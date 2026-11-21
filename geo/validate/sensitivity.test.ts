@@ -35,6 +35,8 @@ const CASES: [string, (i: SimulationInput) => void][] = [
   ['위험 밀도 0.46㎡/인 (이전 값)', (i) => (i.assumptions.jamAreaPerPersonM2 = 0.46)],
   ['관객 +10%', (i) => (i.attendance = Math.round(i.attendance * 1.1))],
   ['안내 반응률 0.4', (i) => (i.compliance = 0.4)],
+  ['퇴장 60분 (정점 15분, 지하철 시간대 데이터와 비슷)', (i) => (i.egress = { kind: 'gamma', totalMinutes: 60, peakMinute: 15 })],
+  ['방면 비율 A93·B3·C4 (지하철 실측)', (i) => (i.directionShare = { A: 0.93, B: 0.03, C: 0.04 })],
 ];
 
 describe('민감도: 분산안 우위가 유지되는가', () => {
