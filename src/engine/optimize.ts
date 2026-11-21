@@ -15,7 +15,13 @@ export interface OptimizeConstraints {
   startMinutes?: number[];
   /** 차량 출구 배정 격자 간격 (기본 0.05) */
   vehicleShareStep?: number;
+  /** 차량 출구마다 최소 배정 비율 (기본 0.15). 출구를 사실상 닫는 안을 막는다 */
+  minVehicleExitShare?: number;
+  /** 안내 대상으로 운영할 방면 (기본: 전부). 여기 없는 방면으로는 돌리지 않는다 */
+  allowedDirections?: Direction[];
 }
+
+export const DEFAULT_MIN_VEHICLE_EXIT_SHARE = 0.15;
 
 export interface Plan {
   guidance: GuidancePlan;
@@ -84,7 +90,10 @@ export function optimize(input: SimulationInput, c: OptimizeConstraints): Optimi
   let best = { plan: { guidance: { moves: [], startMinute: 0 }, vehicleExitShare: currentVehicleShare } as Plan, result: current };
 
   // ---------- 보행 안내 ----------
-  const candidates = junctionCandidates(input, maxDetour);
+  const allowed = c.allowedDirections ? new Set(c.allowedDirections) : null;
+  const candidates = junctionCandidates(input, maxDetour)
+    .map((j) => ({ ...j, targets: j.targets.filter((d) => !allowed || allowed.has(d)) }))
+    .filter((j) => j.targets.length > 0);
   const used = new Set<string>();
   for (let round = 0; round < allowedJunctions; round++) {
     let roundBest = best;
@@ -115,9 +124,11 @@ export function optimize(input: SimulationInput, c: OptimizeConstraints): Optimi
   const exits = input.vehicle?.parking.exits ?? [];
   if (input.vehicle && exits.length >= 2 && exits.length <= 4) {
     const vStep = c.vehicleShareStep ?? 0.05;
+    const minShare = c.minVehicleExitShare ?? DEFAULT_MIN_VEHICLE_EXIT_SHARE;
     let vBest = best;
     for (const shares of compositions(exits.length, Math.round(1 / vStep))) {
-      const share = Object.fromEntries(exits.map((e, i) => [e.id, shares[i]! * vStep]));
+      const share = Object.fromEntries(exits.map((e, i) => [e.id, Math.round(shares[i]! * vStep * 1e9) / 1e9]));
+      if (Object.values(share).some((v) => v < minShare - 1e-9)) continue;
       const plan: Plan = { guidance: best.plan.guidance, vehicleExitShare: share };
       const trial = { plan, result: run(plan) };
       if (better(trial, vBest)) vBest = trial;

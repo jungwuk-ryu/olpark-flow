@@ -182,6 +182,9 @@ export interface Totals {
   maxQueue: number;
   maxQueueEdgeId: string | null;
   maxQueueMinute: number;
+  /** 가장 붐빌 때 전체 대기 인원 (모든 병목 합). 한 지점 한계를 넘쳐 앞쪽 길로 밀린 줄까지 센다 */
+  peakQueueTotal: number;
+  peakQueueTotalMinute: number;
   /** 대기시간 합계 (사람·분) */
   queueMinutesTotal: number;
   /** 가장 가까운 방면 대비 더 걸은 시간 합계 (사람·분) */

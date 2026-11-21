@@ -92,3 +92,60 @@
     text-underline-offset: 3px;
   }
 }
+
+@layer components {
+  /* 슬라이더: 채워진 구간은 --fill(0~100%)로 그린다 */
+  .olp-range {
+    --fill: 50%;
+    --track: var(--color-line);
+    --tint: var(--color-accent);
+    appearance: none;
+    width: 100%;
+    height: 20px;
+    background: transparent;
+    cursor: pointer;
+  }
+  .olp-range::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(to right, var(--tint) var(--fill), var(--track) var(--fill));
+  }
+  .olp-range::-moz-range-track {
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(to right, var(--tint) var(--fill), var(--track) var(--fill));
+  }
+  .olp-range::-webkit-slider-thumb {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    margin-top: -7px;
+    border-radius: 50%;
+    background: var(--color-card);
+    border: 3px solid var(--tint);
+    transition: transform 120ms ease-out;
+  }
+  .olp-range::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--color-card);
+    border: 3px solid var(--tint);
+  }
+  .olp-range:hover::-webkit-slider-thumb {
+    transform: scale(1.12);
+  }
+  .olp-range:focus-visible {
+    outline: none;
+  }
+  .olp-range:focus-visible::-webkit-slider-thumb {
+    box-shadow: 0 0 0 4px var(--color-accent-tint-strong);
+  }
+  .olp-range:focus-visible::-moz-range-thumb {
+    box-shadow: 0 0 0 4px var(--color-accent-tint-strong);
+  }
+  .olp-range:disabled {
+    cursor: not-allowed;
+    --tint: var(--color-line-strong);
+  }
+}
