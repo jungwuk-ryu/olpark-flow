@@ -1,0 +1,94 @@
+@import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
+@import 'tailwindcss';
+
+/*
+ * 디자인 토큰 — Figma "OLPARK Color" 변수와 1:1 대응.
+ * 이름을 바꿀 때는 Figma 변수 이름도 같이 바꾼다.
+ */
+@theme {
+  --font-sans: 'Pretendard Variable', Pretendard, 'Noto Sans KR', system-ui, -apple-system, sans-serif;
+
+  --color-sidebar: #1e3b36;
+  --color-sidebar-selected: #2a4c45;
+  --color-sidebar-text: #dce6e2;
+  --color-sidebar-muted: #9db2ab;
+  --color-sidebar-divider: #33524b;
+
+  --color-page: #f4f5f2;
+  --color-card: #ffffff;
+  --color-subtle: #f7f8f5;
+  --color-line: #e4e6e1;
+  --color-line-strong: #cfd3cc;
+
+  --color-ink: #1f2a27;
+  --color-ink-2: #6b7570;
+
+  --color-accent: #2c6b5f;
+  --color-accent-hover: #24584e;
+  --color-accent-tint: #e6f0ec;
+  --color-accent-tint-strong: #cfe2da;
+
+  --color-route-a: #2f6e60;
+  --color-route-b: #c9a26b;
+  --color-route-c: #8ea2c0;
+  --color-route-blocked: #a3a9a5;
+  --color-vehicle: #5b6b8c;
+
+  --color-ok: #3e8e6e;
+  --color-normal: #d9b44a;
+  --color-bottleneck: #e07b39;
+  --color-danger: #c8423b;
+  --color-ok-tint: #e4f1ea;
+  --color-normal-tint: #f8f0d8;
+  --color-bottleneck-tint: #fbe9dd;
+  --color-danger-tint: #f7e1df;
+
+  --color-src-input-tint: #e8edf4;
+  --color-src-input: #46597a;
+  --color-src-assume-tint: #f5eedf;
+  --color-src-assume: #7d6230;
+  --color-src-observed-tint: #e4f1ea;
+  --color-src-observed: #2c6b4f;
+
+  --color-map-ground: #edf1ea;
+
+  --radius-card: 12px;
+  --radius-control: 8px;
+
+  --shadow-pop: 0 8px 24px rgb(31 42 39 / 0.1), 0 1px 3px rgb(31 42 39 / 0.06);
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    @apply bg-page font-sans text-ink antialiased;
+    font-size: 14px;
+    line-height: 1.45;
+    font-variant-numeric: tabular-nums;
+  }
+  ::selection {
+    background: var(--color-accent-tint-strong);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-line-strong) transparent;
+  }
+  a {
+    text-underline-offset: 3px;
+  }
+}
