@@ -44,8 +44,8 @@
       "kind": "destination",
       "name": "올림픽공원역 3번 출구",
       "lngLat": [
-        127.13075,
-        37.51631
+        127.13062,
+        37.51608
       ],
       "direction": "A",
       "source": "가정"
@@ -77,8 +77,8 @@
       "kind": "junction",
       "name": "분기점 1",
       "lngLat": [
-        127.12817,
-        37.51765
+        127.12735,
+        37.51804
       ],
       "source": "가정"
     },
@@ -87,8 +87,8 @@
       "kind": "junction",
       "name": "분기점 2",
       "lngLat": [
-        127.12683,
-        37.51799
+        127.11649,
+        37.51736
       ],
       "source": "가정"
     },
@@ -97,8 +97,8 @@
       "kind": "junction",
       "name": "분기점 3",
       "lngLat": [
-        127.11649,
-        37.51736
+        127.12646,
+        37.51881
       ],
       "source": "가정"
     },
@@ -107,8 +107,8 @@
       "kind": "junction",
       "name": "분기점 4",
       "lngLat": [
-        127.12646,
-        37.51881
+        127.12756,
+        37.51837
       ],
       "source": "가정"
     },
@@ -116,16 +116,6 @@
       "id": "n-junction-5",
       "kind": "junction",
       "name": "분기점 5",
-      "lngLat": [
-        127.12697,
-        37.51821
-      ],
-      "source": "가정"
-    },
-    {
-      "id": "n-junction-6",
-      "kind": "junction",
-      "name": "분기점 6",
       "lngLat": [
         127.12598,
         37.51808
@@ -137,8 +127,8 @@
       "kind": "crossing",
       "name": "주차장 진출로 교차점 (후보)",
       "lngLat": [
-        127.13034,
-        37.5159
+        127.12981,
+        37.5171
       ],
       "source": "가정"
     },
@@ -167,8 +157,8 @@
       "kind": "bottleneck",
       "name": "지점 4",
       "lngLat": [
-        127.11967,
-        37.5167
+        127.11968,
+        37.51672
       ],
       "source": "가정"
     },
@@ -197,8 +187,8 @@
       "kind": "bottleneck",
       "name": "올림픽공원역 3번 출입구 앞",
       "lngLat": [
-        127.13057,
-        37.51606
+        127.1306,
+        37.51604
       ],
       "source": "가정"
     },
@@ -228,10 +218,10 @@
       "id": "e-01",
       "from": "n-kspo-exit-south",
       "to": "n-junction-1",
-      "lengthM": 135,
-      "widthM": 4,
+      "lengthM": 220,
+      "widthM": 5,
       "type": "flat",
-      "queueAreaM2": 160,
+      "queueAreaM2": 200,
       "stepFree": true,
       "path": [
         [
@@ -265,6 +255,10 @@
         [
           127.12817,
           37.51765
+        ],
+        [
+          127.12735,
+          37.51804
         ]
       ],
       "source": "가정"
@@ -272,71 +266,148 @@
     {
       "id": "e-02",
       "from": "n-junction-1",
-      "to": "n-crossing-a",
-      "lengthM": 341,
-      "widthM": 4,
+      "to": "n-junction-4",
+      "lengthM": 42,
+      "widthM": 20,
       "type": "flat",
-      "queueAreaM2": 160,
+      "queueAreaM2": 800,
       "stepFree": true,
       "path": [
         [
-          127.12817,
-          37.51765
+          127.12735,
+          37.51804
         ],
         [
-          127.12774,
-          37.51701
-        ],
-        [
-          127.13034,
-          37.5159
+          127.12756,
+          37.51837
         ]
       ],
       "source": "가정"
     },
     {
       "id": "e-03",
-      "from": "n-crossing-a",
-      "to": "n-station-front-a",
-      "lengthM": 67,
-      "widthM": 3,
+      "from": "n-junction-4",
+      "to": "n-crossing-a",
+      "lengthM": 251,
+      "widthM": 15,
       "type": "flat",
-      "queueAreaM2": 120,
+      "queueAreaM2": 600,
       "stepFree": true,
       "path": [
         [
-          127.13034,
-          37.5159
+          127.12756,
+          37.51837
         ],
         [
-          127.13043,
-          37.51586
+          127.12757,
+          37.51834
         ],
         [
-          127.13057,
-          37.51606
+          127.12764,
+          37.51825
         ],
         [
-          127.13057,
-          37.51606
+          127.12767,
+          37.5182
+        ],
+        [
+          127.1277,
+          37.51816
+        ],
+        [
+          127.12774,
+          37.5181
+        ],
+        [
+          127.12777,
+          37.51806
+        ],
+        [
+          127.12781,
+          37.51801
+        ],
+        [
+          127.12786,
+          37.51799
+        ],
+        [
+          127.12791,
+          37.51795
+        ],
+        [
+          127.12797,
+          37.51791
+        ],
+        [
+          127.12805,
+          37.51782
+        ],
+        [
+          127.12843,
+          37.51767
+        ],
+        [
+          127.12981,
+          37.5171
         ]
       ],
       "source": "가정"
     },
     {
       "id": "e-04",
-      "from": "n-junction-1",
-      "to": "n-junction-5",
-      "lengthM": 122,
-      "widthM": 3,
+      "from": "n-crossing-a",
+      "to": "n-station-front-a",
+      "lengthM": 194,
+      "widthM": 5.9,
       "type": "flat",
-      "queueAreaM2": 120,
+      "queueAreaM2": 236,
       "stepFree": true,
       "path": [
         [
-          127.12817,
-          37.51765
+          127.12981,
+          37.5171
         ],
+        [
+          127.13089,
+          37.51666
+        ],
+        [
+          127.13096,
+          37.51663
+        ],
+        [
+          127.13089,
+          37.51652
+        ],
+        [
+          127.13075,
+          37.51631
+        ],
+        [
+          127.13057,
+          37.51606
+        ],
+        [
+          127.1306,
+          37.51604
+        ],
+        [
+          127.1306,
+          37.51604
+        ]
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "e-05",
+      "from": "n-junction-1",
+      "to": "n-junction-5",
+      "lengthM": 143,
+      "widthM": 20,
+      "type": "flat",
+      "queueAreaM2": 800,
+      "stepFree": true,
+      "path": [
         [
           127.12735,
           37.51804
@@ -344,41 +415,7 @@
         [
           127.12697,
           37.51821
-        ]
-      ],
-      "source": "가정"
-    },
-    {
-      "id": "e-05",
-      "from": "n-junction-5",
-      "to": "n-junction-2",
-      "lengthM": 27,
-      "widthM": 3,
-      "type": "flat",
-      "queueAreaM2": 82,
-      "stepFree": true,
-      "path": [
-        [
-          127.12697,
-          37.51821
         ],
-        [
-          127.12683,
-          37.51799
-        ]
-      ],
-      "source": "가정"
-    },
-    {
-      "id": "e-06",
-      "from": "n-junction-2",
-      "to": "n-junction-6",
-      "lengthM": 78,
-      "widthM": 3,
-      "type": "flat",
-      "queueAreaM2": 120,
-      "stepFree": true,
-      "path": [
         [
           127.12683,
           37.51799
@@ -407,13 +444,13 @@
       "source": "가정"
     },
     {
-      "id": "e-07",
-      "from": "n-junction-6",
+      "id": "e-06",
+      "from": "n-junction-5",
       "to": "n-point-2",
       "lengthM": 230,
-      "widthM": 4,
+      "widthM": 20,
       "type": "flat",
-      "queueAreaM2": 160,
+      "queueAreaM2": 800,
       "stepFree": true,
       "path": [
         [
@@ -468,13 +505,13 @@
       "source": "가정"
     },
     {
-      "id": "e-08",
+      "id": "e-07",
       "from": "n-point-2",
       "to": "n-point-3",
       "lengthM": 223,
-      "widthM": 4,
+      "widthM": 3.4,
       "type": "flat",
-      "queueAreaM2": 160,
+      "queueAreaM2": 136,
       "stepFree": true,
       "path": [
         [
@@ -537,13 +574,13 @@
       "source": "가정"
     },
     {
-      "id": "e-09",
+      "id": "e-08",
       "from": "n-point-3",
       "to": "n-point-4",
       "lengthM": 229,
-      "widthM": 4,
+      "widthM": 3.4,
       "type": "flat",
-      "queueAreaM2": 160,
+      "queueAreaM2": 136,
       "stepFree": true,
       "path": [
         [
@@ -555,53 +592,65 @@
           37.51724
         ],
         [
-          127.12089,
-          37.51705
+          127.12111,
+          37.51725
         ],
         [
-          127.12073,
-          37.51696
+          127.12087,
+          37.51707
         ],
         [
-          127.12056,
-          37.51689
+          127.12082,
+          37.51704
+        ],
+        [
+          127.12072,
+          37.51698
+        ],
+        [
+          127.12055,
+          37.51691
         ],
         [
           127.12048,
-          37.51686
+          37.51688
         ],
         [
-          127.12019,
-          37.51677
+          127.12018,
+          37.51679
         ],
         [
           127.11986,
-          37.5167
+          37.51673
         ],
         [
-          127.11967,
-          37.5167
+          127.11968,
+          37.51672
         ]
       ],
       "source": "가정"
     },
     {
-      "id": "e-10",
+      "id": "e-09",
       "from": "n-point-4",
       "to": "n-point-5",
-      "lengthM": 235,
-      "widthM": 4,
+      "lengthM": 237,
+      "widthM": 4.4,
       "type": "flat",
-      "queueAreaM2": 160,
+      "queueAreaM2": 176,
       "stepFree": true,
       "path": [
         [
-          127.11967,
-          37.5167
+          127.11968,
+          37.51672
         ],
         [
-          127.11947,
-          37.51673
+          127.11948,
+          37.51675
+        ],
+        [
+          127.11946,
+          37.51676
         ],
         [
           127.11945,
@@ -627,13 +676,13 @@
       "source": "가정"
     },
     {
-      "id": "e-11",
+      "id": "e-10",
       "from": "n-point-5",
-      "to": "n-junction-3",
+      "to": "n-junction-2",
       "lengthM": 65,
-      "widthM": 4,
+      "widthM": 15,
       "type": "flat",
-      "queueAreaM2": 160,
+      "queueAreaM2": 600,
       "stepFree": true,
       "path": [
         [
@@ -648,13 +697,13 @@
       "source": "가정"
     },
     {
-      "id": "e-12",
-      "from": "n-junction-3",
+      "id": "e-11",
+      "from": "n-junction-2",
       "to": "n-station-front-b",
       "lengthM": 104,
-      "widthM": 4,
+      "widthM": 5.9,
       "type": "flat",
-      "queueAreaM2": 160,
+      "queueAreaM2": 236,
       "stepFree": true,
       "path": [
         [
@@ -677,13 +726,13 @@
       "source": "가정"
     },
     {
-      "id": "e-13",
-      "from": "n-junction-3",
+      "id": "e-12",
+      "from": "n-junction-2",
       "to": "n-point-6",
       "lengthM": 239,
-      "widthM": 4,
+      "widthM": 4.4,
       "type": "flat",
-      "queueAreaM2": 160,
+      "queueAreaM2": 176,
       "stepFree": true,
       "path": [
         [
@@ -710,13 +759,13 @@
       "source": "가정"
     },
     {
-      "id": "e-14",
+      "id": "e-13",
       "from": "n-point-6",
       "to": "n-station-front-c",
       "lengthM": 125,
-      "widthM": 3,
+      "widthM": 20,
       "type": "flat",
-      "queueAreaM2": 120,
+      "queueAreaM2": 800,
       "stepFree": true,
       "path": [
         [
@@ -751,13 +800,13 @@
       "source": "가정"
     },
     {
-      "id": "e-15",
+      "id": "e-14",
       "from": "n-kspo-exit-east",
       "to": "n-kspo-exit-south",
       "lengthM": 66,
-      "widthM": 4,
+      "widthM": 7.4,
       "type": "flat",
-      "queueAreaM2": 160,
+      "queueAreaM2": 296,
       "stepFree": true,
       "path": [
         [
@@ -780,13 +829,13 @@
       "source": "가정"
     },
     {
-      "id": "e-16",
+      "id": "e-15",
       "from": "n-kspo-exit-west",
-      "to": "n-junction-4",
+      "to": "n-junction-3",
       "lengthM": 30,
-      "widthM": 4,
+      "widthM": 7.4,
       "type": "flat",
-      "queueAreaM2": 122,
+      "queueAreaM2": 222,
       "stepFree": true,
       "path": [
         [
@@ -805,13 +854,13 @@
       "source": "가정"
     },
     {
-      "id": "e-17",
-      "from": "n-junction-4",
-      "to": "n-junction-5",
-      "lengthM": 101,
-      "widthM": 3,
+      "id": "e-16",
+      "from": "n-junction-3",
+      "to": "n-junction-4",
+      "lengthM": 115,
+      "widthM": 20,
       "type": "flat",
-      "queueAreaM2": 120,
+      "queueAreaM2": 800,
       "stepFree": true,
       "path": [
         [
@@ -851,85 +900,40 @@
           37.51842
         ],
         [
-          127.12697,
-          37.51821
-        ]
-      ],
-      "source": "가정"
-    },
-    {
-      "id": "e-18",
-      "from": "n-junction-2",
-      "to": "n-station-front-a",
-      "lengthM": 401,
-      "widthM": 3,
-      "type": "flat",
-      "queueAreaM2": 120,
-      "stepFree": true,
-      "path": [
-        [
-          127.12683,
-          37.51799
+          127.12727,
+          37.51842
         ],
         [
-          127.127,
-          37.51787
+          127.12741,
+          37.51841
         ],
         [
-          127.1271,
-          37.51775
+          127.12746,
+          37.51841
         ],
         [
-          127.12715,
-          37.51772
-        ],
-        [
-          127.12722,
-          37.51768
-        ],
-        [
-          127.12735,
-          37.51766
-        ],
-        [
-          127.12743,
-          37.51768
+          127.12749,
+          37.5184
         ],
         [
           127.12752,
-          37.51769
+          37.51838
         ],
         [
-          127.12761,
-          37.51769
-        ],
-        [
-          127.1277,
-          37.51767
-        ],
-        [
-          127.1279,
-          37.51758
-        ],
-        [
-          127.1283,
-          37.51741
-        ],
-        [
-          127.13057,
-          37.51606
+          127.12756,
+          37.51837
         ]
       ],
       "source": "가정"
     },
     {
-      "id": "e-19",
-      "from": "n-junction-4",
-      "to": "n-junction-6",
+      "id": "e-17",
+      "from": "n-junction-3",
+      "to": "n-junction-5",
       "lengthM": 93,
-      "widthM": 4,
+      "widthM": 20,
       "type": "flat",
-      "queueAreaM2": 160,
+      "queueAreaM2": 800,
       "stepFree": true,
       "path": [
         [
@@ -966,12 +970,12 @@
       "stepFree": false,
       "path": [
         [
-          127.13057,
-          37.51606
+          127.1306,
+          37.51604
         ],
         [
-          127.13075,
-          37.51631
+          127.13062,
+          37.51608
         ]
       ],
       "source": "가정"

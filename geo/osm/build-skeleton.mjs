@@ -11,7 +11,21 @@ const dist = (a, b) => {
   const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a[1])) * Math.cos(rad(b[1])) * Math.sin(dLon / 2) ** 2;
   return 2 * R * Math.asin(Math.sqrt(h));
 };
-const WALK = new Set(['footway', 'path', 'pedestrian', 'steps', 'living_street', 'residential', 'service']);
+const WALK = new Set(['footway', 'path', 'pedestrian', 'steps', 'living_street', 'residential', 'service', 'cycleway']);
+// 대규모 귀가 동선은 넓은 주 보행로를 탄다: 길 종류별 비용 배수 (클수록 피함)
+const COST = { pedestrian: 0.8, footway: 1.0, cycleway: 1.0, service: 1.3, living_street: 1.3, residential: 1.5, steps: 1.5, path: 2.5 };
+const UNPAVED = /^(dirt|ground|gravel|grass|earth|mud|sand|unpaved|fine_gravel|compacted|wood)$/;
+const costOf = (t) => {
+  let c = COST[t.highway] ?? 2;
+  // 주차장 안 통로·건물 진입로는 귀가 동선이 아님 (연결이 끊기지 않게 제외 대신 큰 비용)
+  if (t.highway === 'service' && /^(parking_aisle|drive-through)$/.test(t.service ?? '')) c = 5;
+  // 공원 안 driveway는 가로수 산책로를 겸하는 경우가 많아 약한 벌점만
+  if (t.highway === 'service' && t.service === 'driveway') c = 1.6;
+  if (UNPAVED.test(t.surface ?? '')) c *= 1.6;
+  const w = parseFloat(t.width);
+  if (Number.isFinite(w) && w >= 5) c *= 0.9;
+  return c;
+};
 
 // ---------- 그래프 ----------
 const coord = new Map();
@@ -23,6 +37,7 @@ const addEdge = (a, b, len, wayId) => {
 };
 for (const w of els.filter((e) => e.type === 'way' && WALK.has(e.tags?.highway))) {
   if (w.tags.access === 'private' || w.tags.foot === 'no') continue;
+
   wayInfo.set(w.id, w.tags);
   w.nodes.forEach((id, i) => coord.set(id, [w.geometry[i].lon, w.geometry[i].lat]));
   for (let i = 1; i < w.nodes.length; i++) {
@@ -105,7 +120,7 @@ function dijkstra(src) {
     if (done.has(u)) continue;
     done.add(u);
     for (const e of adj.get(u) ?? []) {
-      const pen = wayInfo.get(e.wayId)?.highway === 'steps' ? 1.2 : 1;
+      const pen = costOf(wayInfo.get(e.wayId) ?? {});
       const nd = d + e.len * pen;
       if (nd < (D.get(e.to) ?? Infinity)) {
         D.set(e.to, nd);
@@ -116,24 +131,59 @@ function dijkstra(src) {
   }
   return { D, P };
 }
+// 방면별 경유점: 항공영상(브이월드)으로 확인한 주 보행 동선 (광장·넓은 산책로)
+// A: 체조경기장 남동쪽 광장 → 올림픽공원역 방면 넓은 보행로
+// B·C: 핸드볼경기장 북쪽 광장 → 중앙 산책로 → 몽촌해자 남쪽 → (B) 남쪽 출구 / (C) 평화의광장
+const VIA = {
+  A: [[127.12809, 37.51784], [127.13088, 37.51665]],
+  B: [[127.12605, 37.51806], [127.12407, 37.51763], [127.12187, 37.5178], [127.11736, 37.51744], [127.1165, 37.51736]],
+  C: [[127.12605, 37.51806], [127.12407, 37.51763], [127.12187, 37.5178], [127.11736, 37.51744], [127.11618, 37.51814], [127.11457, 37.51772]],
+};
+const viaNodes = Object.fromEntries(Object.entries(VIA).map(([k, v]) => [k, v.map((p) => nearest(p).id)]));
+const dj = new Map();
+const djOf = (n) => (dj.has(n) ? dj.get(n) : (dj.set(n, dijkstra(n)), dj.get(n)));
+const legPath = (a, b) => {
+  const { D, P } = djOf(a);
+  if (!D.has(b)) return null;
+  const nodes = [b];
+  const ways = [];
+  let cur = b;
+  while (cur !== a) {
+    const p = P.get(cur);
+    ways.unshift(p.wayId);
+    cur = p.from;
+    nodes.unshift(cur);
+  }
+  return { nodes, ways };
+};
 const paths = [];
 for (const ex of exits) {
-  const { D, P } = dijkstra(ex.graphNode);
   for (const d of DEST) {
-    if (!D.has(d.graphNode)) {
-      paths.push({ exit: ex, dest: d, missing: true });
-      continue;
+    const stops = [ex.graphNode, ...viaNodes[d.direction], d.graphNode];
+    let nodes = [ex.graphNode];
+    let ways = [];
+    let missing = false;
+    for (let i = 1; i < stops.length; i++) {
+      if (stops[i] === stops[i - 1]) continue;
+      const leg = legPath(stops[i - 1], stops[i]);
+      if (!leg) { missing = true; break; }
+      nodes = nodes.concat(leg.nodes.slice(1));
+      ways = ways.concat(leg.ways);
     }
-    const nodes = [d.graphNode];
-    const ways = [];
-    let cur = d.graphNode;
-    while (cur !== ex.graphNode) {
-      const p = P.get(cur);
-      ways.unshift(p.wayId);
-      cur = p.from;
-      nodes.unshift(cur);
+    // 되돌아가는 구간(같은 점을 두 번 지남) 제거
+    const seen = new Map();
+    for (let i = 0; i < nodes.length; i++) {
+      if (seen.has(nodes[i])) {
+        const j = seen.get(nodes[i]);
+        nodes.splice(j + 1, i - j);
+        ways.splice(j, i - j);
+        i = j;
+        for (const [k, v] of [...seen]) if (v > j) seen.delete(k);
+      } else seen.set(nodes[i], i);
     }
-    paths.push({ exit: ex, dest: d, nodes, ways, lengthM: D.get(d.graphNode) });
+    let lengthM = 0;
+    for (let i = 1; i < nodes.length; i++) lengthM += dist(coord.get(nodes[i - 1]), coord.get(nodes[i]));
+    paths.push(missing ? { exit: ex, dest: d, missing: true } : { exit: ex, dest: d, nodes, ways, lengthM });
   }
 }
 const ok = paths.filter((p) => !p.missing);
@@ -178,7 +228,7 @@ for (const p of ok) {
 }
 
 // ---------- 토막 ----------
-const DEFAULT_WIDTH = { footway: 3, path: 2.5, pedestrian: 8, steps: 3, living_street: 4, residential: 3, service: 4 };
+const DEFAULT_WIDTH = { cycleway: 3, footway: 3, path: 2.5, pedestrian: 8, steps: 3, living_street: 4, residential: 3, service: 4 };
 const r5 = (x) => Math.round(x * 1e5) / 1e5;
 const edges = new Map();
 const routeEdges = [];
