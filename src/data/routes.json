@@ -13,26 +13,28 @@
             "e-01",
             "e-02",
             "e-03",
+            "e-04",
             "e-station-a"
           ]
         },
         {
           "exitNodeId": "n-kspo-exit-east",
           "edgeIds": [
-            "e-15",
+            "e-14",
             "e-01",
             "e-02",
             "e-03",
+            "e-04",
             "e-station-a"
           ]
         },
         {
           "exitNodeId": "n-kspo-exit-west",
           "edgeIds": [
+            "e-15",
             "e-16",
-            "e-17",
-            "e-05",
-            "e-18",
+            "e-03",
+            "e-04",
             "e-station-a"
           ]
         }
@@ -48,7 +50,6 @@
           "exitNodeId": "n-kspo-exit-south",
           "edgeIds": [
             "e-01",
-            "e-04",
             "e-05",
             "e-06",
             "e-07",
@@ -56,16 +57,14 @@
             "e-09",
             "e-10",
             "e-11",
-            "e-12",
             "e-station-b"
           ]
         },
         {
           "exitNodeId": "n-kspo-exit-east",
           "edgeIds": [
-            "e-15",
+            "e-14",
             "e-01",
-            "e-04",
             "e-05",
             "e-06",
             "e-07",
@@ -73,21 +72,20 @@
             "e-09",
             "e-10",
             "e-11",
-            "e-12",
             "e-station-b"
           ]
         },
         {
           "exitNodeId": "n-kspo-exit-west",
           "edgeIds": [
-            "e-16",
-            "e-19",
+            "e-15",
+            "e-17",
+            "e-06",
             "e-07",
             "e-08",
             "e-09",
             "e-10",
             "e-11",
-            "e-12",
             "e-station-b"
           ]
         }
@@ -103,49 +101,45 @@
           "exitNodeId": "n-kspo-exit-south",
           "edgeIds": [
             "e-01",
-            "e-04",
             "e-05",
             "e-06",
             "e-07",
             "e-08",
             "e-09",
             "e-10",
-            "e-11",
+            "e-12",
             "e-13",
-            "e-14",
             "e-station-c"
           ]
         },
         {
           "exitNodeId": "n-kspo-exit-east",
           "edgeIds": [
-            "e-15",
+            "e-14",
             "e-01",
-            "e-04",
             "e-05",
             "e-06",
             "e-07",
             "e-08",
             "e-09",
             "e-10",
-            "e-11",
+            "e-12",
             "e-13",
-            "e-14",
             "e-station-c"
           ]
         },
         {
           "exitNodeId": "n-kspo-exit-west",
           "edgeIds": [
-            "e-16",
-            "e-19",
+            "e-15",
+            "e-17",
+            "e-06",
             "e-07",
             "e-08",
             "e-09",
             "e-10",
-            "e-11",
+            "e-12",
             "e-13",
-            "e-14",
             "e-station-c"
           ]
         }

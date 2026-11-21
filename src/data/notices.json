@@ -5,7 +5,7 @@
       "id": "notice-20261115-1",
       "segmentName": "세계평화의문 → 몽촌토성역 방면 보행로",
       "edgeIds": [
-        "e-13"
+        "e-12"
       ],
       "startAt": "2026-11-18T00:00:00+09:00",
       "endAt": "2026-11-24T23:59:00+09:00",
@@ -28,8 +28,8 @@
       "startAt": "2026-11-21T18:00:00+09:00",
       "endAt": "2026-11-21T23:00:00+09:00",
       "effect": "narrowed",
-      "widthM": 2,
-      "content": "푸드트럭 부스 설치로 유효 폭 4m → 2m",
+      "widthM": 2.5,
+      "content": "푸드트럭 부스 설치로 유효 폭 5m → 2.5m",
       "evidence": {
         "quote": "공연 당일 남측 광장에 부스가 운영되어 통행 공간이 줄어듭니다. (시연용 공지)",
         "url": "https://example.com/olympicpark/notice/1119",
