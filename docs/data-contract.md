@@ -312,6 +312,8 @@ OLPARK FLOW는 세 부분이 따로 만들어져 하나로 합쳐집니다. 이 
   "jamAreaPerPersonM2": 0.46,
   "crossingPedestrianShare": 0.6,
   "vehicleOccupancy": 2.4,
+  "staffPerJunction": 2,
+  "walkToLotMinutes": 5,
   "notes": {
     "flowPerMeterPerMin": "근거 문헌·출처를 여기에 적기",
     "jamAreaPerPersonM2": "1인당 이 넓이에 가까워지면 '위험'으로 표시"
@@ -327,6 +329,8 @@ OLPARK FLOW는 세 부분이 따로 만들어져 하나로 합쳐집니다. 이 
 | `jamAreaPerPersonM2` | 꽉 막혔을 때 1인당 넓이. 줄 공간 한계 계산과 "위험" 판정에 씀 |
 | `crossingPedestrianShare` | 교차점에서 1분 중 보행자가 쓰는 비율 (나머지는 차량) |
 | `vehicleOccupancy` | 차 1대당 탑승 인원 (화면에서 바꿀 수 있음) |
+| `staffPerJunction` | 분기점 하나를 운영하는 데 필요한 안내요원 수. 안내요원 6명 ÷ 2 = 분기점 3곳까지 안내 가능 |
+| `walkToLotMinutes` | 공연장에서 주차장까지 걸어가는 평균 시간. 이만큼 늦게 출차가 시작됨 |
 
 ---
 
@@ -339,7 +343,8 @@ OLPARK FLOW는 세 부분이 따로 만들어져 하나로 합쳐집니다. 이 
 | `maxQueue` | 가장 길었던 줄 | 명 |
 | `queueMinutesTotal` | 줄 서서 기다린 시간 합계 | 사람·분 |
 | `detourMinutesTotal` | 돌아가느라 더 걸은 시간 합계 | 사람·분 |
-| `vehicleQueueMinutes` | 차량 대기 × 탑승 인원 | 사람·분 |
+| `vehicleQueuePersonMinutes` | 차량 대기(대·분) × 탑승 인원 | 사람·분 |
+| `burdenPersonMinutes` | 대기 + 추가 보행 + 차량 대기 (분산안을 고르는 기준) | 사람·분 |
 | `clearMinute` | 줄이 다 풀리는 시각 | 종료 후 분 |
 | `saturation` | 들어오는 사람 ÷ 지나갈 수 있는 사람 | 비율 (1 넘으면 병목) |
 
@@ -350,7 +355,7 @@ OLPARK FLOW는 세 부분이 따로 만들어져 하나로 합쳐집니다. 이 
 1. 파일은 Git 저장소의 `src/data/`에 올리고, 바꿀 때마다 PR로 올립니다.
 2. 모양(필드 이름·종류)을 바꿔야 하면 **먼저 이 문서를 고치고** `schemaVersion`을 올린 뒤 팀에 알립니다.
 3. 진짜 데이터가 아직 없으면 목업으로 먼저 개발하고, 나오면 같은 파일을 덮어씁니다.
-4. 다음 단계에서 `pnpm validate:data` 검사 명령을 만들 예정입니다. 올리기 전에 돌리면 형식 오류를 바로 알려 줍니다.
+4. PR을 올리기 전에 `pnpm validate:data`를 돌리세요. `src/data`의 파일이 이 문서 규칙을 지키는지, 그 파일로 계산 엔진이 끝까지 돌아가는지 검사하고 틀린 곳을 문장으로 알려 줍니다. 지금 들어 있는 파일이 형식 예시입니다.
 
 ## 10. 담당과 확인할 것
 

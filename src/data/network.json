@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "coordSystemOriginal": "EPSG:4326",
+  "source": "가정",
+  "nodes": [
+    { "id": "n-kspo-exit-east", "kind": "exit", "name": "KSPO DOME 동측 출구", "lngLat": [127.1283, 37.5197], "venueId": "kspo-dome", "exitShare": 0.55, "source": "가정" },
+    { "id": "n-kspo-exit-south", "kind": "exit", "name": "KSPO DOME 남측 출구", "lngLat": [127.127, 37.5189], "venueId": "kspo-dome", "exitShare": 0.45, "source": "가정" },
+    { "id": "n-junction-center", "kind": "junction", "name": "중앙 분기점", "lngLat": [127.1262, 37.5176], "source": "가정" },
+    { "id": "n-a-merge", "kind": "bottleneck", "name": "A 경로 합류부", "lngLat": [127.1284, 37.517], "source": "가정" },
+    { "id": "n-crossing-east", "kind": "crossing", "name": "동2문 앞 교차점", "lngLat": [127.1298, 37.5166], "source": "가정" },
+    { "id": "n-dest-a", "kind": "destination", "name": "올림픽공원역 3번 출구", "lngLat": [127.1307, 37.5161], "direction": "A", "source": "가정" },
+    { "id": "n-b-bridge", "kind": "bottleneck", "name": "한성백제 방면 보행교", "lngLat": [127.121, 37.5165], "source": "가정" },
+    { "id": "n-dest-b", "kind": "destination", "name": "한성백제역 2번 출구", "lngLat": [127.1163, 37.516], "direction": "B", "source": "가정" },
+    { "id": "n-c-moat", "kind": "bottleneck", "name": "몽촌해자 보행로 입구", "lngLat": [127.1215, 37.519], "source": "가정" },
+    { "id": "n-dest-c", "kind": "destination", "name": "몽촌토성역 1번 출구", "lngLat": [127.117, 37.5205], "direction": "C", "source": "가정" }
+  ],
+  "edges": [
+    { "id": "e-east-center", "from": "n-kspo-exit-east", "to": "n-junction-center", "lengthM": 140, "widthM": 10, "type": "flat", "queueAreaM2": 1400, "stepFree": true, "source": "가정" },
+    { "id": "e-south-center", "from": "n-kspo-exit-south", "to": "n-junction-center", "lengthM": 90, "widthM": 8, "type": "flat", "queueAreaM2": 1000, "stepFree": true, "source": "가정" },
+    { "id": "e-center-amerge", "from": "n-junction-center", "to": "n-a-merge", "lengthM": 150, "widthM": 6, "type": "flat", "queueAreaM2": 900, "stepFree": true, "source": "가정" },
+    { "id": "e-amerge-crossing", "from": "n-a-merge", "to": "n-crossing-east", "lengthM": 80, "widthM": 2.4, "type": "flat", "queueAreaM2": 700, "stepFree": true, "source": "가정" },
+    { "id": "e-crossing-dest-a", "from": "n-crossing-east", "to": "n-dest-a", "lengthM": 50, "widthM": 4, "type": "stairs", "queueAreaM2": 250, "stepFree": false, "source": "가정" },
+    { "id": "e-center-bbridge", "from": "n-junction-center", "to": "n-b-bridge", "lengthM": 350, "widthM": 3.5, "type": "flat", "queueAreaM2": 800, "stepFree": true, "source": "가정" },
+    { "id": "e-bbridge-dest-b", "from": "n-b-bridge", "to": "n-dest-b", "lengthM": 210, "widthM": 3, "type": "stairs", "queueAreaM2": 400, "stepFree": false, "source": "가정" },
+    { "id": "e-center-cmoat", "from": "n-junction-center", "to": "n-c-moat", "lengthM": 360, "widthM": 4, "type": "flat", "queueAreaM2": 900, "stepFree": true, "source": "가정" },
+    { "id": "e-c-moat", "from": "n-c-moat", "to": "n-dest-c", "lengthM": 410, "widthM": 3, "type": "flat", "queueAreaM2": 600, "stepFree": true, "source": "가정" }
+  ]
+}
