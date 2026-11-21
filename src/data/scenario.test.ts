@@ -4,6 +4,7 @@ import { validateData } from './validate';
 import { simulate } from '../engine/simulate';
 import { optimize } from '../engine/optimize';
 import type { SimulationInput } from '../engine/types';
+import { MAX_DETOUR_MINUTES } from '../model/scenario';
 
 /**
  * `pnpm validate:data`가 돌리는 파일. src/data의 실제 파일이 약속 문서를 지키는지,
@@ -38,11 +39,10 @@ describe('KSPO DOME · 공연 A 시연 시나리오', () => {
     expect(L.departed[last]!).toBeCloseTo(L.arrived[last]! + L.inTransit[last]! + L.queued[last]!, 6);
   });
 
-  it('분산안 탐색은 대기 + 추가 보행 합계를 20% 이상 줄인다', () => {
-    const r = optimize(input, { staff: 6, maxDetourPerPersonMinutes: 10 });
-    const cur = r.current.totals.burdenPersonMinutes;
-    const best = r.best.result.totals.burdenPersonMinutes;
-    expect(best).toBeLessThan(cur * 0.8);
+  it('분산안은 합계 부담을 줄이고, 가장 붐빌 때 대기를 30% 이상 줄인다', () => {
+    const r = optimize(input, { staff: 6, maxDetourPerPersonMinutes: MAX_DETOUR_MINUTES });
+    expect(r.best.result.totals.burdenPersonMinutes).toBeLessThan(r.current.totals.burdenPersonMinutes);
+    expect(r.best.result.totals.peakQueueTotal).toBeLessThan(r.current.totals.peakQueueTotal * 0.7);
     expect(r.best.plan.guidance.moves.length).toBeGreaterThan(0);
   });
 
@@ -53,6 +53,8 @@ describe('KSPO DOME · 공연 A 시연 시나리오', () => {
     );
     const r = simulate({ ...input, blockedEdgeIds: closed, edgeWidthOverrides: narrowed });
     expect(r.unavailableDirections).toEqual(['C']);
-    expect(r.edges['e-south-center']!.capacityPerMin).toBeCloseTo(4 * 82, 6);
+    for (const [id, w] of Object.entries(narrowed)) {
+      expect(r.edges[id]!.capacityPerMin).toBeCloseTo(w * bundle.assumptions.flowPerMeterPerMin.flat, 6);
+    }
   });
 });

@@ -4,6 +4,14 @@ import { PageHeader } from './components/layout/PageHeader';
 import { Card, CardHeader, Pending } from './components/ui/Card';
 import { Icon } from './components/ui/Icon';
 import { Button } from './components/ui/Button';
+import { EventBar } from './components/sections/EventBar';
+import { KpiRow } from './components/sections/KpiRow';
+import { SettingsCard } from './components/sections/SettingsCard';
+import { TrendCard } from './components/sections/TrendCard';
+import { ComparisonCard } from './components/sections/ComparisonCard';
+import { useEffect } from 'react';
+import { loadDataBundle } from './api';
+import { useScenario } from './store/scenario';
 
 /**
  * 1단계 레이아웃 뼈대.
@@ -20,10 +28,16 @@ const DATA_SOURCES = [
   '서울교통공사 승하차',
 ];
 
-const EVENT_CELLS = ['분석 행사', '종료 예정', '기준 보행 경로', '분석 상태'];
-const KPI_LABELS = ['예상 최대 대기 인원', '대기 + 추가 보행', '관객 1인당 추가 시간', '대기열 해소 예상'];
-
 export default function App() {
+  const init = useScenario((s) => s.init);
+  useEffect(() => {
+    let alive = true;
+    loadDataBundle().then((d) => alive && init(d));
+    return () => {
+      alive = false;
+    };
+  }, [init]);
+
   return (
     <div className="flex min-h-screen min-w-[1280px]">
       <Sidebar />
@@ -35,14 +49,7 @@ export default function App() {
             <PageHeader />
 
             <div className="flex flex-col gap-2.5">
-              <Card className="grid grid-cols-[minmax(0,1fr)_250px_200px_216px]">
-                {EVENT_CELLS.map((label, i) => (
-                  <div key={label} className={`flex flex-col gap-1.5 px-5 py-4 ${i < 3 ? 'border-r border-line' : ''}`}>
-                    <span className="text-[12px] leading-[18px] text-ink-2">{label}</span>
-                    <span className="h-[22px] w-28 rounded bg-subtle" aria-hidden="true" />
-                  </div>
-                ))}
-              </Card>
+              <EventBar />
               <div className="flex items-center gap-2">
                 <span className="inline-flex h-8 items-center gap-2 rounded-full border border-line bg-card px-2.5 text-[13px] text-ink-2">
                   <span className="text-accent">
@@ -53,15 +60,7 @@ export default function App() {
               </div>
             </div>
 
-            <Card className="grid grid-cols-4">
-              {KPI_LABELS.map((label, i) => (
-                <div key={label} className={`flex flex-col gap-2 px-6 py-5 ${i < 3 ? 'border-r border-line' : ''}`}>
-                  <span className="text-[13px] leading-5 font-medium text-ink-2">{label}</span>
-                  <span className="h-11 w-24 rounded bg-subtle" aria-hidden="true" />
-                  <span className="h-[18px] w-40 rounded bg-subtle" aria-hidden="true" />
-                </div>
-              ))}
-            </Card>
+            <KpiRow />
 
             <Card className="flex gap-5 px-6 py-[18px]">
               <div className="flex w-[150px] shrink-0 flex-col gap-1.5">
@@ -104,13 +103,7 @@ export default function App() {
                 </div>
               </Card>
 
-              <Card className="flex flex-col gap-3 p-6 pt-5">
-                <CardHeader
-                  title="대기 인원 추이"
-                  description="퇴장 시작 후 시간에 따라 쌓이는 예상 대기열"
-                />
-                <Pending label="현재 운영안 vs 분산 운영안 · 3단계" height={240} />
-              </Card>
+              <TrendCard />
 
               <Card className="flex flex-1 flex-col gap-3.5 p-6 pt-5">
                 <CardHeader
@@ -132,22 +125,7 @@ export default function App() {
             </div>
 
             <div id="dispersal" className="flex scroll-mt-[84px] flex-col gap-5">
-              <Card className="flex flex-col gap-5 p-6 pt-5">
-                <CardHeader
-                  title="분산 운영 설정"
-                  description="조건을 바꾸면 운영안을 다시 계산합니다"
-                  actions={
-                    <span className="text-ink-2">
-                      <Icon name="sliders" size={20} />
-                    </span>
-                  }
-                />
-                <Pending label="슬라이더 · 경로 토글 · 결과 요약 · 3단계" height={420} />
-                <Button variant="primary" icon="refresh" block disabled>
-                  분산 운영안 다시 계산
-                </Button>
-                <Pending label="방면별 안내 비중 · 3단계" height={240} />
-              </Card>
+              <SettingsCard />
 
               <Card className="flex flex-1 flex-col gap-4 p-6 pt-5">
                 <CardHeader
@@ -167,18 +145,7 @@ export default function App() {
           {/* 분석 결과 */}
           <div id="results" className="flex scroll-mt-[84px] flex-col gap-5">
             <div className="grid grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-5">
-              <Card className="flex flex-col gap-4 p-6 pt-5">
-                <CardHeader
-                  title="운영안 비교"
-                  description="같은 관객 수와 통로 조건에서 계산한 결과"
-                  actions={
-                    <Button icon="copy" disabled>
-                      안내표 복사
-                    </Button>
-                  }
-                />
-                <Pending label="비교 표 · 3단계" height={320} />
-              </Card>
+              <ComparisonCard />
               <Card className="flex flex-col gap-4 p-6 pt-5">
                 <CardHeader
                   title="현장 안내 실행표"
@@ -219,6 +186,14 @@ export default function App() {
                   {s}
                 </span>
               ))}
+              <a
+                href="https://www.openstreetmap.org/copyright"
+                target="_blank"
+                rel="noreferrer"
+                className="underline decoration-line-strong hover:text-ink"
+              >
+                보행로 © OpenStreetMap contributors (ODbL)
+              </a>
             </p>
           </footer>
         </main>

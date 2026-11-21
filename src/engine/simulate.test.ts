@@ -27,6 +27,12 @@ describe('가상 사례 1: 10분간 분당 400명, 각 병목 분당 200명', ()
     expect(Math.max(...r.edges['e-jb']!.queue)).toBe(0);
   });
 
+  it('전체 대기 최댓값(모든 병목 합)과 그 시각을 낸다', () => {
+    const r = simulate(caseOne());
+    expect(r.totals.peakQueueTotal).toBeCloseTo(1000, 6);
+    expect(r.totals.peakQueueTotalMinute).toBe(10);
+  });
+
   it('현재 운영안의 대기시간 합계는 7,500사람·분, 종료 후 15분에 해소된다', () => {
     const r = simulate(caseOne());
     expect(r.totals.queueMinutesTotal).toBeCloseTo(7500, 6);
@@ -125,6 +131,8 @@ describe('줄 번짐', () => {
     });
     expect(Math.max(...r.edges['e-ja']!.queue)).toBeLessThanOrEqual(50 + 1e-6);
     expect(Math.max(...r.edges['e-xj']!.queue)).toBeGreaterThan(0);
+    // 한 지점 최대는 공간 한계에 막히지만, 전체 대기는 넘친 줄까지 센다
+    expect(r.totals.peakQueueTotal).toBeGreaterThan(r.totals.maxQueue);
     // 하류 통과량은 용량을 유지한다
     expect(Math.max(...r.edges['e-ja']!.passed)).toBeCloseTo(100, 6);
     // 결국 모두 도착한다

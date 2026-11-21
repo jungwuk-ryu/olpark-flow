@@ -1,0 +1,8 @@
+[out:json][timeout:60];
+(
+  way["highway"~"^(footway|path|pedestrian|steps|living_street|service|residential|cycleway|track)$"](37.508,127.108,37.527,127.137);
+  node["railway"="subway_entrance"](37.508,127.108,37.527,127.137);
+  way["name"~"KSPO|체조경기장|올림픽홀|핸드볼|우리금융"](37.508,127.108,37.527,127.137);
+  node["entrance"](37.512,127.118,37.524,127.134);
+);
+out body geom;

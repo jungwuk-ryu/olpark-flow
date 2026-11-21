@@ -1,16 +1,86 @@
 {
   "schemaVersion": 1,
   "lots": [
-    { "id": "P1", "name": "1주차장", "capacity": 562, "exitIds": ["gate-north-2", "gate-east-2"], "source": "관측" },
-    { "id": "P2", "name": "2주차장 (올림픽홀 지하 포함)", "capacity": 320, "exitIds": ["gate-north-2"], "source": "관측" },
-    { "id": "P4", "name": "4주차장", "capacity": 117, "exitIds": ["gate-east-2"], "source": "관측" },
-    { "id": "P5", "name": "5주차장", "capacity": 176, "exitIds": ["gate-east-2", "gate-south-2"], "source": "관측" },
-    { "id": "P6", "name": "6주차장", "capacity": 167, "exitIds": ["gate-south-2"], "source": "관측" },
-    { "id": "P7", "name": "7주차장", "capacity": 137, "exitIds": ["gate-south-2"], "source": "관측" }
+    {
+      "id": "P1",
+      "name": "1주차장",
+      "capacity": 562,
+      "exitIds": [
+        "gate-north-2",
+        "gate-east-2"
+      ],
+      "source": "관측"
+    },
+    {
+      "id": "P2",
+      "name": "2주차장 (올림픽홀 지하 포함)",
+      "capacity": 320,
+      "exitIds": [
+        "gate-north-2"
+      ],
+      "source": "관측"
+    },
+    {
+      "id": "P4",
+      "name": "4주차장",
+      "capacity": 117,
+      "exitIds": [
+        "gate-east-2"
+      ],
+      "source": "관측"
+    },
+    {
+      "id": "P5",
+      "name": "5주차장",
+      "capacity": 176,
+      "exitIds": [
+        "gate-east-2",
+        "gate-south-2"
+      ],
+      "source": "관측"
+    },
+    {
+      "id": "P6",
+      "name": "6주차장",
+      "capacity": 167,
+      "exitIds": [
+        "gate-south-2"
+      ],
+      "source": "관측"
+    },
+    {
+      "id": "P7",
+      "name": "7주차장",
+      "capacity": 137,
+      "exitIds": [
+        "gate-south-2"
+      ],
+      "source": "관측"
+    }
   ],
   "exits": [
-    { "id": "gate-north-2", "name": "북2문", "throughputPerMin": 10, "crossingNodeIds": [], "source": "가정" },
-    { "id": "gate-east-2", "name": "동2문", "throughputPerMin": 12, "crossingNodeIds": ["n-crossing-east"], "source": "가정" },
-    { "id": "gate-south-2", "name": "남2문", "throughputPerMin": 8, "crossingNodeIds": [], "source": "가정" }
+    {
+      "id": "gate-north-2",
+      "name": "북2문",
+      "throughputPerMin": 10,
+      "crossingNodeIds": [],
+      "source": "가정"
+    },
+    {
+      "id": "gate-east-2",
+      "name": "동2문",
+      "throughputPerMin": 12,
+      "crossingNodeIds": [
+        "n-crossing-a"
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "gate-south-2",
+      "name": "남2문",
+      "throughputPerMin": 8,
+      "crossingNodeIds": [],
+      "source": "가정"
+    }
   ]
 }

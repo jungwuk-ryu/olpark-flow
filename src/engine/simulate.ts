@@ -326,6 +326,14 @@ export function simulate(input: SimulationInput): SimulationResult {
     });
   }
   const queueMinutesTotal = queueTotal.reduce((x, y) => x + y, 0);
+  let peakQueueTotal = 0;
+  let peakIndex = -1;
+  queueTotal.forEach((q, t) => {
+    if (q > peakQueueTotal + 1e-9) {
+      peakQueueTotal = q;
+      peakIndex = t;
+    }
+  });
 
   let detourMinutesTotal = 0;
   const directionPeople: Record<Direction, number> = { A: 0, B: 0, C: 0 };
@@ -364,6 +372,8 @@ export function simulate(input: SimulationInput): SimulationResult {
       maxQueue,
       maxQueueEdgeId,
       maxQueueMinute: maxQueueIndex + 1,
+      peakQueueTotal,
+      peakQueueTotalMinute: peakIndex + 1,
       queueMinutesTotal,
       detourMinutesTotal,
       vehicleQueuePersonMinutes,

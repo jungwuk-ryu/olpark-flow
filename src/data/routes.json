@@ -7,8 +7,35 @@
       "line": "5·9호선",
       "destinationNodeId": "n-dest-a",
       "paths": [
-        { "exitNodeId": "n-kspo-exit-east", "edgeIds": ["e-east-center", "e-center-amerge", "e-amerge-crossing", "e-crossing-dest-a"] },
-        { "exitNodeId": "n-kspo-exit-south", "edgeIds": ["e-south-center", "e-center-amerge", "e-amerge-crossing", "e-crossing-dest-a"] }
+        {
+          "exitNodeId": "n-kspo-exit-south",
+          "edgeIds": [
+            "e-01",
+            "e-02",
+            "e-03",
+            "e-station-a"
+          ]
+        },
+        {
+          "exitNodeId": "n-kspo-exit-east",
+          "edgeIds": [
+            "e-15",
+            "e-01",
+            "e-02",
+            "e-03",
+            "e-station-a"
+          ]
+        },
+        {
+          "exitNodeId": "n-kspo-exit-west",
+          "edgeIds": [
+            "e-16",
+            "e-17",
+            "e-05",
+            "e-18",
+            "e-station-a"
+          ]
+        }
       ]
     },
     {
@@ -17,8 +44,53 @@
       "line": "9호선",
       "destinationNodeId": "n-dest-b",
       "paths": [
-        { "exitNodeId": "n-kspo-exit-east", "edgeIds": ["e-east-center", "e-center-bbridge", "e-bbridge-dest-b"] },
-        { "exitNodeId": "n-kspo-exit-south", "edgeIds": ["e-south-center", "e-center-bbridge", "e-bbridge-dest-b"] }
+        {
+          "exitNodeId": "n-kspo-exit-south",
+          "edgeIds": [
+            "e-01",
+            "e-04",
+            "e-05",
+            "e-06",
+            "e-07",
+            "e-08",
+            "e-09",
+            "e-10",
+            "e-11",
+            "e-12",
+            "e-station-b"
+          ]
+        },
+        {
+          "exitNodeId": "n-kspo-exit-east",
+          "edgeIds": [
+            "e-15",
+            "e-01",
+            "e-04",
+            "e-05",
+            "e-06",
+            "e-07",
+            "e-08",
+            "e-09",
+            "e-10",
+            "e-11",
+            "e-12",
+            "e-station-b"
+          ]
+        },
+        {
+          "exitNodeId": "n-kspo-exit-west",
+          "edgeIds": [
+            "e-16",
+            "e-19",
+            "e-07",
+            "e-08",
+            "e-09",
+            "e-10",
+            "e-11",
+            "e-12",
+            "e-station-b"
+          ]
+        }
       ]
     },
     {
@@ -27,8 +99,56 @@
       "line": "8호선",
       "destinationNodeId": "n-dest-c",
       "paths": [
-        { "exitNodeId": "n-kspo-exit-east", "edgeIds": ["e-east-center", "e-center-cmoat", "e-c-moat"] },
-        { "exitNodeId": "n-kspo-exit-south", "edgeIds": ["e-south-center", "e-center-cmoat", "e-c-moat"] }
+        {
+          "exitNodeId": "n-kspo-exit-south",
+          "edgeIds": [
+            "e-01",
+            "e-04",
+            "e-05",
+            "e-06",
+            "e-07",
+            "e-08",
+            "e-09",
+            "e-10",
+            "e-11",
+            "e-13",
+            "e-14",
+            "e-station-c"
+          ]
+        },
+        {
+          "exitNodeId": "n-kspo-exit-east",
+          "edgeIds": [
+            "e-15",
+            "e-01",
+            "e-04",
+            "e-05",
+            "e-06",
+            "e-07",
+            "e-08",
+            "e-09",
+            "e-10",
+            "e-11",
+            "e-13",
+            "e-14",
+            "e-station-c"
+          ]
+        },
+        {
+          "exitNodeId": "n-kspo-exit-west",
+          "edgeIds": [
+            "e-16",
+            "e-19",
+            "e-07",
+            "e-08",
+            "e-09",
+            "e-10",
+            "e-11",
+            "e-13",
+            "e-14",
+            "e-station-c"
+          ]
+        }
       ]
     }
   ]
