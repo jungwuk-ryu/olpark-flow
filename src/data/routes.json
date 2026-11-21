@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "routes": [
+    {
+      "direction": "A",
+      "name": "올림픽공원역 3번 출구",
+      "line": "5·9호선",
+      "destinationNodeId": "n-dest-a",
+      "paths": [
+        { "exitNodeId": "n-kspo-exit-east", "edgeIds": ["e-east-center", "e-center-amerge", "e-amerge-crossing", "e-crossing-dest-a"] },
+        { "exitNodeId": "n-kspo-exit-south", "edgeIds": ["e-south-center", "e-center-amerge", "e-amerge-crossing", "e-crossing-dest-a"] }
+      ]
+    },
+    {
+      "direction": "B",
+      "name": "한성백제역 2번 출구",
+      "line": "9호선",
+      "destinationNodeId": "n-dest-b",
+      "paths": [
+        { "exitNodeId": "n-kspo-exit-east", "edgeIds": ["e-east-center", "e-center-bbridge", "e-bbridge-dest-b"] },
+        { "exitNodeId": "n-kspo-exit-south", "edgeIds": ["e-south-center", "e-center-bbridge", "e-bbridge-dest-b"] }
+      ]
+    },
+    {
+      "direction": "C",
+      "name": "몽촌토성역 1번 출구",
+      "line": "8호선",
+      "destinationNodeId": "n-dest-c",
+      "paths": [
+        { "exitNodeId": "n-kspo-exit-east", "edgeIds": ["e-east-center", "e-center-cmoat", "e-c-moat"] },
+        { "exitNodeId": "n-kspo-exit-south", "edgeIds": ["e-south-center", "e-center-cmoat", "e-c-moat"] }
+      ]
+    }
+  ]
+}

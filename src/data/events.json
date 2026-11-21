@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "events": [
+    { "id": "kspo-20261121-a", "name": "공연 A", "venueId": "kspo-dome", "venueName": "KSPO DOME", "startAt": "2026-11-21T19:00:00+09:00", "endAt": "2026-11-21T21:40:00+09:00", "seatCapacity": 9500 },
+    { "id": "olympichall-20261122-b", "name": "공연 B", "venueId": "olympic-hall", "venueName": "올림픽홀", "startAt": "2026-11-22T18:00:00+09:00", "endAt": "2026-11-22T20:10:00+09:00", "seatCapacity": 2400 },
+    { "id": "ticketlink-20261128-c", "name": "공연 C", "venueId": "ticketlink-live-arena", "venueName": "티켓링크 라이브 아레나", "startAt": "2026-11-28T19:30:00+09:00", "endAt": "2026-11-28T22:00:00+09:00", "seatCapacity": 2800 },
+    { "id": "woori-20261129-d", "name": "공연 D", "venueId": "woori-art-hall", "venueName": "우리금융아트홀", "startAt": "2026-11-29T17:00:00+09:00", "endAt": "2026-11-29T19:20:00+09:00", "seatCapacity": 1200 }
+  ]
+}

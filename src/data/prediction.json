@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-21T12:00:00+09:00",
+  "model": { "name": "mock", "version": "0.0.0-시연용" },
+  "predictions": [
+    {
+      "eventId": "kspo-20261121-a",
+      "genre": {
+        "value": "아이돌",
+        "confidence": "높음",
+        "sources": [
+          { "title": "공연 A 서울 공연 안내 (시연용)", "url": "https://example.com/notice/1121", "quote": "KSPO DOME에서 이틀간 개최되며 팬클럽 선예매를 진행합니다." },
+          { "title": "올림픽공원 11월 공연 일정 (시연용)", "url": "https://example.com/olympicpark/schedule/2026-11", "quote": "11월 21일 KSPO DOME 공연 A (K-POP)" }
+        ]
+      },
+      "attendance": { "value": 7860, "low": 6900, "high": 8700, "interval": "p10-p90" },
+      "egressCurve": { "totalMinutes": 22, "totalMinutesLow": 20, "totalMinutesHigh": 24, "peakMinute": 6 },
+      "directionShare": { "A": 0.72, "B": 0.19, "C": 0.09 },
+      "vehicle": { "ratio": 0.18, "low": 0.14, "high": 0.22 },
+      "similarEvents": [
+        { "name": "공연 E", "date": "2026-10-18", "genre": "아이돌", "attendance": 8120, "vehicleRatio": 0.17 },
+        { "name": "공연 F", "date": "2026-09-06", "genre": "아이돌", "attendance": 7640, "vehicleRatio": 0.19 },
+        { "name": "공연 G", "date": "2026-05-24", "genre": "아이돌", "attendance": 8410, "vehicleRatio": 0.16 },
+        { "name": "공연 H", "date": "2025-12-13", "genre": "아이돌", "attendance": 7280, "vehicleRatio": 0.21 },
+        { "name": "공연 I", "date": "2025-11-22", "genre": "아이돌", "attendance": 7950, "vehicleRatio": 0.18 }
+      ]
+    },
+    {
+      "eventId": "olympichall-20261122-b",
+      "genre": {
+        "value": "발라드/솔로",
+        "confidence": "보통",
+        "sources": [{ "title": "공연 B 안내 (시연용)", "url": "https://example.com/notice/1122", "quote": "단독 콘서트로 진행됩니다." }]
+      },
+      "attendance": { "value": 2150, "low": 1900, "high": 2350, "interval": "p10-p90" },
+      "egressCurve": { "totalMinutes": 16, "totalMinutesLow": 14, "totalMinutesHigh": 19, "peakMinute": 4 },
+      "directionShare": { "A": 0.68, "B": 0.2, "C": 0.12 },
+      "vehicle": { "ratio": 0.24, "low": 0.19, "high": 0.29 },
+      "similarEvents": [
+        { "name": "공연 J", "date": "2026-08-30", "genre": "발라드/솔로", "attendance": 2210, "vehicleRatio": 0.25 },
+        { "name": "공연 K", "date": "2026-06-14", "genre": "발라드/솔로", "attendance": 2080, "vehicleRatio": 0.23 },
+        { "name": "공연 L", "date": "2026-03-21", "genre": "발라드/솔로", "attendance": 2300, "vehicleRatio": 0.22 },
+        { "name": "공연 M", "date": "2025-12-27", "genre": "발라드/솔로", "attendance": 1960, "vehicleRatio": 0.27 },
+        { "name": "공연 N", "date": "2025-10-11", "genre": "발라드/솔로", "attendance": 2140, "vehicleRatio": 0.24 }
+      ]
+    },
+    {
+      "eventId": "ticketlink-20261128-c",
+      "genre": {
+        "value": "밴드/록",
+        "confidence": "높음",
+        "sources": [{ "title": "공연 C 안내 (시연용)", "url": "https://example.com/notice/1128", "quote": "스탠딩석과 지정석으로 운영됩니다." }]
+      },
+      "attendance": { "value": 2650, "low": 2350, "high": 2800, "interval": "p10-p90" },
+      "egressCurve": { "totalMinutes": 18, "totalMinutesLow": 15, "totalMinutesHigh": 21, "peakMinute": 5 },
+      "directionShare": { "A": 0.7, "B": 0.18, "C": 0.12 },
+      "vehicle": { "ratio": 0.12, "low": 0.09, "high": 0.16 },
+      "similarEvents": [
+        { "name": "공연 O", "date": "2026-09-19", "genre": "밴드/록", "attendance": 2700, "vehicleRatio": 0.11 },
+        { "name": "공연 P", "date": "2026-07-04", "genre": "밴드/록", "attendance": 2520, "vehicleRatio": 0.13 },
+        { "name": "공연 Q", "date": "2026-04-11", "genre": "밴드/록", "attendance": 2780, "vehicleRatio": 0.1 },
+        { "name": "공연 R", "date": "2026-01-24", "genre": "밴드/록", "attendance": 2410, "vehicleRatio": 0.14 },
+        { "name": "공연 S", "date": "2025-11-08", "genre": "밴드/록", "attendance": 2600, "vehicleRatio": 0.12 }
+      ]
+    },
+    {
+      "eventId": "woori-20261129-d",
+      "genre": {
+        "value": "클래식/뮤지컬",
+        "confidence": "낮음",
+        "sources": [{ "title": "공연 D 안내 (시연용)", "url": "https://example.com/notice/1129", "quote": "오케스트라 협연 무대가 포함됩니다." }]
+      },
+      "attendance": { "value": 1080, "low": 900, "high": 1180, "interval": "p10-p90" },
+      "egressCurve": { "totalMinutes": 14, "totalMinutesLow": 12, "totalMinutesHigh": 17, "peakMinute": 4 },
+      "directionShare": { "A": 0.62, "B": 0.22, "C": 0.16 },
+      "vehicle": { "ratio": 0.31, "low": 0.25, "high": 0.37 },
+      "similarEvents": [
+        { "name": "공연 T", "date": "2026-10-03", "genre": "클래식/뮤지컬", "attendance": 1120, "vehicleRatio": 0.3 },
+        { "name": "공연 U", "date": "2026-08-15", "genre": "클래식/뮤지컬", "attendance": 1010, "vehicleRatio": 0.33 },
+        { "name": "공연 V", "date": "2026-05-09", "genre": "클래식/뮤지컬", "attendance": 1150, "vehicleRatio": 0.29 },
+        { "name": "공연 W", "date": "2026-02-21", "genre": "클래식/뮤지컬", "attendance": 960, "vehicleRatio": 0.34 },
+        { "name": "공연 X", "date": "2025-12-06", "genre": "클래식/뮤지컬", "attendance": 1090, "vehicleRatio": 0.31 }
+      ]
+    }
+  ]
+}

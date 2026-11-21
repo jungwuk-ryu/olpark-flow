@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "notices": [
+    {
+      "id": "notice-20261115-1",
+      "segmentName": "평화의문 ↔ 몽촌해자 보행로",
+      "edgeIds": ["e-c-moat"],
+      "startAt": "2026-11-18T00:00:00+09:00",
+      "endAt": "2026-11-24T23:59:00+09:00",
+      "effect": "closed",
+      "widthM": null,
+      "content": "조형물 설치로 보행로 전면 통제",
+      "evidence": {
+        "quote": "평화의문 광장 일대 조형물 설치 공사로 해당 기간 보행로 이용이 제한됩니다. (시연용 공지)",
+        "url": "https://example.com/olympicpark/notice/1115",
+        "publishedAt": "2026-11-15"
+      },
+      "confidence": "높음"
+    },
+    {
+      "id": "notice-20261119-2",
+      "segmentName": "KSPO DOME 남측 광장 일부",
+      "edgeIds": ["e-south-center"],
+      "startAt": "2026-11-21T18:00:00+09:00",
+      "endAt": "2026-11-21T23:00:00+09:00",
+      "effect": "narrowed",
+      "widthM": 4,
+      "content": "푸드트럭 부스 설치로 유효 폭 8m → 4m",
+      "evidence": {
+        "quote": "공연 당일 남측 광장에 부스가 운영되어 통행 공간이 줄어듭니다. (시연용 공지)",
+        "url": "https://example.com/olympicpark/notice/1119",
+        "publishedAt": "2026-11-19"
+      },
+      "confidence": "보통"
+    }
+  ]
+}
