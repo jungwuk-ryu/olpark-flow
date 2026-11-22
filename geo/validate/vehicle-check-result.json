@@ -1,0 +1,133 @@
+{
+  "source": "관측",
+  "input_rows": 2411225,
+  "invalid_exit_times": 0,
+  "event_days_in_calendar": 105,
+  "event_days_with_records": 100,
+  "compared_days": 28,
+  "excluded": {
+    "비교일 3일 미만": 66,
+    "출구 출차 50대 미만 또는 증가 없음": 18,
+    "출차 기록 없는 공연일": 5
+  },
+  "time_origin": "16:00부터의 분. 실제 공연 종료 후 경과 시간이 아님",
+  "baseline": "±60일·같은 요일 종류·공연 없는 날 3일 이상, 10분 구간 중앙값",
+  "summary": {
+    "gate-north-2": {
+      "days": 28,
+      "vehicles_excess": 632.0,
+      "q10_from16": 53.0,
+      "q50_from16": 276.5,
+      "q90_from16": 414.5,
+      "span10to90": 332.5,
+      "busiest60_share": 0.4766463189049205,
+      "positive_bin_minutes": 350.0,
+      "last_hour_share": 0.07471264367816091
+    },
+    "gate-east-2": {
+      "days": 28,
+      "vehicles_excess": 688.5,
+      "q10_from16": 41.5,
+      "q50_from16": 257.0,
+      "q90_from16": 423.0,
+      "span10to90": 367.0,
+      "busiest60_share": 0.36264571230715986,
+      "positive_bin_minutes": 380.0,
+      "last_hour_share": 0.10878334067000262
+    },
+    "gate-south-2": {
+      "days": 28,
+      "vehicles_excess": 438.25,
+      "q10_from16": 35.0,
+      "q50_from16": 262.0,
+      "q90_from16": 404.0,
+      "span10to90": 346.5,
+      "busiest60_share": 0.45504141518496344,
+      "positive_bin_minutes": 330.0,
+      "last_hour_share": 0.03103890053575588
+    }
+  },
+  "engine_comparison": [
+    {
+      "egress_minutes": 22,
+      "exit_id": "gate-north-2",
+      "q50_after_assumed_end": 18,
+      "q90_after_assumed_end": 27,
+      "clear_minute": 30,
+      "span10to90": 19,
+      "observed_span_median": 332.5
+    },
+    {
+      "egress_minutes": 22,
+      "exit_id": "gate-east-2",
+      "q50_after_assumed_end": 29,
+      "q90_after_assumed_end": 49,
+      "clear_minute": 55,
+      "span10to90": 39,
+      "observed_span_median": 367.0
+    },
+    {
+      "egress_minutes": 22,
+      "exit_id": "gate-south-2",
+      "q50_after_assumed_end": 13,
+      "q90_after_assumed_end": 23,
+      "clear_minute": 13,
+      "span10to90": 15,
+      "observed_span_median": 346.5
+    },
+    {
+      "egress_minutes": 60,
+      "exit_id": "gate-north-2",
+      "q50_after_assumed_end": 27,
+      "q90_after_assumed_end": 54,
+      "clear_minute": 0,
+      "span10to90": 42,
+      "observed_span_median": 332.5
+    },
+    {
+      "egress_minutes": 60,
+      "exit_id": "gate-east-2",
+      "q50_after_assumed_end": 32,
+      "q90_after_assumed_end": 54,
+      "clear_minute": 52,
+      "span10to90": 41,
+      "observed_span_median": 367.0
+    },
+    {
+      "egress_minutes": 60,
+      "exit_id": "gate-south-2",
+      "q50_after_assumed_end": 27,
+      "q90_after_assumed_end": 54,
+      "clear_minute": 0,
+      "span10to90": 42,
+      "observed_span_median": 346.5
+    },
+    {
+      "egress_minutes": 80,
+      "exit_id": "gate-north-2",
+      "q50_after_assumed_end": 35,
+      "q90_after_assumed_end": 71,
+      "clear_minute": 0,
+      "span10to90": 56,
+      "observed_span_median": 332.5
+    },
+    {
+      "egress_minutes": 80,
+      "exit_id": "gate-east-2",
+      "q50_after_assumed_end": 35,
+      "q90_after_assumed_end": 71,
+      "clear_minute": 39,
+      "span10to90": 56,
+      "observed_span_median": 367.0
+    },
+    {
+      "egress_minutes": 80,
+      "exit_id": "gate-south-2",
+      "q50_after_assumed_end": 35,
+      "q90_after_assumed_end": 71,
+      "clear_minute": 0,
+      "span10to90": 56,
+      "observed_span_median": 346.5
+    }
+  ]
+}
