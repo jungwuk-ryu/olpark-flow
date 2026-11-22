@@ -1,0 +1,76 @@
+{
+  "checkedAt": "2026-11-23",
+  "files": [
+    {
+      "file": "osm-map.xml",
+      "url": "https://api.openstreetmap.org/api/0.6/map?bbox=127.109,37.509,127.141,37.533",
+      "sha256": "084a716e76d79f5ecc49bd09731e91bd58542e6777eb04f479d89e82a9070881",
+      "bytes": 7400492,
+      "note": "OSM 경계·길 원본. 편집자 개인정보는 결과에 포함하지 않음."
+    },
+    {
+      "file": "station-report-202409.pdf",
+      "url": "https://mas.smc.seoul.kr/record/appendixDownload.do?key=0957113b351d5ae21f33d83fee8a17b6f205e18b24d424a0a8023da2d788a7f11032ec074f8e1f7b",
+      "sha256": "857d344bd30b82982c4712bd758b49d5f6cfa503606de3bc3af755c0e577e8be",
+      "bytes": 473406,
+      "note": "2024.9 9호선운영부문 보고. PDF 7쪽/인쇄79쪽 렌더 확인. 높이 치수는 폭이 아님."
+    },
+    {
+      "file": "park-guide.pdf",
+      "url": "https://www.ksponco.or.kr/olympicpark/map/img/olpark/%EC%98%AC%EB%A6%BC%ED%94%BD%EA%B3%B5%EC%9B%90_%EC%A2%85%ED%95%A9%EC%95%88%EB%82%B4%EB%8F%84.pdf",
+      "sha256": "3895d36695c89db8f142916733396ee4050f0633881252d879af5878162673ea",
+      "bytes": 8335268,
+      "note": "공원 전체 시설·주요 길 배치 대조. 축척 없는 안내도이므로 폭 측정에 미사용."
+    },
+    {
+      "file": "popimg_acro_1f.pdf",
+      "url": "https://ksponco.or.kr/attachFiles/download/kspo/popimg_acro_1f.pdf",
+      "sha256": "2454ab4489b095844b727c3920f4cfda720651e6a6c6e22eaad959a04c8d6538",
+      "bytes": 1788919,
+      "note": "1쪽 렌더 확인. 2018년 생성 PDF. 출입문 배치·방 면적 확인. 현재 개방 상태 미확인."
+    },
+    {
+      "file": "popimg_acro_2f.pdf",
+      "url": "https://ksponco.or.kr/attachFiles/download/kspo/popimg_acro_2f.pdf",
+      "sha256": "30b906fc6a9478a7773a2d2c2ae45357b17e74228522713b4db029031f3f4b16",
+      "bytes": 4093413,
+      "note": "1쪽 렌더 확인. 2-1/2-2/2-3문 배치 확인. 방풍실 아래 2,350 등은 출입문 폭으로 사용하지 않음."
+    },
+    {
+      "imageryMode": "core",
+      "tiles": 180,
+      "failed": [],
+      "pixelM": 0.2368208508233111,
+      "fieldM": 32.0,
+      "sources": [
+        "vworld",
+        "esri"
+      ],
+      "sampleIndexSha256": "2518e6ff00813b6cfd37fc2c554f4b71c90f56f2b63f78cc6179476457b0ad60",
+      "imageDate": null
+    },
+    {
+      "imageryMode": "park",
+      "tiles": 820,
+      "failed": [],
+      "pixelM": 0.2368208508233111,
+      "fieldM": 32.0,
+      "sources": [
+        "vworld",
+        "esri"
+      ],
+      "sampleIndexSha256": "e1b2f9652486ba976a5e9136751de3eb4b2590db5dbab109c215e4fbbf6b2cda",
+      "imageDate": null
+    }
+  ],
+  "streetview": {
+    "url": "https://map.kakao.com/?panoid=1212537572&pan=300&zoom=0&map_attribute=ROADVIEW",
+    "location": "올림픽공원역 3번 출입구 주변",
+    "displayedImageMonth": "2026-07",
+    "finding": "출입구 캐노피·가로수·펜스·자전거 확인. 내부 계단 폭과 영상 축척을 확인할 수 없어 수치 측정에 미사용."
+  },
+  "unavailable": [
+    "Overpass 3개 서버 요청은 시간 초과/502로 실패. 공식 OSM map API로 대체.",
+    "공식 대관 페이지의 3층 PDF·SKP·DAE 링크는 오류 페이지 반환."
+  ]
+}
