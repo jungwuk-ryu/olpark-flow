@@ -58,7 +58,7 @@ def build():
     (HERE/'survey.geojson').write_text(json.dumps({'type':'FeatureCollection','license':inv['license'],'features':features},ensure_ascii=False,separators=(',',':'))+'\n')
     with (HERE/'survey.csv').open('w',newline='',encoding='utf-8-sig') as f:
         fields=['index','id','highway','lengthM','status','width20','width50','width80','osmWidthTag','confidence','note','kakaoUrl','naverUrl','roadviewUrl','osmUrl']
-        w=csv.DictWriter(f,fieldnames=fields);w.writeheader()
+        w=csv.DictWriter(f,fieldnames=fields,lineterminator="\n");w.writeheader()
         for r in rows:w.writerow(dict(zip(fields,[r['surveyIndex'],r['id'],r['tags']['highway'],r['lengthM'],r['widthStatus'],*[width_text(s['pavingWidthRangeM']) for s in r['samples']],r['osmWidthTagM'],'하',r['notes'],r['kakaoUrl'],r['naverUrl'],r['roadviewUrl'],r['osmUrl']])))
     write_map(inv,rows,stats)
     (HERE/'summary.json').write_text(json.dumps(stats,ensure_ascii=False,indent=2)+'\n')
