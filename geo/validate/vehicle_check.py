@@ -1,5 +1,6 @@
 """2025년 공연일 차량 출차 시간 폭을 평소와 비교한다 (표준 라이브러리만 사용).
 
+별도 결과 폴더 지정: --output-dir <폴더> (기본은 이 스크립트 폴더).
 실제 종료 시각 자료가 없어 '공연 종료 후 50%·90%'는 계산할 수 없다.
 대신 16~24시 출차 증가분의 10~90% 시간 폭과 시계 시각을 구한다.
 평소: ±60일·같은 요일 종류·공연 없는 날 3일 이상, 10분 구간별 중앙값.
@@ -61,7 +62,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('csv', type=Path)
     parser.add_argument('--engine', type=Path, default=HERE / 'vehicle-engine-result.json')
+    parser.add_argument('--output-dir', type=Path, default=HERE)
     args = parser.parse_args()
+    args.output_dir.mkdir(parents=True, exist_ok=True)
     events, blocked = load_events()
     event_days = {d for days, _ in events for d in days if d.year == 2025}
     per_day = defaultdict(lambda: {gate: [0] * 48 for gate in GATES})
@@ -107,14 +110,14 @@ def main():
                            'observed': value, 'baseline': base, 'excess': ex}
                           for i, (value, base, ex) in enumerate(zip(observed, background, excess)))
     summary = summarize(rows)
-    output = HERE / 'vehicle-observed-days.csv'
+    output = args.output_dir / 'vehicle-observed-days.csv'
     if not rows:
         raise ValueError('비교 가능한 공연일 없음')
     with output.open('w', encoding='utf-8-sig', newline='') as stream:
         writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
         writer.writeheader()
         writer.writerows(rows)
-    with (HERE / 'vehicle-observed-curves.csv.gz').open('wb') as raw:
+    with (args.output_dir / 'vehicle-observed-curves.csv.gz').open('wb') as raw:
         import io
         with gzip.GzipFile(filename='', fileobj=raw, mode='wb', mtime=0) as compressed:
             with io.TextIOWrapper(compressed, encoding='utf-8-sig', newline='') as stream:
@@ -139,7 +142,7 @@ def main():
              'observed_span_median': summary[s['exitId']]['span10to90']}
             for scenario in engine['scenarios'] for s in scenario['exits']
         ]
-    (HERE / 'vehicle-check-result.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n')
+    (args.output_dir / 'vehicle-check-result.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n')
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
 
