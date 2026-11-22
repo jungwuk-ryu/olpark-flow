@@ -1,6 +1,6 @@
 """2025 올림픽공원 입출차정보(전체구역, 문화공공데이터광장 API_CPM_008)로 차량 출구 처리량과 공연일 출차량을 구한다.
 
-입력: fetch_inout_2025.py로 만든 CSV(.csv 또는 .csv.gz), 또는 API 응답 XML 파일들. 원본은 커밋하지 않는다.
+입력: geo/data/olympicpark_inout_2025_full.csv.gz (fetch_inout_2025.py로 만든 CSV), 또는 API 응답 XML 파일들.
 실행: python3 geo/validate/parking_2025.py <CSV 경로>   또는   python3 geo/validate/parking_2025.py '<XML 폴더>/*.xml'
 
 1) 출구별 처리량: KSPO DOME 공연일, 16~24시 출구(북2문·동2문·남2문, 차로 #1·#2)별 1분 출차 대수 →
