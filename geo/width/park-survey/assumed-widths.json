@@ -1,0 +1,836 @@
+{
+  "schemaVersion": 1,
+  "source": "가정",
+  "defaultsM": {
+    "footway": 3.0,
+    "path": 2.0,
+    "steps": 2.0,
+    "cycleway": 3.0,
+    "service": 6.0,
+    "living_street": 6.0,
+    "residential": 6.0,
+    "track": 3.0,
+    "pedestrian": 6.0
+  },
+  "note": "영상에서 폭을 확인하지 못한 선형 구간의 임시 포장 폭. 실제 측정값·보행 유효폭이 아니며 길의 존재·개방 상태를 보증하지 않음. 0.5~1.5배 범위는 민감도 검사용 임의 범위. 원본 조사와 엔진 입력은 유지.",
+  "count": 43,
+  "segments": [
+    {
+      "id": "osm-65370499-1",
+      "highway": "cycleway",
+      "lengthM": 15.7,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "OSM 폭 태그를 미검증 가정으로 차용",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "교량·수목 아래 자전거길. 중심선에서 양쪽 경계를 확인할 수 없음",
+      "osmUrl": "https://www.openstreetmap.org/way/65370499",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5242417,127.1171791"
+    },
+    {
+      "id": "osm-75542637-1",
+      "highway": "steps",
+      "lengthM": 17.7,
+      "assumedPavingWidthM": 2.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.0,
+        3.0
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "계단 표본이 수목에 가려 난간 사이 폭 판독 불가",
+      "osmUrl": "https://www.openstreetmap.org/way/75542637",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5170394,127.1189190"
+    },
+    {
+      "id": "osm-162460608-1",
+      "highway": "footway",
+      "lengthM": 298.8,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "몽촌토성 수목에 중심선 가림",
+      "osmUrl": "https://www.openstreetmap.org/way/162460608",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5223930,127.1220457"
+    },
+    {
+      "id": "osm-239950022-1",
+      "highway": "living_street",
+      "lengthM": 117.5,
+      "assumedPavingWidthM": 6.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        3.0,
+        9.0
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "수목 아래 도로. 양쪽 경계 미확인",
+      "osmUrl": "https://www.openstreetmap.org/way/239950022",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5233233,127.1172008"
+    },
+    {
+      "id": "osm-239950553-1",
+      "highway": "service",
+      "lengthM": 187.9,
+      "assumedPavingWidthM": 6.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        3.0,
+        9.0
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "모든 표본 수목 가림",
+      "osmUrl": "https://www.openstreetmap.org/way/239950553",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5146888,127.1232441"
+    },
+    {
+      "id": "osm-239951038-1",
+      "highway": "service",
+      "lengthM": 20.5,
+      "assumedPavingWidthM": 6.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        3.0,
+        9.0
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "표본에서 차도 횡단·중심선 방향 해석이 어려워 폭 판독 보류",
+      "osmUrl": "https://www.openstreetmap.org/way/239951038",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5204838,127.1283829"
+    },
+    {
+      "id": "osm-239951580-1",
+      "highway": "service",
+      "lengthM": 62.6,
+      "assumedPavingWidthM": 6.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        3.0,
+        9.0
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "수목 가림으로 연속 차로 경계 미확인",
+      "osmUrl": "https://www.openstreetmap.org/way/239951580",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5179198,127.1226887"
+    },
+    {
+      "id": "osm-473347753-1",
+      "highway": "path",
+      "lengthM": 189.8,
+      "assumedPavingWidthM": 2.0,
+      "source": "가정",
+      "method": "OSM 폭 태그를 미검증 가정으로 차용",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.0,
+        3.0
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "좁은 숲길 전부 수관에 가림",
+      "osmUrl": "https://www.openstreetmap.org/way/473347753",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5200391,127.1214902"
+    },
+    {
+      "id": "osm-473349864-1",
+      "highway": "path",
+      "lengthM": 131.9,
+      "assumedPavingWidthM": 1.0,
+      "source": "가정",
+      "method": "OSM 폭 태그를 미검증 가정으로 차용",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        0.5,
+        1.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "좁은 숲길 전부 수관에 가림",
+      "osmUrl": "https://www.openstreetmap.org/way/473349864",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5202708,127.1206814"
+    },
+    {
+      "id": "osm-473349865-1",
+      "highway": "path",
+      "lengthM": 283.9,
+      "assumedPavingWidthM": 2.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.0,
+        3.0
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "숲·토사 경계가 불명확해 폭 미판독",
+      "osmUrl": "https://www.openstreetmap.org/way/473349865",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5198508,127.1231307"
+    },
+    {
+      "id": "osm-474020311-1",
+      "highway": "footway",
+      "lengthM": 242.8,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "건물·수목·시설물 경계가 겹쳐 유효 통로 판독 보류",
+      "osmUrl": "https://www.openstreetmap.org/way/474020311",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5168685,127.1295001"
+    },
+    {
+      "id": "osm-474085524-1",
+      "highway": "footway",
+      "lengthM": 40.0,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "초지의 OSM 선 주변에 연속된 길 경계가 안 보임",
+      "osmUrl": "https://www.openstreetmap.org/way/474085524",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5165635,127.1193818"
+    },
+    {
+      "id": "osm-474085527-1",
+      "highway": "footway",
+      "lengthM": 46.8,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "조형물·수목 주변 비정형 공간. 폭 단일값 부적합",
+      "osmUrl": "https://www.openstreetmap.org/way/474085527",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5168398,127.1208054"
+    },
+    {
+      "id": "osm-474085528-1",
+      "highway": "footway",
+      "lengthM": 6.6,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "조형물·수목 주변 비정형 공간. 폭 단일값 부적합",
+      "osmUrl": "https://www.openstreetmap.org/way/474085528",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5167403,127.1207956"
+    },
+    {
+      "id": "osm-474085529-1",
+      "highway": "footway",
+      "lengthM": 30.4,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "수목·조형물 주변 경계 미확인",
+      "osmUrl": "https://www.openstreetmap.org/way/474085529",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5169388,127.1210757"
+    },
+    {
+      "id": "osm-474085530-1",
+      "highway": "path",
+      "lengthM": 454.4,
+      "assumedPavingWidthM": 2.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.0,
+        3.0
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "숲길 수관 가림",
+      "osmUrl": "https://www.openstreetmap.org/way/474085530",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5174362,127.1222905"
+    },
+    {
+      "id": "osm-474101586-1",
+      "highway": "path",
+      "lengthM": 41.5,
+      "assumedPavingWidthM": 2.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.0,
+        3.0
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "잔디에 길 경계 불명. 폭 미판독",
+      "osmUrl": "https://www.openstreetmap.org/way/474101586",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5216247,127.1205163"
+    },
+    {
+      "id": "osm-474149108-1",
+      "highway": "footway",
+      "lengthM": 7.6,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "비정형 조경·시설 사이에 단일 통로 경계 미확인",
+      "osmUrl": "https://www.openstreetmap.org/way/474149108",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5164046,127.1183390"
+    },
+    {
+      "id": "osm-474149109-1",
+      "highway": "footway",
+      "lengthM": 50.8,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "수관에 가려 통로 경계 미확인",
+      "osmUrl": "https://www.openstreetmap.org/way/474149109",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5163356,127.1189881"
+    },
+    {
+      "id": "osm-532940799-1",
+      "highway": "footway",
+      "lengthM": 382.4,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "수목 가림으로 통로 양쪽 경계 미확인",
+      "osmUrl": "https://www.openstreetmap.org/way/532940799",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5229396,127.1172713"
+    },
+    {
+      "id": "osm-544144052-1",
+      "highway": "cycleway",
+      "lengthM": 15.2,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "OSM 폭 태그를 미검증 가정으로 차용",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "가로수 수관에 포장 경계 가림",
+      "osmUrl": "https://www.openstreetmap.org/way/544144052",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5236131,127.1279312"
+    },
+    {
+      "id": "osm-624285626-1",
+      "highway": "footway",
+      "lengthM": 15.9,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "OSM 중심선이 수경시설과 겹쳐 통로 폭 해석 보류",
+      "osmUrl": "https://www.openstreetmap.org/way/624285626",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5183068,127.1153885"
+    },
+    {
+      "id": "osm-743712418-1",
+      "highway": "cycleway",
+      "lengthM": 1349.9,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "OSM 폭 태그를 미검증 가정으로 차용",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "수목에 가려 자전거길 경계 판독 불가.",
+      "osmUrl": "https://www.openstreetmap.org/way/743712418",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5251173,127.1244874"
+    },
+    {
+      "id": "osm-908419283-1",
+      "highway": "footway",
+      "lengthM": 235.6,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "잔디·밭 사이 흔적은 보이나 통행 경계와 이용 가능 여부를 판독할 수 없음.",
+      "osmUrl": "https://www.openstreetmap.org/way/908419283",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5185592,127.1207081"
+    },
+    {
+      "id": "osm-908419284-1",
+      "highway": "footway",
+      "lengthM": 95.7,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "잔디·밭 사이 흔적은 보이나 통행 경계와 이용 가능 여부를 판독할 수 없음.",
+      "osmUrl": "https://www.openstreetmap.org/way/908419284",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5188472,127.1208202"
+    },
+    {
+      "id": "osm-908419285-1",
+      "highway": "footway",
+      "lengthM": 4.7,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "잔디·밭 사이 흔적은 보이나 통행 경계와 이용 가능 여부를 판독할 수 없음.",
+      "osmUrl": "https://www.openstreetmap.org/way/908419285",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5184397,127.1209768"
+    },
+    {
+      "id": "osm-908419286-1",
+      "highway": "footway",
+      "lengthM": 82.1,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "잔디·밭 사이 흔적은 보이나 통행 경계와 이용 가능 여부를 판독할 수 없음.",
+      "osmUrl": "https://www.openstreetmap.org/way/908419286",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5188605,127.1209339"
+    },
+    {
+      "id": "osm-908419287-1",
+      "highway": "footway",
+      "lengthM": 40.8,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "잔디·밭 사이 흔적은 보이나 통행 경계와 이용 가능 여부를 판독할 수 없음.",
+      "osmUrl": "https://www.openstreetmap.org/way/908419287",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5190358,127.1209465"
+    },
+    {
+      "id": "osm-908419288-1",
+      "highway": "footway",
+      "lengthM": 37.6,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "잔디·밭 사이 흔적은 보이나 통행 경계와 이용 가능 여부를 판독할 수 없음.",
+      "osmUrl": "https://www.openstreetmap.org/way/908419288",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5189384,127.1209103"
+    },
+    {
+      "id": "osm-908419289-1",
+      "highway": "footway",
+      "lengthM": 85.1,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "잔디·밭 사이 흔적은 보이나 통행 경계와 이용 가능 여부를 판독할 수 없음.",
+      "osmUrl": "https://www.openstreetmap.org/way/908419289",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5187215,127.1210997"
+    },
+    {
+      "id": "osm-923303935-1",
+      "highway": "footway",
+      "lengthM": 97.0,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "중심선이 건물 지붕과 겹쳐 지상 통로 폭 판독 불가.",
+      "osmUrl": "https://www.openstreetmap.org/way/923303935",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5200729,127.1156855"
+    },
+    {
+      "id": "osm-923303943-1",
+      "highway": "footway",
+      "lengthM": 90.5,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "수목 가림으로 양쪽 통행 경계 확인 불가.",
+      "osmUrl": "https://www.openstreetmap.org/way/923303943",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5161762,127.1177850"
+    },
+    {
+      "id": "osm-923303948-1",
+      "highway": "footway",
+      "lengthM": 21.2,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "건물·흰 구조물과 중심선이 겹침. 지상 통행면·상부 구조의 구분이 불확실하여 폭 미확정.",
+      "osmUrl": "https://www.openstreetmap.org/way/923303948",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5174212,127.1207613"
+    },
+    {
+      "id": "osm-923303949-1",
+      "highway": "footway",
+      "lengthM": 23.2,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "건물·흰 구조물과 중심선이 겹침. 지상 통행면·상부 구조의 구분이 불확실하여 폭 미확정.",
+      "osmUrl": "https://www.openstreetmap.org/way/923303949",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5173090,127.1206590"
+    },
+    {
+      "id": "osm-923303950-1",
+      "highway": "footway",
+      "lengthM": 23.1,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "건물·흰 구조물과 중심선이 겹침. 지상 통행면·상부 구조의 구분이 불확실하여 폭 미확정.",
+      "osmUrl": "https://www.openstreetmap.org/way/923303950",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5172118,127.1208067"
+    },
+    {
+      "id": "osm-923303951-1",
+      "highway": "footway",
+      "lengthM": 23.1,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "건물·흰 구조물과 중심선이 겹침. 지상 통행면·상부 구조의 구분이 불확실하여 폭 미확정.",
+      "osmUrl": "https://www.openstreetmap.org/way/923303951",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5173207,127.1209193"
+    },
+    {
+      "id": "osm-923303952-1",
+      "highway": "footway",
+      "lengthM": 24.3,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "건물·흰 구조물과 중심선이 겹침. 지상 통행면·상부 구조의 구분이 불확실하여 폭 미확정.",
+      "osmUrl": "https://www.openstreetmap.org/way/923303952",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5171483,127.1208106"
+    },
+    {
+      "id": "osm-923303953-1",
+      "highway": "footway",
+      "lengthM": 62.8,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "건물·흰 구조물과 중심선이 겹침. 지상 통행면·상부 구조의 구분이 불확실하여 폭 미확정.",
+      "osmUrl": "https://www.openstreetmap.org/way/923303953",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5172570,127.1208486"
+    },
+    {
+      "id": "osm-923303954-1",
+      "highway": "footway",
+      "lengthM": 4.5,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "건물·흰 구조물과 중심선이 겹침. 지상 통행면·상부 구조의 구분이 불확실하여 폭 미확정.",
+      "osmUrl": "https://www.openstreetmap.org/way/923303954",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5173098,127.1206844"
+    },
+    {
+      "id": "osm-923303955-1",
+      "highway": "footway",
+      "lengthM": 4.3,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "건물·흰 구조물과 중심선이 겹침. 지상 통행면·상부 구조의 구분이 불확실하여 폭 미확정.",
+      "osmUrl": "https://www.openstreetmap.org/way/923303955",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5173274,127.1208935"
+    },
+    {
+      "id": "osm-923303958-1",
+      "highway": "footway",
+      "lengthM": 48.6,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "조경 수목에 가려 경계 판독 불가.",
+      "osmUrl": "https://www.openstreetmap.org/way/923303958",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5231479,127.1183326"
+    },
+    {
+      "id": "osm-923609913-1",
+      "highway": "service",
+      "lengthM": 48.2,
+      "assumedPavingWidthM": 6.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        3.0,
+        9.0
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "차량도로와 수목 위로 중심선이 지나가 실제 통행 폭 확정 불가.",
+      "osmUrl": "https://www.openstreetmap.org/way/923609913",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5201039,127.1282388"
+    },
+    {
+      "id": "osm-1279895523-1",
+      "highway": "footway",
+      "lengthM": 67.2,
+      "assumedPavingWidthM": 3.0,
+      "source": "가정",
+      "method": "길 종류별 임시 기본값",
+      "confidence": "하",
+      "sensitivityRangeM": [
+        1.5,
+        4.5
+      ],
+      "effectiveWidthM": null,
+      "measured": false,
+      "originalWidthStatus": "미확정",
+      "note": "중심선과 도로·수목의 위치가 어긋나 통행면 폭 확정 불가.",
+      "osmUrl": "https://www.openstreetmap.org/way/1279895523",
+      "kakaoUrl": "https://map.kakao.com/link/map/37.5183988,127.1287564"
+    }
+  ]
+}
