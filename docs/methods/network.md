@@ -98,7 +98,7 @@
 **반영:** `parking.json`의 연결·처리량·대수는 바꾸지 않았다. 현재 `lots[].source: 관측`은 대수의 출처와 함께 묶인 표시이므로 `exitIds`까지 관측으로 읽지 않는다. 문별 비율을 주차장별 비율이나 엔진 출구 배정 비율로 대입하지 않는다. 팀원 C와 필드별 출처 표시를 구분할 때는 데이터 약속 문서를 먼저 맞춘다. 다음 검증에는 **주차장 ID가 결합된 입출차 자료 또는 주차장별 출구 안내·운영 동선**이 필요하다.
 
 재현: `PYTHONDONTWRITEBYTECODE=1 python3 geo/validate/parking_exit_check.py`.
-결과: `geo/validate/parking-exit-result.json`(집계·6개 주차장 판정), `parking-exit-matrix.csv`(3개 조건별 문 조합 147행, 건수·비율·관측 일수), `parking-exit-raw-pairs.csv`(원본 전체 213개 차로 조합, 특수 표기 포함). 원본은 변경하지 않았다. 입차·출차 시각 이상 기록은 기존 차량 검증에도 영향을 줄 수 있으므로, 이번 제외 기준과 이전 검증의 포함 기준을 구분해 읽는다.
+결과: `geo/validate/parking-exit-result.json`(집계·6개 주차장 판정), `parking-exit-matrix.csv`(3개 조건별 문 조합 147행, 건수·비율·관측 일수), `parking-exit-raw-pairs.csv`(원본 전체 213개 차로 조합, 특수 표기 포함). 원본은 변경하지 않았다. 입차·출차 시각 역전 6,288건의 제외 효과는 [별도 사후 점검](vehicle-time-audit.md)에서 비교했다. A-6의 표준 차로 제한과 해당 점검의 시각 역전 제외 조건은 다르다.
 
 ## 5. 계산 가정값 (assumptions.json)
 
@@ -205,6 +205,8 @@ WA 문서는 검색 색인에 2025.8 판으로 표시됐지만 실제 다운로�
 재현: `ASSUMPTIONS_RESULT=geo/validate/assumptions-sensitivity-result.json pnpm vitest run -c geo/validate/vitest.config.ts geo/validate/assumptions-sensitivity.test.ts`. 결과 JSON에 반올림 전 부담·감소율·차량 대수·선택 분기점 수를 남겼다. `src/data/assumptions.json`은 근거 설명 3개만 수정했고 계산 숫자와 스키마는 유지했다.
 
 ### ③ 차량 출차 시간
+
+아래 표는 역전 시각 기록을 포함한 기존 비교 기준이다. 이후 [시각 역전 제외 전후 비교](vehicle-time-audit.md)에서는 처리량 입력은 같았으나 개별 날짜의 시간 분포가 달라짐을 확인했다.
 
 2025 입출차 원본 **2,411,225건**에서 공연 날짜 105일 중 출차 기록이 있는 날은 100일이다. 평소 비교일이 충분한 **28일**을 비교했다 (비교일 부족 66일, 출차 기록 없음 5일, 남은 34일 중 출구 출차 50대 미만인 경우 제외). 평소는 ±60일 이내·같은 요일 종류(평일/금/토/일)·KSPO DOME 공연 없는 날 3일 이상이다. 출구별 16~24시 **10분 구간 출차 − 평소 중앙값**의 양수 부분을 구하고, 구간 안에서는 균등하게 나간다고 두었다.
 

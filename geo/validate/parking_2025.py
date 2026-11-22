@@ -2,12 +2,13 @@
 
 입력: geo/data/olympicpark_inout_2025_full.csv.gz (fetch_inout_2025.py로 만든 CSV), 또는 API 응답 XML 파일들.
 실행: python3 geo/validate/parking_2025.py <CSV 경로>   또는   python3 geo/validate/parking_2025.py '<XML 폴더>/*.xml'
+동일 계산의 JSON 출력: --json-output <파일> (계산·필터 조건은 바꾸지 않음)
 
 1) 출구별 처리량: KSPO DOME 공연일, 16~24시 출구(북2문·동2문·남2문, 차로 #1·#2)별 1분 출차 대수 →
    10분 최대 평균. 공연 직후 출차가 몰릴 때 실제로 빠져나간 양이라 '처리 능력의 하한'으로 본다.
 2) 공연일 출차 증가량: 17시 이후 출차가 평소(같은 요일 종류, 공연 없는 날 중앙값)보다 몇 대 늘었는지.
 """
-import csv, datetime as dt, glob, gzip, os, re, statistics as st, sys
+import argparse, csv, datetime as dt, glob, gzip, json, os, re, statistics as st
 from collections import Counter, defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -33,11 +34,12 @@ def rng(s):
 
 def load_events():
     ev, blocked = [], set()
-    for r in csv.DictReader(open(os.path.join(HERE, 'kspo-dome-events.csv'), encoding='utf-8')):
-        days = rng(r['dates'])
-        blocked |= set(days)
-        if r['use'] == 'yes':
-            ev.append((days, int(r['attendance'])))
+    with open(os.path.join(HERE, 'kspo-dome-events.csv'), encoding='utf-8') as stream:
+        for r in csv.DictReader(stream):
+            days = rng(r['dates'])
+            blocked |= set(days)
+            if r['use'] == 'yes':
+                ev.append((days, int(r['attendance'])))
     return ev, blocked
 
 
@@ -85,7 +87,7 @@ def gate_of(lane):  # '동2문출구#1' → 'gate-east-2'
     return 'other'
 
 
-def main(pattern):
+def main(pattern, json_output=None):
     rows = parse(sorted(glob.glob(pattern)))
     ev, blocked = load_events()
     event_days = {d for days, _ in ev for d in days if d.year == 2025}
@@ -138,8 +140,31 @@ def main(pattern):
         per1000 = sorted(x[1] / x[2] * 1000 for x in out)
         print(f'  공연일 {len(out)}일, 증가 대수 중앙값 {st.median(ex):.0f}대 (사분위 {ex[len(ex)//4]:.0f}~{ex[3*len(ex)//4]:.0f})')
         print(f'  관객 1,000명당 증가 대수 중앙값 {st.median(per1000):.0f}대 (사분위 {per1000[len(per1000)//4]:.0f}~{per1000[3*len(per1000)//4]:.0f})')
+    if json_output:
+        summary = {
+            'source': '관측', 'rows': len(rows),
+            'throughput': {
+                gate: {'days': len(values), 'median': st.median(values),
+                       'p90': values[int(len(values) * 0.9)], 'max': values[-1]}
+                for gate, values in res.items()
+            },
+            'excess': {
+                'days': len(out),
+                'median_vehicles': st.median(sorted(x[1] for x in out)) if out else None,
+                'median_per1000': st.median(sorted(x[1] / x[2] * 1000 for x in out)) if out else None,
+                'daily': [{'date': day.isoformat(), 'excess': extra, 'attendance_per_day': attendance}
+                          for day, extra, attendance in out],
+            },
+        }
+        with open(json_output, 'w', encoding='utf-8') as stream:
+            json.dump(summary, stream, ensure_ascii=False, indent=2)
+            stream.write('\n')
     return res, out
 
 
 if __name__ == '__main__':
-    main(sys.argv[1])
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('pattern')
+    parser.add_argument('--json-output', help='동일 계산의 구조화 결과를 저장할 경로')
+    args = parser.parse_args()
+    main(args.pattern, args.json_output)

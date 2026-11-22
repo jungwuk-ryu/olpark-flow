@@ -1,0 +1,984 @@
+{
+  "source": "관측",
+  "filter": "입차 시각 > 출차 시각인 기록만 제외",
+  "unchanged_conditions": "기간·차로 분류(CMB 포함 방식)·공연일·비교일·10분 창·분위수 계산은 기존 스크립트와 동일",
+  "audit": {
+    "counts": {
+      "input_rows": 2411225,
+      "kept_rows": 2404937,
+      "excluded_rows": 6288,
+      "unparsed_times_kept": 0,
+      "excluded_event_16_24": 511,
+      "excluded_after17": 1702
+    },
+    "excluded_by_exit_year": {
+      "2025": 6288
+    },
+    "excluded_by_exit_lane": {
+      "남2문CMB": 2,
+      "남2문출구#1": 544,
+      "남2문출구#2": 645,
+      "남3문출구#1": 83,
+      "남4문출구#1": 302,
+      "동2문CMB": 6,
+      "동2문출구#1": 1206,
+      "동2문출구#2": 1490,
+      "북2문CMB": 1,
+      "북2문출구#1": 625,
+      "북2문출구#2": 942,
+      "서1문CMB": 1,
+      "서1문출구#1": 141,
+      "서2문CMB": 4,
+      "서2문출구#1": 296
+    },
+    "excluded_by_exit_date": {
+      "2025-05-26": 5,
+      "2025-05-27": 3,
+      "2025-05-29": 2,
+      "2025-05-30": 1,
+      "2025-06-01": 2,
+      "2025-06-02": 1,
+      "2025-06-03": 5,
+      "2025-06-04": 2,
+      "2025-06-05": 8,
+      "2025-06-06": 4,
+      "2025-06-07": 4,
+      "2025-06-08": 4,
+      "2025-06-09": 2,
+      "2025-06-12": 2,
+      "2025-06-14": 1,
+      "2025-06-15": 1,
+      "2025-06-17": 1,
+      "2025-06-18": 3,
+      "2025-06-23": 2,
+      "2025-06-25": 1,
+      "2025-07-01": 61,
+      "2025-07-02": 67,
+      "2025-07-03": 50,
+      "2025-07-04": 75,
+      "2025-07-05": 94,
+      "2025-07-06": 78,
+      "2025-07-07": 45,
+      "2025-07-08": 49,
+      "2025-07-09": 63,
+      "2025-07-10": 51,
+      "2025-07-11": 62,
+      "2025-07-12": 87,
+      "2025-07-13": 50,
+      "2025-07-14": 35,
+      "2025-07-15": 51,
+      "2025-07-16": 39,
+      "2025-07-17": 58,
+      "2025-07-18": 63,
+      "2025-07-19": 55,
+      "2025-07-20": 53,
+      "2025-07-21": 48,
+      "2025-07-22": 43,
+      "2025-07-23": 48,
+      "2025-07-24": 47,
+      "2025-07-25": 62,
+      "2025-07-26": 54,
+      "2025-07-27": 59,
+      "2025-07-28": 48,
+      "2025-07-29": 44,
+      "2025-07-30": 39,
+      "2025-08-01": 7,
+      "2025-08-02": 13,
+      "2025-08-03": 7,
+      "2025-08-04": 5,
+      "2025-08-05": 8,
+      "2025-08-06": 9,
+      "2025-08-07": 6,
+      "2025-08-08": 6,
+      "2025-08-09": 9,
+      "2025-08-10": 9,
+      "2025-08-11": 1,
+      "2025-08-13": 8,
+      "2025-08-15": 16,
+      "2025-08-16": 12,
+      "2025-08-17": 8,
+      "2025-08-18": 8,
+      "2025-08-19": 3,
+      "2025-08-20": 6,
+      "2025-08-21": 5,
+      "2025-08-22": 8,
+      "2025-08-23": 2,
+      "2025-08-24": 6,
+      "2025-08-25": 1,
+      "2025-08-26": 4,
+      "2025-08-27": 3,
+      "2025-08-28": 3,
+      "2025-08-29": 2,
+      "2025-08-30": 5,
+      "2025-09-07": 1,
+      "2025-09-09": 259,
+      "2025-09-10": 416,
+      "2025-09-11": 401,
+      "2025-09-12": 398,
+      "2025-09-13": 350,
+      "2025-09-14": 352,
+      "2025-09-15": 398,
+      "2025-09-16": 372,
+      "2025-09-17": 417,
+      "2025-09-18": 367,
+      "2025-09-19": 461,
+      "2025-09-20": 184
+    }
+  },
+  "before": {
+    "parking": {
+      "source": "관측",
+      "rows": 2411225,
+      "throughput": {
+        "gate-north-2": {
+          "days": 86,
+          "median": 8.7,
+          "p90": 10.0,
+          "max": 11.3
+        },
+        "gate-east-2": {
+          "days": 86,
+          "median": 8.8,
+          "p90": 9.8,
+          "max": 10.5
+        },
+        "gate-south-2": {
+          "days": 86,
+          "median": 8.55,
+          "p90": 11.9,
+          "max": 13.6
+        },
+        "전체": {
+          "days": 86,
+          "median": 24.0,
+          "p90": 28.1,
+          "max": 34.5
+        }
+      },
+      "excess": {
+        "days": 33,
+        "median_vehicles": 910,
+        "median_per1000": 122.12111703796674,
+        "daily": [
+          {
+            "date": "2025-01-10",
+            "excess": 770,
+            "attendance_per_day": 14042.333333333334
+          },
+          {
+            "date": "2025-01-31",
+            "excess": -3459.5,
+            "attendance_per_day": 7920.333333333333
+          },
+          {
+            "date": "2025-02-14",
+            "excess": 681.5,
+            "attendance_per_day": 3493.3333333333335
+          },
+          {
+            "date": "2025-02-28",
+            "excess": -3512,
+            "attendance_per_day": 12600.333333333334
+          },
+          {
+            "date": "2025-03-07",
+            "excess": 910,
+            "attendance_per_day": 9560.666666666666
+          },
+          {
+            "date": "2025-04-18",
+            "excess": 1104,
+            "attendance_per_day": 8569.666666666666
+          },
+          {
+            "date": "2025-05-09",
+            "excess": 1946,
+            "attendance_per_day": 15935.0
+          },
+          {
+            "date": "2025-05-23",
+            "excess": 1581,
+            "attendance_per_day": 10561.333333333334
+          },
+          {
+            "date": "2025-07-04",
+            "excess": 1693,
+            "attendance_per_day": 10334.333333333334
+          },
+          {
+            "date": "2025-07-11",
+            "excess": 2447.5,
+            "attendance_per_day": 7704.666666666667
+          },
+          {
+            "date": "2025-07-18",
+            "excess": 4021,
+            "attendance_per_day": 9096.333333333334
+          },
+          {
+            "date": "2025-07-25",
+            "excess": 4545.0,
+            "attendance_per_day": 10739.666666666666
+          },
+          {
+            "date": "2025-07-27",
+            "excess": 2611,
+            "attendance_per_day": 10739.666666666666
+          },
+          {
+            "date": "2025-08-03",
+            "excess": -404.0,
+            "attendance_per_day": 8389.0
+          },
+          {
+            "date": "2025-08-08",
+            "excess": 222.0,
+            "attendance_per_day": 7650.0
+          },
+          {
+            "date": "2025-08-10",
+            "excess": -293.0,
+            "attendance_per_day": 7650.0
+          },
+          {
+            "date": "2025-08-15",
+            "excess": 48.0,
+            "attendance_per_day": 9106.0
+          },
+          {
+            "date": "2025-08-17",
+            "excess": -267.0,
+            "attendance_per_day": 9106.0
+          },
+          {
+            "date": "2025-08-22",
+            "excess": 195,
+            "attendance_per_day": 9873.0
+          },
+          {
+            "date": "2025-08-24",
+            "excess": -334,
+            "attendance_per_day": 9873.0
+          },
+          {
+            "date": "2025-08-29",
+            "excess": 336.0,
+            "attendance_per_day": 9697.333333333334
+          },
+          {
+            "date": "2025-08-31",
+            "excess": -990,
+            "attendance_per_day": 9697.333333333334
+          },
+          {
+            "date": "2025-09-14",
+            "excess": -139,
+            "attendance_per_day": 11773.0
+          },
+          {
+            "date": "2025-10-03",
+            "excess": 3751.5,
+            "attendance_per_day": 8403.0
+          },
+          {
+            "date": "2025-10-05",
+            "excess": 1581,
+            "attendance_per_day": 8403.0
+          },
+          {
+            "date": "2025-10-10",
+            "excess": 2967.5,
+            "attendance_per_day": 8411.666666666666
+          },
+          {
+            "date": "2025-10-12",
+            "excess": 2131,
+            "attendance_per_day": 8411.666666666666
+          },
+          {
+            "date": "2025-10-24",
+            "excess": 4335,
+            "attendance_per_day": 10265.666666666666
+          },
+          {
+            "date": "2025-10-26",
+            "excess": 2180,
+            "attendance_per_day": 10265.666666666666
+          },
+          {
+            "date": "2025-10-31",
+            "excess": -722,
+            "attendance_per_day": 9514.333333333334
+          },
+          {
+            "date": "2025-11-02",
+            "excess": 3366,
+            "attendance_per_day": 9514.333333333334
+          },
+          {
+            "date": "2025-11-10",
+            "excess": -1650.5,
+            "attendance_per_day": 9860.0
+          },
+          {
+            "date": "2025-12-05",
+            "excess": 4582,
+            "attendance_per_day": 13718.333333333334
+          }
+        ]
+      }
+    },
+    "vehicle": {
+      "source": "관측",
+      "input_rows": 2411225,
+      "invalid_exit_times": 0,
+      "event_days_in_calendar": 105,
+      "event_days_with_records": 100,
+      "compared_days": 28,
+      "excluded": {
+        "비교일 3일 미만": 66,
+        "출구 출차 50대 미만 또는 증가 없음": 18,
+        "출차 기록 없는 공연일": 5
+      },
+      "time_origin": "16:00부터의 분. 실제 공연 종료 후 경과 시간이 아님",
+      "baseline": "±60일·같은 요일 종류·공연 없는 날 3일 이상, 10분 구간 중앙값",
+      "summary": {
+        "gate-north-2": {
+          "days": 28,
+          "vehicles_excess": 632.0,
+          "q10_from16": 53.0,
+          "q50_from16": 276.5,
+          "q90_from16": 414.5,
+          "span10to90": 332.5,
+          "busiest60_share": 0.4766463189049205,
+          "positive_bin_minutes": 350.0,
+          "last_hour_share": 0.07471264367816091
+        },
+        "gate-east-2": {
+          "days": 28,
+          "vehicles_excess": 688.5,
+          "q10_from16": 41.5,
+          "q50_from16": 257.0,
+          "q90_from16": 423.0,
+          "span10to90": 367.0,
+          "busiest60_share": 0.36264571230715986,
+          "positive_bin_minutes": 380.0,
+          "last_hour_share": 0.10878334067000262
+        },
+        "gate-south-2": {
+          "days": 28,
+          "vehicles_excess": 438.25,
+          "q10_from16": 35.0,
+          "q50_from16": 262.0,
+          "q90_from16": 404.0,
+          "span10to90": 346.5,
+          "busiest60_share": 0.45504141518496344,
+          "positive_bin_minutes": 330.0,
+          "last_hour_share": 0.03103890053575588
+        }
+      },
+      "engine_comparison": [
+        {
+          "egress_minutes": 22,
+          "exit_id": "gate-north-2",
+          "q50_after_assumed_end": 18,
+          "q90_after_assumed_end": 27,
+          "clear_minute": 30,
+          "span10to90": 19,
+          "observed_span_median": 332.5
+        },
+        {
+          "egress_minutes": 22,
+          "exit_id": "gate-east-2",
+          "q50_after_assumed_end": 29,
+          "q90_after_assumed_end": 49,
+          "clear_minute": 55,
+          "span10to90": 39,
+          "observed_span_median": 367.0
+        },
+        {
+          "egress_minutes": 22,
+          "exit_id": "gate-south-2",
+          "q50_after_assumed_end": 13,
+          "q90_after_assumed_end": 23,
+          "clear_minute": 13,
+          "span10to90": 15,
+          "observed_span_median": 346.5
+        },
+        {
+          "egress_minutes": 60,
+          "exit_id": "gate-north-2",
+          "q50_after_assumed_end": 27,
+          "q90_after_assumed_end": 54,
+          "clear_minute": 0,
+          "span10to90": 42,
+          "observed_span_median": 332.5
+        },
+        {
+          "egress_minutes": 60,
+          "exit_id": "gate-east-2",
+          "q50_after_assumed_end": 32,
+          "q90_after_assumed_end": 54,
+          "clear_minute": 52,
+          "span10to90": 41,
+          "observed_span_median": 367.0
+        },
+        {
+          "egress_minutes": 60,
+          "exit_id": "gate-south-2",
+          "q50_after_assumed_end": 27,
+          "q90_after_assumed_end": 54,
+          "clear_minute": 0,
+          "span10to90": 42,
+          "observed_span_median": 346.5
+        },
+        {
+          "egress_minutes": 80,
+          "exit_id": "gate-north-2",
+          "q50_after_assumed_end": 35,
+          "q90_after_assumed_end": 71,
+          "clear_minute": 0,
+          "span10to90": 56,
+          "observed_span_median": 332.5
+        },
+        {
+          "egress_minutes": 80,
+          "exit_id": "gate-east-2",
+          "q50_after_assumed_end": 35,
+          "q90_after_assumed_end": 71,
+          "clear_minute": 39,
+          "span10to90": 56,
+          "observed_span_median": 367.0
+        },
+        {
+          "egress_minutes": 80,
+          "exit_id": "gate-south-2",
+          "q50_after_assumed_end": 35,
+          "q90_after_assumed_end": 71,
+          "clear_minute": 0,
+          "span10to90": 56,
+          "observed_span_median": 346.5
+        }
+      ]
+    }
+  },
+  "after": {
+    "parking": {
+      "source": "관측",
+      "rows": 2404937,
+      "throughput": {
+        "gate-north-2": {
+          "days": 86,
+          "median": 8.7,
+          "p90": 10.0,
+          "max": 11.3
+        },
+        "gate-east-2": {
+          "days": 86,
+          "median": 8.8,
+          "p90": 9.8,
+          "max": 10.5
+        },
+        "gate-south-2": {
+          "days": 86,
+          "median": 8.55,
+          "p90": 11.9,
+          "max": 13.6
+        },
+        "전체": {
+          "days": 86,
+          "median": 24.0,
+          "p90": 28.1,
+          "max": 34.5
+        }
+      },
+      "excess": {
+        "days": 33,
+        "median_vehicles": 910,
+        "median_per1000": 122.12111703796674,
+        "daily": [
+          {
+            "date": "2025-01-10",
+            "excess": 770,
+            "attendance_per_day": 14042.333333333334
+          },
+          {
+            "date": "2025-01-31",
+            "excess": -3459.5,
+            "attendance_per_day": 7920.333333333333
+          },
+          {
+            "date": "2025-02-14",
+            "excess": 681.5,
+            "attendance_per_day": 3493.3333333333335
+          },
+          {
+            "date": "2025-02-28",
+            "excess": -3512,
+            "attendance_per_day": 12600.333333333334
+          },
+          {
+            "date": "2025-03-07",
+            "excess": 910,
+            "attendance_per_day": 9560.666666666666
+          },
+          {
+            "date": "2025-04-18",
+            "excess": 1105,
+            "attendance_per_day": 8569.666666666666
+          },
+          {
+            "date": "2025-05-09",
+            "excess": 1946,
+            "attendance_per_day": 15935.0
+          },
+          {
+            "date": "2025-05-23",
+            "excess": 1581,
+            "attendance_per_day": 10561.333333333334
+          },
+          {
+            "date": "2025-07-04",
+            "excess": 1669,
+            "attendance_per_day": 10334.333333333334
+          },
+          {
+            "date": "2025-07-11",
+            "excess": 2429.0,
+            "attendance_per_day": 7704.666666666667
+          },
+          {
+            "date": "2025-07-18",
+            "excess": 4000,
+            "attendance_per_day": 9096.333333333334
+          },
+          {
+            "date": "2025-07-25",
+            "excess": 4528.0,
+            "attendance_per_day": 10739.666666666666
+          },
+          {
+            "date": "2025-07-27",
+            "excess": 2599,
+            "attendance_per_day": 10739.666666666666
+          },
+          {
+            "date": "2025-08-03",
+            "excess": -405.0,
+            "attendance_per_day": 8389.0
+          },
+          {
+            "date": "2025-08-08",
+            "excess": 221.0,
+            "attendance_per_day": 7650.0
+          },
+          {
+            "date": "2025-08-10",
+            "excess": -295.0,
+            "attendance_per_day": 7650.0
+          },
+          {
+            "date": "2025-08-15",
+            "excess": 43.0,
+            "attendance_per_day": 9106.0
+          },
+          {
+            "date": "2025-08-17",
+            "excess": -269.0,
+            "attendance_per_day": 9106.0
+          },
+          {
+            "date": "2025-08-22",
+            "excess": 193,
+            "attendance_per_day": 9873.0
+          },
+          {
+            "date": "2025-08-24",
+            "excess": -335,
+            "attendance_per_day": 9873.0
+          },
+          {
+            "date": "2025-08-29",
+            "excess": 337.0,
+            "attendance_per_day": 9697.333333333334
+          },
+          {
+            "date": "2025-08-31",
+            "excess": -990,
+            "attendance_per_day": 9697.333333333334
+          },
+          {
+            "date": "2025-09-14",
+            "excess": -203,
+            "attendance_per_day": 11773.0
+          },
+          {
+            "date": "2025-10-03",
+            "excess": 3815.0,
+            "attendance_per_day": 8403.0
+          },
+          {
+            "date": "2025-10-05",
+            "excess": 1581,
+            "attendance_per_day": 8403.0
+          },
+          {
+            "date": "2025-10-10",
+            "excess": 3031.0,
+            "attendance_per_day": 8411.666666666666
+          },
+          {
+            "date": "2025-10-12",
+            "excess": 2131,
+            "attendance_per_day": 8411.666666666666
+          },
+          {
+            "date": "2025-10-24",
+            "excess": 4462,
+            "attendance_per_day": 10265.666666666666
+          },
+          {
+            "date": "2025-10-26",
+            "excess": 2180,
+            "attendance_per_day": 10265.666666666666
+          },
+          {
+            "date": "2025-10-31",
+            "excess": -595,
+            "attendance_per_day": 9514.333333333334
+          },
+          {
+            "date": "2025-11-02",
+            "excess": 3366,
+            "attendance_per_day": 9514.333333333334
+          },
+          {
+            "date": "2025-11-10",
+            "excess": -1615.0,
+            "attendance_per_day": 9860.0
+          },
+          {
+            "date": "2025-12-05",
+            "excess": 4582,
+            "attendance_per_day": 13718.333333333334
+          }
+        ]
+      }
+    },
+    "vehicle": {
+      "source": "관측",
+      "input_rows": 2404937,
+      "invalid_exit_times": 0,
+      "event_days_in_calendar": 105,
+      "event_days_with_records": 100,
+      "compared_days": 28,
+      "excluded": {
+        "비교일 3일 미만": 66,
+        "출구 출차 50대 미만 또는 증가 없음": 18,
+        "출차 기록 없는 공연일": 5
+      },
+      "time_origin": "16:00부터의 분. 실제 공연 종료 후 경과 시간이 아님",
+      "baseline": "±60일·같은 요일 종류·공연 없는 날 3일 이상, 10분 구간 중앙값",
+      "summary": {
+        "gate-north-2": {
+          "days": 28,
+          "vehicles_excess": 632.0,
+          "q10_from16": 53.0,
+          "q50_from16": 274.5,
+          "q90_from16": 414.5,
+          "span10to90": 333.0,
+          "busiest60_share": 0.444385026737968,
+          "positive_bin_minutes": 355.0,
+          "last_hour_share": 0.07384084749644532
+        },
+        "gate-east-2": {
+          "days": 28,
+          "vehicles_excess": 688.5,
+          "q10_from16": 41.5,
+          "q50_from16": 258.5,
+          "q90_from16": 422.5,
+          "span10to90": 369.0,
+          "busiest60_share": 0.34683868579722044,
+          "positive_bin_minutes": 380.0,
+          "last_hour_share": 0.10783409151343934
+        },
+        "gate-south-2": {
+          "days": 28,
+          "vehicles_excess": 438.25,
+          "q10_from16": 35.5,
+          "q50_from16": 276.0,
+          "q90_from16": 404.0,
+          "span10to90": 346.5,
+          "busiest60_share": 0.45504141518496344,
+          "positive_bin_minutes": 330.0,
+          "last_hour_share": 0.030764586946730933
+        }
+      },
+      "engine_comparison": [
+        {
+          "egress_minutes": 22,
+          "exit_id": "gate-north-2",
+          "q50_after_assumed_end": 18,
+          "q90_after_assumed_end": 27,
+          "clear_minute": 30,
+          "span10to90": 19,
+          "observed_span_median": 333.0
+        },
+        {
+          "egress_minutes": 22,
+          "exit_id": "gate-east-2",
+          "q50_after_assumed_end": 29,
+          "q90_after_assumed_end": 49,
+          "clear_minute": 55,
+          "span10to90": 39,
+          "observed_span_median": 369.0
+        },
+        {
+          "egress_minutes": 22,
+          "exit_id": "gate-south-2",
+          "q50_after_assumed_end": 13,
+          "q90_after_assumed_end": 23,
+          "clear_minute": 13,
+          "span10to90": 15,
+          "observed_span_median": 346.5
+        },
+        {
+          "egress_minutes": 60,
+          "exit_id": "gate-north-2",
+          "q50_after_assumed_end": 27,
+          "q90_after_assumed_end": 54,
+          "clear_minute": 0,
+          "span10to90": 42,
+          "observed_span_median": 333.0
+        },
+        {
+          "egress_minutes": 60,
+          "exit_id": "gate-east-2",
+          "q50_after_assumed_end": 32,
+          "q90_after_assumed_end": 54,
+          "clear_minute": 52,
+          "span10to90": 41,
+          "observed_span_median": 369.0
+        },
+        {
+          "egress_minutes": 60,
+          "exit_id": "gate-south-2",
+          "q50_after_assumed_end": 27,
+          "q90_after_assumed_end": 54,
+          "clear_minute": 0,
+          "span10to90": 42,
+          "observed_span_median": 346.5
+        },
+        {
+          "egress_minutes": 80,
+          "exit_id": "gate-north-2",
+          "q50_after_assumed_end": 35,
+          "q90_after_assumed_end": 71,
+          "clear_minute": 0,
+          "span10to90": 56,
+          "observed_span_median": 333.0
+        },
+        {
+          "egress_minutes": 80,
+          "exit_id": "gate-east-2",
+          "q50_after_assumed_end": 35,
+          "q90_after_assumed_end": 71,
+          "clear_minute": 39,
+          "span10to90": 56,
+          "observed_span_median": 369.0
+        },
+        {
+          "egress_minutes": 80,
+          "exit_id": "gate-south-2",
+          "q50_after_assumed_end": 35,
+          "q90_after_assumed_end": 71,
+          "clear_minute": 0,
+          "span10to90": 56,
+          "observed_span_median": 346.5
+        }
+      ]
+    }
+  },
+  "comparison": {
+    "throughput": [
+      {
+        "exit_id": "gate-north-2",
+        "before": {
+          "days": 86,
+          "median": 8.7,
+          "p90": 10.0,
+          "max": 11.3
+        },
+        "after": {
+          "days": 86,
+          "median": 8.7,
+          "p90": 10.0,
+          "max": 11.3
+        },
+        "p90_delta": 0.0
+      },
+      {
+        "exit_id": "gate-east-2",
+        "before": {
+          "days": 86,
+          "median": 8.8,
+          "p90": 9.8,
+          "max": 10.5
+        },
+        "after": {
+          "days": 86,
+          "median": 8.8,
+          "p90": 9.8,
+          "max": 10.5
+        },
+        "p90_delta": 0.0
+      },
+      {
+        "exit_id": "gate-south-2",
+        "before": {
+          "days": 86,
+          "median": 8.55,
+          "p90": 11.9,
+          "max": 13.6
+        },
+        "after": {
+          "days": 86,
+          "median": 8.55,
+          "p90": 11.9,
+          "max": 13.6
+        },
+        "p90_delta": 0.0
+      },
+      {
+        "exit_id": "전체",
+        "before": {
+          "days": 86,
+          "median": 24.0,
+          "p90": 28.1,
+          "max": 34.5
+        },
+        "after": {
+          "days": 86,
+          "median": 24.0,
+          "p90": 28.1,
+          "max": 34.5
+        },
+        "p90_delta": 0.0
+      }
+    ],
+    "excess_after17": {
+      "days": {
+        "before": 33,
+        "after": 33,
+        "delta": 0
+      },
+      "median_vehicles": {
+        "before": 910,
+        "after": 910,
+        "delta": 0
+      },
+      "median_per1000": {
+        "before": 122.12111703796674,
+        "after": 122.12111703796674,
+        "delta": 0.0
+      }
+    },
+    "time_distribution": [
+      {
+        "exit_id": "gate-north-2",
+        "before": {
+          "days": 28,
+          "vehicles_excess": 632.0,
+          "q10_from16": 53.0,
+          "q50_from16": 276.5,
+          "q90_from16": 414.5,
+          "span10to90": 332.5,
+          "busiest60_share": 0.4766463189049205,
+          "positive_bin_minutes": 350.0,
+          "last_hour_share": 0.07471264367816091
+        },
+        "after": {
+          "days": 28,
+          "vehicles_excess": 632.0,
+          "q10_from16": 53.0,
+          "q50_from16": 274.5,
+          "q90_from16": 414.5,
+          "span10to90": 333.0,
+          "busiest60_share": 0.444385026737968,
+          "positive_bin_minutes": 355.0,
+          "last_hour_share": 0.07384084749644532
+        },
+        "span_delta_minutes": 0.5
+      },
+      {
+        "exit_id": "gate-east-2",
+        "before": {
+          "days": 28,
+          "vehicles_excess": 688.5,
+          "q10_from16": 41.5,
+          "q50_from16": 257.0,
+          "q90_from16": 423.0,
+          "span10to90": 367.0,
+          "busiest60_share": 0.36264571230715986,
+          "positive_bin_minutes": 380.0,
+          "last_hour_share": 0.10878334067000262
+        },
+        "after": {
+          "days": 28,
+          "vehicles_excess": 688.5,
+          "q10_from16": 41.5,
+          "q50_from16": 258.5,
+          "q90_from16": 422.5,
+          "span10to90": 369.0,
+          "busiest60_share": 0.34683868579722044,
+          "positive_bin_minutes": 380.0,
+          "last_hour_share": 0.10783409151343934
+        },
+        "span_delta_minutes": 2.0
+      },
+      {
+        "exit_id": "gate-south-2",
+        "before": {
+          "days": 28,
+          "vehicles_excess": 438.25,
+          "q10_from16": 35.0,
+          "q50_from16": 262.0,
+          "q90_from16": 404.0,
+          "span10to90": 346.5,
+          "busiest60_share": 0.45504141518496344,
+          "positive_bin_minutes": 330.0,
+          "last_hour_share": 0.03103890053575588
+        },
+        "after": {
+          "days": 28,
+          "vehicles_excess": 438.25,
+          "q10_from16": 35.5,
+          "q50_from16": 276.0,
+          "q90_from16": 404.0,
+          "span10to90": 346.5,
+          "busiest60_share": 0.45504141518496344,
+          "positive_bin_minutes": 330.0,
+          "last_hour_share": 0.030764586946730933
+        },
+        "span_delta_minutes": 0.0
+      }
+    ]
+  },
+  "detail_files": [
+    {
+      "file": "daily-deltas.csv",
+      "changed_rows": 38,
+      "matched_rows": 84,
+      "removed_keys": [],
+      "added_keys": []
+    },
+    {
+      "file": "curve-deltas.csv.gz",
+      "changed_rows": 629,
+      "matched_rows": 4032,
+      "removed_keys": [],
+      "added_keys": []
+    }
+  ],
+  "previous_vehicle_result_reproduced": true
+}
