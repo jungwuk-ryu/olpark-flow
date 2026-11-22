@@ -62,25 +62,25 @@
     {
       "id": "gate-north-2",
       "name": "북2문",
-      "throughputPerMin": 11.0,
+      "throughputPerMin": 10.0,
       "crossingNodeIds": [],
-      "source": "가정"
+      "source": "관측"
     },
     {
       "id": "gate-east-2",
       "name": "동2문",
-      "throughputPerMin": 8.9,
+      "throughputPerMin": 9.8,
       "crossingNodeIds": [
         "n-crossing-a"
       ],
-      "source": "가정"
+      "source": "관측"
     },
     {
       "id": "gate-south-2",
       "name": "남2문",
-      "throughputPerMin": 7.2,
+      "throughputPerMin": 11.9,
       "crossingNodeIds": [],
-      "source": "가정"
+      "source": "관측"
     }
   ]
 }
