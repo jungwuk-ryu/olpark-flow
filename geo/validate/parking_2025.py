@@ -1,13 +1,13 @@
 """2025 올림픽공원 입출차정보(전체구역, 문화공공데이터광장 API_CPM_008)로 차량 출구 처리량과 공연일 출차량을 구한다.
 
-입력: API 응답 XML 파일들(페이지별). 받는 방법은 docs/methods/network.md 참고. 원본은 커밋하지 않는다.
-실행: python3 geo/validate/parking_2025.py '<XML 폴더>/*.xml'
+입력: fetch_inout_2025.py로 만든 CSV(.csv 또는 .csv.gz), 또는 API 응답 XML 파일들. 원본은 커밋하지 않는다.
+실행: python3 geo/validate/parking_2025.py <CSV 경로>   또는   python3 geo/validate/parking_2025.py '<XML 폴더>/*.xml'
 
 1) 출구별 처리량: KSPO DOME 공연일, 16~24시 출구(북2문·동2문·남2문, 차로 #1·#2)별 1분 출차 대수 →
    10분 최대 평균. 공연 직후 출차가 몰릴 때 실제로 빠져나간 양이라 '처리 능력의 하한'으로 본다.
 2) 공연일 출차 증가량: 17시 이후 출차가 평소(같은 요일 종류, 공연 없는 날 중앙값)보다 몇 대 늘었는지.
 """
-import csv, datetime as dt, glob, os, re, statistics as st, sys
+import csv, datetime as dt, glob, gzip, os, re, statistics as st, sys
 from collections import Counter, defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -45,7 +45,21 @@ def kind(d):
     return {4: 'fri', 5: 'sat', 6: 'sun'}.get(d.weekday(), 'wk')
 
 
+def parse_csv(path):
+    op = gzip.open if path.endswith('.gz') else open
+    rows = []
+    with op(path, 'rt', encoding='utf-8-sig') as f:
+        for r in csv.DictReader(f):
+            try:
+                rows.append((r['entry_gate'], dt.datetime.fromisoformat(r['entry_time']), r['exit_gate'], dt.datetime.fromisoformat(r['exit_time'])))
+            except ValueError:
+                pass
+    return rows
+
+
 def parse(files):
+    if len(files) == 1 and re.search(r'\.csv(\.gz)?$', files[0]):
+        return parse_csv(files[0])
     seen = set()
     rows = []
     for f in files:
