@@ -1,0 +1,16 @@
+{
+  "segments": 240,
+  "linearSegments": 238,
+  "linearLengthM": 31569.1,
+  "areaPerimeterM": 263.5,
+  "statusCounts": {
+    "하한 포함": 9,
+    "미확정": 43,
+    "3표본 범위 판독": 130,
+    "부분 판독": 56,
+    "면 외곽선": 2
+  },
+  "readableSamples": 507,
+  "samples": 720,
+  "osmWidthTaggedSegments": 16
+}
