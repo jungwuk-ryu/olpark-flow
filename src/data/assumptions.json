@@ -21,9 +21,9 @@
     "flowPerMeterPerMin": "근거: 영국 Green Guide(경기장 안전 지침) 출구 용량 계산 기준 — 평지 82명/m/분, 계단(stepped surface) 66명/m/분 (SGSA 요약, https://sgsa.org.uk/physical-factors/circulation/egress/). stairsFactor = 66/82 ≈ 0.8. 문(gate) 115명은 출처를 확인하지 못해 평지와 같은 82명으로 둠",
     "weatherFactor": "근거: 비 오는 날 평균 보행속도 1.22→0.85m/s(약 30% 감소) (Deng·Lam 외 2017, 위 링크). 우산 실험에서는 우산 든 비율이 0→100%일 때 0.98→0.76m/s(약 22% 감소) (Xie·Lam 외 2017, HKSTS, https://ira.lib.polyu.edu.hk/bitstream/10397/102617/1/Lam_Experimental_Study_Pedestrian.pdf). 통과량 감소율을 직접 잰 자료는 없어 0.85 유지(가정), 민감도로 0.7도 확인",
     "jamAreaPerPersonM2": "근거: 행정안전부 「다중운집인파사고 안전관리 가이드라인」(2024.9) p.19 위험 단계별 적정인원 — 여유 2명/㎡ 이하, 주의 3~4명/㎡, 위험 5명/㎡ 이상 → 위험 기준 1인 0.2㎡. 이전 값 0.46㎡/인은 같은 지침 p.5의 실내 수용능력 기준(NFPA 101 서서 관람, 약 2명/㎡)이라 위험 판정·줄 한계에는 맞지 않음 (https://cse.snu.ac.kr/api/v1/file/1730252035876_[붙임3] 240905 다중운집인파사고 안전관리 가이드라인(배포용).pdf)",
-    "crossingPedestrianShare": "근거 없음(가정). 교차점 신호·안내 통제 방식을 확인하지 못함. 민감도 확인 대상",
-    "vehicleOccupancy": "가정. 행사 관객 차량 평균 탑승 인원 예: 워싱턴대 허스키 스타디움 관객 조사 3.1명/대(2016, https://transportation.uw.edu/files/media/husky-report-2016.pdf). 국내 공연 자료 없음 → 2.4 유지, 화면에서 2~3명 범위로 바꿔 확인",
-    "staffPerJunction": "가정. 영국 HSE 행사 안전 지침은 안내요원 지휘 체계만 제시하고 분기점당 인원 기준은 없음 (https://www.hse.gov.uk/event-safety/crowd-management-control-inside.htm)",
+    "crossingPedestrianShare": "가정(0.6 유지). 보행·차량이 동시에 몰릴 때 처리량을 0.6/0.4로 나누는 계산값이며 실제 신호 녹색 비율이 아님. Main Roads WA 지침(2026.1) pp.22~23은 진입 허용 시간과 횡단 완료 시간을 구분하므로 고정 60%의 근거로 쓰지 않음 (https://www.mainroads.wa.gov.au/4970bb/globalassets/technical-commercial/technical-library/road-and-traffic-engineering/traffic-management/traffic-signals/guidelines-for-pedestrian-crossing-facilities-at-traffic-signals-v2.pdf). 현장 통제 주기·보행/차량 충돌 구간 자료 필요. 검토 범위 0.4/0.6/0.8은 가정이며 현장 권고값이 아님",
+    "vehicleOccupancy": "가정(2.4 유지). 워싱턴대 2016 보고서 p.14, Table 5의 전체 평균은 3.0명/대이고 캠퍼스 주차 차량은 3.1명/대임 (https://transportation.uw.edu/files/media/husky-report-2016.pdf#page=15). 기존 3.1을 전체 평균으로 읽지 않도록 정정. 해외 미식축구 경기 참고값이며 국내 공연 2.4의 직접 근거가 아님. 검토 범위 2.0/2.4/3.0명/대는 가정이며 신뢰구간이 아님",
+    "staffPerJunction": "가정(2명 유지). SGSA SG03(2021) p.63, 4.12는 고정 배치와 이동 배치를 구분한다. 이동 배치 예시 250명당 1명을 분기점당 인원으로 환산하지 않음 (https://sgsa.org.uk/wp-content/uploads/2021/09/SG03-Event-Safety-Management-Digital-Edition.pdf#page=63). 6명÷2명=동시 안내 분기점 3곳이라는 계산 제약이며 현장 전체 안전요원 정원이 아님. 검토 범위 1/2/3명은 가정. HSE도 위험에 맞는 감독·교육을 요구함 (https://www.hse.gov.uk/event-safety/crowd-management-control-inside.htm)",
     "walkToLotMinutes": "가정. 체조경기장 출구에서 주요 주차장(P1·P5 등)까지 지도상 약 200~400m ÷ 분당 70m ≈ 3~6분 → 5분"
   }
 }
