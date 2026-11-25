@@ -24,6 +24,7 @@ from .mode_mix import ModeMixAssumptions, ModeMixModel
 from .network_registry import load_registry
 from .network_registry import ROUTABLE
 from .od_allocation import RouteAvailability, allocate_event
+from .response_features import LARGE_GROUPS
 from .response_packet import ResponseBundle, anchor_mode_mix
 from .scenario import _digest, _unique_object
 
@@ -86,6 +87,16 @@ def _check_keys(obj, allowed, name):
     extra = obj.keys() - set(allowed)
     if extra:
         raise ValueError(f"Unknown {name} fields: {sorted(extra)}")
+
+
+def _station_response(forecast) -> bool:
+    """Whether the bundle's rail figures describe this session's crowd.
+
+    Outside the large venues a crowd is too small to tell from an ordinary evening at the
+    station gates. The fitted rail share there is not a measurement, so the mode mix and the
+    rail destinations stay as they were estimated without the bundle.
+    """
+    return forecast is not None and forecast["inputs"]["venue_group"] in LARGE_GROUPS
 
 
 class MissingEventInput(ValueError):
@@ -263,7 +274,7 @@ class EgressEstimator:
                 "band_80": forecast["attendance"]["band_80"], "act_history_used": forecast["attendance"]["act_history_used"],
                 "unit": "estimated_ticket_count", "assumption": False,
                 "listed_seats": previous.get("listed_seats"), "replaced_basis": previous.get("basis")}
-        if not profile["end_basis"].startswith("operator_"):
+        if _station_response(forecast) and not profile["end_basis"].startswith("operator_"):
             previous = profile["provenance"]["expected_end_at"]
             likely = _time(forecast["station_arrivals"]["likely_end_at"])
             if likely > _time(profile["scheduled_start_at"]):
@@ -336,7 +347,7 @@ class EgressEstimator:
             registry=coverage.registry,
             assumptions=destination_assumptions,
         )
-        if forecast is not None:
+        if _station_response(forecast):
             # An operator's own mode scenario is kept as given; only the default mix is re-anchored.
             if anchor_modes and outbound.get("status") != "rail_from_event_response_model":
                 outbound = anchor_mode_mix(outbound, forecast, profile["attendance"])
@@ -680,7 +691,7 @@ def _export_catalogue(estimator, directory, day_filter, fill_fraction):
                 profile = estimator.resolve({"session_id": key}, cutoff, True, 1.0 if fill_fraction is None else fill_fraction)
                 forecast = estimator.response_forecast(profile, {}, cutoff, True, fill_fraction is not None)
                 arrival, returning = estimator.estimate_shares(profile, cutoff, True, assumptions)
-                if forecast is not None and returning is not None and profile["attendance"] is not None:
+                if _station_response(forecast) and returning is not None and profile["attendance"] is not None:
                     returning = anchor_mode_mix(returning, forecast, profile["attendance"])
                 row = {
                     "session_id": key,

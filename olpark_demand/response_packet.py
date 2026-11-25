@@ -263,7 +263,8 @@ class ResponseBundle:
                 single["busiest_five_minutes_observed_at_station"] = self.single_show["busiest_five_minutes_observed"]
         return {
             "bundle": self.name, "trained_through": self.manifest["trained_through"],
-            "inputs": {"venue_group": group, "audience_type": table.audience_type.iloc[0], "act": table.act.iloc[0],
+            # The act's name stays out: a packet is a result file and carries no artist name.
+            "inputs": {"venue_group": group, "audience_type": table.audience_type.iloc[0],
                        "act_history_shift_hours": float(table.act_shift_hist.iloc[0]),
                        "runtime_minutes": None if not runtime_minutes else float(runtime_minutes)},
             "attendance": {
