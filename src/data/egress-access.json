@@ -1,0 +1,2983 @@
+{
+  "schemaVersion": 1,
+  "publishedAt": "2026-11-23T02:50:00+09:00",
+  "networkRevision": "48e50c3614e2b8786062278ede9c2b822ea6f4b7",
+  "baseFileSha256": {
+    "network.json": "e24efce18e3fd7d0be6a1644b9149c520c9d00eef3e00f68b43d289aeb9f951c",
+    "routes.json": "97af91cd34855946a40dbfd7bec8b59e533d1c07c52fc55d81d631eb4e6a4eab",
+    "parking.json": "787d08626da02dc72206744aa2720be7d16be1e2943fa0a509627c2903081663"
+  },
+  "sources": {
+    "seoul-walk": {
+      "localPath": "data/prepared/walk_network_songpa_gangdong.parquet",
+      "sha256": "1c5cf7a8712635997d66e7138fd0a545531e97b8e32bf18d0475ebb10aba084b",
+      "url": "https://data.seoul.go.kr/dataList/OA-21208/S/1/datasetView.do",
+      "attribution": "서울특별시·서울 열린데이터광장",
+      "usage": "원 자료 포털 표기 이용허락범위 제한 없음.",
+      "snapshotDate": "2026-11-20",
+      "referenceNote": "포털 설명은 2020년 기준이며 2026-11-20은 이 파일의 수집일. 도면 작성·갱신일과 개별 시설 개방 시각은 알 수 없음."
+    },
+    "seoul-bus-stops": {
+      "localPath": "data/prepared/bus_stop_locations.parquet",
+      "sha256": "09e01e4d6e600abcb7c805da71ea0838e2a3905fe3d307cb9e6c0ff218e3a30f",
+      "url": "https://data.seoul.go.kr/dataList/OA-15067/A/1/datasetView.do",
+      "attribution": "서울특별시·서울 열린데이터광장",
+      "usage": "원 자료 포털 표기 이용허락범위 제한 없음."
+    },
+    "stcis-catchment": {
+      "localPath": "data/raw/D05/stcis/stations.json",
+      "sha256": "8ff5bc341ec8c38bd627f8f250bf9d72694078a6c446a537c9aff3efb189215e",
+      "usage": "교통카드빅데이터(STCIS) 지점 조회 대상 ARS 목록만 사용. 통행량 미사용."
+    },
+    "team-b-landmarks": {
+      "localPath": "geo/osm/apply-skeleton.mjs",
+      "sha256": "b444e047b459dad44b7689ca8f438a6913e10d22a29bf6623e5b814c80103f52",
+      "url": "https://github.com/jungwuk-ryu/olpark-flow/blob/48e50c3614e2b8786062278ede9c2b822ea6f4b7/geo/osm/apply-skeleton.mjs",
+      "attribution": "© OpenStreetMap contributors, ODbL 1.0. 팀 B가 보행 경로와 랜드마크를 모델링.",
+      "licenceUrl": "https://www.openstreetmap.org/copyright"
+    },
+    "team-b-network": {
+      "localPath": "src/data/network.json",
+      "sha256": "e24efce18e3fd7d0be6a1644b9149c520c9d00eef3e00f68b43d289aeb9f951c",
+      "url": "https://github.com/jungwuk-ryu/olpark-flow/blob/48e50c3614e2b8786062278ede9c2b822ea6f4b7/src/data/network.json",
+      "attribution": "© OpenStreetMap contributors, ODbL 1.0. 팀 B가 보행 경로와 랜드마크를 모델링.",
+      "licenceUrl": "https://www.openstreetmap.org/copyright"
+    },
+    "team-b-routes": {
+      "localPath": "src/data/routes.json",
+      "sha256": "97af91cd34855946a40dbfd7bec8b59e533d1c07c52fc55d81d631eb4e6a4eab",
+      "url": "https://github.com/jungwuk-ryu/olpark-flow/blob/48e50c3614e2b8786062278ede9c2b822ea6f4b7/src/data/routes.json",
+      "attribution": "© OpenStreetMap contributors, ODbL 1.0. 팀 B가 보행 경로와 랜드마크를 모델링.",
+      "licenceUrl": "https://www.openstreetmap.org/copyright"
+    },
+    "team-b-parking": {
+      "localPath": "src/data/parking.json",
+      "sha256": "787d08626da02dc72206744aa2720be7d16be1e2943fa0a509627c2903081663",
+      "url": "https://github.com/jungwuk-ryu/olpark-flow/blob/48e50c3614e2b8786062278ede9c2b822ea6f4b7/src/data/parking.json"
+    },
+    "d10-stop-codebook": {
+      "localPath": "data/raw/D10/도보네트워크_링크노드유형코드.xlsx",
+      "sha256": "c718a21352d91b2a9be50e8c52ed886d92a495adb14070995b487b0ca5ab4e4f",
+      "usage": "서울특별시. 원본 유형코드표의 NODE_CODE 2(버스 정류장)와 보행 허용 링크 코드.",
+      "url": "https://data.seoul.go.kr/dataList/OA-21208/S/1/datasetView.do"
+    },
+    "d05-october-directions": {
+      "localPath": "data/prepared/bus_park_daily_totals_2025.parquet",
+      "sha256": "1394eee40caa0773163fe6c101b0f5bec23461f5fa01a0d47410053590f27574",
+      "usage": "서울시 버스 노선·정류장 일별 자료의 10월 25일자 순번·ARS만 사용. 10월 28일 등록.",
+      "url": "https://data.seoul.go.kr/dataList/OA-12912/A/1/datasetView.do"
+    }
+  },
+  "coordSystem": "WGS84; [longitude, latitude]",
+  "usage": "연구 시나리오 전용. 전 구간 현장 미검증. 시설 접근 대리점까지의 보행으로 계산한다.",
+  "coverageByVenue": {
+    "kspo-dome": {
+      "originNodeIds": [
+        "n-kspo-exit-south",
+        "n-kspo-exit-east",
+        "n-kspo-exit-west"
+      ],
+      "status": "base_graph"
+    },
+    "ticketlink-live-arena": {
+      "originNodeIds": [],
+      "status": "unmapped"
+    },
+    "olympic-hall": {
+      "originNodeIds": [],
+      "status": "unmapped"
+    },
+    "woori-art-hall": {
+      "originNodeIds": [],
+      "status": "unmapped"
+    }
+  },
+  "method": {
+    "cityWalkPermission": "D10 링크유형 첫 비트 1(보행 가능). 실내·지하철·고가·육교·교량·터널은 제외. 공간상 교차만 하는 선은 연결하지 않고 제공된 시작·종료 노드 ID만 사용.",
+    "matching": "B팀 접점과 서울시 보행선 간격 5m 이하, 같은 B팀 길의 5·10·15m 표본 최대편차 7m 이하. 목적지에서 시 보행망으로 가장 가까운 기존 접점의 연장 경로를 사용. 공연장부터의 전역 최단경로나 실제 선택 경로를 뜻하지 않음. 여러 목적지가 공유하는 구간의 용량을 한 번만 계산. 정류소·평화의문은 최대 10m, 번호 미상 주차장 대리점만 35m. 비슷한 거리(차이 3m 이하)지만 도착점이 6m 넘게 다른 경우 보류. 접점 진입로를 되짚는 시 보행로(15·30·45m 지점 모두 10m 이내)는 해당 출발 방향에서 제외. 보행선을 벗어나 마지막 좌표까지 직선으로 잇지 않음.",
+    "dimensions": "추가 간선의 폭 3m·평지·대기 면적(폭×길이, 적용 길이 10~40m)은 민감도 분석용 임시 가정. 폭·높이·접근성을 조사하지 않았으며 stepFree=false는 무단차를 보장할 수 없음을 뜻함.",
+    "limitations": "알려진 목적지 후보 목록만 담았다. 각 수단 전체 중 이 장소를 향하는 비중은 별도 근거가 필요하다. 목록 밖 목적지, 익명 주차장과 특정 구역 간 귀속, 현장 승차·경계 통과·폐쇄는 미확인."
+  },
+  "destinations": [
+    {
+      "id": "bus-24123",
+      "firstMode": "bus",
+      "name": "잠실파크리오아파트상가.올림픽회관 (24123)",
+      "status": "modelled_connector",
+      "arsId": "24123",
+      "evidence": [
+        "d05-october-directions",
+        "d10-stop-codebook",
+        "seoul-bus-stops",
+        "seoul-walk",
+        "stcis-catchment"
+      ],
+      "scope": "방향별 정류소 표지 주변 보행선까지. 승차구 위치·운행·승차 인원은 별도 확인.",
+      "stopNodeId": "123000034",
+      "stopType": "가로변시간",
+      "sourceLngLat": [
+        127.11464918,
+        37.52102392
+      ],
+      "snapshotDate": "2025-12-09",
+      "publishedDate": "2025-12-11",
+      "approachLngLat": [
+        127.11468466,
+        37.52107191
+      ],
+      "mappingNote": "D10 정류장 노드에서 계산을 끝냄. 보행망의 기존 길목과 이어지는 지상 경로.",
+      "stopMatch": {
+        "d10StopNodeId": "195706",
+        "sourceNodeCode": "2",
+        "stopNodeGapM": 6.19,
+        "nextD10StopGapM": 32.55,
+        "nextArsGapM": 44.72,
+        "sameIdentitySnapshots": 10,
+        "firstSnapshot": "2024-12-09",
+        "lastSnapshot": "2025-12-09",
+        "preEventStopSnapshot": "2025-10-02",
+        "routeServiceDate": "2025-10-25",
+        "routeRegisteredDate": "2025-10-28",
+        "routeDirectionWitnesses": [
+          {
+            "routeNumber": "3318",
+            "previousArs": "24110",
+            "stopSequence": 35,
+            "nextArs": "24124",
+            "routeHeadingDeg": 222.8
+          },
+          {
+            "routeNumber": "3319",
+            "previousArs": "24110",
+            "stopSequence": 24,
+            "nextArs": "24127",
+            "routeHeadingDeg": 205.9
+          },
+          {
+            "routeNumber": "340",
+            "previousArs": "24110",
+            "stopSequence": 29,
+            "nextArs": "24396",
+            "routeHeadingDeg": 200.2
+          },
+          {
+            "routeNumber": "341",
+            "previousArs": "24110",
+            "stopSequence": 20,
+            "nextArs": "24127",
+            "routeHeadingDeg": 205.9
+          },
+          {
+            "routeNumber": "3411",
+            "previousArs": "24110",
+            "stopSequence": 31,
+            "nextArs": "24127",
+            "routeHeadingDeg": 205.9
+          },
+          {
+            "routeNumber": "342",
+            "previousArs": "24110",
+            "stopSequence": 34,
+            "nextArs": "24124",
+            "routeHeadingDeg": 222.8
+          },
+          {
+            "routeNumber": "4318",
+            "previousArs": "24111",
+            "stopSequence": 65,
+            "nextArs": "24510",
+            "routeHeadingDeg": 198.1
+          },
+          {
+            "routeNumber": "N31",
+            "previousArs": "24110",
+            "stopSequence": 25,
+            "nextArs": "24127",
+            "routeHeadingDeg": 205.9
+          }
+        ],
+        "directionalSideCheck": {
+          "oppositeArs": "24231",
+          "routeNumber": "340",
+          "tripHeadingDeg": 200.2,
+          "oppositeTripHeadingDeg": 18.5,
+          "arsRightOffsetM": 22.9,
+          "d10RightOffsetM": 21.8,
+          "oppositeArsRightOffsetM": -22.9
+        }
+      },
+      "lngLat": [
+        127.11468466,
+        37.52107191
+      ],
+      "anchorNodeId": "walk-peace-gate",
+      "approachLengthM": 1478.7,
+      "snapGapM": 6.19
+    },
+    {
+      "id": "bus-24127",
+      "firstMode": "bus",
+      "name": "몽촌토성역 (24127)",
+      "status": "candidate_only",
+      "arsId": "24127",
+      "evidence": [
+        "d05-october-directions",
+        "d10-stop-codebook",
+        "seoul-bus-stops",
+        "seoul-walk",
+        "stcis-catchment"
+      ],
+      "scope": "방향별 정류소 표지 주변 보행선까지. 승차구 위치·운행·승차 인원은 별도 확인.",
+      "stopNodeId": "123000038",
+      "stopType": "가로변시간",
+      "sourceLngLat": [
+        127.11300986,
+        37.51837037
+      ],
+      "snapshotDate": "2025-12-09",
+      "publishedDate": "2025-12-11",
+      "approachLngLat": [
+        127.11310768,
+        37.51851598
+      ],
+      "mappingNote": "공식 정류장 노드를 확인했으나 이 판본의 개방 조건에서 기존 보행망에 연결되지 않음.",
+      "stopMatch": {
+        "d10StopNodeId": "110203",
+        "sourceNodeCode": "2",
+        "stopNodeGapM": 18.35,
+        "nextD10StopGapM": 170.12,
+        "nextArsGapM": 169.79,
+        "sameIdentitySnapshots": 10,
+        "firstSnapshot": "2024-12-09",
+        "lastSnapshot": "2025-12-09",
+        "preEventStopSnapshot": "2025-10-02",
+        "routeServiceDate": "2025-10-25",
+        "routeRegisteredDate": "2025-10-28",
+        "routeDirectionWitnesses": [
+          {
+            "routeNumber": "3319",
+            "previousArs": "24123",
+            "stopSequence": 25,
+            "nextArs": "24128",
+            "routeHeadingDeg": 223.7
+          },
+          {
+            "routeNumber": "341",
+            "previousArs": "24123",
+            "stopSequence": 21,
+            "nextArs": "24128",
+            "routeHeadingDeg": 223.7
+          },
+          {
+            "routeNumber": "3411",
+            "previousArs": "24123",
+            "stopSequence": 32,
+            "nextArs": "24128",
+            "routeHeadingDeg": 223.7
+          },
+          {
+            "routeNumber": "N31",
+            "previousArs": "24123",
+            "stopSequence": 26,
+            "nextArs": "24128",
+            "routeHeadingDeg": 223.7
+          },
+          {
+            "routeNumber": "N31",
+            "previousArs": "24123",
+            "stopSequence": 96,
+            "nextArs": "24128",
+            "routeHeadingDeg": 223.7
+          }
+        ]
+      }
+    },
+    {
+      "id": "bus-24211",
+      "firstMode": "bus",
+      "name": "한성백제역4번출구 (24211)",
+      "status": "candidate_only",
+      "arsId": "24211",
+      "evidence": [
+        "d05-october-directions",
+        "d10-stop-codebook",
+        "seoul-bus-stops",
+        "seoul-walk",
+        "stcis-catchment"
+      ],
+      "scope": "방향별 정류소 표지 주변 보행선까지. 승차구 위치·운행·승차 인원은 별도 확인.",
+      "stopNodeId": "123000122",
+      "stopType": "일반차로",
+      "sourceLngLat": [
+        127.11536315,
+        37.51499159
+      ],
+      "snapshotDate": "2025-12-09",
+      "publishedDate": "2025-12-11",
+      "approachLngLat": [
+        127.11524486,
+        37.51479499
+      ],
+      "mappingNote": "공식 정류장 노드를 확인했으나 이 판본의 개방 조건에서 기존 보행망에 연결되지 않음.",
+      "stopMatch": {
+        "d10StopNodeId": "201383",
+        "sourceNodeCode": "2",
+        "stopNodeGapM": 24.22,
+        "nextD10StopGapM": 130.81,
+        "nextArsGapM": 104.47,
+        "sameIdentitySnapshots": 10,
+        "firstSnapshot": "2024-12-09",
+        "lastSnapshot": "2025-12-09",
+        "preEventStopSnapshot": "2025-10-02",
+        "routeServiceDate": "2025-10-25",
+        "routeRegisteredDate": "2025-10-28",
+        "routeDirectionWitnesses": [
+          {
+            "routeNumber": "340",
+            "previousArs": "24213",
+            "stopSequence": 77,
+            "nextArs": "24241",
+            "routeHeadingDeg": 12.3
+          }
+        ]
+      }
+    },
+    {
+      "id": "bus-24221",
+      "firstMode": "bus",
+      "name": "올림픽공원남2문 (24221)",
+      "status": "candidate_only",
+      "arsId": "24221",
+      "evidence": [
+        "d05-october-directions",
+        "d10-stop-codebook",
+        "seoul-bus-stops",
+        "seoul-walk",
+        "stcis-catchment"
+      ],
+      "scope": "방향별 정류소 표지 주변 보행선까지. 승차구 위치·운행·승차 인원은 별도 확인.",
+      "stopNodeId": "123000132",
+      "stopType": "일반차로",
+      "sourceLngLat": [
+        127.12140728,
+        37.51402402
+      ],
+      "snapshotDate": "2025-12-09",
+      "publishedDate": "2025-12-11",
+      "mappingNote": "공식 정류장 노드를 확인했으나 이 판본의 개방 조건에서 기존 보행망에 연결되지 않음.",
+      "stopMatch": {
+        "d10StopNodeId": "199362",
+        "sourceNodeCode": "2",
+        "stopNodeGapM": 10.59,
+        "nextD10StopGapM": 76.38,
+        "nextArsGapM": 69.65,
+        "sameIdentitySnapshots": 10,
+        "firstSnapshot": "2024-12-09",
+        "lastSnapshot": "2025-12-09",
+        "preEventStopSnapshot": "2025-10-02",
+        "routeServiceDate": "2025-10-25",
+        "routeRegisteredDate": "2025-10-28",
+        "routeDirectionWitnesses": [
+          {
+            "routeNumber": "3216",
+            "previousArs": "24226",
+            "stopSequence": 85,
+            "nextArs": "24227",
+            "routeHeadingDeg": 110.4
+          },
+          {
+            "routeNumber": "3323",
+            "previousArs": "24217",
+            "stopSequence": 47,
+            "nextArs": "24222",
+            "routeHeadingDeg": 115.3
+          },
+          {
+            "routeNumber": "3412",
+            "previousArs": "24217",
+            "stopSequence": 84,
+            "nextArs": "24222",
+            "routeHeadingDeg": 115.3
+          },
+          {
+            "routeNumber": "3413",
+            "previousArs": "24217",
+            "stopSequence": 70,
+            "nextArs": "24222",
+            "routeHeadingDeg": 115.3
+          },
+          {
+            "routeNumber": "3414",
+            "previousArs": "24226",
+            "stopSequence": 79,
+            "nextArs": "24227",
+            "routeHeadingDeg": 110.4
+          }
+        ],
+        "directionalSideCheck": {
+          "oppositeArs": "24240",
+          "routeNumber": "3323",
+          "tripHeadingDeg": 115.3,
+          "oppositeTripHeadingDeg": 295.9,
+          "arsRightOffsetM": 37.7,
+          "d10RightOffsetM": 31.8,
+          "oppositeArsRightOffsetM": -37.7
+        }
+      },
+      "approachLngLat": [
+        127.12152602,
+        37.51403792
+      ]
+    },
+    {
+      "id": "bus-24222",
+      "firstMode": "bus",
+      "name": "올림픽공원장미광장 (24222)",
+      "status": "candidate_only",
+      "arsId": "24222",
+      "evidence": [
+        "d05-october-directions",
+        "d10-stop-codebook",
+        "seoul-bus-stops",
+        "seoul-walk",
+        "stcis-catchment"
+      ],
+      "scope": "방향별 정류소 표지 주변 보행선까지. 승차구 위치·운행·승차 인원은 별도 확인.",
+      "stopNodeId": "123000133",
+      "stopType": "일반차로",
+      "sourceLngLat": [
+        127.12492015,
+        37.51265129
+      ],
+      "snapshotDate": "2025-12-09",
+      "publishedDate": "2025-12-11",
+      "approachLngLat": [
+        127.12492402,
+        37.5127093
+      ],
+      "mappingNote": "공식 정류장 노드를 확인했으나 이 판본의 개방 조건에서 기존 보행망에 연결되지 않음.",
+      "stopMatch": {
+        "d10StopNodeId": "199267",
+        "sourceNodeCode": "2",
+        "stopNodeGapM": 6.46,
+        "nextD10StopGapM": 125.0,
+        "nextArsGapM": 110.62,
+        "sameIdentitySnapshots": 10,
+        "firstSnapshot": "2024-12-09",
+        "lastSnapshot": "2025-12-09",
+        "preEventStopSnapshot": "2025-10-02",
+        "routeServiceDate": "2025-10-25",
+        "routeRegisteredDate": "2025-10-28",
+        "routeDirectionWitnesses": [
+          {
+            "routeNumber": "3323",
+            "previousArs": "24221",
+            "stopSequence": 48,
+            "nextArs": "24247",
+            "routeHeadingDeg": 96.4
+          },
+          {
+            "routeNumber": "3412",
+            "previousArs": "24221",
+            "stopSequence": 85,
+            "nextArs": "24247",
+            "routeHeadingDeg": 96.4
+          },
+          {
+            "routeNumber": "3413",
+            "previousArs": "24221",
+            "stopSequence": 71,
+            "nextArs": "24247",
+            "routeHeadingDeg": 96.4
+          }
+        ],
+        "directionalSideCheck": {
+          "oppositeArs": "24239",
+          "routeNumber": "3323",
+          "tripHeadingDeg": 96.4,
+          "oppositeTripHeadingDeg": 253.8,
+          "arsRightOffsetM": 18.9,
+          "d10RightOffsetM": 12.5,
+          "oppositeArsRightOffsetM": -18.9
+        }
+      }
+    },
+    {
+      "id": "bus-24231",
+      "firstMode": "bus",
+      "name": "올림픽회관 (24231)",
+      "status": "modelled_connector",
+      "arsId": "24231",
+      "evidence": [
+        "d05-october-directions",
+        "d10-stop-codebook",
+        "seoul-bus-stops",
+        "seoul-walk",
+        "stcis-catchment"
+      ],
+      "scope": "방향별 정류소 표지 주변 보행선까지. 승차구 위치·운행·승차 인원은 별도 확인.",
+      "stopNodeId": "123000142",
+      "stopType": "가로변전일",
+      "sourceLngLat": [
+        127.11515019,
+        37.52091259
+      ],
+      "snapshotDate": "2025-12-09",
+      "publishedDate": "2025-12-11",
+      "mappingNote": "D10 정류장 노드에서 계산을 끝냄. 보행망의 기존 길목과 이어지는 지상 경로.",
+      "stopMatch": {
+        "d10StopNodeId": "110208",
+        "sourceNodeCode": "2",
+        "stopNodeGapM": 13.42,
+        "nextD10StopGapM": 44.72,
+        "nextArsGapM": 32.55,
+        "sameIdentitySnapshots": 10,
+        "firstSnapshot": "2024-12-09",
+        "lastSnapshot": "2025-12-09",
+        "preEventStopSnapshot": "2025-10-02",
+        "routeServiceDate": "2025-10-25",
+        "routeRegisteredDate": "2025-10-28",
+        "routeDirectionWitnesses": [
+          {
+            "routeNumber": "3318",
+            "previousArs": "24126",
+            "stopSequence": 79,
+            "nextArs": "24232",
+            "routeHeadingDeg": 39.2
+          },
+          {
+            "routeNumber": "3319",
+            "previousArs": "24126",
+            "stopSequence": 32,
+            "nextArs": "24232",
+            "routeHeadingDeg": 39.2
+          },
+          {
+            "routeNumber": "340",
+            "previousArs": "24241",
+            "stopSequence": 79,
+            "nextArs": "24232",
+            "routeHeadingDeg": 18.5
+          },
+          {
+            "routeNumber": "341",
+            "previousArs": "24216",
+            "stopSequence": 76,
+            "nextArs": "24232",
+            "routeHeadingDeg": 34.0
+          },
+          {
+            "routeNumber": "3411",
+            "previousArs": "24216",
+            "stopSequence": 61,
+            "nextArs": "24232",
+            "routeHeadingDeg": 34.0
+          },
+          {
+            "routeNumber": "342",
+            "previousArs": "24126",
+            "stopSequence": 77,
+            "nextArs": "24232",
+            "routeHeadingDeg": 39.2
+          },
+          {
+            "routeNumber": "4318",
+            "previousArs": "24126",
+            "stopSequence": 42,
+            "nextArs": "24445",
+            "routeHeadingDeg": 38.5
+          },
+          {
+            "routeNumber": "N31",
+            "previousArs": "24216",
+            "stopSequence": 124,
+            "nextArs": "24232",
+            "routeHeadingDeg": 34.0
+          },
+          {
+            "routeNumber": "N31",
+            "previousArs": "24216",
+            "stopSequence": 48,
+            "nextArs": "24232",
+            "routeHeadingDeg": 34.0
+          }
+        ],
+        "directionalSideCheck": {
+          "oppositeArs": "24123",
+          "routeNumber": "340",
+          "tripHeadingDeg": 18.5,
+          "oppositeTripHeadingDeg": 200.2,
+          "arsRightOffsetM": 22.9,
+          "d10RightOffsetM": 9.6,
+          "oppositeArsRightOffsetM": -22.9
+        }
+      },
+      "approachLngLat": [
+        127.11500051,
+        37.52093429
+      ],
+      "lngLat": [
+        127.11500051,
+        37.52093429
+      ],
+      "anchorNodeId": "walk-peace-gate",
+      "approachLengthM": 344.9,
+      "snapGapM": 13.42
+    },
+    {
+      "id": "bus-24233",
+      "firstMode": "bus",
+      "name": "한성백제박물관 (24233)",
+      "status": "modelled_connector",
+      "arsId": "24233",
+      "evidence": [
+        "seoul-bus-stops",
+        "stcis-catchment",
+        "seoul-walk",
+        "team-b-network"
+      ],
+      "scope": "방향별 정류소 표지 주변 보행선까지. 승차구 위치·운행·승차 인원은 별도 확인.",
+      "stopNodeId": "123000584",
+      "stopType": "일반차로",
+      "sourceLngLat": [
+        127.11930314,
+        37.51552827
+      ],
+      "snapshotDate": "2025-12-09",
+      "publishedDate": "2025-12-11",
+      "d10LinkId": "281270",
+      "snapGapM": 1.39,
+      "approachLngLat": [
+        127.11929669,
+        37.51551684
+      ],
+      "anchorNodeId": "n-junction-2",
+      "approachLengthM": 400.0,
+      "lngLat": [
+        127.11929669,
+        37.51551684
+      ]
+    },
+    {
+      "id": "bus-24239",
+      "firstMode": "bus",
+      "name": "올림픽공원장미광장 (24239)",
+      "status": "modelled_connector",
+      "arsId": "24239",
+      "evidence": [
+        "seoul-bus-stops",
+        "stcis-catchment",
+        "seoul-walk",
+        "team-b-network"
+      ],
+      "scope": "방향별 정류소 표지 주변 보행선까지. 승차구 위치·운행·승차 인원은 별도 확인.",
+      "stopNodeId": "123000149",
+      "stopType": "일반차로",
+      "sourceLngLat": [
+        127.12615899,
+        37.51288346
+      ],
+      "snapshotDate": "2025-12-09",
+      "publishedDate": "2025-12-11",
+      "d10LinkId": "209261",
+      "snapGapM": 3.13,
+      "approachLngLat": [
+        127.12617511,
+        37.51290852
+      ],
+      "anchorNodeId": "n-station-front-a",
+      "approachLengthM": 656.7,
+      "lngLat": [
+        127.12617511,
+        37.51290852
+      ]
+    },
+    {
+      "id": "bus-24240",
+      "firstMode": "bus",
+      "name": "올림픽공원남2문 (24240)",
+      "status": "modelled_connector",
+      "arsId": "24240",
+      "evidence": [
+        "seoul-bus-stops",
+        "stcis-catchment",
+        "seoul-walk",
+        "team-b-network"
+      ],
+      "scope": "방향별 정류소 표지 주변 보행선까지. 승차구 위치·운행·승차 인원은 별도 확인.",
+      "stopNodeId": "123000150",
+      "stopType": "일반차로",
+      "sourceLngLat": [
+        127.12180995,
+        37.51462246
+      ],
+      "snapshotDate": "2025-12-09",
+      "publishedDate": "2025-12-11",
+      "d10LinkId": "197687",
+      "snapGapM": 1.16,
+      "approachLngLat": [
+        127.12181521,
+        37.514632
+      ],
+      "anchorNodeId": "n-point-3",
+      "approachLengthM": 557.7,
+      "lngLat": [
+        127.12181521,
+        37.514632
+      ]
+    },
+    {
+      "id": "bus-24241",
+      "firstMode": "bus",
+      "name": "몽촌토성역.한성백제역 (24241)",
+      "status": "modelled_connector",
+      "arsId": "24241",
+      "evidence": [
+        "seoul-bus-stops",
+        "stcis-catchment",
+        "seoul-walk",
+        "team-b-network"
+      ],
+      "scope": "방향별 정류소 표지 주변 보행선까지. 승차구 위치·운행·승차 인원은 별도 확인.",
+      "stopNodeId": "123000151",
+      "stopType": "일반차로",
+      "sourceLngLat": [
+        127.1146313,
+        37.51719976
+      ],
+      "snapshotDate": "2025-12-09",
+      "publishedDate": "2025-12-11",
+      "d10LinkId": "231567",
+      "snapGapM": 1.4,
+      "approachLngLat": [
+        127.11462505,
+        37.5171882
+      ],
+      "anchorNodeId": "n-junction-2",
+      "approachLengthM": 230.2,
+      "lngLat": [
+        127.11462505,
+        37.5171882
+      ]
+    },
+    {
+      "id": "bus-24244",
+      "firstMode": "bus",
+      "name": "올림픽공원역 (24244)",
+      "status": "modelled_connector",
+      "arsId": "24244",
+      "evidence": [
+        "d05-october-directions",
+        "d10-stop-codebook",
+        "seoul-bus-stops",
+        "seoul-walk",
+        "stcis-catchment"
+      ],
+      "scope": "방향별 정류소 표지 주변 보행선까지. 승차구 위치·운행·승차 인원은 별도 확인.",
+      "stopNodeId": "123000154",
+      "stopType": "일반차로",
+      "sourceLngLat": [
+        127.13089889,
+        37.51671779
+      ],
+      "snapshotDate": "2025-12-09",
+      "publishedDate": "2025-12-11",
+      "mappingNote": "기존 e-04와 같은 입구·단면의 앞부분을 사용하고 실제 D10 정류장 노드에서 종료.",
+      "stopMatch": {
+        "d10StopNodeId": "198625",
+        "sourceNodeCode": "2",
+        "stopNodeGapM": 12.14,
+        "nextD10StopGapM": 51.15,
+        "nextArsGapM": 23.86,
+        "sameIdentitySnapshots": 10,
+        "firstSnapshot": "2024-12-09",
+        "lastSnapshot": "2025-12-09",
+        "preEventStopSnapshot": "2025-10-02",
+        "routeServiceDate": "2025-10-25",
+        "routeRegisteredDate": "2025-10-28",
+        "routeDirectionWitnesses": [
+          {
+            "routeNumber": "3214",
+            "previousArs": "24243",
+            "stopSequence": 44,
+            "nextArs": "24265",
+            "routeHeadingDeg": 197.8
+          },
+          {
+            "routeNumber": "3220",
+            "previousArs": "24243",
+            "stopSequence": 86,
+            "nextArs": "24246",
+            "routeHeadingDeg": 208.5
+          },
+          {
+            "routeNumber": "3319",
+            "previousArs": "24243",
+            "stopSequence": 41,
+            "nextArs": "24246",
+            "routeHeadingDeg": 208.5
+          },
+          {
+            "routeNumber": "3323",
+            "previousArs": "24243",
+            "stopSequence": 27,
+            "nextArs": "24239",
+            "routeHeadingDeg": 218.4
+          },
+          {
+            "routeNumber": "3412",
+            "previousArs": "24243",
+            "stopSequence": 32,
+            "nextArs": "24239",
+            "routeHeadingDeg": 218.4
+          },
+          {
+            "routeNumber": "3413",
+            "previousArs": "24243",
+            "stopSequence": 29,
+            "nextArs": "24239",
+            "routeHeadingDeg": 218.4
+          }
+        ],
+        "directionalSideCheck": {
+          "oppositeArs": "24245",
+          "routeNumber": "3214",
+          "tripHeadingDeg": 197.8,
+          "oppositeTripHeadingDeg": 26.6,
+          "arsRightOffsetM": 31.0,
+          "d10RightOffsetM": 20.6,
+          "oppositeArsRightOffsetM": -31.0
+        }
+      },
+      "approachLngLat": [
+        127.13098944,
+        37.51663559
+      ],
+      "lngLat": [
+        127.13098944,
+        37.51663559
+      ],
+      "anchorNodeId": "n-crossing-a",
+      "approachLengthM": 118.21,
+      "snapGapM": 12.14
+    },
+    {
+      "id": "bus-24245",
+      "firstMode": "bus",
+      "name": "올림픽공원역 (24245)",
+      "status": "candidate_only",
+      "arsId": "24245",
+      "evidence": [
+        "d05-october-directions",
+        "d10-stop-codebook",
+        "seoul-bus-stops",
+        "seoul-walk",
+        "stcis-catchment"
+      ],
+      "scope": "방향별 정류소 표지 주변 보행선까지. 승차구 위치·운행·승차 인원은 별도 확인.",
+      "stopNodeId": "123000155",
+      "stopType": "일반차로",
+      "sourceLngLat": [
+        127.13147854,
+        37.51632427
+      ],
+      "snapshotDate": "2025-12-09",
+      "publishedDate": "2025-12-11",
+      "approachLngLat": [
+        127.13134821,
+        37.51642694
+      ],
+      "mappingNote": "공식 정류장 노드를 확인했으나 이 판본의 개방 조건에서 기존 보행망에 연결되지 않음.",
+      "stopMatch": {
+        "d10StopNodeId": "198634",
+        "sourceNodeCode": "2",
+        "stopNodeGapM": 16.2,
+        "nextD10StopGapM": 55.31,
+        "nextArsGapM": 32.7,
+        "sameIdentitySnapshots": 10,
+        "firstSnapshot": "2024-12-09",
+        "lastSnapshot": "2025-12-09",
+        "preEventStopSnapshot": "2025-10-02",
+        "routeServiceDate": "2025-10-25",
+        "routeRegisteredDate": "2025-10-28",
+        "routeDirectionWitnesses": [
+          {
+            "routeNumber": "3214",
+            "previousArs": "24247",
+            "stopSequence": 17,
+            "nextArs": "24242",
+            "routeHeadingDeg": 26.6
+          },
+          {
+            "routeNumber": "3220",
+            "previousArs": "24247",
+            "stopSequence": 7,
+            "nextArs": "25188",
+            "routeHeadingDeg": 13.4
+          },
+          {
+            "routeNumber": "3319",
+            "previousArs": "24247",
+            "stopSequence": 16,
+            "nextArs": "25188",
+            "routeHeadingDeg": 13.4
+          },
+          {
+            "routeNumber": "3323",
+            "previousArs": "24247",
+            "stopSequence": 50,
+            "nextArs": "24242",
+            "routeHeadingDeg": 26.6
+          },
+          {
+            "routeNumber": "3412",
+            "previousArs": "24247",
+            "stopSequence": 87,
+            "nextArs": "24242",
+            "routeHeadingDeg": 26.6
+          },
+          {
+            "routeNumber": "3413",
+            "previousArs": "24247",
+            "stopSequence": 73,
+            "nextArs": "24242",
+            "routeHeadingDeg": 26.6
+          }
+        ],
+        "directionalSideCheck": {
+          "oppositeArs": "24244",
+          "routeNumber": "3214",
+          "tripHeadingDeg": 26.6,
+          "oppositeTripHeadingDeg": 197.8,
+          "arsRightOffsetM": 32.7,
+          "d10RightOffsetM": 17.3,
+          "oppositeArsRightOffsetM": -32.7
+        }
+      }
+    },
+    {
+      "id": "bus-24246",
+      "firstMode": "bus",
+      "name": "올림픽공원테니스장 (24246)",
+      "status": "modelled_connector",
+      "arsId": "24246",
+      "evidence": [
+        "seoul-bus-stops",
+        "stcis-catchment",
+        "seoul-walk",
+        "team-b-network"
+      ],
+      "scope": "방향별 정류소 표지 주변 보행선까지. 승차구 위치·운행·승차 인원은 별도 확인.",
+      "stopNodeId": "123000156",
+      "stopType": "일반차로",
+      "sourceLngLat": [
+        127.12859719,
+        37.5132953
+      ],
+      "snapshotDate": "2025-12-09",
+      "publishedDate": "2025-12-11",
+      "d10LinkId": "74293",
+      "snapGapM": 6.7,
+      "approachLngLat": [
+        127.12866269,
+        37.51326484
+      ],
+      "anchorNodeId": "n-station-front-a",
+      "approachLengthM": 365.4,
+      "lngLat": [
+        127.12866269,
+        37.51326484
+      ]
+    },
+    {
+      "id": "bus-24396",
+      "firstMode": "bus",
+      "name": "몽촌토성역.한성백제역 (24396)",
+      "status": "candidate_only",
+      "arsId": "24396",
+      "evidence": [
+        "d05-october-directions",
+        "d10-stop-codebook",
+        "seoul-bus-stops",
+        "seoul-walk",
+        "stcis-catchment"
+      ],
+      "scope": "방향별 정류소 표지 주변 보행선까지. 승차구 위치·운행·승차 인원은 별도 확인.",
+      "stopNodeId": "123000305",
+      "stopType": "일반차로",
+      "sourceLngLat": [
+        127.11360276,
+        37.51704039
+      ],
+      "snapshotDate": "2025-12-09",
+      "publishedDate": "2025-12-11",
+      "mappingNote": "공식 정류장 노드를 확인했으나 이 판본의 개방 조건에서 기존 보행망에 연결되지 않음.",
+      "stopMatch": {
+        "d10StopNodeId": "110616",
+        "sourceNodeCode": "2",
+        "stopNodeGapM": 18.94,
+        "nextD10StopGapM": 95.98,
+        "nextArsGapM": 105.5,
+        "sameIdentitySnapshots": 10,
+        "firstSnapshot": "2024-12-09",
+        "lastSnapshot": "2025-12-09",
+        "preEventStopSnapshot": "2025-10-02",
+        "routeServiceDate": "2025-10-25",
+        "routeRegisteredDate": "2025-10-28",
+        "routeDirectionWitnesses": [
+          {
+            "routeNumber": "3323",
+            "previousArs": "24216",
+            "stopSequence": 45,
+            "nextArs": "24217",
+            "routeHeadingDeg": 100.2
+          },
+          {
+            "routeNumber": "333",
+            "previousArs": "24216",
+            "stopSequence": 51,
+            "nextArs": "24210",
+            "routeHeadingDeg": 118.1
+          },
+          {
+            "routeNumber": "340",
+            "previousArs": "24123",
+            "stopSequence": 30,
+            "nextArs": "24210",
+            "routeHeadingDeg": 181.9
+          },
+          {
+            "routeNumber": "3412",
+            "previousArs": "24126",
+            "stopSequence": 82,
+            "nextArs": "24217",
+            "routeHeadingDeg": 127.5
+          },
+          {
+            "routeNumber": "3413",
+            "previousArs": "24216",
+            "stopSequence": 68,
+            "nextArs": "24217",
+            "routeHeadingDeg": 100.2
+          }
+        ]
+      },
+      "approachLngLat": [
+        127.11350028,
+        37.51689074
+      ]
+    },
+    {
+      "id": "bus-24902",
+      "firstMode": "bus",
+      "name": "한성백제박물관 (24902)",
+      "status": "modelled_connector",
+      "arsId": "24902",
+      "evidence": [
+        "seoul-bus-stops",
+        "stcis-catchment",
+        "seoul-walk",
+        "team-b-network"
+      ],
+      "scope": "방향별 정류소 표지 주변 보행선까지. 승차구 위치·운행·승차 인원은 별도 확인.",
+      "stopNodeId": "123000642",
+      "stopType": "일반차로",
+      "sourceLngLat": [
+        127.11960101,
+        37.51541885
+      ],
+      "snapshotDate": "2025-12-09",
+      "publishedDate": "2025-12-11",
+      "d10LinkId": "163291",
+      "snapGapM": 0.48,
+      "approachLngLat": [
+        127.11959902,
+        37.51541481
+      ],
+      "anchorNodeId": "n-junction-2",
+      "approachLengthM": 429.0,
+      "lngLat": [
+        127.11959902,
+        37.51541481
+      ]
+    },
+    {
+      "id": "bus-24903",
+      "firstMode": "bus",
+      "name": "올림픽공원평화의문 (24903)",
+      "status": "modelled_connector",
+      "arsId": "24903",
+      "evidence": [
+        "seoul-bus-stops",
+        "stcis-catchment",
+        "seoul-walk",
+        "team-b-network"
+      ],
+      "scope": "방향별 정류소 표지 주변 보행선까지. 승차구 위치·운행·승차 인원은 별도 확인.",
+      "stopNodeId": "123000643",
+      "stopType": "일반차로",
+      "sourceLngLat": [
+        127.11500801,
+        37.51707048
+      ],
+      "snapshotDate": "2025-12-09",
+      "publishedDate": "2025-12-11",
+      "d10LinkId": "137040",
+      "snapGapM": 1.52,
+      "approachLngLat": [
+        127.11500099,
+        37.51705803
+      ],
+      "anchorNodeId": "n-junction-2",
+      "approachLengthM": 194.0,
+      "lngLat": [
+        127.11500099,
+        37.51705803
+      ]
+    },
+    {
+      "id": "n-dest-a",
+      "firstMode": "rail",
+      "status": "base_graph",
+      "name": "올림픽공원역 3번 출구",
+      "lngLat": [
+        127.13062,
+        37.51608
+      ],
+      "evidence": [
+        "team-b-network",
+        "team-b-routes"
+      ]
+    },
+    {
+      "id": "n-dest-b",
+      "firstMode": "rail",
+      "status": "base_graph",
+      "name": "한성백제역 2번 출구",
+      "lngLat": [
+        127.11621,
+        37.51654
+      ],
+      "evidence": [
+        "team-b-network",
+        "team-b-routes"
+      ]
+    },
+    {
+      "id": "n-dest-c",
+      "firstMode": "rail",
+      "status": "base_graph",
+      "name": "몽촌토성역 1번 출구",
+      "lngLat": [
+        127.11329,
+        37.51771
+      ],
+      "evidence": [
+        "team-b-network",
+        "team-b-routes"
+      ]
+    },
+    {
+      "id": "park-lot-aggregate",
+      "firstMode": "parked_vehicle",
+      "name": "공원 주차장 인근 보행 접근점 (구역 미상)",
+      "status": "modelled_connector",
+      "sourceLngLat": [
+        127.12887,
+        37.51621
+      ],
+      "evidence": [
+        "team-b-landmarks",
+        "seoul-walk",
+        "team-b-network"
+      ],
+      "scope": "이 지도 표식 인근 보행선까지만 계산. 특정 주차구역 입구·승차나 전체 주차장 대표 여부는 확인되지 않음.",
+      "d10LinkId": "260954",
+      "snapGapM": 32.09,
+      "approachLngLat": [
+        127.1290434,
+        37.51646376
+      ],
+      "anchorNodeId": "n-station-front-a",
+      "approachLengthM": 169.8,
+      "lngLat": [
+        127.1290434,
+        37.51646376
+      ]
+    },
+    {
+      "id": "park-lot-p1",
+      "firstMode": "parked_vehicle",
+      "name": "1주차장",
+      "lotId": "P1",
+      "status": "unmapped",
+      "evidence": [
+        "team-b-parking"
+      ],
+      "scope": "구역 이름·대수는 있으나 보행 출입구 좌표와 접근 경로가 없음."
+    },
+    {
+      "id": "park-lot-p2",
+      "firstMode": "parked_vehicle",
+      "name": "2주차장 (올림픽홀 지하 포함)",
+      "lotId": "P2",
+      "status": "unmapped",
+      "evidence": [
+        "team-b-parking"
+      ],
+      "scope": "구역 이름·대수는 있으나 보행 출입구 좌표와 접근 경로가 없음."
+    },
+    {
+      "id": "park-lot-p4",
+      "firstMode": "parked_vehicle",
+      "name": "4주차장",
+      "lotId": "P4",
+      "status": "unmapped",
+      "evidence": [
+        "team-b-parking"
+      ],
+      "scope": "구역 이름·대수는 있으나 보행 출입구 좌표와 접근 경로가 없음."
+    },
+    {
+      "id": "park-lot-p5",
+      "firstMode": "parked_vehicle",
+      "name": "5주차장",
+      "lotId": "P5",
+      "status": "unmapped",
+      "evidence": [
+        "team-b-parking"
+      ],
+      "scope": "구역 이름·대수는 있으나 보행 출입구 좌표와 접근 경로가 없음."
+    },
+    {
+      "id": "park-lot-p6",
+      "firstMode": "parked_vehicle",
+      "name": "6주차장",
+      "lotId": "P6",
+      "status": "unmapped",
+      "evidence": [
+        "team-b-parking"
+      ],
+      "scope": "구역 이름·대수는 있으나 보행 출입구 좌표와 접근 경로가 없음."
+    },
+    {
+      "id": "park-lot-p7",
+      "firstMode": "parked_vehicle",
+      "name": "7주차장",
+      "lotId": "P7",
+      "status": "unmapped",
+      "evidence": [
+        "team-b-parking"
+      ],
+      "scope": "구역 이름·대수는 있으나 보행 출입구 좌표와 접근 경로가 없음."
+    },
+    {
+      "id": "pickup-unregistered",
+      "firstMode": "taxi_pickup",
+      "name": "택시·픽업 지점 미등록",
+      "status": "unmapped",
+      "evidence": [
+        "team-b-parking",
+        "seoul-bus-stops"
+      ],
+      "scope": "기존 자료에는 지정 승차구나 적법한 정차 장소를 특정하는 좌표·운영 근거가 없음."
+    },
+    {
+      "id": "walk-east-2",
+      "firstMode": "walk_only",
+      "name": "동2문 보행 출입구",
+      "status": "unmapped",
+      "evidence": [
+        "team-b-parking"
+      ],
+      "scope": "주차 차단기의 차량 출입 기록만 확인. 보행 통과 위치와 동선 미확인."
+    },
+    {
+      "id": "walk-north-2",
+      "firstMode": "walk_only",
+      "name": "북2문 보행 출입구",
+      "status": "unmapped",
+      "evidence": [
+        "team-b-parking"
+      ],
+      "scope": "주차 차단기의 차량 출입 기록만 확인. 보행 통과 위치와 동선 미확인."
+    },
+    {
+      "id": "walk-peace-gate",
+      "firstMode": "walk_only",
+      "name": "세계평화의문 인근 보행 접근점",
+      "status": "modelled_connector",
+      "sourceLngLat": [
+        127.11539,
+        37.51831
+      ],
+      "evidence": [
+        "team-b-landmarks",
+        "seoul-walk",
+        "team-b-network"
+      ],
+      "scope": "공원 서쪽 경계의 대리점. 기념문 인근 보행선에서 계산을 끝내며 실제 경계선 통과는 현장 미확인.",
+      "d10LinkId": "58292",
+      "snapGapM": 6.56,
+      "approachLngLat": [
+        127.1153193,
+        37.51829163
+      ],
+      "anchorNodeId": "n-station-front-c",
+      "approachLengthM": 197.2,
+      "lngLat": [
+        127.1153193,
+        37.51829163
+      ]
+    },
+    {
+      "id": "walk-south-2",
+      "firstMode": "walk_only",
+      "name": "남2문 보행 출입구",
+      "status": "unmapped",
+      "evidence": [
+        "team-b-parking"
+      ],
+      "scope": "주차 차단기의 차량 출입 기록만 확인. 보행 통과 위치와 동선 미확인."
+    }
+  ],
+  "nodes": [
+    {
+      "id": "access-city-122797",
+      "kind": "junction",
+      "name": "서울시 보행망 분기점 122797",
+      "lngLat": [
+        127.12873104,
+        37.51323733
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "bus-24246",
+      "kind": "destination",
+      "name": "올림픽공원테니스장 (24246)",
+      "lngLat": [
+        127.12866269,
+        37.51326484
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "access-city-198626",
+      "kind": "junction",
+      "name": "서울시 보행망 분기점 198626",
+      "lngLat": [
+        127.13043646,
+        37.51586496
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "access-city-32181",
+      "kind": "junction",
+      "name": "서울시 보행망 분기점 32181",
+      "lngLat": [
+        127.11610114,
+        37.51669756
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "bus-24903",
+      "kind": "destination",
+      "name": "올림픽공원평화의문 (24903)",
+      "lngLat": [
+        127.11500099,
+        37.51705803
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "bus-24902",
+      "kind": "destination",
+      "name": "한성백제박물관 (24902)",
+      "lngLat": [
+        127.11959902,
+        37.51541481
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "bus-24240",
+      "kind": "destination",
+      "name": "올림픽공원남2문 (24240)",
+      "lngLat": [
+        127.12181521,
+        37.514632
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "bus-24239",
+      "kind": "destination",
+      "name": "올림픽공원장미광장 (24239)",
+      "lngLat": [
+        127.12617511,
+        37.51290852
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "bus-24241",
+      "kind": "destination",
+      "name": "몽촌토성역.한성백제역 (24241)",
+      "lngLat": [
+        127.11462505,
+        37.5171882
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "park-lot-aggregate",
+      "kind": "destination",
+      "name": "공원 주차장 인근 보행 접근점 (구역 미상)",
+      "lngLat": [
+        127.1290434,
+        37.51646376
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "bus-24233",
+      "kind": "destination",
+      "name": "한성백제박물관 (24233)",
+      "lngLat": [
+        127.11929669,
+        37.51551684
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "walk-peace-gate",
+      "kind": "destination",
+      "name": "세계평화의문 인근 보행 접근점",
+      "lngLat": [
+        127.1153193,
+        37.51829163
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "bus-24231",
+      "kind": "destination",
+      "name": "올림픽회관 (24231)",
+      "lngLat": [
+        127.11500051,
+        37.52093429
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "bus-24123",
+      "kind": "destination",
+      "name": "잠실파크리오아파트상가.올림픽회관 (24123)",
+      "lngLat": [
+        127.11468466,
+        37.52107191
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "bus-24244",
+      "kind": "destination",
+      "name": "올림픽공원역 (24244)",
+      "lngLat": [
+        127.13098944,
+        37.51663559
+      ],
+      "source": "가정"
+    }
+  ],
+  "edges": [
+    {
+      "id": "access-e-f60ace507cd8",
+      "from": "n-station-front-a",
+      "to": "access-city-198626",
+      "lengthM": 30.03,
+      "widthM": 3.0,
+      "type": "flat",
+      "queueAreaM2": 90.08,
+      "stepFree": false,
+      "path": [
+        [
+          127.1306,
+          37.51604
+        ],
+        [
+          127.13060058,
+          37.51606846
+        ],
+        [
+          127.13043646,
+          37.51586496
+        ]
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "access-e-9148a676f18e",
+      "from": "access-city-122797",
+      "to": "bus-24239",
+      "lengthM": 298.06,
+      "widthM": 3.0,
+      "type": "flat",
+      "queueAreaM2": 120,
+      "stepFree": false,
+      "path": [
+        [
+          127.12873104,
+          37.51323733
+        ],
+        [
+          127.12830828,
+          37.51265762
+        ],
+        [
+          127.12807862,
+          37.51276314
+        ],
+        [
+          127.12793759,
+          37.51261454
+        ],
+        [
+          127.1277881,
+          37.5125552
+        ],
+        [
+          127.12763292,
+          37.51253248
+        ],
+        [
+          127.12748068,
+          37.51254866
+        ],
+        [
+          127.12739454,
+          37.51257851
+        ],
+        [
+          127.12730813,
+          37.51244586
+        ],
+        [
+          127.1266966,
+          37.51268911
+        ],
+        [
+          127.12631477,
+          37.512852
+        ],
+        [
+          127.12617511,
+          37.51290852
+        ]
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "access-e-47d61b27f057",
+      "from": "access-city-122797",
+      "to": "bus-24246",
+      "lengthM": 6.76,
+      "widthM": 3.0,
+      "type": "flat",
+      "queueAreaM2": 30,
+      "stepFree": false,
+      "path": [
+        [
+          127.12873104,
+          37.51323733
+        ],
+        [
+          127.12866269,
+          37.51326484
+        ]
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "access-e-1c6f8f2c0a1e",
+      "from": "access-city-198626",
+      "to": "access-city-122797",
+      "lengthM": 328.63,
+      "widthM": 3.0,
+      "type": "flat",
+      "queueAreaM2": 120,
+      "stepFree": false,
+      "path": [
+        [
+          127.13043646,
+          37.51586496
+        ],
+        [
+          127.12971335,
+          37.51473293
+        ],
+        [
+          127.12922659,
+          37.51400762
+        ],
+        [
+          127.12873104,
+          37.51323733
+        ]
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "access-e-b66ebb2218ef",
+      "from": "access-city-198626",
+      "to": "park-lot-aggregate",
+      "lengthM": 139.74,
+      "widthM": 3.0,
+      "type": "flat",
+      "queueAreaM2": 120,
+      "stepFree": false,
+      "path": [
+        [
+          127.13043646,
+          37.51586496
+        ],
+        [
+          127.1290434,
+          37.51646376
+        ]
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "access-e-a012c76f6a51",
+      "from": "access-city-32181",
+      "to": "bus-24233",
+      "lengthM": 311.13,
+      "widthM": 3.0,
+      "type": "flat",
+      "queueAreaM2": 120,
+      "stepFree": false,
+      "path": [
+        [
+          127.11610114,
+          37.51669756
+        ],
+        [
+          127.11631933,
+          37.5165875
+        ],
+        [
+          127.11646291,
+          37.51654158
+        ],
+        [
+          127.11847867,
+          37.51580724
+        ],
+        [
+          127.11929669,
+          37.51551684
+        ]
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "access-e-b078ee3750de",
+      "from": "access-city-32181",
+      "to": "bus-24903",
+      "lengthM": 105.1,
+      "widthM": 3.0,
+      "type": "flat",
+      "queueAreaM2": 120,
+      "stepFree": false,
+      "path": [
+        [
+          127.11610114,
+          37.51669756
+        ],
+        [
+          127.11579671,
+          37.51677567
+        ],
+        [
+          127.11500099,
+          37.51705803
+        ]
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "access-e-ff9ff6165c31",
+      "from": "bus-24903",
+      "to": "bus-24241",
+      "lengthM": 36.18,
+      "widthM": 3.0,
+      "type": "flat",
+      "queueAreaM2": 108.53,
+      "stepFree": false,
+      "path": [
+        [
+          127.11500099,
+          37.51705803
+        ],
+        [
+          127.11494431,
+          37.51707815
+        ],
+        [
+          127.11467869,
+          37.51716995
+        ],
+        [
+          127.11462505,
+          37.5171882
+        ]
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "access-e-4cd30d6c4f00",
+      "from": "n-junction-2",
+      "to": "access-city-32181",
+      "lengthM": 88.9,
+      "widthM": 3.0,
+      "type": "flat",
+      "queueAreaM2": 120,
+      "stepFree": false,
+      "path": [
+        [
+          127.11649,
+          37.51736
+        ],
+        [
+          127.1165145,
+          37.51737003
+        ],
+        [
+          127.11655031,
+          37.51731503
+        ],
+        [
+          127.11642368,
+          37.51717784
+        ],
+        [
+          127.11618184,
+          37.51685768
+        ],
+        [
+          127.11610114,
+          37.51669756
+        ]
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "access-e-3ec194d203e0",
+      "from": "n-station-front-c",
+      "to": "walk-peace-gate",
+      "lengthM": 197.17,
+      "widthM": 3.0,
+      "type": "flat",
+      "queueAreaM2": 120,
+      "stepFree": false,
+      "path": [
+        [
+          127.1133,
+          37.5177
+        ],
+        [
+          127.11327206,
+          37.51769215
+        ],
+        [
+          127.11326448,
+          37.51770912
+        ],
+        [
+          127.11531968,
+          37.51829071
+        ],
+        [
+          127.1153193,
+          37.51829163
+        ]
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "access-e-fc0806673de9",
+      "from": "bus-24233",
+      "to": "bus-24902",
+      "lengthM": 28.99,
+      "widthM": 3.0,
+      "type": "flat",
+      "queueAreaM2": 86.96,
+      "stepFree": false,
+      "path": [
+        [
+          127.11929669,
+          37.51551684
+        ],
+        [
+          127.11948116,
+          37.51545135
+        ],
+        [
+          127.11959902,
+          37.51541481
+        ]
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "access-e-46e35cbd7d4c",
+      "from": "n-point-3",
+      "to": "bus-24240",
+      "lengthM": 557.74,
+      "widthM": 3.0,
+      "type": "flat",
+      "queueAreaM2": 120,
+      "stepFree": false,
+      "path": [
+        [
+          127.12176,
+          37.5178
+        ],
+        [
+          127.12174115,
+          37.51781436
+        ],
+        [
+          127.1214455,
+          37.51757028
+        ],
+        [
+          127.12114498,
+          37.51726798
+        ],
+        [
+          127.12122635,
+          37.51704767
+        ],
+        [
+          127.12131207,
+          37.51675465
+        ],
+        [
+          127.12126528,
+          37.51625121
+        ],
+        [
+          127.12125328,
+          37.51609773
+        ],
+        [
+          127.12133164,
+          37.51592063
+        ],
+        [
+          127.12147694,
+          37.51566055
+        ],
+        [
+          127.12173501,
+          37.51535362
+        ],
+        [
+          127.12198764,
+          37.51522978
+        ],
+        [
+          127.12242982,
+          37.51506454
+        ],
+        [
+          127.12250448,
+          37.51504158
+        ],
+        [
+          127.12292941,
+          37.5148695
+        ],
+        [
+          127.12269036,
+          37.51451045
+        ],
+        [
+          127.12246897,
+          37.5144054
+        ],
+        [
+          127.12181521,
+          37.514632
+        ]
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "access-e-ef3cc5dcd0da",
+      "from": "bus-24231",
+      "to": "bus-24123",
+      "lengthM": 1133.77,
+      "widthM": 3.0,
+      "type": "flat",
+      "queueAreaM2": 120,
+      "stepFree": false,
+      "path": [
+        [
+          127.11500051,
+          37.52093429
+        ],
+        [
+          127.11580084,
+          37.52223614
+        ],
+        [
+          127.11647205,
+          37.52334314
+        ],
+        [
+          127.11657288,
+          37.52351697
+        ],
+        [
+          127.1172844,
+          37.52466053
+        ],
+        [
+          127.11730505,
+          37.52469508
+        ],
+        [
+          127.11764909,
+          37.52525796
+        ],
+        [
+          127.11776466,
+          37.52531565
+        ],
+        [
+          127.11773342,
+          37.52538007
+        ],
+        [
+          127.11737222,
+          37.52548128
+        ],
+        [
+          127.11732475,
+          37.52542484
+        ],
+        [
+          127.11717722,
+          37.52523477
+        ],
+        [
+          127.11714396,
+          37.52506399
+        ],
+        [
+          127.11690252,
+          37.52469508
+        ],
+        [
+          127.11682448,
+          37.52455114
+        ],
+        [
+          127.11679279,
+          37.52450082
+        ],
+        [
+          127.11606113,
+          37.52332752
+        ],
+        [
+          127.11554782,
+          37.52247626
+        ],
+        [
+          127.11514659,
+          37.52185881
+        ],
+        [
+          127.1147279,
+          37.52116341
+        ],
+        [
+          127.11468466,
+          37.52107191
+        ]
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "access-e-0033472eedd6",
+      "from": "walk-peace-gate",
+      "to": "bus-24231",
+      "lengthM": 344.93,
+      "widthM": 3.0,
+      "type": "flat",
+      "queueAreaM2": 120,
+      "stepFree": false,
+      "path": [
+        [
+          127.1153193,
+          37.51829163
+        ],
+        [
+          127.1153193,
+          37.51829163
+        ],
+        [
+          127.11478295,
+          37.51958998
+        ],
+        [
+          127.11493417,
+          37.51983013
+        ],
+        [
+          127.11442446,
+          37.52002516
+        ],
+        [
+          127.11452533,
+          37.52022531
+        ],
+        [
+          127.11500051,
+          37.52093429
+        ]
+      ],
+      "source": "가정"
+    },
+    {
+      "id": "access-e-04-stop-24244",
+      "from": "n-crossing-a",
+      "to": "bus-24244",
+      "capacityEdgeId": "e-04",
+      "lengthM": 118.21,
+      "widthM": 5.9,
+      "type": "flat",
+      "queueAreaM2": 236,
+      "stepFree": false,
+      "path": [
+        [
+          127.12981,
+          37.5171
+        ],
+        [
+          127.13089,
+          37.51666
+        ],
+        [
+          127.13093784,
+          37.5166395
+        ],
+        [
+          127.13094925,
+          37.51665623
+        ],
+        [
+          127.13098944,
+          37.51663559
+        ]
+      ],
+      "source": "가정"
+    }
+  ],
+  "edgeEvidence": {
+    "access-e-f60ace507cd8": {
+      "d10LinkIds": [
+        "81518"
+      ],
+      "baseTransfer": {
+        "baseNodeId": "n-station-front-a",
+        "baseEdgeId": "e-04",
+        "d10LinkId": "273827",
+        "snapGapM": 3.17,
+        "maxTraceGapM": 1.97
+      },
+      "pedestrianLinkCodes": [
+        "1111"
+      ],
+      "containsMarkedCrossing": false
+    },
+    "access-e-9148a676f18e": {
+      "d10LinkIds": [
+        "257622",
+        "217268",
+        "165422",
+        "224841",
+        "75318",
+        "221073",
+        "209261"
+      ],
+      "pedestrianLinkCodes": [
+        "1011",
+        "1111"
+      ],
+      "containsMarkedCrossing": true
+    },
+    "access-e-47d61b27f057": {
+      "d10LinkIds": [
+        "74293"
+      ],
+      "pedestrianLinkCodes": [
+        "1111"
+      ],
+      "containsMarkedCrossing": false
+    },
+    "access-e-1c6f8f2c0a1e": {
+      "d10LinkIds": [
+        "158282"
+      ],
+      "pedestrianLinkCodes": [
+        "1111"
+      ],
+      "containsMarkedCrossing": false
+    },
+    "access-e-b66ebb2218ef": {
+      "d10LinkIds": [
+        "260954"
+      ],
+      "pedestrianLinkCodes": [
+        "1111"
+      ],
+      "containsMarkedCrossing": false
+    },
+    "access-e-a012c76f6a51": {
+      "d10LinkIds": [
+        "34971",
+        "254675",
+        "32992",
+        "281270"
+      ],
+      "pedestrianLinkCodes": [
+        "1111"
+      ],
+      "containsMarkedCrossing": false
+    },
+    "access-e-b078ee3750de": {
+      "d10LinkIds": [
+        "135463",
+        "137040"
+      ],
+      "pedestrianLinkCodes": [
+        "1111"
+      ],
+      "containsMarkedCrossing": false
+    },
+    "access-e-ff9ff6165c31": {
+      "d10LinkIds": [
+        "137040",
+        "126096",
+        "231567"
+      ],
+      "pedestrianLinkCodes": [
+        "1111"
+      ],
+      "containsMarkedCrossing": false
+    },
+    "access-e-4cd30d6c4f00": {
+      "d10LinkIds": [
+        "138000",
+        "1259",
+        "201047"
+      ],
+      "baseTransfer": {
+        "baseNodeId": "n-junction-2",
+        "baseEdgeId": "e-12",
+        "d10LinkId": "138000",
+        "snapGapM": 2.43,
+        "maxTraceGapM": 1.66
+      },
+      "pedestrianLinkCodes": [
+        "1111"
+      ],
+      "containsMarkedCrossing": true
+    },
+    "access-e-3ec194d203e0": {
+      "d10LinkIds": [
+        "231567",
+        "276904",
+        "58292"
+      ],
+      "baseTransfer": {
+        "baseNodeId": "n-station-front-c",
+        "baseEdgeId": "e-13",
+        "d10LinkId": "231567",
+        "snapGapM": 2.61,
+        "maxTraceGapM": 6.81
+      },
+      "pedestrianLinkCodes": [
+        "1111"
+      ],
+      "containsMarkedCrossing": true
+    },
+    "access-e-fc0806673de9": {
+      "d10LinkIds": [
+        "281270",
+        "163291"
+      ],
+      "pedestrianLinkCodes": [
+        "1111"
+      ],
+      "containsMarkedCrossing": false
+    },
+    "access-e-46e35cbd7d4c": {
+      "d10LinkIds": [
+        "88458",
+        "241468",
+        "246645",
+        "274485",
+        "138545",
+        "197687"
+      ],
+      "baseTransfer": {
+        "baseNodeId": "n-point-3",
+        "baseEdgeId": "e-08",
+        "d10LinkId": "88458",
+        "snapGapM": 2.31,
+        "maxTraceGapM": 2.86
+      },
+      "pedestrianLinkCodes": [
+        "1011",
+        "1111"
+      ],
+      "containsMarkedCrossing": true
+    },
+    "access-e-ef3cc5dcd0da": {
+      "d10LinkIds": [
+        "156652",
+        "181227",
+        "63470",
+        "243424",
+        "214209",
+        "27105",
+        "3555",
+        "107854",
+        "149874",
+        "114973",
+        "32537",
+        "194066",
+        "120506",
+        "236925",
+        "75839"
+      ],
+      "pedestrianLinkCodes": [
+        "1000",
+        "1111"
+      ],
+      "containsMarkedCrossing": true
+    },
+    "access-e-0033472eedd6": {
+      "d10LinkIds": [
+        "58292",
+        "63162",
+        "258968",
+        "86766"
+      ],
+      "baseTransfer": {
+        "baseNodeId": "walk-peace-gate",
+        "d10LinkId": "58292",
+        "snapGapM": 0,
+        "source": "기존 등록부와 같은 서울시 보행망 위치"
+      },
+      "pedestrianLinkCodes": [
+        "1111"
+      ],
+      "containsMarkedCrossing": false
+    },
+    "access-e-04-stop-24244": {
+      "d10LinkIds": [
+        "197838"
+      ],
+      "pedestrianLinkCodes": [
+        "1111"
+      ],
+      "containsMarkedCrossing": false,
+      "sharedCapacityEdgeId": "e-04",
+      "basePrefixPolylineM": 111.88,
+      "basePolylineM": 189.68,
+      "basePublishedLengthM": 194,
+      "d10FrontageJoinNodeId": "120430",
+      "baseToCityJoinGapM": 2.12,
+      "alignmentMaxGapsM": {
+        "63719": 2.67,
+        "273827": 1.88
+      },
+      "cityFrontageLengthM": 4.22,
+      "closureAndCapacityPolicy": "e-04 입구 용량·대기공간과 폐쇄를 공유. 종점 직전 서울시 보행선까지 짧은 공간 정합은 가정."
+    }
+  },
+  "paths": [
+    {
+      "exitNodeId": "n-kspo-exit-east",
+      "destinationId": "bus-24123",
+      "edgeIds": [
+        "e-14",
+        "e-01",
+        "e-05",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "e-12",
+        "e-13",
+        "access-e-3ec194d203e0",
+        "access-e-0033472eedd6",
+        "access-e-ef3cc5dcd0da"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-east",
+      "destinationId": "bus-24231",
+      "edgeIds": [
+        "e-14",
+        "e-01",
+        "e-05",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "e-12",
+        "e-13",
+        "access-e-3ec194d203e0",
+        "access-e-0033472eedd6"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-east",
+      "destinationId": "bus-24233",
+      "edgeIds": [
+        "e-14",
+        "e-01",
+        "e-05",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "access-e-4cd30d6c4f00",
+        "access-e-a012c76f6a51"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-east",
+      "destinationId": "bus-24239",
+      "edgeIds": [
+        "e-14",
+        "e-01",
+        "e-02",
+        "e-03",
+        "e-04",
+        "access-e-f60ace507cd8",
+        "access-e-1c6f8f2c0a1e",
+        "access-e-9148a676f18e"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-east",
+      "destinationId": "bus-24240",
+      "edgeIds": [
+        "e-14",
+        "e-01",
+        "e-05",
+        "e-06",
+        "e-07",
+        "access-e-46e35cbd7d4c"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-east",
+      "destinationId": "bus-24241",
+      "edgeIds": [
+        "e-14",
+        "e-01",
+        "e-05",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "access-e-4cd30d6c4f00",
+        "access-e-b078ee3750de",
+        "access-e-ff9ff6165c31"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-east",
+      "destinationId": "bus-24244",
+      "edgeIds": [
+        "e-14",
+        "e-01",
+        "e-02",
+        "e-03",
+        "access-e-04-stop-24244"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-east",
+      "destinationId": "bus-24246",
+      "edgeIds": [
+        "e-14",
+        "e-01",
+        "e-02",
+        "e-03",
+        "e-04",
+        "access-e-f60ace507cd8",
+        "access-e-1c6f8f2c0a1e",
+        "access-e-47d61b27f057"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-east",
+      "destinationId": "bus-24902",
+      "edgeIds": [
+        "e-14",
+        "e-01",
+        "e-05",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "access-e-4cd30d6c4f00",
+        "access-e-a012c76f6a51",
+        "access-e-fc0806673de9"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-east",
+      "destinationId": "bus-24903",
+      "edgeIds": [
+        "e-14",
+        "e-01",
+        "e-05",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "access-e-4cd30d6c4f00",
+        "access-e-b078ee3750de"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-east",
+      "destinationId": "n-dest-a",
+      "edgeIds": [
+        "e-14",
+        "e-01",
+        "e-02",
+        "e-03",
+        "e-04",
+        "e-station-a"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-east",
+      "destinationId": "n-dest-b",
+      "edgeIds": [
+        "e-14",
+        "e-01",
+        "e-05",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "e-11",
+        "e-station-b"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-east",
+      "destinationId": "n-dest-c",
+      "edgeIds": [
+        "e-14",
+        "e-01",
+        "e-05",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "e-12",
+        "e-13",
+        "e-station-c"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-east",
+      "destinationId": "park-lot-aggregate",
+      "edgeIds": [
+        "e-14",
+        "e-01",
+        "e-02",
+        "e-03",
+        "e-04",
+        "access-e-f60ace507cd8",
+        "access-e-b66ebb2218ef"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-east",
+      "destinationId": "walk-peace-gate",
+      "edgeIds": [
+        "e-14",
+        "e-01",
+        "e-05",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "e-12",
+        "e-13",
+        "access-e-3ec194d203e0"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-south",
+      "destinationId": "bus-24123",
+      "edgeIds": [
+        "e-01",
+        "e-05",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "e-12",
+        "e-13",
+        "access-e-3ec194d203e0",
+        "access-e-0033472eedd6",
+        "access-e-ef3cc5dcd0da"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-south",
+      "destinationId": "bus-24231",
+      "edgeIds": [
+        "e-01",
+        "e-05",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "e-12",
+        "e-13",
+        "access-e-3ec194d203e0",
+        "access-e-0033472eedd6"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-south",
+      "destinationId": "bus-24233",
+      "edgeIds": [
+        "e-01",
+        "e-05",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "access-e-4cd30d6c4f00",
+        "access-e-a012c76f6a51"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-south",
+      "destinationId": "bus-24239",
+      "edgeIds": [
+        "e-01",
+        "e-02",
+        "e-03",
+        "e-04",
+        "access-e-f60ace507cd8",
+        "access-e-1c6f8f2c0a1e",
+        "access-e-9148a676f18e"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-south",
+      "destinationId": "bus-24240",
+      "edgeIds": [
+        "e-01",
+        "e-05",
+        "e-06",
+        "e-07",
+        "access-e-46e35cbd7d4c"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-south",
+      "destinationId": "bus-24241",
+      "edgeIds": [
+        "e-01",
+        "e-05",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "access-e-4cd30d6c4f00",
+        "access-e-b078ee3750de",
+        "access-e-ff9ff6165c31"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-south",
+      "destinationId": "bus-24244",
+      "edgeIds": [
+        "e-01",
+        "e-02",
+        "e-03",
+        "access-e-04-stop-24244"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-south",
+      "destinationId": "bus-24246",
+      "edgeIds": [
+        "e-01",
+        "e-02",
+        "e-03",
+        "e-04",
+        "access-e-f60ace507cd8",
+        "access-e-1c6f8f2c0a1e",
+        "access-e-47d61b27f057"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-south",
+      "destinationId": "bus-24902",
+      "edgeIds": [
+        "e-01",
+        "e-05",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "access-e-4cd30d6c4f00",
+        "access-e-a012c76f6a51",
+        "access-e-fc0806673de9"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-south",
+      "destinationId": "bus-24903",
+      "edgeIds": [
+        "e-01",
+        "e-05",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "access-e-4cd30d6c4f00",
+        "access-e-b078ee3750de"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-south",
+      "destinationId": "n-dest-a",
+      "edgeIds": [
+        "e-01",
+        "e-02",
+        "e-03",
+        "e-04",
+        "e-station-a"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-south",
+      "destinationId": "n-dest-b",
+      "edgeIds": [
+        "e-01",
+        "e-05",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "e-11",
+        "e-station-b"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-south",
+      "destinationId": "n-dest-c",
+      "edgeIds": [
+        "e-01",
+        "e-05",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "e-12",
+        "e-13",
+        "e-station-c"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-south",
+      "destinationId": "park-lot-aggregate",
+      "edgeIds": [
+        "e-01",
+        "e-02",
+        "e-03",
+        "e-04",
+        "access-e-f60ace507cd8",
+        "access-e-b66ebb2218ef"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-south",
+      "destinationId": "walk-peace-gate",
+      "edgeIds": [
+        "e-01",
+        "e-05",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "e-12",
+        "e-13",
+        "access-e-3ec194d203e0"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-west",
+      "destinationId": "bus-24123",
+      "edgeIds": [
+        "e-15",
+        "e-17",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "e-12",
+        "e-13",
+        "access-e-3ec194d203e0",
+        "access-e-0033472eedd6",
+        "access-e-ef3cc5dcd0da"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-west",
+      "destinationId": "bus-24231",
+      "edgeIds": [
+        "e-15",
+        "e-17",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "e-12",
+        "e-13",
+        "access-e-3ec194d203e0",
+        "access-e-0033472eedd6"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-west",
+      "destinationId": "bus-24233",
+      "edgeIds": [
+        "e-15",
+        "e-17",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "access-e-4cd30d6c4f00",
+        "access-e-a012c76f6a51"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-west",
+      "destinationId": "bus-24239",
+      "edgeIds": [
+        "e-15",
+        "e-16",
+        "e-03",
+        "e-04",
+        "access-e-f60ace507cd8",
+        "access-e-1c6f8f2c0a1e",
+        "access-e-9148a676f18e"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-west",
+      "destinationId": "bus-24240",
+      "edgeIds": [
+        "e-15",
+        "e-17",
+        "e-06",
+        "e-07",
+        "access-e-46e35cbd7d4c"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-west",
+      "destinationId": "bus-24241",
+      "edgeIds": [
+        "e-15",
+        "e-17",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "access-e-4cd30d6c4f00",
+        "access-e-b078ee3750de",
+        "access-e-ff9ff6165c31"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-west",
+      "destinationId": "bus-24244",
+      "edgeIds": [
+        "e-15",
+        "e-16",
+        "e-03",
+        "access-e-04-stop-24244"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-west",
+      "destinationId": "bus-24246",
+      "edgeIds": [
+        "e-15",
+        "e-16",
+        "e-03",
+        "e-04",
+        "access-e-f60ace507cd8",
+        "access-e-1c6f8f2c0a1e",
+        "access-e-47d61b27f057"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-west",
+      "destinationId": "bus-24902",
+      "edgeIds": [
+        "e-15",
+        "e-17",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "access-e-4cd30d6c4f00",
+        "access-e-a012c76f6a51",
+        "access-e-fc0806673de9"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-west",
+      "destinationId": "bus-24903",
+      "edgeIds": [
+        "e-15",
+        "e-17",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "access-e-4cd30d6c4f00",
+        "access-e-b078ee3750de"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-west",
+      "destinationId": "n-dest-a",
+      "edgeIds": [
+        "e-15",
+        "e-16",
+        "e-03",
+        "e-04",
+        "e-station-a"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-west",
+      "destinationId": "n-dest-b",
+      "edgeIds": [
+        "e-15",
+        "e-17",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "e-11",
+        "e-station-b"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-west",
+      "destinationId": "n-dest-c",
+      "edgeIds": [
+        "e-15",
+        "e-17",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "e-12",
+        "e-13",
+        "e-station-c"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-west",
+      "destinationId": "park-lot-aggregate",
+      "edgeIds": [
+        "e-15",
+        "e-16",
+        "e-03",
+        "e-04",
+        "access-e-f60ace507cd8",
+        "access-e-b66ebb2218ef"
+      ]
+    },
+    {
+      "exitNodeId": "n-kspo-exit-west",
+      "destinationId": "walk-peace-gate",
+      "edgeIds": [
+        "e-15",
+        "e-17",
+        "e-06",
+        "e-07",
+        "e-08",
+        "e-09",
+        "e-10",
+        "e-12",
+        "e-13",
+        "access-e-3ec194d203e0"
+      ]
+    }
+  ],
+  "mappingVersion": "egress-access-v1-efeec53bd04e520d",
+  "supersedesMappingVersion": "egress-access-v1-4e56007f295b7c08",
+  "accessScope": "outdoor_stop_nodes",
+  "conditionDefault": "outdoor_only",
+  "stopMatchingMethod": "D09 ARS·표준노드·명칭·좌표가 10판에서 일치. D10 코드 2(정류장)와 25m 이내 양방향 최근접이어야 하고 양쪽의 다음 후보는 각각 10m 이상 더 떨어져 있어야 함. 2025-10-02 D09 위치와 2025-10-25 D05 노선 정류순번의 직전·직후 ARS로 방향을 대조. 표시 좌표까지 임의 직선을 추가하지 않음. 기존 간선이 차지하는 시 보행망 구간은 역방향까지 재사용을 차단하고 등록된 접점에서 기존 간선 ID를 공유. 정류장까지 연속적인 지상 경로가 있으면 길이를 기록하고 우회거리를 실제 선택 경로로 해석하지 않음. 2026년 수집 시 보행망은 소급 연구용이며 2025년 행사 당일 개방을 보증하지 않음."
+}

@@ -1,0 +1,547 @@
+{
+  "time_zone": "Asia/Seoul",
+  "proxy_holdout_from": "2025-08-01",
+  "proxy_holdout_to": "2025-12-31",
+  "proxy_origin": "17:00 on the last calendar day of the preceding month",
+  "bootstrap_seed": 1429,
+  "sha256": {
+    "olpark_demand/validate_egress_od.py": "506acd439055ff924fe2678f39c010054c32dcff3c8cac3c7c239e16ed50b572",
+    "olpark_demand/mode_mix.py": "c4cdd5245d2de6620e577b2a482b0faf573abea516c7a830cd19de9e17af1dea",
+    "olpark_demand/destination_mix.py": "7870a7cab87b37fa53717cc63b109b65fb60eb414e697abfe4ba2327cbb65cc8",
+    "olpark_demand/observations.py": "a3636b929848eb95c7b597ce3d76a0ef0cf08e2e2878c7c5281451a6425730d0",
+    "olpark_demand/features.py": "8bcdeb576f5f794e5a669e84517a2da7a516a018f5f471c5324916c93b5cbec1",
+    "olpark_demand/protocol.py": "a38894c2db69a828c20e43a0a401f3a3578649d227338e0a56509d63384382d4",
+    "olpark_demand/network_registry.py": "e884697138f311fadda5eeeca928f306e884cc7ed482528eab42145bf85c1269",
+    "artifacts/egress-demand/2025-d1/predictions.parquet": "2613c0279437b35b158c7fea1fe8f6c27d6b6d057fe07c98bd1951befefd8a2d",
+    "geo/validate/kspo-dome-events.csv": "513c3a891ea64d9ff08a105c0be50d2db753cc868c170e4843daeaabfe811339",
+    "geo/data/olympicpark_linked_2025.csv.gz": "c8642669bdab15a7625d77d7fd8aaa6b5b7c5ce0a5d59799104e46e258aa2015",
+    "geo/measurements.csv": "fe744dc5b415e4da2d9d2aa8bde71fdf252be62caff52ace77786cdcb08dbe8b",
+    "src/data/prediction.json": "bd457c3c3d274a09de820323e0fdc688dc8a407f9d4ddd4b5e487bed6fdf728b",
+    "src/data/egress-access.json": "4841e8d7d1c82a6d656e488f4e52a5edf0bca871ac1ae1bcc43a73d9ead6af72",
+    "artifacts/egress-od/mode_mix.json": "6afcf3bdfadffc858fdc1837c7073128939812230d4312bc2f98681b073a52fd",
+    "artifacts/egress-demand/2025-d1/manifest.json": "640d79704008531b8c2ac362cca3fc093e9714ca5260b620945e0daa691b2d76",
+    "data/prepared/park_station_boardings_2025.csv": "cb72a74110c017e39a61b3373e644c763ce73856283b2bcdc1a110516e0c2769",
+    "data/prepared/bus_park_daily_totals_2025.parquet": "1394eee40caa0773163fe6c101b0f5bec23461f5fa01a0d47410053590f27574",
+    "data/prepared/kopis_park_performances_2025.csv": "d7bfd14f35e4d900326f6f8530764e5876eef8cdedafdabe6a2fd74cbd65d40c"
+  },
+  "mode_mix_source_sha256": {
+    "rail_station_intervals_2025.parquet": "a692629a7441a7199800d89aa29ee53cec7d0d848ebd1bed4f84672a45ab9e36",
+    "parking_gate_hourly_2025.parquet": "c21ff1ed80407c4a045e370a708a4cb6b7d59d684703381d9b14d9dfbccad8f6",
+    "bus_park_stcis_stop_hours_2025.parquet": "b2163d0966f122a32c82d7c638f36a25e846eb0375f8c8cc3eeba76c90aa740b",
+    "event_sessions_2025.csv": "98924f5bc234ac9cc94cd5f7a21af4c7dfa2acafff535f20e85f372951dea723",
+    "calendar_2025.csv": "2d811161c1096d72084f56d48e6c57106f07c6034abf891d964617457eba935b",
+    "event_schedule_review.csv": "ab5fb68d1530666984641134f9d3014c4432624f51efdbd64102fa80f58825c0",
+    "olympicpark_events_2025.csv": "38865a6d2dfb19cacad44a7f93b22b9c2d580cecf689c8fb7db8c521a541b861",
+    "manifest.json": "95e9d0f507462f85d8701da1a61002d4c85cef8b349239de4cc4e1bdc0d6717e"
+  },
+  "label_audit": {
+    "transport_sources": {
+      "rail": {
+        "target": "승차 / 순승차",
+        "target_sum": 9042938,
+        "days": 365,
+        "sites": [
+          "5:2556",
+          "8:2814",
+          "9:4135",
+          "9:4136"
+        ],
+        "unit": "persons"
+      },
+      "parking": {
+        "target": "출입문별 시간당 출차 대수",
+        "target_sum": 2457696,
+        "days": 330,
+        "sites": [
+          "남2",
+          "동2",
+          "북2"
+        ],
+        "unit": "vehicles"
+      },
+      "bus_day": {
+        "target": "정류장 수송일별 공표 노선 승차 합계",
+        "target_sum": 2560448,
+        "days": 365,
+        "sites": [
+          "24123",
+          "24127",
+          "24211",
+          "24221",
+          "24222",
+          "24231",
+          "24233",
+          "24239",
+          "24240",
+          "24241",
+          "24244",
+          "24245",
+          "24246",
+          "24396"
+        ],
+        "unit": "persons"
+      },
+      "bus_hour": {
+        "target": "STCIS 정류장·시간별 전체 노선 승차 인원",
+        "target_sum": 246230,
+        "days": 42,
+        "sites": [
+          "24123",
+          "24127",
+          "24211",
+          "24221",
+          "24222",
+          "24231",
+          "24233",
+          "24239",
+          "24240",
+          "24241",
+          "24244",
+          "24245",
+          "24246",
+          "24396"
+        ],
+        "unit": "persons"
+      }
+    },
+    "dome_programs": {
+      "csv_rows_2023_2025": 132,
+      "rows_2025": 48,
+      "use_yes_with_total_2025": 40,
+      "attendance_sum_2025": 1044056,
+      "single_date_totals": 1,
+      "missing_2025": 8,
+      "columns": [
+        "dates",
+        "attendance",
+        "use"
+      ]
+    },
+    "park_listing": {
+      "schedule_rows": 521,
+      "event_ids": 113,
+      "kopis_rows": 127,
+      "kopis_listed_seats_present": 127
+    },
+    "linked_visitors": {
+      "rows": 7803,
+      "exactly_parking_times_3_or_5": 7803
+    },
+    "network_measurements": {
+      "rows": 20,
+      "distinct_edge_ids": 20,
+      "geometry_columns": [
+        "lengthM",
+        "widthEffectiveM",
+        "areaM2"
+      ],
+      "provenance": "aerial-image readings and assumptions; no field crowd counts"
+    },
+    "dashboard_example_model": "mock",
+    "identifiability": {
+      "first_mode_by_person": false,
+      "vehicle_occupancy": false,
+      "venue_exit_by_destination_5min": false,
+      "walking_link_flow_density_or_queue": false,
+      "anonymous_event_exit_or_trip_survey": false
+    }
+  },
+  "transport_forecast_composition": {
+    "rail": {
+      "prediction_train_through": "2025-08-30",
+      "fixed_training_days": 242,
+      "fixed_shares": {
+        "A": 0.5823857522030012,
+        "B": 0.12589940981023973,
+        "C": 0.2917148379867591
+      },
+      "holdout_rows_verified": 4392,
+      "scheduled_bins_before_panel_check": 242,
+      "panel_sites": 4,
+      "bins": 242,
+      "days": 39,
+      "test_from": "2025-11-01",
+      "test_to": "2025-12-31",
+      "measured_total": 492269,
+      "mean_tv_pct": {
+        "frozen_transport_model": 7.797498791305851,
+        "weekday_median": 7.797498791305851,
+        "fixed": 12.238165606295954
+      },
+      "model_minus_fixed_tv_pp": {
+        "mean": -4.440666814990105,
+        "ci95": [
+          -5.718464690587631,
+          -3.203804378265907
+        ]
+      },
+      "native_total_mae": 785.1260330578513,
+      "native_total_wape_pct": 38.596885036433335
+    },
+    "parking": {
+      "prediction_train_through": "2025-08-30",
+      "fixed_training_days": 238,
+      "fixed_shares": {
+        "남2": 0.22423092792958005,
+        "동2": 0.3995128828167981,
+        "북2": 0.37625618925362186
+      },
+      "holdout_rows_verified": 1551,
+      "scheduled_bins_before_panel_check": 60,
+      "panel_sites": 3,
+      "bins": 60,
+      "days": 16,
+      "test_from": "2025-11-01",
+      "test_to": "2025-11-30",
+      "measured_total": 43675,
+      "mean_tv_pct": {
+        "frozen_transport_model": 8.832548061323626,
+        "weekday_median": 10.362537906764178,
+        "fixed": 10.029055498678908
+      },
+      "model_minus_fixed_tv_pp": {
+        "mean": -1.1965074373552806,
+        "ci95": [
+          -1.8106996993676108,
+          -0.42122520859584694
+        ]
+      },
+      "native_total_mae": 316.90563054579366,
+      "native_total_wape_pct": 43.535976720658546
+    },
+    "bus_day": {
+      "prediction_train_through": "2025-08-30",
+      "fixed_training_days": 239,
+      "fixed_shares": {
+        "24123": 0.12592988759580523,
+        "24127": 0.01193817587579936,
+        "24211": 0.03072974901363169,
+        "24221": 0.04016339128991657,
+        "24222": 0.03433179528118008,
+        "24231": 0.10186940568356505,
+        "24233": 0.02502837663824359,
+        "24239": 0.04813368334215624,
+        "24240": 0.023194949018961773,
+        "24241": 0.03397807155152677,
+        "24244": 0.17840213784807565,
+        "24245": 0.23437588960912317,
+        "24246": 0.005612335751656868,
+        "24396": 0.10631215150035796
+      },
+      "holdout_rows_verified": 854,
+      "scheduled_bins_before_panel_check": 39,
+      "panel_sites": 14,
+      "bins": 39,
+      "days": 39,
+      "test_from": "2025-11-01",
+      "test_to": "2025-12-31",
+      "measured_total": 281656,
+      "mean_tv_pct": {
+        "frozen_transport_model": 4.010824630321246,
+        "weekday_median": 4.010999531462005,
+        "fixed": 6.052115676787998
+      },
+      "model_minus_fixed_tv_pp": {
+        "mean": -2.041291046466751,
+        "ci95": [
+          -2.6118159851095997,
+          -1.4553043657977127
+        ]
+      },
+      "native_total_mae": 490.7295833205466,
+      "native_total_wape_pct": 6.7949746319983655
+    },
+    "bus_hour": {
+      "prediction_train_through": "2025-01-27",
+      "fixed_training_days": 27,
+      "fixed_shares": {
+        "24123": 0.13494660013768817,
+        "24127": 0.011752234386708827,
+        "24211": 0.03154034080870482,
+        "24221": 0.04116023614131925,
+        "24222": 0.03465964822498005,
+        "24231": 0.10782324736960747,
+        "24233": 0.024272110832891634,
+        "24239": 0.05162088230097661,
+        "24240": 0.024247741243701985,
+        "24241": 0.03367877226009663,
+        "24244": 0.16641992457612145,
+        "24245": 0.22560756432048445,
+        "24246": 0.0056598370892962675,
+        "24396": 0.10661086030742237
+      },
+      "holdout_rows_verified": 1638,
+      "scheduled_bins_before_panel_check": 48,
+      "panel_sites": 14,
+      "bins": 0,
+      "days": 0,
+      "documented_13_stop_sensitivity": {
+        "bins": 48,
+        "days": 6,
+        "test_from": "2025-02-05",
+        "test_to": "2025-02-11",
+        "measured_total": 17811,
+        "mean_tv_pct": {
+          "frozen_transport_model": 10.16643578726986,
+          "weekday_median": 10.43500588074352,
+          "fixed": 12.65758396077201
+        },
+        "model_minus_fixed_tv_pp": {
+          "mean": -2.491148173502153,
+          "ci95": [
+            -4.049376124473255,
+            -0.1750223178889888
+          ]
+        },
+        "native_total_mae": 45.59801653941145,
+        "native_total_wape_pct": 12.288500330648192
+      }
+    }
+  },
+  "directional_proxy_holdouts": {
+    "egress": {
+      "funnel": {
+        "scheduled_at_supported_venues": 194,
+        "announced_by_forecast_origin": 190,
+        "uncontaminated_scheduled_window": 10,
+        "complete_observed_window": 6,
+        "at_least_two_previous_control_dates": 4
+      },
+      "from": "2025-10-17",
+      "to": "2025-11-21",
+      "months": {
+        "2025-10": 1,
+        "2025-11": 3
+      },
+      "venues": {
+        "kspo-dome": 2,
+        "olympic-hall": 1,
+        "ticketlink-live-arena": 1
+      },
+      "strict_status": {
+        "prior_only_archive_unavailable_at_cutoff": 4
+      },
+      "retrospective_status": {
+        "historical_proxy_with_assumptions": 4
+      },
+      "any_prior_show_of_same_program": 0,
+      "strict_any_preceding_session": 0,
+      "source_available_at": "2026-11-22T21:59:47+09:00",
+      "sessions": 4,
+      "dates": 4,
+      "distinct_programs": 4,
+      "fixed_and_model": {
+        "rail": {
+          "sessions": 3,
+          "days": 3,
+          "mae_native_units": {
+            "model": 2499.8333333333335,
+            "pooled_history": 2499.8333333333335,
+            "zero_excess": 4354.333333333333
+          },
+          "model_minus_pooled_mae": {
+            "mean": 7.579122514774402e-14,
+            "ci95": [
+              0.0,
+              2.2737367544323206e-13
+            ]
+          },
+          "negative_actual_excess": 0
+        },
+        "car": {
+          "sessions": 3,
+          "days": 3,
+          "mae_native_units": {
+            "model": 416.1666666666667,
+            "pooled_history": 416.1666666666667,
+            "zero_excess": 1109.6666666666667
+          },
+          "model_minus_pooled_mae": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "negative_actual_excess": 0
+        }
+      },
+      "vehicles_given_measured_rail": {
+        "sessions": 3,
+        "days": 3,
+        "model_mae_vehicles": 551.5308708546778,
+        "fixed_ratio_mae_vehicles": 551.5308708546778
+      },
+      "scenario_implied_vehicles_given_measured_rail": {
+        "sessions": 4,
+        "days": 4,
+        "model_mae_vehicles": 334.12499306656264,
+        "fixed_prior_mae_vehicles": 343.16517857142856
+      }
+    },
+    "ingress": {
+      "funnel": {
+        "scheduled_at_supported_venues": 232,
+        "announced_by_forecast_origin": 226,
+        "uncontaminated_scheduled_window": 19,
+        "complete_observed_window": 14,
+        "at_least_two_previous_control_dates": 6
+      },
+      "from": "2025-10-17",
+      "to": "2025-11-21",
+      "months": {
+        "2025-10": 1,
+        "2025-11": 5
+      },
+      "venues": {
+        "kspo-dome": 4,
+        "olympic-hall": 1,
+        "ticketlink-live-arena": 1
+      },
+      "strict_status": {
+        "prior_only_archive_unavailable_at_cutoff": 6
+      },
+      "retrospective_status": {
+        "historical_proxy_with_assumptions": 6
+      },
+      "any_prior_show_of_same_program": 0,
+      "strict_any_preceding_session": 0,
+      "source_available_at": "2026-11-22T21:59:47+09:00",
+      "sessions": 6,
+      "dates": 6,
+      "distinct_programs": 4,
+      "fixed_and_model": {
+        "rail": {
+          "sessions": 6,
+          "days": 6,
+          "mae_native_units": {
+            "model": 617.7525048555923,
+            "pooled_history": 1350.0666666666666,
+            "zero_excess": 3780.6666666666665
+          },
+          "model_minus_pooled_mae": {
+            "mean": -732.3141618110743,
+            "ci95": [
+              -1035.834068377848,
+              -359.5303353050774
+            ]
+          },
+          "negative_actual_excess": 0
+        },
+        "car": {
+          "sessions": 6,
+          "days": 6,
+          "mae_native_units": {
+            "model": 433.29689968689627,
+            "pooled_history": 457.2180555555555,
+            "zero_excess": 1143.25
+          },
+          "model_minus_pooled_mae": {
+            "mean": -23.921155868659355,
+            "ci95": [
+              -65.13933268231663,
+              52.110406356992236
+            ]
+          },
+          "negative_actual_excess": 0
+        }
+      },
+      "vehicles_given_measured_rail": {
+        "sessions": 6,
+        "days": 6,
+        "model_mae_vehicles": 379.53360448304056,
+        "fixed_ratio_mae_vehicles": 314.41991020154205
+      },
+      "scenario_implied_vehicles_given_measured_rail": {
+        "sessions": 6,
+        "days": 6,
+        "model_mae_vehicles": 446.58281572464256,
+        "fixed_prior_mae_vehicles": 468.13095238095246
+      }
+    }
+  },
+  "rail_endpoint_holdouts": {
+    "funnel": {
+      "scheduled_at_supported_venues": 194,
+      "announced_by_forecast_origin": 190,
+      "uncontaminated_scheduled_window": 10,
+      "complete_observed_window": 10,
+      "at_least_two_previous_control_dates": 6
+    },
+    "sessions": 6,
+    "days": 6,
+    "distinct_programs": 4,
+    "any_negative_station_excess": 0,
+    "nonpositive_net_excess": 0,
+    "strict_basis": {
+      "annual_archive_not_yet_published": 6
+    },
+    "rail_first_usable_after_listed_date": {
+      "D03": "2026-06-09T00:00:00+09:00",
+      "D04": "2026-10-03T00:00:00+09:00"
+    },
+    "deployed_policy_selected_after_inspecting_this_holdout": true,
+    "by_replay_basis": {
+      "gross_weekday_proxy": {
+        "sessions": 2,
+        "net_positive_and_mapped": 2,
+        "days": 2,
+        "model_excess_tv_pct": 11.60799235838163,
+        "fixed_excess_tv_pct": 38.1426774612835,
+        "model_minus_fixed_tv_pp": {
+          "mean": -26.534685102901868,
+          "ci95": [
+            -27.072897771880964,
+            -25.99647243392277
+          ]
+        },
+        "same_target_baseline_sessions": 2,
+        "pooled_event_excess_tv_pct": 2.6763990728473033,
+        "deployed_scored": 2,
+        "deployed_excess_tv_pct": 2.676399072847309,
+        "deployed_basis": {
+          "pooled_event_excess": 2
+        },
+        "model_minus_pooled_event_tv_pp": {
+          "mean": 8.931593285534326,
+          "ci95": [
+            5.443558552172769,
+            12.419628018895882
+          ]
+        },
+        "gross_model_tv_pct": 11.999182478240119,
+        "gross_fixed_tv_pct": 14.535502624661746
+      },
+      "matched_event_excess": {
+        "sessions": 4,
+        "net_positive_and_mapped": 4,
+        "days": 4,
+        "model_excess_tv_pct": 0.991294758687792,
+        "fixed_excess_tv_pct": 39.815798874363814,
+        "model_minus_fixed_tv_pp": {
+          "mean": -38.82450411567602,
+          "ci95": [
+            -39.4176921679905,
+            -38.32473791764187
+          ]
+        },
+        "same_target_baseline_sessions": 4,
+        "pooled_event_excess_tv_pct": 0.8123918397784337,
+        "deployed_scored": 4,
+        "deployed_excess_tv_pct": 0.8123918397784391,
+        "deployed_basis": {
+          "pooled_event_excess": 4
+        },
+        "model_minus_pooled_event_tv_pp": {
+          "mean": 0.1789029189093585,
+          "ci95": [
+            0.1129244792162705,
+            0.2385372252124789
+          ]
+        },
+        "gross_model_tv_pct": 14.868102109973723,
+        "gross_fixed_tv_pct": 25.84921570332892
+      }
+    }
+  }
+}

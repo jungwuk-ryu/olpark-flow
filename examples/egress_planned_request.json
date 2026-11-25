@@ -1,0 +1,22 @@
+{
+  "scenario_id": "agency-input-example",
+  "as_of": "2026-11-23T01:56:00+09:00",
+  "events": [
+    {
+      "session_id": "agency-planning-example",
+      "title": "공단 입력 형식 예시 공연",
+      "venue_id": "kspo-dome",
+      "scheduled_start_at": "2026-11-28T18:00:00+09:00",
+      "runtime_text": "120분",
+      "source": "example:agency-schedule",
+      "available_at": "2026-11-23T01:56:00+09:00",
+      "overrides": {
+        "attendance": {
+          "value": 8000,
+          "source": "example:planning-scenario",
+          "available_at": "2026-11-23T01:56:00+09:00"
+        }
+      }
+    }
+  ]
+}
