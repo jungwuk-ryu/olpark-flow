@@ -1,3 +1,6 @@
+.venv/
+__pycache__/
+.pytest_cache/
 node_modules
 dist
 *.tsbuildinfo
@@ -9,3 +12,17 @@ dist
 .impeccable/config.local.json
 geo/osm/osm.json
 geo/osm/out/
+
+# 내려받은 원본과 그 가공본은 올리지 않는다 (data/README.md)
+/data/*
+!/data/README.md
+!/data/manifest.json
+
+# 출연자 이름과 회차별 예매 수가 든 번들 내부 표
+/artifacts/egress-response/*/attendance_history.csv
+/artifacts/egress-response/*/act_history.csv
+
+# 관측값이 행 단위로 든 대조 장부. 저장소에는 요약(JSON)만 둔다
+/artifacts/egress-response/*/*_forecasts.parquet
+/artifacts/egress-response/cycles/*/*.parquet
+/experiments/response_model/**/*.parquet
