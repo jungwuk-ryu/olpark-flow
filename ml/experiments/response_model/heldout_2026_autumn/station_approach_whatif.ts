@@ -4,9 +4,9 @@
 // Called by station_approach_whatif.py.
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { bundle } from '../../../src/data/index';
-import { simulate } from '../../../src/engine/simulate';
-import currentMapping from '../../../src/data/egress-access.json';
+import { bundle } from '../../../../src/data/index';
+import { simulate } from '../../../../src/engine/simulate';
+import currentMapping from '../../../../src/data/egress-access.json';
 
 type Network = typeof bundle.network;
 const flow = bundle.assumptions.flowPerMeterPerMin;

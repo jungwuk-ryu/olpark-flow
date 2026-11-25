@@ -33,6 +33,7 @@ from olpark_demand.response_features import known_by_cutoff
 from olpark_demand.response_train import load_inputs
 
 ROOT = Path(__file__).resolve().parents[3]
+REPO = ROOT.parent          # the pedestrian engine is the dashboard's, outside ml/
 HERE = Path(__file__).parent
 LABELS = {
     "walk_without_limits": "the packet's departures walked with nothing in the way",
@@ -56,8 +57,8 @@ def main():
     for day in days:
         packet, _ = chain.packet_for(estimator, day, sessions[sessions.date.eq(day)])
         (folder / f"{day}.json").write_text(json.dumps(packet, ensure_ascii=False), encoding="utf-8")
-    done = subprocess.run([str(ROOT / "node_modules/.bin/jiti"), str(HERE / "station_approach_whatif.ts"), str(folder)],
-                          cwd=ROOT, check=True, capture_output=True, text=True)
+    done = subprocess.run([str(REPO / "node_modules/.bin/jiti"), str(HERE / "station_approach_whatif.ts"), str(folder)],
+                          cwd=REPO, check=True, capture_output=True, text=True)
     rows = []
     for item in json.loads(done.stdout):
         minutes = {int(minute): persons for minute, persons in item["arrivals"].items()}

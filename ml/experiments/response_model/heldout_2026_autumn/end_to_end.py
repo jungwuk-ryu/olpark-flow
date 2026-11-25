@@ -29,6 +29,7 @@ from olpark_demand.response_features import LARGE_GROUPS, known_by_cutoff
 from olpark_demand.response_train import load_inputs
 
 ROOT = Path(__file__).resolve().parents[3]
+REPO = ROOT.parent          # the pedestrian engine is the dashboard's, outside ml/
 HERE = Path(__file__).parent
 BUNDLE = ROOT / "artifacts/egress-response/rail-2026-11-v2"
 STATION = ("9:4136", "5:2556")
@@ -58,8 +59,8 @@ def walk(packet: dict, folder: Path) -> dict:
     source, target = folder / "packet.json", folder / "result.json"
     source.write_text(json.dumps(packet, ensure_ascii=False), encoding="utf-8")
     target.unlink(missing_ok=True)
-    subprocess.run([str(ROOT / "node_modules/.bin/jiti"), "scripts/simulate-demand.ts", "--packet", str(source),
-                    "--output", str(target), "--tail-minutes", "180", "--detail"], cwd=ROOT, check=True, capture_output=True)
+    subprocess.run([str(REPO / "node_modules/.bin/jiti"), "scripts/simulate-demand.ts", "--packet", str(source),
+                    "--output", str(target), "--tail-minutes", "180", "--detail"], cwd=REPO, check=True, capture_output=True)
     return json.loads(target.read_text(encoding="utf-8"))
 
 

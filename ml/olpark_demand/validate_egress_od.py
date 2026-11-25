@@ -13,6 +13,7 @@ import numpy as np
 import pandas as pd
 
 from .observations import BUS_STOPS, PARK_GATES, RAIL_SITES, load_observations
+from .paths import repo_of
 from .protocol import available_labels, protocol
 from .features import _local_timestamp, _sessions_for_file
 
@@ -154,7 +155,8 @@ def verify_transport_forecasts(observations, prediction_ledger):
 
 def audit_labels(root, quality):
     """Inspect the measurement type and actual granularity of the local sources."""
-    read = lambda path: pd.read_csv(root / path)
+    repo = repo_of(root)
+    read = lambda path: pd.read_csv(root / path if (root / path).exists() else repo / path)
     attendance = read("geo/validate/kspo-dome-events.csv")
     year = attendance[attendance.dates.str.startswith("2025")]
     known = year.loc[year.use.eq("yes") & year.attendance.notna()]
@@ -164,7 +166,7 @@ def audit_labels(root, quality):
     schedule = read("data/prepared/event_sessions_2025.csv")
     kopis = read("data/prepared/kopis_park_performances_2025.csv")
     network = read("geo/measurements.csv")
-    prediction_demo = json.loads((root / "src/data/prediction.json").read_text())
+    prediction_demo = json.loads((repo / "src/data/prediction.json").read_text())
     return {
         "transport_sources": {mode: {key: data[key] for key in ("target", "target_sum", "days", "sites", "unit")}
                               for mode, data in quality["modes"].items()},
@@ -463,7 +465,7 @@ def validate_destinations(root, observations):
     from .network_registry import load_registry
 
     model = DestinationModel.fit(root)
-    registry = load_registry(root / "src/data")
+    registry = load_registry(repo_of(root) / "src/data")
     if model.registry.mapping_version != registry.mapping_version:
         raise ValueError("Destination model and independently verified network catalogue disagree")
     indices = [RAIL_GROUPS.index("n-dest-" + letter) for letter in "abc"]
@@ -677,7 +679,8 @@ def main(argv=None):
                   "data/prepared/bus_park_daily_totals_2025.parquet", "data/prepared/kopis_park_performances_2025.csv"])
     hashes = {}
     for name in files:
-        with (root / name).open("rb") as stream:
+        # Python-side files are named from their root, the dashboard's and Team B's from the repository.
+        with (root / name if (root / name).is_file() else repo_of(root) / name).open("rb") as stream:
             hashes[name] = hashlib.file_digest(stream, "sha256").hexdigest()
     result = {"time_zone": "Asia/Seoul", "proxy_holdout_from": "2025-08-01", "proxy_holdout_to": "2025-12-31",
               "proxy_origin": "17:00 on the last calendar day of the preceding month", "bootstrap_seed": 1429,

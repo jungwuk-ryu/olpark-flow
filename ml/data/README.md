@@ -29,7 +29,7 @@
 
 ### 행사 반응 모델의 입력
 
-`.venv/bin/python -m olpark_demand.response_data`가 `prepared/response/`에 만든다. 2025년 판본의 입력 파일은 바꾸지 않는다.
+`python -m olpark_demand.response_data`가 `prepared/response/`에 만든다. 2025년 판본의 입력 파일은 바꾸지 않는다.
 
 | 파일 | 내용과 단위 |
 |---|---|
@@ -42,7 +42,7 @@
 
 ### 서울시 교통카드 태그 집계
 
-`.venv/bin/python -m olpark_demand.collect_card_tags`가 `prepared/card_tags/`에 만든다. 원본은 [서울시 T-Data 교통카드 데이터](https://t-data.seoul.go.kr/dataprovide/trafficdataviewfile.do?data_id=20006)의 일별 ZIP(하루 290~610MB, 수송일 나흘 뒤 공개)이고, 개인별 태그 기록이므로 집계한 뒤 지운다. 2026-08-01~11-15의 대형 회차가 있던 40일(16.6GB)을 받았다.
+`python -m olpark_demand.collect_card_tags`가 `prepared/card_tags/`에 만든다. 원본은 [서울시 T-Data 교통카드 데이터](https://t-data.seoul.go.kr/dataprovide/trafficdataviewfile.do?data_id=20006)의 일별 ZIP(하루 290~610MB, 수송일 나흘 뒤 공개)이고, 개인별 태그 기록이므로 집계한 뒤 지운다. 2026-08-01~11-15의 대형 회차가 있던 40일(16.6GB)을 받았다.
 
 | 파일 | 내용 |
 |---|---|

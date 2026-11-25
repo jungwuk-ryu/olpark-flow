@@ -102,10 +102,11 @@ class AllocationTests(unittest.TestCase):
 class DeliveryTests(unittest.TestCase):
     def test_shadow_uses_the_map_published_at_forecast_cutoff(self):
         from olpark_demand.egress import ROOT, _load
+        from olpark_demand.network_registry import DATA_DIR
 
         request = _load(ROOT / "examples/egress_planned_request.json")
         packet = self.estimator.build(request, issued_at=request["as_of"])
-        archived = sorted(path.stem for path in (ROOT / "src/data/archive").glob("egress-access-v1-*.json"))
+        archived = sorted(path.stem for path in (DATA_DIR / "archive").glob("egress-access-v1-*.json"))
         self.assertEqual([packet["versions"]["mapping_version"]], archived)
         self.assertNotEqual(packet["versions"]["mapping_version"], self.estimator.registry.mapping_version)
         self.assertEqual(packet["versions"]["data_snapshot"],

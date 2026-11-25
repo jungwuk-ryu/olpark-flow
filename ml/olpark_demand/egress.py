@@ -24,12 +24,13 @@ from .mode_mix import ModeMixAssumptions, ModeMixModel
 from .network_registry import load_registry
 from .network_registry import ROUTABLE
 from .od_allocation import RouteAvailability, allocate_event
+from .paths import REPO, repo_of
 from .response_features import LARGE_GROUPS
 from .response_packet import ResponseBundle, anchor_mode_mix
 from .scenario import _digest, _unique_object
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTRACT = ROOT / "docs/design/egress-demand/contract"
+CONTRACT = REPO / "docs/design/egress-demand/contract"
 KST = ZoneInfo("Asia/Seoul")
 
 
@@ -70,10 +71,13 @@ def packet_validator():
 
 
 def _file_hashes(paths, root):
+    """Hashes by the name each file has always been recorded under: Python-side files from their
+    root, the dashboard's and Team B's files from the repository."""
     hashes = {}
     for path in sorted(paths):
+        base = root if path.is_relative_to(root) else repo_of(root)
         with path.open("rb") as handle:
-            hashes[str(path.relative_to(root))] = hashlib.file_digest(handle, "sha256").hexdigest()
+            hashes[str(path.relative_to(base))] = hashlib.file_digest(handle, "sha256").hexdigest()
     return hashes
 
 
@@ -117,11 +121,12 @@ class EgressEstimator:
             self.response = ResponseBundle.latest(self.root)
         else:
             self.response = ResponseBundle(Path(response_bundle), self.root) if response_bundle else None
+        self.repo = repo_of(self.root)
         data = self.root / "data"
-        self.catalog = EventCatalog(data, self.root)
+        self.catalog = EventCatalog(data, self.repo)
         self.mode_model = ModeMixModel.fit(data)
         self.destinations = DestinationModel.fit(self.root)
-        self.registry = load_registry(self.root / "src/data")
+        self.registry = load_registry(self.repo / "src/data")
         self.archive_time = _time(_load(data / "manifest.json")["as_of_kst"])
         self.sessions = {}
         for path in sorted((data / "prepared").glob("event_sessions_*.csv")):
@@ -138,12 +143,12 @@ class EgressEstimator:
         inputs.update(
             [
                 data / "manifest.json",
-                self.root / "src/data/parking.json",
-                self.root / "src/data/assumptions.json",
+                self.repo / "src/data/parking.json",
+                self.repo / "src/data/assumptions.json",
             ]
         )
         self._input_hashes = _file_hashes(inputs, self.root)
-        self.snapshot = self._map_snapshot(self.root / "src/data/egress-access.json")
+        self.snapshot = self._map_snapshot(self.repo / "src/data/egress-access.json")
         self.producer = _signature(
             [
                 self.root / "olpark_demand" / f
@@ -169,7 +174,7 @@ class EgressEstimator:
 
     def _map_at(self, cutoff, retrospective):
         if not retrospective and self.archive_time <= cutoff < self.registry.published_at:
-            data = self.root / "src/data"
+            data = self.repo / "src/data"
             available = []
             for path in sorted((data / "archive").glob("egress-access-v1-*.json")):
                 registry = load_registry(data, mapping_path=path)

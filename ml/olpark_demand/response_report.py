@@ -241,11 +241,11 @@ def write_card(bundle: Path) -> Path:
               "- 공원 공지에 없는 행사(다른 주최자의 축제, 체육 행사)는 모델이 알지 못한다.",
               "- 출구별 5분 인원, 보행로의 대기, 첫 귀가 수단은 이 자료로 검증하지 않았다.", "",
               "## 재현", "", "```sh",
-              ".venv/bin/python -m olpark_demand.response_data",
-              f".venv/bin/python -m olpark_demand.response_train freeze --output artifacts/egress-response/NEW",
-              f".venv/bin/python -m olpark_demand.response_train score --bundle artifacts/egress-response/NEW",
-              f".venv/bin/python -m olpark_demand.response_train fit --bundle artifacts/egress-response/NEW",
-              f".venv/bin/python -m olpark_demand.response_report --bundle artifacts/egress-response/NEW", "```", "",
+              "python -m olpark_demand.response_data",
+              f"python -m olpark_demand.response_train freeze --output artifacts/egress-response/NEW",
+              f"python -m olpark_demand.response_train score --bundle artifacts/egress-response/NEW",
+              f"python -m olpark_demand.response_train fit --bundle artifacts/egress-response/NEW",
+              f"python -m olpark_demand.response_report --bundle artifacts/egress-response/NEW", "```", "",
               "규칙·지문은 [protocol.json](protocol.json), 2025년 점수는 [development.json](development.json), "
               "2026년 점수는 [heldout.json](heldout.json), 행별 예측은 두 Parquet 파일, 예측 범위는 [calibration.json](calibration.json)에 있다.", ""]
     path = bundle / "MODEL_CARD.md"
@@ -675,13 +675,13 @@ def write_card_v2(bundle: Path) -> Path:
               "- 공원 공지에 없는 행사는 모델이 알지 못한다. 페스티벌의 발권 수는 실제 인파를 대표하지 못한다.",
               "- 버스, 주차, 출구별 5분 인원, 보행로의 대기는 이 판본이 검증하지 않았다.", "",
               "## 재현", "", "```sh",
-              ".venv/bin/python -m olpark_demand.collect_kopis --start 2026-01-01 --end 2026-11-23",
-              ".venv/bin/python -m olpark_demand.response_data",
-              ".venv/bin/python -m olpark_demand.response_train develop --spec v2 --output artifacts/egress-response/NEW",
-              ".venv/bin/python -m olpark_demand.response_train fit --bundle artifacts/egress-response/NEW",
-              "PYTHONPATH=. .venv/bin/python experiments/response_model/station_5min_check.py artifacts/egress-response/NEW",
-              "PYTHONPATH=. .venv/bin/python experiments/response_model/within_event_curve.py artifacts/egress-response/NEW",
-              ".venv/bin/python -m olpark_demand.response_report --bundle artifacts/egress-response/NEW", "```", "",
+              "python -m olpark_demand.collect_kopis --start 2026-01-01 --end 2026-11-23",
+              "python -m olpark_demand.response_data",
+              "python -m olpark_demand.response_train develop --spec v2 --output artifacts/egress-response/NEW",
+              "python -m olpark_demand.response_train fit --bundle artifacts/egress-response/NEW",
+              "PYTHONPATH=. python experiments/response_model/station_5min_check.py artifacts/egress-response/NEW",
+              "PYTHONPATH=. python experiments/response_model/within_event_curve.py artifacts/egress-response/NEW",
+              "python -m olpark_demand.response_report --bundle artifacts/egress-response/NEW", "```", "",
               "규칙과 채점 계획은 [protocol.json](protocol.json), 기간별 점수는 [development.json](development.json), 행별 예측은 "
               "[development_forecasts.parquet](development_forecasts.parquet), 당일 보정식은 [day_of_update.json](day_of_update.json)에 있다.", ""]
     path = bundle / "MODEL_CARD.md"
@@ -862,16 +862,16 @@ def write_card_v3(bundle: Path) -> Path:
               "- 채점한 값은 역 승차 전체다. 평소 이용객과 여러 회차의 관객이 섞여 있고 회차별 몫은 모델이 나눈 값이다.",
               "- 버스 분담은 교통카드 집계와 맞았다(철도 100명당 약 9명). 주차 분담과 출구별 배분은 검증하지 않았다.", "",
               "## 재현", "", "```sh",
-              ".venv/bin/python -m olpark_demand.update_cycle plan   # 다음 갱신에서 받을 날짜와 용량",
-              ".venv/bin/python -m olpark_demand.update_cycle run    # 예측 고정 → 수집 → 채점 → 재학습 (날짜마다 300~600MB를 받아 집계만 남긴다)", "```", "",
+              "python -m olpark_demand.update_cycle plan   # 다음 갱신에서 받을 날짜와 용량",
+              "python -m olpark_demand.update_cycle run    # 예측 고정 → 수집 → 채점 → 재학습 (날짜마다 300~600MB를 받아 집계만 남긴다)", "```", "",
               "갱신 명령이 하는 일을 단계별로 따로 실행하려면:", "", "```sh",
-              ".venv/bin/python -m olpark_demand.collect_calendar --first 2026-11 --last 2027-01",
-              ".venv/bin/python -m olpark_demand.collect_card_tags --dates 2026-11-21 --check",
-              ".venv/bin/python -m olpark_demand.response_data",
-              ".venv/bin/python -m olpark_demand.response_train develop --spec v3 --output artifacts/egress-response/NEW",
-              ".venv/bin/python -m olpark_demand.response_train fit --bundle artifacts/egress-response/NEW",
-              ".venv/bin/python -m olpark_demand.station_curve --bundle artifacts/egress-response/NEW",
-              ".venv/bin/python -m olpark_demand.response_report --bundle artifacts/egress-response/NEW", "```", "",
+              "python -m olpark_demand.collect_calendar --first 2026-11 --last 2027-01",
+              "python -m olpark_demand.collect_card_tags --dates 2026-11-21 --check",
+              "python -m olpark_demand.response_data",
+              "python -m olpark_demand.response_train develop --spec v3 --output artifacts/egress-response/NEW",
+              "python -m olpark_demand.response_train fit --bundle artifacts/egress-response/NEW",
+              "python -m olpark_demand.station_curve --bundle artifacts/egress-response/NEW",
+              "python -m olpark_demand.response_report --bundle artifacts/egress-response/NEW", "```", "",
               "규칙과 채점 계획은 [protocol.json](protocol.json), 기간별 점수는 [development.json](development.json), 당일 보정식은 "
               "[day_of_update.json](day_of_update.json), 5분 곡선은 [single_show_curve.json](single_show_curve.json)에 있다. "
               "v2 채점의 사전 기록과 스크립트는 `experiments/response_model/heldout_2026_autumn/`에 있다.", ""]

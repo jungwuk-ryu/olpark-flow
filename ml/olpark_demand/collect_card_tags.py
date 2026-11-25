@@ -44,6 +44,8 @@ import pyarrow.csv as arrow_csv
 
 from .response_data import CORE_SITES, NEIGHBOUR_SITES
 
+from .paths import repo_of
+
 ROOT = Path(__file__).resolve().parents[1]
 CATALOGUE = "https://t-data.seoul.go.kr/dataprovide/trafficdataviewfile.do?data_id=20006"
 DOWNLOAD = "https://t-data.seoul.go.kr/dataprovide/download.do?id="
@@ -92,7 +94,7 @@ def fetch(entry: dict, folder: Path) -> Path:
 
 def park_stops(root: Path = ROOT) -> tuple[set[str], set[str]]:
     """Standard stop ids: the stops the pedestrian network ends at, and the wider park-area list."""
-    registry = json.loads((root / "src/data/egress-access.json").read_text(encoding="utf-8"))
+    registry = json.loads((repo_of(root) / "src/data/egress-access.json").read_text(encoding="utf-8"))
     near = {str(d["stopNodeId"]) for d in registry["destinations"] if d.get("firstMode") == "bus" and d.get("stopNodeId")}
     area = set(pd.read_parquet(root / "data/prepared/bus_park_station_hours_2025.parquet", columns=["stop_id"]).stop_id.unique())
     return near, area | near

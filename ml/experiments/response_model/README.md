@@ -21,12 +21,12 @@
 이 분석들을 바탕으로 만든 판본이 [v2](../../artifacts/egress-response/rail-2026-11-v2/MODEL_CARD.md)와 [v3](../../artifacts/egress-response/rail-2026-11-v3/MODEL_CARD.md)다. 스크립트에 판본 폴더를 인자로 주면 결과를 그 판본 안에 쓴다.
 
 ```sh
-PYTHONPATH=. .venv/bin/python experiments/response_model/tickets_2026.py
-PYTHONPATH=. .venv/bin/python experiments/response_model/station_5min_check.py
-PYTHONPATH=. .venv/bin/python experiments/response_model/within_event_curve.py
-PYTHONPATH=. .venv/bin/python experiments/response_model/level_tracking.py
-PYTHONPATH=. .venv/bin/python experiments/response_model/parking.py
-.venv/bin/python -m olpark_demand.response_report --bundle artifacts/egress-response/rail-2026-11
+PYTHONPATH=. python experiments/response_model/tickets_2026.py
+PYTHONPATH=. python experiments/response_model/station_5min_check.py
+PYTHONPATH=. python experiments/response_model/within_event_curve.py
+PYTHONPATH=. python experiments/response_model/level_tracking.py
+PYTHONPATH=. python experiments/response_model/parking.py
+python -m olpark_demand.response_report --bundle artifacts/egress-response/rail-2026-11
 ```
 
 `within_event_curve.py`는 `station_5min_check.py`가 만든 5분 표를 읽으므로 그 뒤에 실행한다. `level_tracking.py`는 판본의 예측 범위 파일을 다시 쓴다.

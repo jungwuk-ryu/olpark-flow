@@ -1,6 +1,8 @@
 # 올림픽공원 퇴장 시간대 수요모델
 
-국민체육진흥공단의 병목 예측과 안전요원 배치안 비교에 필요한 입력은 **공연장 출구별로 5분 동안 각 목적지를 향해 출발하는 사람 수**다. 주차장까지 걷는 관객, 역·정류장으로 걷는 관객, 걸어서 귀가하는 관객이 같은 통로를 쓰면 보행망에서 이들의 흐름을 합산한다. [보행망 연동 명세](../docs/design/egress-demand/integration-operations.md)
+아래 명령은 가상환경을 켠 뒤 `ml/` 폴더에서 실행한다. `pnpm`으로 시작하는 명령만 저장소 루트에서 실행한다. [폴더 구성과 설치](../README.md)
+
+국민체육진흥공단의 병목 예측과 안전요원 배치안 비교에 필요한 입력은 **공연장 출구별로 5분 동안 각 목적지를 향해 출발하는 사람 수**다. 주차장까지 걷는 관객, 역·정류장으로 걷는 관객, 걸어서 귀가하는 관객이 같은 통로를 쓰면 보행망에서 이들의 흐름을 합산한다. [보행망 연동 명세](../../docs/design/egress-demand/integration-operations.md)
 
 공연 전날 17시 KST에 알 수 있는 달력·공연 일정·날씨 예보로 지하철과 버스의 **지점별 총승차 인원**, 주차장의 **차량 출구별 총출차 대수**를 예측한다. 학습에 사용한 2025년 데이터와 입력 버전, 검증에서 선택한 모델, 예측구간, 행별 예측값을 함께 저장했다. [훈련된 판본의 결과표](../artifacts/egress-demand/2025-d1/MODEL_CARD.md) · [학습 데이터 목록](../data/README.md)
 
@@ -26,13 +28,13 @@
 v2의 채점이 알려 준 것은 세 가지다. **몇 명이 오는가**(퇴장 시간대 총량)는 현행보다 분명히 낫다. **언제 오는가**는 전날 공개된 정보로는 ±25분 안팎으로만 알 수 있고, 시간별 값은 현행보다 유의하게 낫지 않았다. **당일 역 하차 보정**은 가을 주말의 공원 방문객 때문에 과대 보정이 되어 도움이 되지 않았다. v3는 전날 예측의 규칙을 v2 그대로 두고, 학습 자료를 11월 15일까지 늘리고, 당일 보정 신호를 ‘와서 머문 사람’으로 바꾸고, 한 저녁의 5분 곡선을 5분 승차로 다시 맞췄다. 같은 원자료로 수요표의 나머지 부분도 처음으로 관측과 맞대었다. 버스 분담은 맞았다(철도 100명당 수요표 7.4명, 관측 8.7명). 5분 출발은 맞지 않았다. 수요표의 5분 출발 인원을 막힘 없이 걸려 보내면 역 도착 정점이 개찰구 실측의 1.85배이며, 공연장 퇴장 곡선(22분에 95%)은 아직 검증되지 않은 가정이다. 시간별 오차의 대부분은 종료 시각에서 온다. KSPO DOME 저녁 22개에서 실제 종료 시각을 알았다면 올림픽공원역의 시간별 MAE가 1,728명에서 715명으로, 피크 시각 적중이 41%에서 86%로 달라진다(상한). 관객 규모를 알아도 시간별 값은 거의 달라지지 않는다. 운영자의 종료 예정 시각은 회차의 `overrides.expected_end_at`으로 넣는다. 자세한 표는 [v3 모델 카드](../artifacts/egress-response/rail-2026-11-v3/MODEL_CARD.md)에 있다.
 
 ```sh
-.venv/bin/python -m olpark_demand.collect_kopis --start 2026-01-01 --end 2026-11-23   # 공연장별 발권 통계 (환경변수 KOPIS_API_KEY 사용)
-.venv/bin/python -m olpark_demand.collect_card_tags --dates 2026-11-20 2026-11-21 --check   # 교통카드 태그: 하루 300~600MB를 받아 역별 집계만 남기고 지운다
-.venv/bin/python -m olpark_demand.response_data                                       # 승차 패널·회차표·달력 준비
-.venv/bin/python -m olpark_demand.response_train develop --spec v3 --output artifacts/egress-response/NEW   # 순차 재예측, 규칙 고정
-.venv/bin/python -m olpark_demand.response_train fit --bundle artifacts/egress-response/NEW                 # 배포 모델, 당일 보정식
-PYTHONPATH=. .venv/bin/python experiments/response_model/station_curve_5min.py artifacts/egress-response/NEW   # 한 저녁의 5분 곡선
-.venv/bin/python -m olpark_demand.response_report --bundle artifacts/egress-response/NEW                    # 모델 카드
+python -m olpark_demand.collect_kopis --start 2026-01-01 --end 2026-11-23   # 공연장별 발권 통계 (환경변수 KOPIS_API_KEY 사용)
+python -m olpark_demand.collect_card_tags --dates 2026-11-20 2026-11-21 --check   # 교통카드 태그: 하루 300~600MB를 받아 역별 집계만 남기고 지운다
+python -m olpark_demand.response_data                                       # 승차 패널·회차표·달력 준비
+python -m olpark_demand.response_train develop --spec v3 --output artifacts/egress-response/NEW   # 순차 재예측, 규칙 고정
+python -m olpark_demand.response_train fit --bundle artifacts/egress-response/NEW                 # 배포 모델, 당일 보정식
+PYTHONPATH=. python experiments/response_model/station_curve_5min.py artifacts/egress-response/NEW   # 한 저녁의 5분 곡선
+python -m olpark_demand.response_report --bundle artifacts/egress-response/NEW                    # 모델 카드
 ```
 
 운영기관의 시간대별 승차 파일은 몇 달 늦게 나온다. [교통카드 태그 수집기](collect_card_tags.py)는 서울시가 나흘 뒤에 공개하는 일별 원자료에서 공원 주변 역의 5분 승하차, 주변 정류장의 버스 승하차, 같은 날 공원에 내렸다가 다시 탄 사람의 수를 집계한다. 카드 번호는 같은 날의 도착과 출발을 잇는 데만 메모리에서 쓰고 어디에도 쓰지 않는다. 역·일 합계는 서울시 일별 공표값과 40일 모두 0.4% 안에서 일치했다. v2의 채점은 [사전 기록과 스크립트](../experiments/response_model/heldout_2026_autumn/README.md)로 재현할 수 있다.
@@ -42,8 +44,8 @@ PYTHONPATH=. .venv/bin/python experiments/response_model/station_curve_5min.py a
 공연은 계속 열리고, 그날의 역 승차는 나흘쯤 뒤에 공개된다. [갱신 명령](update_cycle.py)은 그 자료를 두 번 쓴다. 먼저 **지금 쓰는 판본을 채점**하고, 그다음 **같은 규칙으로 다시 학습**한다.
 
 ```sh
-.venv/bin/python -m olpark_demand.update_cycle plan   # 받을 날짜와 용량만 보여 준다. 아무것도 바꾸지 않는다
-.venv/bin/python -m olpark_demand.update_cycle run    # 한 주기를 돈다
+python -m olpark_demand.update_cycle plan   # 받을 날짜와 용량만 보여 준다. 아무것도 바꾸지 않는다
+python -m olpark_demand.update_cycle run    # 한 주기를 돈다
 ```
 
 `run`이 하는 일은 순서가 정해져 있다.
@@ -73,7 +75,7 @@ PYTHONPATH=. .venv/bin/python experiments/response_model/station_curve_5min.py a
 이미 본 기간에서는 어느 쪽도 지금 규칙과 구분되지 않는다. 중장년 공연일 41일만 보면 둘째 후보의 총량 오차가 18.2%(지금 18.8%), 편향이 −3.6%(지금 −9.3%)다. 가릴 자료는 앞으로 오는 중장년 공연일이다. [근거](../experiments/response_model/audience_candidates.json)
 
 ```sh
-.venv/bin/python -m olpark_demand.response_candidates fit   # 지금 판본 옆에 후보를 학습해 둔다
+python -m olpark_demand.response_candidates fit   # 지금 판본 옆에 후보를 학습해 둔다
 ```
 
 v1은 `freeze` → `score` → `fit` 순서로 만들었다. `score`는 규칙을 고정한 뒤 코드나 준비 자료가 바뀌었으면 실행을 거부하고 한 판본에서 한 번만 실행된다. 공원 공지의 일정 문구는 [일정 해석기](schedule.py)가 읽는다. 2025년에 수작업으로 정리한 113개 행사 521회차와 전부 일치했고, 그때 보류했던 12개 행사(야외 페스티벌 등)도 회차로 복원한다.
@@ -103,13 +105,13 @@ v1은 `freeze` → `score` → `fit` 순서로 만들었다. `score`는 규칙�
 
 ## 저장된 모델 조회
 
-저장소 루트에서 실행한다. 이 작업공간에는 Python 3.12 환경과 의존성을 설치했다. 새 환경에서는 `python3.12 -m venv .venv`와 `.venv/bin/python -m pip install -r requirements-demand.txt`로 같은 버전을 준비한다.
+`ml/`에서 실행한다. 이 작업공간에는 Python 3.12 환경과 의존성을 설치했다. 새 환경에서는 `python3.12 -m venv .venv`와 `python -m pip install -r requirements.txt`로 같은 버전을 준비한다.
 
 ```sh
-.venv/bin/python -m olpark_demand.predict --mode parking --site 동2 --date 2025-11-23 --hour 20
-.venv/bin/python -m olpark_demand.predict --mode parking --site 동2 --date 2025-11-23 --hour 20 --candidate cat_event
-.venv/bin/python -m olpark_demand.predict --mode rail --site 9:4136 --date 2025-11-23 --hour 21
-.venv/bin/python -m olpark_demand.predict --mode bus_day --site 24244 --date 2025-11-23
+python -m olpark_demand.predict --mode parking --site 동2 --date 2025-11-23 --hour 20
+python -m olpark_demand.predict --mode parking --site 동2 --date 2025-11-23 --hour 20 --candidate cat_event
+python -m olpark_demand.predict --mode rail --site 9:4136 --date 2025-11-23 --hour 21
+python -m olpark_demand.predict --mode bus_day --site 24244 --date 2025-11-23
 ```
 
 첫 명령은 검증 구간에서 고른 모델의 결과, 두 번째 명령은 동일한 지점·시간에 대한 공연 일정 모델의 연구 결과를 반환한다. 예측은 지점별 예상 통행량이므로 소수일 수 있다. `start`, `end`는 시작 포함·끝 제외이며 `lower_80`, `upper_80`은 해당 후보의 별도 보정 구간에서 계산했다. `backtest_interval_coverage_pct`는 후향 시험의 실제 포함률이고 `selected_in_validation`은 기본 모델 선택 여부다. 입력 파일의 지문을 합친 `input_snapshot_sha256`으로 요청의 자료 판본을 구별할 수 있다. 행사 변수를 쓰는 후보는 같은 달력·예보에서 **알려진 모든 회차를 제거한 수요**와 원 예측 간 차이도 반환한다. 음수 차이도 보존한다. 원 자료에 관객 여부가 없어 개별 공연이 실제로 유발한 인원을 확정할 수 없다.
@@ -126,9 +128,9 @@ v1은 `freeze` → `score` → `fit` 순서로 만들었다. `score`는 규칙�
 ## 재학습과 독립 검산
 
 ```sh
-.venv/bin/python -m olpark_demand.train --data-dir data/prepared --output artifacts/egress-demand/replay-2025
-.venv/bin/python -m olpark_demand.verify --bundle artifacts/egress-demand/2025-d1 --data-dir data/prepared
-.venv/bin/python -m unittest discover -s tests -v
+python -m olpark_demand.train --data-dir data/prepared --output artifacts/egress-demand/replay-2025
+python -m olpark_demand.verify --bundle artifacts/egress-demand/2025-d1 --data-dir data/prepared
+python -m unittest discover -s tests -v
 ```
 
 학습은 새 경로에 완결된 판본을 한 번에 발행한다. 원본을 바꾸거나 기존 결과를 덮어쓰지 않는다. 동일 환경의 재학습은 저장·재로딩한 모델의 **예측값**으로 비교한다. CatBoost 파일은 실행별 모델 식별자 등이 포함될 수 있으므로 서로 다른 학습 실행 간 바이너리 해시는 동일성을 판정하는 기준으로 삼지 않는다. 개별 판본 안에서는 원 자료·코드·모델·검증 원장의 SHA-256을 검사한다. [학습 명령](train.py) · [판본 명세](../artifacts/egress-demand/2025-d1/manifest.json)
@@ -145,24 +147,24 @@ v1은 `freeze` → `score` → `fit` 순서로 만들었다. `score`는 규칙�
 
 ## 공연별 방문·귀가 비중과 보행망 입력
 
-저장소 루트에서 실행한다. 첫 명령은 실제 2025년 KSPO DOME 회차 하나를 현재 보행망에서 재구성한다. 두 번째 명령은 그 결과를 보행 엔진에 넣는다. 경로가 연결된 사람은 분 단위로 보행·대기를 거쳐 첫 목적지에 도착한다. 같은 시간에 같은 통로로 모인 관객은 함께 계산한다.
+첫 명령은 `ml/`에서, `pnpm` 명령은 저장소 루트에서 실행한다. 첫 명령은 실제 2025년 KSPO DOME 회차 하나를 현재 보행망에서 재구성한다. 두 번째 명령은 그 결과를 보행 엔진에 넣는다. 경로가 연결된 사람은 분 단위로 보행·대기를 거쳐 첫 목적지에 도착한다. 같은 시간에 같은 통로로 모인 관객은 함께 계산한다.
 
 ```sh
-.venv/bin/python -m olpark_demand.egress build --session 5018-20251101-1800 --retrospective --output /tmp/olpark-demand.json
+python -m olpark_demand.egress build --session 5018-20251101-1800 --retrospective --output /tmp/olpark-demand.json
 pnpm install --frozen-lockfile
 pnpm simulate:demand --packet /tmp/olpark-demand.json --output /tmp/olpark-network.json
 ```
 
-`--session`을 여러 번 지정하면 한 보행망에 여러 회차를 동시에 넣는다. `build --date 2025-11-01 --retrospective`처럼 날짜로도 함께 계산할 수 있다. `pnpm dev`로 화면을 열고 ‘공연별 퇴장 수요 파일’에서 같은 JSON을 선택해 계산할 수도 있다. 노드별 이동과 링크별 분 단위 결과는 엔진 명령의 `--detail`, 전체 이동·대기를 더 추적할 시간은 `--tail-minutes`로 지정한다. 결과에는 출발 창 전·후 인원, 미배정, 보행 중, 대기 중, 도착 인원이 포함된다. [교환 형식 1.1](../docs/design/egress-demand/contract/demand-v1.1.schema.json) · [보행 경로 등록부](../src/data/egress-access.json)
+`--session`을 여러 번 지정하면 한 보행망에 여러 회차를 동시에 넣는다. `build --date 2025-11-01 --retrospective`처럼 날짜로도 함께 계산할 수 있다. `pnpm dev`로 화면을 열고 ‘공연별 퇴장 수요 파일’에서 같은 JSON을 선택해 계산할 수도 있다. 노드별 이동과 링크별 분 단위 결과는 엔진 명령의 `--detail`, 전체 이동·대기를 더 추적할 시간은 `--tail-minutes`로 지정한다. 결과에는 출발 창 전·후 인원, 미배정, 보행 중, 대기 중, 도착 인원이 포함된다. [교환 형식 1.1](../../docs/design/egress-demand/contract/demand-v1.1.schema.json) · [보행 경로 등록부](../../src/data/egress-access.json)
 
 **공단이 확보한 신규 회차**는 아래 입력 예제의 공연장·일정과 총원을 바꿔 계산한다. 운영 입력에는 출처와 확인 시각을 함께 기재한다. `shadow`는 당시 사용할 수 있던 자료로 실행하는 전향 비교용 결과다. `--retrospective`를 지정한 2025년 실행은 사후에 나온 원자료와 2026년 보행망을 사용한다. 수단 모델은 이 경우에도 대상 회차 뒤의 교통 관측을 학습에 넣지 않는다. [공단 입력 형식 예제](../examples/egress_planned_request.json)
 
-저장된 회차에서 보행로만 바꿀 때는 `.venv/bin/python -m olpark_demand.remap 원본.json --mapping 경로판본.json --output 비교용.json`을 쓴다. 원래의 회차·출구·첫 귀가 수단·의도한 목적지·5분 출발 인원을 고정하며, 두 판본 모두 원본 파일과 함께 재생할 수 있다.
+저장된 회차에서 보행로만 바꿀 때는 `python -m olpark_demand.remap 원본.json --mapping 경로판본.json --output 비교용.json`을 쓴다. 원래의 회차·출구·첫 귀가 수단·의도한 목적지·5분 출발 인원을 고정하며, 두 판본 모두 원본 파일과 함께 재생할 수 있다.
 
 ```sh
-.venv/bin/python -m olpark_demand.egress build --request examples/egress_planned_request.json --output /tmp/olpark-planned.json
-.venv/bin/python -m olpark_demand.egress catalogue --output-dir /tmp/olpark-2025
-.venv/bin/python -m olpark_demand.validate_egress_od
+python -m olpark_demand.egress build --request examples/egress_planned_request.json --output /tmp/olpark-planned.json
+python -m olpark_demand.egress catalogue --output-dir /tmp/olpark-2025
+python -m olpark_demand.validate_egress_od
 ```
 
 | 출력·설정 | 해석 |
@@ -176,7 +178,7 @@ pnpm simulate:demand --packet /tmp/olpark-demand.json --output /tmp/olpark-netwo
 
 2025년 521회차 중 실내 517회차에 수량 시나리오를 만들었다. 118회차에 KSPO DOME 출구 경로가 있으며, 다른 공연장의 관객은 미배정 사유와 함께 기록한다. 잔디마당 4회차는 총원과 퇴장 곡선이 미확정이다. CSV에는 회차별 방문·귀가 비중, 총원 근거, D−1 등록 여부가 있고, Parquet에는 5분 인원과 의도한 목적지, 경로 상태가 있다. [회차별 결과](../artifacts/egress-od/2025/sessions.csv) · [5분 출발 인원](../artifacts/egress-od/2025/departures_5min.parquet) · [실측 검증 결과와 제한](../artifacts/egress-od/validation/README.md)
 
-운영자가 기존 방식대로 모든 비중을 지정하는 1.0 시나리오도 `.venv/bin/python -m olpark_demand.scenario examples/egress_scenario.json`으로 재현할 수 있다. [1.0 입력](../examples/egress_scenario.json) · [1.0 교환 형식](../docs/design/egress-demand/contract/demand-v1.schema.json)
+운영자가 기존 방식대로 모든 비중을 지정하는 1.0 시나리오도 `python -m olpark_demand.scenario examples/egress_scenario.json`으로 재현할 수 있다. [1.0 입력](../examples/egress_scenario.json) · [1.0 교환 형식](../../docs/design/egress-demand/contract/demand-v1.schema.json)
 
 ## 실제 도착한 과거 승차를 이용하는 실험
 

@@ -10,7 +10,7 @@ import json
 import math
 from pathlib import Path
 
-DATA_DIR = Path(__file__).resolve().parents[1] / "src/data"
+DATA_DIR = Path(__file__).resolve().parents[2] / "src/data"
 NETWORK_REVISION = "48e50c3614e2b8786062278ede9c2b822ea6f4b7"
 PINNED_BASE_SHA256 = {
     "network.json": "e24efce18e3fd7d0be6a1644b9149c520c9d00eef3e00f68b43d289aeb9f951c",

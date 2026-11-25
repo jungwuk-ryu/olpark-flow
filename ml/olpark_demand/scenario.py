@@ -34,7 +34,7 @@ from jsonschema import Draft202012Validator
 NETWORK_REVISION = "48e50c3614e2b8786062278ede9c2b822ea6f4b7"
 NETWORK_PUBLISHED_AT = datetime.fromisoformat("2026-11-22T22:12:16+09:00")
 MAPPING_VERSION = "kspo-rail-paths-1-" + NETWORK_REVISION[:12]
-SCHEMA = Path(__file__).resolve().parents[1] / "docs/design/egress-demand/contract/demand-v1.schema.json"
+SCHEMA = Path(__file__).resolve().parents[2] / "docs/design/egress-demand/contract/demand-v1.schema.json"
 BPS = 10_000
 FIVE_MINUTES = timedelta(minutes=5)
 UNKNOWN = ("", "", "unknown")

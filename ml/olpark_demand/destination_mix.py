@@ -18,6 +18,7 @@ import pandas as pd
 from .features import KST
 from .mode_mix import CONTROL_WEEKS, HOURS, MAX_CONTROLS, MIN_CONTROLS, RETURN, VENUES, _Schedule, _venue, _window
 from .network_registry import NetworkRegistry, ROUTABLE, load_registry
+from .paths import repo_of
 
 
 UNKNOWN = "unknown"
@@ -223,11 +224,11 @@ class DestinationModel:
         self.cases = _rail_cases(_Schedule(prepared), self.rail)
         self.geography = _bus_geography(prepared)
         self.bus = _bus_months(prepared)
-        self.capacities = {r["id"]: r["capacity"] for r in _json(root / "src/data/parking.json")["lots"]}
+        self.capacities = {r["id"]: r["capacity"] for r in _json(repo_of(root) / "src/data/parking.json")["lots"]}
         if (not set(self.capacities).issubset(LOT_GROUPS)
                 or not all(type(n) == int and n > 0 for n in self.capacities.values())):
             raise ValueError("Invalid named parking inventory")
-        self.registry = load_registry(root / "src/data")
+        self.registry = load_registry(repo_of(root) / "src/data")
         return self
 
     def _rail(self, venue, end, cutoff, retrospective, mapped, assumptions):

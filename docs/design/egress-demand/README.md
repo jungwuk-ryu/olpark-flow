@@ -4,7 +4,7 @@
 
 **국민체육진흥공단 담당자가 내릴 결정은 이 공연의 퇴장 때 어느 통로가 언제 혼잡해질지, 가용한 안전요원을 어디에 언제 배치할지다.** 수요 모듈은 공연의 규모·장르·종료 시각과 관객의 차량·대중교통·도보 방문 특성을 이용해, 각 공연장 출구에서 5분마다 목적지별로 출발할 인원(명)을 추정한다. 보행망은 서로 다른 목적지로 가는 관객이 같은 통로에 모이는 흐름과 대기를 계산한다. 운영 담당자는 지도에서 예상 병목을 확인하고 같은 수요에서 안전요원 배치안을 비교한다.
 
-2025년 자료로 방문·첫 귀가 수단 비중을 추정하고, 5분별 출발 인원을 보행 엔진에 넘기는 연구용 경로를 구현했다. 승하차·입출차는 교통 관측과 대조할 수 있다. 도보 비중·출구별 분포·병목 예측은 독립 현장 관측이 없어 정확도가 미확인이다. [구현과 사용법](../../../olpark_demand/README.md) · [실측 검증](../../../artifacts/egress-od/validation/README.md)
+2025년 자료로 방문·첫 귀가 수단 비중을 추정하고, 5분별 출발 인원을 보행 엔진에 넘기는 연구용 경로를 구현했다. 승하차·입출차는 교통 관측과 대조할 수 있다. 도보 비중·출구별 분포·병목 예측은 독립 현장 관측이 없어 정확도가 미확인이다. [구현과 사용법](../../../ml/olpark_demand/README.md) · [실측 검증](../../../ml/artifacts/egress-od/validation/README.md)
 
 | 문서·부속물 | 쓰임 |
 |---|---|
@@ -49,7 +49,7 @@
 
 ## 3. 사용할 수 있는 자료와 빈 구간
 
-아래 숫자의 기준은 로컬 준비 자료와 2026-11-22 원격 `main`의 커밋 `48e50c3614e2b8786062278ede9c2b822ea6f4b7`이다. 로컬에서 정제한 자료와 PR에 포함된 자료는 각각 원본 지문과 수집 경로를 유지한다. [로컬 데이터 목록](../../../data/README.md) · [파일별 수집 명세](../../../data/manifest.json) · [원격 차량 자료][vehicles] · [원격 기준 커밋][main]
+아래 숫자의 기준은 로컬 준비 자료와 2026-11-22 원격 `main`의 커밋 `48e50c3614e2b8786062278ede9c2b822ea6f4b7`이다. 로컬에서 정제한 자료와 PR에 포함된 자료는 각각 원본 지문과 수집 경로를 유지한다. [로컬 데이터 목록](../../../ml/data/README.md) · [파일별 수집 명세](../../../ml/data/manifest.json) · [원격 차량 자료][vehicles] · [원격 기준 커밋][main]
 
 | 출처 | 확인한 범위 | 설계에 미치는 영향 |
 |---|---|---|
@@ -137,11 +137,11 @@ flowchart LR
 
 ### 부속물 재현
 
-저장소 루트에서 Python 3.12.13을 사용했다. 첫 명령은 합성 패킷을 확인하고, 두 번째는 로컬 `data/prepared`의 정제 파일 네 개에서 12개 MAE와 종료창 재표집 결과를 다시 계산한다. 세 번째는 같은 커밋의 원격 저장소에 있는 두 압축 파일의 실제 경로를 인자로 받는다. 표준출력으로 결과를 내므로 저장된 결과와 직접 비교할 수 있다. 예비실험 패키지 버전과 네 파일의 SHA-256은 결과에 있고, 예제 검사는 `jsonschema==4.26.0`, 원본 대조는 Python 표준 라이브러리를 사용한다. [실험 환경과 해시](evidence/pilot_2025.json) · [압축 파일 원본과 해시](evidence/remote_sources_2025.json)
+저장소 루트에서 Python 3.12.13을 사용했다. 첫 명령은 합성 패킷을 확인하고, 두 번째는 로컬 `ml/data/prepared`의 정제 파일 네 개에서 12개 MAE와 종료창 재표집 결과를 다시 계산한다. 세 번째는 같은 커밋의 원격 저장소에 있는 두 압축 파일의 실제 경로를 인자로 받는다. 표준출력으로 결과를 내므로 저장된 결과와 직접 비교할 수 있다. 예비실험 패키지 버전과 네 파일의 SHA-256은 결과에 있고, 예제 검사는 `jsonschema==4.26.0`, 원본 대조는 Python 표준 라이브러리를 사용한다. [실험 환경과 해시](evidence/pilot_2025.json) · [압축 파일 원본과 해시](evidence/remote_sources_2025.json)
 
 ```sh
 python docs/design/egress-demand/contract/validate_example.py --self-test
-python docs/design/egress-demand/evidence/reproduce_pilot.py
+python docs/design/egress-demand/evidence/reproduce_pilot.py --data-dir ml/data/prepared
 python docs/design/egress-demand/evidence/audit_remote_sources.py /path/to/olympicpark_inout_2025_full.csv.gz /path/to/olympicpark_linked_2025.csv.gz
 ```
 

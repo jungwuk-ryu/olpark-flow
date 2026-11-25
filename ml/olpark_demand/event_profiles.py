@@ -33,7 +33,7 @@ from scipy.special import gammainc, gammaincc
 KST = ZoneInfo("Asia/Seoul")
 DAY = timedelta(days=1)
 FIVE_MINUTES = timedelta(minutes=5)
-PROJECT_DIR = Path(__file__).resolve().parents[1]
+PROJECT_DIR = Path(__file__).resolve().parents[2]      # the repository: src/data and Team B's files
 # First verifiable version in this checkout. Earlier source publication is unknown.
 PERIOD_ARCHIVE_RELEASE = "2026-11-22T00:59:42+09:00"  # dbeb39e
 DEMO_RELEASE = "2026-11-21T15:01:39+09:00"  # 42290c4

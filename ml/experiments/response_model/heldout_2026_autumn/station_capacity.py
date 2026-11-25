@@ -22,6 +22,7 @@ import pandas as pd
 from olpark_demand import response_data
 
 ROOT = Path(__file__).resolve().parents[3]
+REPO = ROOT.parent          # the pedestrian network's files are the dashboard's, outside ml/
 HERE = Path(__file__).parent
 STATION = ("9:4136", "5:2556")
 EDGE = "e-station-a"
@@ -44,8 +45,8 @@ def main():
     evenings = pd.DataFrame(rows)
     evenings.to_csv(HERE / "station_capacity_evenings.csv", index=False)
 
-    network = json.loads((ROOT / "src/data/network.json").read_text(encoding="utf-8"))
-    assumptions = json.loads((ROOT / "src/data/assumptions.json").read_text(encoding="utf-8"))
+    network = json.loads((REPO / "src/data/network.json").read_text(encoding="utf-8"))
+    assumptions = json.loads((REPO / "src/data/assumptions.json").read_text(encoding="utf-8"))
     edge = next(e for e in network["edges"] if e["id"] == EDGE)
     flow = assumptions["flowPerMeterPerMin"]
     per_metre = flow["flat"] * flow["stairsFactor"] if edge["type"] == "stairs" else flow[edge["type"]]

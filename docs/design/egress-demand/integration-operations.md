@@ -4,7 +4,7 @@
 
 현장 인수의 첫 질문은 **한 사람을 기준으로 공연장 출구를 떠나는 시각, 길 위의 위치, 목적지에 도착하는 시각을 서로 구분할 수 있는가**다. 수요 모듈은 출구를 떠나는 인원을 낸다. 보행 엔진은 그 사람들이 링크를 통과하고 대기하는 과정을 계산한다. 교통 통계는 그중 일부와 일반 이용객이 나중에 관측 지점을 통과한 결과다.
 
-**현재 실행 경로.** Python의 `olpark_demand.egress build`가 회차별 방문·귀가 비중과 첫 목적지별 출발 인원을 `olpark-demand/1.1`로 발행한다. TypeScript의 `loadDemandSimulation`은 같은 파일을 받아 공통 링크의 대기와 목적지 도착을 계산한다. 명령행과 운영 화면에서 이 경로를 호출할 수 있다. 아래 1절은 연동 전 베이스 커밋의 조사 기록이다. [실행 방법](../../../olpark_demand/README.md) · [연구용 교환 형식](contract/demand-v1.1.schema.json) · [목적지 등록부](../../../src/data/egress-access.json)
+**현재 실행 경로.** Python의 `olpark_demand.egress build`가 회차별 방문·귀가 비중과 첫 목적지별 출발 인원을 `olpark-demand/1.1`로 발행한다. TypeScript의 `loadDemandSimulation`은 같은 파일을 받아 공통 링크의 대기와 목적지 도착을 계산한다. 명령행과 운영 화면에서 이 경로를 호출할 수 있다. 아래 1절은 연동 전 베이스 커밋의 조사 기록이다. [실행 방법](../../../ml/olpark_demand/README.md) · [연구용 교환 형식](contract/demand-v1.1.schema.json) · [목적지 등록부](../../../src/data/egress-access.json)
 
 ## 1. 병합된 코드의 연결 지점
 
