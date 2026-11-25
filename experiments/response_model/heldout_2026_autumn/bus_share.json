@@ -1,0 +1,118 @@
+{
+  "evenings": 24,
+  "window": "from 90 minutes after the KSPO DOME session's posted start to the end of service",
+  "packet": {
+    "bus_per_rail": {
+      "median": 0.0740465803186948,
+      "p10": 0.035920814667281434,
+      "p90": 0.09527658397509556
+    },
+    "bus_persons": {
+      "median": 535.5,
+      "p10": 303.2,
+      "p90": 735.4
+    },
+    "rail_persons": {
+      "median": 7712.0,
+      "p10": 6606.8,
+      "p90": 8440.8
+    },
+    "car_per_rail": {
+      "median": 0.19109295455105324,
+      "p10": 0.09157900157111261,
+      "p90": 0.24797618809579106
+    }
+  },
+  "ceiling": {
+    "what": "every boarding at the sixteen stops the network ends at, residents included",
+    "boardings": {
+      "median": 2009.0,
+      "p10": 1841.1,
+      "p90": 2958.0
+    },
+    "per_rail_crowd_at_the_gates": {
+      "median": 0.21790821491591406,
+      "p10": 0.1784173844827537,
+      "p90": 0.27744636155662594
+    },
+    "evenings_the_packet_put_more_on_buses_than_boarded_there": 0
+  },
+  "came_and_went": {
+    "what": "boardings by cards that got off at a park station or stop two to nine hours earlier",
+    "by_rail": {
+      "median": 8318.5,
+      "p10": 6977.6,
+      "p90": 10179.9
+    },
+    "by_bus_at_network_stops": {
+      "median": 822.0,
+      "p10": 727.7,
+      "p90": 1406.1
+    },
+    "by_bus_at_other_area_stops": {
+      "median": 3449.0,
+      "p10": 2878.1,
+      "p90": 4157.4
+    },
+    "bus_at_network_stops_per_rail": {
+      "median": 0.11240248768017141,
+      "p10": 0.08959738340820014,
+      "p90": 0.1286866423747598
+    },
+    "bus_at_any_area_stop_per_rail": {
+      "median": 0.5178777072193316,
+      "p10": 0.43520955362876995,
+      "p90": 0.6352854645461136
+    },
+    "share_of_the_rail_crowd_that_is_linked": {
+      "median": 0.8297116845307807,
+      "p10": 0.7625635380610081,
+      "p90": 0.9147403286272562
+    },
+    "of_those_who_came_by_rail_left_by_bus": {
+      "median": 0.08685631573178054,
+      "p10": 0.06453373874248354,
+      "p90": 0.09845673340934696
+    },
+    "of_those_who_came_by_bus_left_by_rail": {
+      "median": 0.13291631694168748,
+      "p10": 0.10907202638866899,
+      "p90": 0.17668931594273077
+    }
+  },
+  "by_crowd_size": {
+    "evenings": 40,
+    "window": "20:30 to the end of service",
+    "rail_returning_range": [
+      1070.0,
+      8833.0
+    ],
+    "returning_by_bus_at_network_stops": {
+      "per_rail": 0.0871340239958593,
+      "ci95": [
+        0.07162060801606579,
+        0.10264743997565282
+      ],
+      "level_without_a_crowd": 172.36847139703698,
+      "correlation": 0.8725216666711535
+    },
+    "returning_by_bus_at_other_area_stops": {
+      "per_rail": 0.09298840307260918,
+      "ci95": [
+        0.045412294614226065,
+        0.1405645115309923
+      ],
+      "level_without_a_crowd": 2143.618496610494,
+      "correlation": 0.5278271841654388
+    },
+    "all_boardings_at_network_stops": {
+      "per_rail": 0.10969942962904984,
+      "ci95": [
+        0.0840243974397903,
+        0.13537446181830937
+      ],
+      "level_without_a_crowd": 679.4435740277794,
+      "correlation": 0.805337547940317
+    }
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "date": "2026-11-07",
+  "bundle": "rail-2026-11",
+  "trained_through": "2026-07-31",
+  "attendance_estimates": {
+    "5157-20261107-1800": 9796,
+    "5166-20261107-1800": 2334,
+    "5169-20261107-1600": 333
+  },
+  "station": "올림픽공원역 5·9호선 합계",
+  "hourly": {
+    "6": {
+      "observed": 217,
+      "forecast": 217.1,
+      "background": 217.1
+    },
+    "7": {
+      "observed": 317,
+      "forecast": 294.4,
+      "background": 294.4
+    },
+    "8": {
+      "observed": 527,
+      "forecast": 462.9,
+      "background": 462.9
+    },
+    "9": {
+      "observed": 684,
+      "forecast": 580.8,
+      "background": 580.8
+    },
+    "10": {
+      "observed": 811,
+      "forecast": 681.7,
+      "background": 681.7
+    },
+    "11": {
+      "observed": 917,
+      "forecast": 759.1,
+      "background": 759.1
+    },
+    "12": {
+      "observed": 1172,
+      "forecast": 959.7,
+      "background": 959.7
+    },
+    "13": {
+      "observed": 1221,
+      "forecast": 1021.3,
+      "background": 1021.3
+    },
+    "14": {
+      "observed": 1213,
+      "forecast": 959.7,
+      "background": 959.7
+    },
+    "15": {
+      "observed": 1355,
+      "forecast": 1071.7,
+      "background": 1071.7
+    },
+    "16": {
+      "observed": 1657,
+      "forecast": 1215.2,
+      "background": 1215.2
+    },
+    "17": {
+      "observed": 1506,
+      "forecast": 1088.4,
+      "background": 1088.4
+    },
+    "18": {
+      "observed": 1166,
+      "forecast": 780.8,
+      "background": 779.6
+    },
+    "19": {
+      "observed": 582,
+      "forecast": 403.0,
+      "background": 402.3
+    },
+    "20": {
+      "observed": 1793,
+      "forecast": 1552.9,
+      "background": 576.0
+    },
+    "21": {
+      "observed": 7589,
+      "forecast": 5595.5,
+      "background": 952.1
+    },
+    "22": {
+      "observed": 801,
+      "forecast": 1729.3,
+      "background": 4.3
+    },
+    "23": {
+      "observed": 85,
+      "forecast": 483.8,
+      "background": 0.0
+    }
+  },
+  "window_20_to_22": {
+    "observed": 10183,
+    "forecast": 8877.8,
+    "ratio": 0.872
+  },
+  "day_06_to_23": {
+    "observed": 23613,
+    "forecast": 19857.2
+  },
+  "five_minute_peak": {
+    "observed_at": "21:00",
+    "observed": 1105,
+    "forecast_at": "21:10",
+    "forecast": 539.0
+  },
+  "first_five_minutes_above_300": {
+    "observed": "20:50",
+    "forecast": "20:55"
+  },
+  "note": "The observed five-minute series plateaus near 800-1,100 for about 45 minutes, the mark of a capacity-limited approach to the gates. A smooth delay curve cannot show that plateau; the pedestrian network is the place to reproduce it."
+}

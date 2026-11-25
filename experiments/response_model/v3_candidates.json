@@ -1,0 +1,621 @@
+{
+  "origins": [
+    "2025-04-01",
+    "2026-11-01"
+  ],
+  "status": "development: every month had been seen",
+  "candidates": {
+    "v2": {
+      "2025-04..12": {
+        "window": {
+          "site_days": 452,
+          "total_wape_pct": 17.769415799184284,
+          "total_bias_pct": -8.652578026121695,
+          "peak_wape_pct": 30.406865284143354,
+          "peak_bias_pct": -24.70455447895601,
+          "peak_shortfall_pct": 34.92437304892454,
+          "peak_hour_hit_pct": 68.36283185840708,
+          "peak_hour_mae": 0.40707964601769914
+        },
+        "egress_mae": 304.3814553008959,
+        "all_mae": 62.134818758691914,
+        "dome_centre_error_min": {
+          "mean": 1.817976319986239,
+          "mean_abs": 16.85201249467183,
+          "evenings": 88
+        }
+      },
+      "2026-01..07": {
+        "window": {
+          "site_days": 314,
+          "total_wape_pct": 23.61797146260423,
+          "total_bias_pct": -13.251991488977277,
+          "peak_wape_pct": 25.8986973712287,
+          "peak_bias_pct": -18.404704737412548,
+          "peak_shortfall_pct": 26.936600455372066,
+          "peak_hour_hit_pct": 67.51592356687898,
+          "peak_hour_mae": 0.3885350318471338
+        },
+        "egress_mae": 342.6019249367218,
+        "all_mae": 86.68441394898471,
+        "dome_centre_error_min": {
+          "mean": 0.8959371935397314,
+          "mean_abs": 15.323403484607528,
+          "evenings": 75
+        }
+      },
+      "2026-08..11": {
+        "window": {
+          "site_days": 160,
+          "total_wape_pct": 20.411711704031674,
+          "total_bias_pct": -8.112394642475138,
+          "peak_wape_pct": 24.629178263339796,
+          "peak_bias_pct": -9.94890948240416,
+          "peak_shortfall_pct": 39.99283997227982,
+          "peak_hour_hit_pct": 52.5,
+          "peak_hour_mae": 0.60625
+        },
+        "egress_mae": 361.0783659822219,
+        "all_mae": 140.66768205985383,
+        "dome_centre_error_min": {
+          "mean": 25.55329014127879,
+          "mean_abs": 26.171700343884428,
+          "evenings": 25
+        }
+      },
+      "festival_days": {
+        "site_days": 108,
+        "total_wape_pct": 34.98650082233342,
+        "total_bias_pct": -27.913191360234784,
+        "peak_wape_pct": 40.000436092991144,
+        "peak_bias_pct": -28.12275152805366,
+        "peak_shortfall_pct": 46.01432558382356,
+        "peak_hour_hit_pct": 45.370370370370374,
+        "peak_hour_mae": 0.8518518518518519,
+        "egress_mae": 373.61655849421464
+      },
+      "timing_effects_hours": {
+        "runtime_dev": 0.82875238443298,
+        "runtime_missing": 0.18556119544777777,
+        "act_shift_hist": 0.9446079948199446
+      }
+    },
+    "festival_length": {
+      "2025-04..12": {
+        "window": {
+          "site_days": 452,
+          "total_wape_pct": 17.528278595800337,
+          "total_bias_pct": -7.965087464036321,
+          "peak_wape_pct": 30.05173513744387,
+          "peak_bias_pct": -24.722012739473847,
+          "peak_shortfall_pct": 34.64301017737559,
+          "peak_hour_hit_pct": 66.3716814159292,
+          "peak_hour_mae": 0.4314159292035398
+        },
+        "egress_mae": 305.3109194658385,
+        "all_mae": 62.192867248589515,
+        "dome_centre_error_min": {
+          "mean": 1.4833236735116893,
+          "mean_abs": 16.75782948598022,
+          "evenings": 88
+        },
+        "minus_v2_egress_mae": {
+          "days": 113,
+          "rows": 1608,
+          "mae_diff": 0.9294641649426412,
+          "ci95": [
+            -1.5273967063684637,
+            3.3724911894712264
+          ],
+          "share_of_draws_better": 0.232
+        }
+      },
+      "2026-01..07": {
+        "window": {
+          "site_days": 314,
+          "total_wape_pct": 23.836640275768055,
+          "total_bias_pct": -13.680973364857394,
+          "peak_wape_pct": 26.248205033248002,
+          "peak_bias_pct": -18.730029224341177,
+          "peak_shortfall_pct": 27.040741056082396,
+          "peak_hour_hit_pct": 68.47133757961782,
+          "peak_hour_mae": 0.37579617834394907
+        },
+        "egress_mae": 346.9112122882183,
+        "all_mae": 87.01235821053534,
+        "dome_centre_error_min": {
+          "mean": 1.287126639693895,
+          "mean_abs": 15.184830731002974,
+          "evenings": 75
+        },
+        "minus_v2_egress_mae": {
+          "days": 85,
+          "rows": 1200,
+          "mae_diff": 4.309287351496496,
+          "ci95": [
+            -0.16193075126758416,
+            9.324124929409386
+          ],
+          "share_of_draws_better": 0.03075
+        }
+      },
+      "2026-08..11": {
+        "window": {
+          "site_days": 160,
+          "total_wape_pct": 19.40719068799397,
+          "total_bias_pct": -4.628798680571823,
+          "peak_wape_pct": 24.066997731051543,
+          "peak_bias_pct": -6.759216093373358,
+          "peak_shortfall_pct": 36.89348686637593,
+          "peak_hour_hit_pct": 50.0,
+          "peak_hour_mae": 0.6125
+        },
+        "egress_mae": 356.1745550455095,
+        "all_mae": 136.6796578114527,
+        "dome_centre_error_min": {
+          "mean": 23.95489959105305,
+          "mean_abs": 24.77311301526413,
+          "evenings": 25
+        },
+        "minus_v2_egress_mae": {
+          "days": 40,
+          "rows": 584,
+          "mae_diff": -4.903810936712363,
+          "ci95": [
+            -14.107125284699709,
+            3.0118334914747398
+          ],
+          "share_of_draws_better": 0.874
+        }
+      },
+      "festival_days": {
+        "site_days": 108,
+        "total_wape_pct": 34.305583220366024,
+        "total_bias_pct": -25.28228173954562,
+        "peak_wape_pct": 38.8671779775242,
+        "peak_bias_pct": -24.75383487011665,
+        "peak_shortfall_pct": 41.09114160902313,
+        "peak_hour_hit_pct": 38.88888888888889,
+        "peak_hour_mae": 0.9166666666666666,
+        "egress_mae": 380.09796244266283
+      },
+      "timing_effects_hours": {
+        "runtime_dev": 0.5118116836433784,
+        "runtime_missing": 0.15189166780145352,
+        "festival_runtime_dev": 0.3971694758061703,
+        "act_shift_hist": 0.8831519880751354
+      }
+    },
+    "recent_drift": {
+      "2025-04..12": {
+        "window": {
+          "site_days": 452,
+          "total_wape_pct": 17.653723253764166,
+          "total_bias_pct": -8.53077228788442,
+          "peak_wape_pct": 30.607365144530515,
+          "peak_bias_pct": -24.946343741305057,
+          "peak_shortfall_pct": 35.104910350732666,
+          "peak_hour_hit_pct": 67.47787610619469,
+          "peak_hour_mae": 0.41150442477876104
+        },
+        "egress_mae": 306.4684679568189,
+        "all_mae": 62.36548356309345,
+        "dome_centre_error_min": {
+          "mean": 1.485021927960505,
+          "mean_abs": 17.109147298709914,
+          "evenings": 88
+        },
+        "minus_v2_egress_mae": {
+          "days": 113,
+          "rows": 1608,
+          "mae_diff": 2.087012655923091,
+          "ci95": [
+            0.33124132151824526,
+            4.10952471147855
+          ],
+          "share_of_draws_better": 0.01025
+        }
+      },
+      "2026-01..07": {
+        "window": {
+          "site_days": 314,
+          "total_wape_pct": 23.616530109783504,
+          "total_bias_pct": -13.233494470064617,
+          "peak_wape_pct": 25.919849333126162,
+          "peak_bias_pct": -18.398682485650095,
+          "peak_shortfall_pct": 26.942692036835776,
+          "peak_hour_hit_pct": 67.51592356687898,
+          "peak_hour_mae": 0.3885350318471338
+        },
+        "egress_mae": 342.6784531359589,
+        "all_mae": 86.69251077174464,
+        "dome_centre_error_min": {
+          "mean": 0.8394617898846122,
+          "mean_abs": 15.320491588248396,
+          "evenings": 75
+        },
+        "minus_v2_egress_mae": {
+          "days": 85,
+          "rows": 1200,
+          "mae_diff": 0.07652819923719593,
+          "ci95": [
+            -0.06643182503692589,
+            0.22082821830290209
+          ],
+          "share_of_draws_better": 0.144
+        }
+      },
+      "2026-08..11": {
+        "window": {
+          "site_days": 160,
+          "total_wape_pct": 20.347680987792547,
+          "total_bias_pct": -8.187791045522227,
+          "peak_wape_pct": 24.66029669504627,
+          "peak_bias_pct": -10.230294488215753,
+          "peak_shortfall_pct": 39.87861031691412,
+          "peak_hour_hit_pct": 52.5,
+          "peak_hour_mae": 0.60625
+        },
+        "egress_mae": 358.7525986971013,
+        "all_mae": 140.11236502868329,
+        "dome_centre_error_min": {
+          "mean": 24.988385940246314,
+          "mean_abs": 25.851322612513854,
+          "evenings": 25
+        },
+        "minus_v2_egress_mae": {
+          "days": 40,
+          "rows": 584,
+          "mae_diff": -2.325767285120585,
+          "ci95": [
+            -3.723025017900153,
+            -0.9140304752079915
+          ],
+          "share_of_draws_better": 0.9995
+        }
+      },
+      "festival_days": {
+        "site_days": 108,
+        "total_wape_pct": 34.96980184181996,
+        "total_bias_pct": -27.908593251195388,
+        "peak_wape_pct": 40.27935474343239,
+        "peak_bias_pct": -28.331593042774106,
+        "peak_shortfall_pct": 46.1919712688145,
+        "peak_hour_hit_pct": 44.44444444444444,
+        "peak_hour_mae": 0.8518518518518519,
+        "egress_mae": 374.22567624687036
+      },
+      "timing_effects_hours": {
+        "runtime_dev": 0.8262096591089012,
+        "runtime_missing": 0.1792476797037095,
+        "act_shift_hist": 0.9539263285614316,
+        "recent_shift_hist": 0.09536075727474345
+      }
+    },
+    "audience_timing": {
+      "2025-04..12": {
+        "window": {
+          "site_days": 452,
+          "total_wape_pct": 17.905804926848536,
+          "total_bias_pct": -8.216694248722627,
+          "peak_wape_pct": 30.058807037038044,
+          "peak_bias_pct": -24.266379148764518,
+          "peak_shortfall_pct": 34.95619676510746,
+          "peak_hour_hit_pct": 67.03539823008849,
+          "peak_hour_mae": 0.415929203539823
+        },
+        "egress_mae": 306.62163730228554,
+        "all_mae": 62.37206146113073,
+        "dome_centre_error_min": {
+          "mean": 0.7389652253641302,
+          "mean_abs": 16.423707663762404,
+          "evenings": 88
+        },
+        "minus_v2_egress_mae": {
+          "days": 113,
+          "rows": 1608,
+          "mae_diff": 2.2401820013896607,
+          "ci95": [
+            -2.946342272125675,
+            7.264838019095858
+          ],
+          "share_of_draws_better": 0.19325
+        }
+      },
+      "2026-01..07": {
+        "window": {
+          "site_days": 314,
+          "total_wape_pct": 23.223712892414827,
+          "total_bias_pct": -12.923696143556333,
+          "peak_wape_pct": 25.522790849460836,
+          "peak_bias_pct": -17.8106379310878,
+          "peak_shortfall_pct": 26.39991921080663,
+          "peak_hour_hit_pct": 69.42675159235668,
+          "peak_hour_mae": 0.3630573248407643
+        },
+        "egress_mae": 340.8093429487157,
+        "all_mae": 86.4299983191352,
+        "dome_centre_error_min": {
+          "mean": -0.35660618950561795,
+          "mean_abs": 14.855076577907294,
+          "evenings": 75
+        },
+        "minus_v2_egress_mae": {
+          "days": 85,
+          "rows": 1200,
+          "mae_diff": -1.7925819880061367,
+          "ci95": [
+            -8.348579007441206,
+            4.462773974875015
+          ],
+          "share_of_draws_better": 0.6895
+        }
+      },
+      "2026-08..11": {
+        "window": {
+          "site_days": 160,
+          "total_wape_pct": 21.61199601071477,
+          "total_bias_pct": -6.170344500137032,
+          "peak_wape_pct": 24.238023897354292,
+          "peak_bias_pct": -7.682680408584506,
+          "peak_shortfall_pct": 34.88427621992582,
+          "peak_hour_hit_pct": 56.25,
+          "peak_hour_mae": 0.5625
+        },
+        "egress_mae": 333.5988329465785,
+        "all_mae": 134.34125162854232,
+        "dome_centre_error_min": {
+          "mean": 21.488123329689632,
+          "mean_abs": 23.006344671984674,
+          "evenings": 25
+        },
+        "minus_v2_egress_mae": {
+          "days": 40,
+          "rows": 584,
+          "mae_diff": -27.47953303564334,
+          "ci95": [
+            -75.60785794798242,
+            10.350041312506788
+          ],
+          "share_of_draws_better": 0.89725
+        }
+      },
+      "festival_days": {
+        "site_days": 108,
+        "total_wape_pct": 35.03179176954302,
+        "total_bias_pct": -26.450060615024892,
+        "peak_wape_pct": 39.398402118054165,
+        "peak_bias_pct": -28.719798480943233,
+        "peak_shortfall_pct": 44.37715546152079,
+        "peak_hour_hit_pct": 50.0,
+        "peak_hour_mae": 0.7870370370370371,
+        "egress_mae": 370.26114980393913
+      },
+      "timing_effects_hours": {
+        "runtime_dev": 0.39030523578506165,
+        "runtime_missing": 0.013889711765276667,
+        "aud_general": -0.21619926246223123,
+        "aud_senior": -0.2675797188040621,
+        "aud_foreign": -0.7931226225387306,
+        "act_shift_hist": 0.7411702492876673
+      }
+    },
+    "festival_length+recent_drift": {
+      "2025-04..12": {
+        "window": {
+          "site_days": 452,
+          "total_wape_pct": 17.51060638062669,
+          "total_bias_pct": -7.883630818580899,
+          "peak_wape_pct": 30.126896886893682,
+          "peak_bias_pct": -24.764949998190072,
+          "peak_shortfall_pct": 34.70813933431284,
+          "peak_hour_hit_pct": 66.5929203539823,
+          "peak_hour_mae": 0.4314159292035398
+        },
+        "egress_mae": 306.1496259965777,
+        "all_mae": 62.26436423348752,
+        "dome_centre_error_min": {
+          "mean": 1.3606395286307993,
+          "mean_abs": 16.881756446314384,
+          "evenings": 88
+        },
+        "minus_v2_egress_mae": {
+          "days": 113,
+          "rows": 1608,
+          "mae_diff": 1.7681706956818288,
+          "ci95": [
+            -0.9666637276133955,
+            4.455353235029162
+          ],
+          "share_of_draws_better": 0.09975
+        }
+      },
+      "2026-01..07": {
+        "window": {
+          "site_days": 314,
+          "total_wape_pct": 23.816819501410635,
+          "total_bias_pct": -13.587724575291158,
+          "peak_wape_pct": 26.297879773255115,
+          "peak_bias_pct": -18.752934320780493,
+          "peak_shortfall_pct": 27.061817540540243,
+          "peak_hour_hit_pct": 68.47133757961782,
+          "peak_hour_mae": 0.37579617834394907
+        },
+        "egress_mae": 347.04125853216044,
+        "all_mae": 87.01594168552661,
+        "dome_centre_error_min": {
+          "mean": 1.111730474301737,
+          "mean_abs": 15.169290972538239,
+          "evenings": 75
+        },
+        "minus_v2_egress_mae": {
+          "days": 85,
+          "rows": 1200,
+          "mae_diff": 4.4393335954386055,
+          "ci95": [
+            0.04190075244938225,
+            9.439211771150559
+          ],
+          "share_of_draws_better": 0.0245
+        }
+      },
+      "2026-08..11": {
+        "window": {
+          "site_days": 160,
+          "total_wape_pct": 19.391903933825784,
+          "total_bias_pct": -4.617498474256261,
+          "peak_wape_pct": 24.03691827506882,
+          "peak_bias_pct": -6.7530044376180145,
+          "peak_shortfall_pct": 36.9080340870126,
+          "peak_hour_hit_pct": 50.0,
+          "peak_hour_mae": 0.6125
+        },
+        "egress_mae": 355.68839371302965,
+        "all_mae": 136.54689272848685,
+        "dome_centre_error_min": {
+          "mean": 23.799859774290134,
+          "mean_abs": 24.725313425694136,
+          "evenings": 25
+        },
+        "minus_v2_egress_mae": {
+          "days": 40,
+          "rows": 584,
+          "mae_diff": -5.389972269192206,
+          "ci95": [
+            -14.37508629704207,
+            2.3754669385562193
+          ],
+          "share_of_draws_better": 0.90125
+        }
+      },
+      "festival_days": {
+        "site_days": 108,
+        "total_wape_pct": 34.211130775009686,
+        "total_bias_pct": -25.18154554495396,
+        "peak_wape_pct": 38.7468258297355,
+        "peak_bias_pct": -24.602238872886492,
+        "peak_shortfall_pct": 41.01006970389894,
+        "peak_hour_hit_pct": 38.88888888888889,
+        "peak_hour_mae": 0.9259259259259259,
+        "egress_mae": 379.58243690880397
+      },
+      "timing_effects_hours": {
+        "runtime_dev": 0.5101061320352634,
+        "runtime_missing": 0.15061519259134687,
+        "festival_runtime_dev": 0.39903570024413626,
+        "act_shift_hist": 0.8829795576968622,
+        "recent_shift_hist": 0.027739981743364298
+      }
+    },
+    "all_three": {
+      "2025-04..12": {
+        "window": {
+          "site_days": 452,
+          "total_wape_pct": 18.047115765608574,
+          "total_bias_pct": -8.289889912895758,
+          "peak_wape_pct": 30.20038676825686,
+          "peak_bias_pct": -24.510635897488584,
+          "peak_shortfall_pct": 35.0615174581007,
+          "peak_hour_hit_pct": 64.38053097345133,
+          "peak_hour_mae": 0.46238938053097345
+        },
+        "egress_mae": 308.94680701969276,
+        "all_mae": 62.513597370243836,
+        "dome_centre_error_min": {
+          "mean": 0.3490924409824103,
+          "mean_abs": 16.699849605938457,
+          "evenings": 88
+        },
+        "minus_v2_egress_mae": {
+          "days": 113,
+          "rows": 1608,
+          "mae_diff": 4.5653517187969195,
+          "ci95": [
+            -1.2501824836476698,
+            9.97280794560487
+          ],
+          "share_of_draws_better": 0.0555
+        }
+      },
+      "2026-01..07": {
+        "window": {
+          "site_days": 314,
+          "total_wape_pct": 23.433559647806824,
+          "total_bias_pct": -13.208648507210613,
+          "peak_wape_pct": 25.486883581216258,
+          "peak_bias_pct": -18.116734558296148,
+          "peak_shortfall_pct": 26.412859637969618,
+          "peak_hour_hit_pct": 69.10828025477707,
+          "peak_hour_mae": 0.36942675159235666
+        },
+        "egress_mae": 346.603264371431,
+        "all_mae": 86.81514762178716,
+        "dome_centre_error_min": {
+          "mean": -1.077599577278218,
+          "mean_abs": 14.750040558500634,
+          "evenings": 75
+        },
+        "minus_v2_egress_mae": {
+          "days": 85,
+          "rows": 1200,
+          "mae_diff": 4.0013394347092115,
+          "ci95": [
+            -2.6128687285298526,
+            10.216944548446955
+          ],
+          "share_of_draws_better": 0.1115
+        }
+      },
+      "2026-08..11": {
+        "window": {
+          "site_days": 160,
+          "total_wape_pct": 20.262688700010592,
+          "total_bias_pct": -2.0218337788071703,
+          "peak_wape_pct": 23.027948979957955,
+          "peak_bias_pct": -3.7325079438314273,
+          "peak_shortfall_pct": 31.14687364287358,
+          "peak_hour_hit_pct": 53.75,
+          "peak_hour_mae": 0.575
+        },
+        "egress_mae": 327.75583649973214,
+        "all_mae": 130.79130842455487,
+        "dome_centre_error_min": {
+          "mean": 20.00553937372545,
+          "mean_abs": 21.780222492692918,
+          "evenings": 25
+        },
+        "minus_v2_egress_mae": {
+          "days": 40,
+          "rows": 584,
+          "mae_diff": -33.32252948248975,
+          "ci95": [
+            -81.62271097766431,
+            6.566722527992203
+          ],
+          "share_of_draws_better": 0.941
+        }
+      },
+      "festival_days": {
+        "site_days": 108,
+        "total_wape_pct": 34.24476917797548,
+        "total_bias_pct": -23.533219499396434,
+        "peak_wape_pct": 36.32674668582039,
+        "peak_bias_pct": -21.916612041414748,
+        "peak_shortfall_pct": 38.02555059213977,
+        "peak_hour_hit_pct": 40.74074074074074,
+        "peak_hour_mae": 0.9351851851851852,
+        "egress_mae": 377.62573536623347
+      },
+      "timing_effects_hours": {
+        "runtime_dev": 0.370552099929199,
+        "runtime_missing": 0.010197338301304468,
+        "festival_runtime_dev": 0.5199241282109659,
+        "aud_general": -0.21147444920819247,
+        "aud_senior": -0.2803143102439418,
+        "aud_foreign": -0.8081495208554433,
+        "act_shift_hist": 0.5537334720172008,
+        "recent_shift_hist": -0.016793489694264183
+      }
+    }
+  }
+}

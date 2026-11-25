@@ -1,0 +1,103 @@
+{
+  "evenings": 24,
+  "packet": "D-1, v2 bundle fitted through 2026-07-31",
+  "unit": "the crowd alone: gate boardings less the usual boardings of the hour",
+  "counted_at_the_gates": {
+    "busiest_5_min_median": 1181.0558469583334,
+    "busiest_5_min_p10": 944.1826453916666,
+    "busiest_5_min_p90": 1435.1379763916666,
+    "busiest_5_min_share_of_evening_crowd_median": 0.12437900920540618
+  },
+  "settings": {
+    "walk_without_limits": {
+      "what": "the packet's departures walked with nothing in the way",
+      "delivered_busiest_5_min": {
+        "min": 1846.0,
+        "median": 2198.0,
+        "max": 2492.0
+      },
+      "busiest_5_min_share_of_delivered_median": 0.33000937529611896,
+      "delivered_over_counted": {
+        "median": 1.8461786622591345,
+        "p10": 1.4640216469793532,
+        "p90": 2.417566091316568
+      },
+      "evenings_the_gates_passed_more": 0,
+      "largest_queue_persons_median": 490.5,
+      "minutes_with_a_queue_median": 0.0,
+      "queue_person_minutes_median": 0.0
+    },
+    "network_as_it_is": {
+      "what": "the network as it is (entrance 984 per five minutes)",
+      "delivered_busiest_5_min": {
+        "min": 946.0,
+        "median": 946.0,
+        "max": 947.0
+      },
+      "busiest_5_min_share_of_delivered_median": 0.1385779298432102,
+      "delivered_over_counted": {
+        "median": 0.801462314922452,
+        "p10": 0.6593835035005142,
+        "p90": 1.0026848534183033
+      },
+      "evenings_the_gates_passed_more": 21,
+      "largest_queue_persons_median": 2619.0,
+      "minutes_with_a_queue_median": 31.0,
+      "queue_person_minutes_median": 53378.5
+    },
+    "entrance_at_counted_throughput": {
+      "what": "entrance at the counted 1,450 per five minutes, standing areas as assumed (150 and 236 square metres)",
+      "delivered_busiest_5_min": {
+        "min": 981.0,
+        "median": 1021.5,
+        "max": 1040.0
+      },
+      "busiest_5_min_share_of_delivered_median": 0.15066675494204168,
+      "delivered_over_counted": {
+        "median": 0.8543597869607115,
+        "p10": 0.7041396102608815,
+        "p90": 1.076045894649141
+      },
+      "evenings_the_gates_passed_more": 17,
+      "largest_queue_persons_median": 2619.0,
+      "minutes_with_a_queue_median": 31.0,
+      "queue_person_minutes_median": 52518.5
+    },
+    "and_room_at_the_station_front": {
+      "what": "and 232 square metres at the station front",
+      "delivered_busiest_5_min": {
+        "min": 1134.0,
+        "median": 1146.0,
+        "max": 1167.0
+      },
+      "busiest_5_min_share_of_delivered_median": 0.1685346741116584,
+      "delivered_over_counted": {
+        "median": 0.9720215149763674,
+        "p10": 0.7943527074467207,
+        "p90": 1.2036687463326512
+      },
+      "evenings_the_gates_passed_more": 13,
+      "largest_queue_persons_median": 2289.5,
+      "minutes_with_a_queue_median": 25.0,
+      "queue_person_minutes_median": 32249.5
+    },
+    "and_room_on_the_approach": {
+      "what": "and 290 square metres on the approach walkway",
+      "delivered_busiest_5_min": {
+        "min": 1394.0,
+        "median": 1408.0,
+        "max": 1433.0
+      },
+      "busiest_5_min_share_of_delivered_median": 0.20676811987178298,
+      "delivered_over_counted": {
+        "median": 1.1917464673993567,
+        "p10": 0.9755690885537733,
+        "p90": 1.4788205770122786
+      },
+      "evenings_the_gates_passed_more": 4,
+      "largest_queue_persons_median": 1749.5,
+      "minutes_with_a_queue_median": 19.0,
+      "queue_person_minutes_median": 18008.0
+    }
+  }
+}
