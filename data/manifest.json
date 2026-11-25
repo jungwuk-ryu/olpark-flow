@@ -1,0 +1,4851 @@
+{
+  "as_of_kst": "2026-11-22T21:59:47+09:00",
+  "target_year": 2025,
+  "timezone": "Asia/Seoul",
+  "datasets": {
+    "D01": {
+      "name": "올림픽공원 공연일정",
+      "provider": "한국체육산업개발",
+      "status": "available_official_calendar",
+      "sources": [
+        "https://www.ksponco.or.kr/olympicpark/eventInfo/eventInfoList?mid=a20301010100",
+        "https://www.ksponco.or.kr/olympicpark/eventInfo/eventInfoListAjax.es",
+        "https://www.data.go.kr/data/3037877/openapi.do",
+        "https://www.culture.go.kr/data/openapi/openapiView.do?id=96"
+      ],
+      "usage": "공식 공개 일정의 사실 정보. 소개문·이미지·판매처 콘텐츠의 재배포 권리는 별도 확인.",
+      "coverage": {
+        "events": 125,
+        "schedule_month_records": 148,
+        "scheduled_sessions": 521,
+        "unresolved_events": 12,
+        "unresolved_means": "회차 기재가 불완전하거나 기간·다른 행사 기록과 충돌함. 미개최를 의미하지 않음."
+      }
+    },
+    "D02": {
+      "name": "KOPIS 공연 목록·상세",
+      "provider": "예술경영지원센터 KOPIS",
+      "status": "available_official_database_export_and_detail",
+      "sources": [
+        "https://kopis.or.kr/por/cs/openapi/openApiUseSend.do?menuId=MNU_00074",
+        "https://kopis.or.kr/openApi/restful/pblprfr",
+        "https://kopis.or.kr/por/db/pblprfr/pblprfr.do?menuId=MNU_00020"
+      ],
+      "usage": "신청 시 개인정보 수집·이용, 출처 표시 동의가 필요.",
+      "coverage": {
+        "songpa_candidates": 542,
+        "park_performances": 127,
+        "park_facility": "FC001247",
+        "cast_present": 88
+      },
+      "service_note": "발급 키를 보관했다. 공식 HTTPS XML 서비스에서 HTTP 400이 반환되어 KOPIS 공식 공연DB의 XLSX, 목록, 상세 페이지에서 수집했다."
+    },
+    "D03": {
+      "name": "1~8호선 관할역 일별 시간대별 승하차",
+      "provider": "서울교통공사",
+      "status": "available",
+      "sources": [
+        "https://data.seoul.go.kr/dataList/OA-12921/F/1/datasetView.do",
+        "https://www.data.go.kr/data/15048032/fileData.do"
+      ],
+      "usage": "서울 열린데이터광장 표기: 이용허락범위 제한 없음.",
+      "coverage": {
+        "wide_rows": 199290,
+        "removed_blank_rows": 134,
+        "measurements": 3985800,
+        "null_persons": 0,
+        "dates": 365,
+        "first_date": "2025-01-01",
+        "last_date": "2025-12-31",
+        "stations": 273,
+        "min_count": 0,
+        "max_count": 26951,
+        "duplicate_keys": 0
+      }
+    },
+    "D04": {
+      "name": "9호선 2·3단계 일별 시간대별 승하차",
+      "provider": "서울교통공사",
+      "status": "available_with_alighting_conflicts",
+      "sources": [
+        "https://data.seoul.go.kr/dataList/OA-22441/F/1/datasetView.do"
+      ],
+      "usage": "서울 열린데이터광장 표기: 이용허락범위 제한 없음.",
+      "coverage": {
+        "wide_rows": 9490,
+        "removed_blank_rows": 0,
+        "measurements": 227760,
+        "null_persons": 0,
+        "dates": 365,
+        "first_date": "2025-01-01",
+        "last_date": "2025-12-31",
+        "stations": 13,
+        "min_count": 0,
+        "max_count": 8069,
+        "conflict_rows_excluded": 1248,
+        "duplicate_keys": 624
+      },
+      "quality_note": "13개 역 순하차에 3/21·6/21 결측, 3/22·6/22 같은 키에 서로 다른 관측값. 중복 키 624개의 양쪽 기록 1,248개를 정제본에서 제외. 순승차는 모두 보존."
+    },
+    "D05": {
+      "name": "일자별 시간대별 버스노선별 정류장별 승객수",
+      "provider": "서울특별시 T-DATA",
+      "status": "partial_daily_by_hour_with_full_year_coarser_sources",
+      "sources": [
+        "https://t-data.seoul.go.kr/dataprovide/trafficdataviewopenapi.do?data_id=1040",
+        "https://t-data.seoul.go.kr/dataprovide/trafficdataviewfile.do?data_id=40",
+        "https://t-data.seoul.go.kr/dataprovide/trafficdataviewfile.do?data_id=19940",
+        "https://data.seoul.go.kr/dataList/OA-12912/A/1/datasetView.do",
+        "https://data.seoul.go.kr/dataList/OA-12913/A/1/datasetView.do",
+        "https://www.stcis.go.kr/pivotIndi/wpsPivotIndicator.do?siteGb=P&indiClss=IC03&indiSel=IC0308"
+      ],
+      "usage": "T-DATA 저작권 출처 표시.",
+      "verified_fallbacks": {
+        "download_10233_observed_dates": [
+          "2026-11-14",
+          "2026-11-15"
+        ],
+        "monthly_archive_last_visible_month": "2024-12"
+      },
+      "coverage": {
+        "days_queried": 365,
+        "tdata_status_counts": {
+          "empty_response": 325,
+          "complete": 38,
+          "partial": 2
+        },
+        "first": "2025-11-22",
+        "last": "2025-12-31",
+        "tdata_source_rows_returned": 3514723,
+        "park_hours": 979272,
+        "daily_totals": {
+          "source_rows": 14940136,
+          "prepared_rows": 263563,
+          "periods": 365,
+          "stations": 242,
+          "source_file_rows": {
+            "BUS_STATION_BOARDING_MONTH_202501.csv.gz": 1262244,
+            "BUS_STATION_BOARDING_MONTH_202502.csv.gz": 1146109,
+            "BUS_STATION_BOARDING_MONTH_202503.csv.gz": 1267802,
+            "BUS_STATION_BOARDING_MONTH_202504.csv.gz": 1229999,
+            "BUS_STATION_BOARDING_MONTH_202505.csv.gz": 1269102,
+            "BUS_STATION_BOARDING_MONTH_202506.csv.gz": 1224340,
+            "BUS_STATION_BOARDING_MONTH_202507.csv.gz": 1268713,
+            "BUS_STATION_BOARDING_MONTH_202508.csv.gz": 1268921,
+            "BUS_STATION_BOARDING_MONTH_202509.csv.gz": 1232318,
+            "BUS_STATION_BOARDING_MONTH_202510.csv.gz": 1267242,
+            "BUS_STATION_BOARDING_MONTH_202511.csv.gz": 1229991,
+            "BUS_STATION_BOARDING_MONTH_202512.csv.gz": 1273355
+          }
+        },
+        "monthly_hourly_totals": {
+          "source_rows": 509498,
+          "prepared_rows": 214152,
+          "periods": 12,
+          "stations": 242,
+          "source_file_rows": {
+            "2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(01월).csv.gz": 42980,
+            "2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(02월).csv.gz": 41844,
+            "2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(03월).csv.gz": 41833,
+            "2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(04월).csv.gz": 43005,
+            "2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(05월).csv.gz": 42301,
+            "2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(06월).csv.gz": 41961,
+            "2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(07월).csv.gz": 42152,
+            "2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(08월).csv.gz": 42323,
+            "2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(09월).csv.gz": 44126,
+            "2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(10월).csv.gz": 41960,
+            "2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(11월).csv.gz": 42196,
+            "2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(12월).csv.gz": 42817
+          }
+        },
+        "station_level_stcis": {
+          "candidate_stops": 16,
+          "matched_stops": 14,
+          "reported_stops": 14,
+          "full_year_stops": 0,
+          "dates": 42,
+          "reported_stop_days": 574,
+          "rows": 13776,
+          "connection_note": "14일 단위 공용 보고서에서 수신된 기간을 보존했다. 그 밖의 기간은 제공처 연결 시간 초과로 미수령이다."
+        }
+      },
+      "quality_note": "T-DATA의 빈 응답과 결측 승차·하차는 0으로 치환하지 않았다. 12월 29~30일 HTTP 500으로 일부 페이지 누락. 해당 날짜의 서로 다른 페이지에 중복된 동일 관측을 정제본에서 제거. 상세 조회범위는 raw/D05/download_counts.json."
+    },
+    "D06": {
+      "name": "올림픽공원 전체구역 차량 입출차",
+      "provider": "한국체육산업개발",
+      "status": "marketplace_plus_official_api_partial_scan",
+      "sources": [
+        "https://www.data.go.kr/data/15159093/openapi.do",
+        "https://www.culture.go.kr/data/openapi/openapiView.do?id=659",
+        "https://www.bigdata-culture.kr/bigdata/user/data_market/detail.do?id=a2d6393d-246e-439b-8bfb-c25204e808fb",
+        "https://api.kcisa.kr/openapi/API_CPM_008/request"
+      ],
+      "usage": "문화광장 API와 문화 빅데이터 플랫폼 월별 상품은 이용조건이 다름. 후자는 무료 구매 및 정보보안관리 약정.",
+      "available_file_catalog": [
+        {
+          "product": "올림픽공원 차량 이용현황 데이터(202512)",
+          "distribution_id": "13e88e42-a310-420f-bdb2-0ab921205c80",
+          "price_krw": 0
+        },
+        {
+          "product": "올림픽공원 차량 이용현황 데이터(202511)",
+          "distribution_id": "72e04b70-a934-4feb-b0ec-ea47356848ba",
+          "price_krw": 0
+        },
+        {
+          "product": "올림픽공원 차량 이용현황 데이터(202510)",
+          "distribution_id": "244946b8-f0d0-4d02-9a40-e5c6e90d5318",
+          "price_krw": 0
+        },
+        {
+          "product": "올림픽공원 차량 이용현황 데이터(202509)",
+          "distribution_id": "ee71ca1f-1042-4339-84ec-1daf217a1279",
+          "price_krw": 0
+        },
+        {
+          "product": "올림픽공원 차량 이용현황 데이터(202508)",
+          "distribution_id": "ee745dd5-738b-4336-9bf4-24f3903185f1",
+          "price_krw": 0
+        },
+        {
+          "product": "올림픽공원 차량 이용현황 데이터(202507)",
+          "distribution_id": "8ac6975e-7c6c-4101-947c-7a84e1f3c1a7",
+          "price_krw": 0
+        },
+        {
+          "product": "올림픽공원 차량 이용현황 데이터(202506)",
+          "distribution_id": "e5a56455-0fb2-4f5c-a49e-c34675249447",
+          "price_krw": 0
+        },
+        {
+          "product": "올림픽공원 차량 이용현황 데이터(202505)",
+          "distribution_id": "e5aedaac-fd3b-4f9d-9328-092914f30f7f",
+          "price_krw": 0
+        },
+        {
+          "product": "올림픽공원 차량 이용현황 데이터(202504)",
+          "distribution_id": "ab755d10-9f93-4ab5-b646-290b24908990",
+          "price_krw": 0
+        },
+        {
+          "product": "올림픽공원 차량 이용현황 데이터(202503)",
+          "distribution_id": "e4fd6611-312d-47b5-9846-f8abd4ba296f",
+          "price_krw": 0
+        },
+        {
+          "product": "올림픽공원 차량 이용현황 데이터(202502)",
+          "distribution_id": "7d2ab716-c21c-45c3-b409-8383f8ba07f4",
+          "price_krw": 0
+        },
+        {
+          "product": "올림픽공원 차량 이용현황 데이터(202501)",
+          "distribution_id": "4d31796d-88df-47e2-beb7-b83894faeb27",
+          "price_krw": 0
+        }
+      ],
+      "file_months_received": 11,
+      "public_preview": {
+        "date": "2025-06-01",
+        "records": 29,
+        "fields": "입출차 일시·출입문, 차량식별해시 제외",
+        "representative": false
+      },
+      "coverage": {
+        "entry_months": [
+          "2025-01",
+          "2025-02",
+          "2025-03",
+          "2025-04",
+          "2025-05",
+          "2025-06",
+          "2025-07",
+          "2025-08",
+          "2025-09",
+          "2025-10",
+          "2025-11"
+        ],
+        "missing_entry_months": [
+          "2025-12"
+        ],
+        "unique_source_rows": 3091265,
+        "hourly_rows": 96881,
+        "missing_entry_dates_january_november": [
+          "2025-07-31",
+          "2025-08-02"
+        ],
+        "december_exits_from_prior_entry_months": 480,
+        "details": "raw/D06/coverage.json",
+        "culture_api_archive": {
+          "pages_received": 45,
+          "pages_expected": 242,
+          "rows_scanned": 441225,
+          "requested_date_records": 67716,
+          "observed_target_dates": 27,
+          "coverage_file": "raw/D06/culture_api/coverage.json",
+          "december_entries": 65534,
+          "december_entry_range": [
+            "2025-12-01 00:06:17",
+            "2025-12-07 16:08:25"
+          ],
+          "december_id_holes_in_range": 0,
+          "pagination_complete": false
+        }
+      },
+      "quality_note": "CSV 합본은 표제와 실제 입차 월이 다를 수 있다. 출입문·시간·입출차 방향별로 집계했다. 주차구역 식별자는 없다. 빠진 입차 기록에 연결되는 출차는 집계에서 누락될 수 있다. 문화데이터광장 API는 독립 원천으로 저장했고, B050 기록 식별자로 검산했다. 시간별 자료끼리는 집계 범위가 겹칠 수 있어 더하지 않는다."
+    },
+    "D07": {
+      "name": "서울 108 ASOS 시간자료",
+      "provider": "기상청",
+      "status": "available_verified_api",
+      "sources": [
+        "https://www.data.go.kr/data/15057210/openapi.do",
+        "https://data.kma.go.kr/data/grnd/selectAsosRltmList.do?pgmNo=36",
+        "https://apihub.kma.go.kr/apiList.do?apiSeq=5"
+      ],
+      "usage": "기상청·공공데이터포털 해당 서비스 이용조건 적용.",
+      "verified_file_catalog": {
+        "station": "108",
+        "filename": "SURFACE_ASOS_108_HR_2025_2025_2026.zip",
+        "file_production_date": "2026-02-03"
+      },
+      "coverage": {
+        "station_id": 108,
+        "station_name": "서울",
+        "dates": 365,
+        "unique_hours": 8760,
+        "timezone": "Asia/Seoul",
+        "raw_months": 12
+      }
+    },
+    "D08": {
+      "name": "격자 단기예보 현행 및 과거 발표분",
+      "provider": "기상청",
+      "status": "available_point_archive_all_2025_issues",
+      "sources": [
+        "https://www.data.go.kr/data/15084084/openapi.do",
+        "https://apihub.kma.go.kr/apiList.do?seqApi=10",
+        "https://data.kma.go.kr/data/rmt/rmtList.do?code=420&pgmNo=572"
+      ],
+      "usage": "기상청·공공데이터포털 해당 서비스 이용조건 적용.",
+      "coverage": {
+        "issue_count": 365,
+        "complete_issue_count": 365,
+        "extracted_values": 4380,
+        "unavailable_values": 0,
+        "issue_time_kst": "17:00",
+        "target_same_day_kst": "20:00",
+        "grids": [
+          [
+            62,
+            126
+          ],
+          [
+            63,
+            126
+          ]
+        ],
+        "variables": [
+          "TMP",
+          "PCP",
+          "POP",
+          "PTY",
+          "WSD",
+          "REH"
+        ],
+        "live_example_issue": "2026-11-20T05:00:00+09:00",
+        "live_example_records": 1814,
+        "point_archive": {
+          "rows": 2505360,
+          "issue_count": 2920,
+          "minimum_lead_hours": 6,
+          "maximum_lead_hours": 103,
+          "missing_values": 1144,
+          "details": "raw/D08/point_archive/coverage.json"
+        }
+      },
+      "quality_note": "기상자료개방포털 지점 CSV 12개로 두 격자의 변수 6종과 2025년 매일 8회 발표분을 확보했다. 지점 파일의 선행시간은 발표 후 6시간부터이며 확대기간의 풍속과 강수량은 원본 범주 코드를 보존했다."
+    },
+    "D09": {
+      "name": "서울시 버스정류소 위치정보",
+      "provider": "서울특별시",
+      "status": "available",
+      "sources": [
+        "https://data.seoul.go.kr/dataList/OA-15067/A/1/datasetView.do"
+      ],
+      "usage": "서울 열린데이터광장 표기: 이용허락범위 제한 없음.",
+      "coverage": {
+        "rows_by_snapshot": {
+          "2024-12-09": 11262,
+          "2025-02-04": 11285,
+          "2025-05-13": 11301,
+          "2025-06-24": 11323,
+          "2025-08-01": 11338,
+          "2025-09-01": 11335,
+          "2025-10-02": 11324,
+          "2025-11-03": 11335,
+          "2025-11-17": 11247,
+          "2025-12-09": 11245
+        },
+        "records": 112995
+      }
+    },
+    "D10": {
+      "name": "서울 자치구별 도보 네트워크",
+      "provider": "서울특별시",
+      "status": "available_2026_snapshot",
+      "sources": [
+        "https://data.seoul.go.kr/dataList/OA-21208/S/1/datasetView.do",
+        "https://www.data.go.kr/data/15098156/openapi.do"
+      ],
+      "usage": "서울 열린데이터광장 표기: 이용허락범위 제한 없음.",
+      "coverage": {
+        "seoul_types": {
+          "NODE": 212066,
+          "LINK": 279016
+        },
+        "districts": {
+          "송파구": 21779,
+          "강동구": 19274
+        },
+        "collection_dates": [
+          "2026-11-20"
+        ]
+      }
+    },
+    "D11": {
+      "name": "2025년 공휴일 및 달력",
+      "provider": "한국천문연구원·우주항공청·대한민국 정책브리핑",
+      "status": "available_official_notices",
+      "sources": [
+        "https://astro.kasi.re.kr/kor/life/post/calendarData?year=2025",
+        "https://www.kasi.re.kr/publication/post/newsMaterial/30071?cPage=11",
+        "https://www.korea.kr/news/policyNewsView.do?newsId=148938559",
+        "https://www.korea.kr/news/policyNewsView.do?newsId=148941443",
+        "https://www.data.go.kr/data/15012690/openapi.do"
+      ],
+      "usage": "공식 발표의 날짜·공휴일 명칭과 요일 계산값. 보도자료 본문·사진의 이용조건은 각 원문 참조.",
+      "coverage": {
+        "dates": 365,
+        "public_holidays_including_sundays": 70,
+        "named_dates": 19,
+        "api_records": 20,
+        "api_distinct_named_holiday_dates": 19,
+        "api_date_differences": 0
+      }
+    }
+  },
+  "artifacts": [
+    {
+      "path": "raw/D01/calendar_202501.json",
+      "bytes": 8555,
+      "sha256": "2b8a298e3fee9e34d5552ed6d13f9df53321818716732152ef13e1f28d416e97",
+      "dataset_id": "D01",
+      "requested_month": "202501",
+      "format_note": "공개 응답 필드 선별 JSON"
+    },
+    {
+      "path": "raw/D01/calendar_202502.json",
+      "bytes": 8273,
+      "sha256": "93f07a03c7275e5f1530aa2ce225ae2840d0650cba48b6832bfe56767f7c1329",
+      "dataset_id": "D01",
+      "requested_month": "202502",
+      "format_note": "공개 응답 필드 선별 JSON"
+    },
+    {
+      "path": "raw/D01/calendar_202503.json",
+      "bytes": 9140,
+      "sha256": "b2566ce409a2629b40c318da67a2f056ad29872c7e505e83b80303452d9b00dc",
+      "dataset_id": "D01",
+      "requested_month": "202503",
+      "format_note": "공개 응답 필드 선별 JSON"
+    },
+    {
+      "path": "raw/D01/calendar_202504.json",
+      "bytes": 5912,
+      "sha256": "e73f076061b8492823ddf040f2c0e03b0bc7946afa59904df63d09c7c2437d35",
+      "dataset_id": "D01",
+      "requested_month": "202504",
+      "format_note": "공개 응답 필드 선별 JSON"
+    },
+    {
+      "path": "raw/D01/calendar_202505.json",
+      "bytes": 8756,
+      "sha256": "b4ac80a4cc6b1c9160777272b654642ed648628ea6f8fcc6e937bbbcc9ea8a9f",
+      "dataset_id": "D01",
+      "requested_month": "202505",
+      "format_note": "공개 응답 필드 선별 JSON"
+    },
+    {
+      "path": "raw/D01/calendar_202506.json",
+      "bytes": 8764,
+      "sha256": "7432c2ea26d997c6f4bc8db5249859e7cd09093f67ad60f152bb9df1702e142b",
+      "dataset_id": "D01",
+      "requested_month": "202506",
+      "format_note": "공개 응답 필드 선별 JSON"
+    },
+    {
+      "path": "raw/D01/calendar_202507.json",
+      "bytes": 6778,
+      "sha256": "f0b738dd1dc2b26c3b61cdf4e37f58a74f826744e93642f2510ac55025c765ee",
+      "dataset_id": "D01",
+      "requested_month": "202507",
+      "format_note": "공개 응답 필드 선별 JSON"
+    },
+    {
+      "path": "raw/D01/calendar_202508.json",
+      "bytes": 9452,
+      "sha256": "982238bb22fcad49ffc2b4a17a519bc50e540bdf876ce2b423a46cb9ac68c2e8",
+      "dataset_id": "D01",
+      "requested_month": "202508",
+      "format_note": "공개 응답 필드 선별 JSON"
+    },
+    {
+      "path": "raw/D01/calendar_202509.json",
+      "bytes": 5244,
+      "sha256": "8f4c1cd781f25a0ca05c8d47b8f7a9854f0fabc54c578237c1c3e248cc0d3356",
+      "dataset_id": "D01",
+      "requested_month": "202509",
+      "format_note": "공개 응답 필드 선별 JSON"
+    },
+    {
+      "path": "raw/D01/calendar_202510.json",
+      "bytes": 8343,
+      "sha256": "ad695b2b57de2d29c8e4a0b883bc1704fe552c06643268c57ed103c70ab8efb0",
+      "dataset_id": "D01",
+      "requested_month": "202510",
+      "format_note": "공개 응답 필드 선별 JSON"
+    },
+    {
+      "path": "raw/D01/calendar_202511.json",
+      "bytes": 9779,
+      "sha256": "1a360176df8af42424b530b99379d5bc6786d4999b491f2864ee3e362f6c5f56",
+      "dataset_id": "D01",
+      "requested_month": "202511",
+      "format_note": "공개 응답 필드 선별 JSON"
+    },
+    {
+      "path": "raw/D01/calendar_202512.json",
+      "bytes": 9558,
+      "sha256": "021f8e41274ea4027a4f42adcd8cb07d5ba8ebd05408b792b5830939fb967bf6",
+      "dataset_id": "D01",
+      "requested_month": "202512",
+      "format_note": "공개 응답 필드 선별 JSON"
+    },
+    {
+      "path": "raw/D02/details/PF252386.json",
+      "bytes": 1062,
+      "sha256": "e5b22cf0735da673729984e0eeebaf36b3a058aef53b14a9493763cdcc4f0b04",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF252522.json",
+      "bytes": 1149,
+      "sha256": "2f3cc0ae35e5761fe9ea8bc901f27f03ee19235f002f418158f9f5db65128a54",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF252687.json",
+      "bytes": 1163,
+      "sha256": "15902d05260c42fff4efe5f3a0136a957658de409151b5ce72208d55d3169e6c",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF253422.json",
+      "bytes": 1127,
+      "sha256": "8bed0366166a70b98eb7a1e05bdda79eb78630c0ebfc5edb2c5f3f56ea5e085a",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF253682.json",
+      "bytes": 1129,
+      "sha256": "c30e38389dfaaef49b230bc3e4e886b1cae9ca9b41ccf457c16279e8046a4b40",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF254000.json",
+      "bytes": 1161,
+      "sha256": "e207ada37f880aeced9ab0a2a511f8f1d5462b2f955b8a4ab5a0b14cc304dc9e",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF254111.json",
+      "bytes": 1516,
+      "sha256": "4a5a4d046220503e5d19ebbac1d75d32f40b8b075626de8553460e1cdc54ad0c",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF254344.json",
+      "bytes": 1149,
+      "sha256": "bd085f156267b93c7b773e762cf217d5f20d5420686d1d599ef302ec47a1dffa",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF254786.json",
+      "bytes": 1073,
+      "sha256": "d66f114efa816c41c869ba36a12bfed0b29b2a5521e5c1ace4aebfd0346341cd",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF255235.json",
+      "bytes": 1226,
+      "sha256": "f1c04e6ab6522977ef15b2d69cf1e4f8d27361478aa8f65fa6341f09619a0609",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF255296.json",
+      "bytes": 1134,
+      "sha256": "6cae7e2804f0787b45fc2d9c8ae462bf4e5b772713c56dc438779b438957b9b3",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF255541.json",
+      "bytes": 1216,
+      "sha256": "e8e694c9d66b4df74f680dfa2d5170b0ee9abda1d138fe37a97527e468609b91",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF255895.json",
+      "bytes": 1131,
+      "sha256": "7c90f9ba55fa8f95418ffdc3bbb5bfcda412989911d19aed76451081b33ec1a5",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF255948.json",
+      "bytes": 1092,
+      "sha256": "0a1c2e77ec4b462556d311916573e48212b5aaf04e839a5a34373e6d9bb4774e",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF256716.json",
+      "bytes": 1113,
+      "sha256": "4fd442a9902309fb8c68de37bcda7f205b4bc3d21ad5bd2b444fda440b9ef653",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF256780.json",
+      "bytes": 1153,
+      "sha256": "92a89bf2c6fe9f77320376b50c10427eaf86f2f02e3c427e7ab9f8bfd19d3634",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF256964.json",
+      "bytes": 1120,
+      "sha256": "55d1d122c01bf8c0774d4a65668081447218dc24df2b6be3d48ca3edabbb0637",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF257170.json",
+      "bytes": 1221,
+      "sha256": "79f063bc65c7a2fbd765b147959cd41a834273f65b37555c377d2f4d274a3775",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF257186.json",
+      "bytes": 1163,
+      "sha256": "b4c26ea76e7fba9fa7bc82e405d3b950c1de9ad4b170f48b0be9624105b67a6b",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF257188.json",
+      "bytes": 1105,
+      "sha256": "360b8d3b907b1db0ba9666383381706f72509d48cfccacc4f5810b13f36ab27c",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF257194.json",
+      "bytes": 1098,
+      "sha256": "d02de39f65c955a60c286e68bfda9160114ab3860376633263ea1a6129492fdd",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF257210.json",
+      "bytes": 1109,
+      "sha256": "7b628bfb0c8789c4ab5a3a8dd5cbc618bd701b3aa32709b543f425420de7ea0c",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF257267.json",
+      "bytes": 1168,
+      "sha256": "341c0d46eeb076de74409a93746711ea5f166c811bca088c4042d805fa6783a7",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF257280.json",
+      "bytes": 1106,
+      "sha256": "906e1d70a50112028c8d82de65b147222c6b5e2b885d9f475d150160f82a4483",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF257321.json",
+      "bytes": 1104,
+      "sha256": "641ce5417ca74a8ee6b0b75f31ca12c180830b63d47e70b7145df291eb8aac77",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF257403.json",
+      "bytes": 1102,
+      "sha256": "bba03e28f56a49a2c01444f42b50f693c798cd8e627c4d1d97d994b58a1763d3",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF257515.json",
+      "bytes": 1141,
+      "sha256": "fa043c2fad18b0a9b924d63de0cda4c8ab0cb0d33be1274fe66bd5b625f5d1c3",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF257567.json",
+      "bytes": 1464,
+      "sha256": "2280b01ab7528a91f35eb62ef62060c1ff7ed7c3db3be278002970ba8d5b4dbe",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF257949.json",
+      "bytes": 1130,
+      "sha256": "45a0cdf471948811669d7e176945d8406e5c36adf8e9213b34d5dca752440675",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF258148.json",
+      "bytes": 1160,
+      "sha256": "8b9a2ab6b59c9de6f5c6a2dcbd1ae37183321a6197a33d9210ec00623974eab0",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF258164.json",
+      "bytes": 1089,
+      "sha256": "020049148124e6e98aa9017f3b47f6a7698fcb7970e244df2991486e8179001b",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF258451.json",
+      "bytes": 1134,
+      "sha256": "b2dfaedeb1d27e305e577a4f19c93019dd84161b0610fbf1f52aa23b4c3ea4d3",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF258952.json",
+      "bytes": 1100,
+      "sha256": "540ddece774d6556ec98b42fce67c852dd911137bbd26042579e7a4ce6542c9f",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF259190.json",
+      "bytes": 1084,
+      "sha256": "8d7d41327909d698ad148515fd5702bb43e11ccb88c6a9d9951b6ecc1c87ccb3",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF259729.json",
+      "bytes": 1124,
+      "sha256": "6b96ad4552bef95661aa60e1b282db4cef71289a71225e1a0992cbd814d715cd",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF260275.json",
+      "bytes": 1253,
+      "sha256": "a683d7970a7430e421c48385e05409754bb250cc88c17894c1863b3f42f98e42",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF260433.json",
+      "bytes": 1161,
+      "sha256": "cdeb61ba257484998344acc5c7074b010eac02c89c0a3e567b51eb06a9f271ed",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF260434.json",
+      "bytes": 1072,
+      "sha256": "2da7387857cd720ec9bd2418608302ec9c2acfb7d23cb7557ef5feca55e38e97",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF260541.json",
+      "bytes": 1164,
+      "sha256": "32bf2c4acf8f001703f29cc516179241ae0e4a5bb13ee69a6dca876f4e30c921",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF260564.json",
+      "bytes": 1526,
+      "sha256": "d9ba9c04c397e445c69b52e4312e748730873cea0c98285b66ab664c107fb3cb",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF260840.json",
+      "bytes": 1100,
+      "sha256": "5af232c87f2a9a8138418f229fbac526d0c852ac2e4ec6f2fef1aa220e4b6081",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF261011.json",
+      "bytes": 1149,
+      "sha256": "2be16cc9e5eb14aa0431dcf74f9f83c1effbcb3fa51d6d10752fa3fefe4da54d",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF261255.json",
+      "bytes": 1253,
+      "sha256": "3cd7767c0be834355df1d6e94cb0eae21437e150c222efedd8802734a0c1dc8a",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF261301.json",
+      "bytes": 1147,
+      "sha256": "c00d048c6fc1a6f82511a5c5d513ab69f593c4a3b0b39d6ceeee29e341a0f364",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF261324.json",
+      "bytes": 1089,
+      "sha256": "c2fa27a76f831940bd560fc40255192846053f868bac13ad13b3b45f0c485dfe",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF261329.json",
+      "bytes": 1261,
+      "sha256": "c252d7d58ff17d20a9ae6c52458229ddfa3a6a12aa66784ff3de5d8930f80593",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF261418.json",
+      "bytes": 1253,
+      "sha256": "b0bcaa7a6584efa662e3361ca06b2cd502f1fd9a8f5f91bcd8822c4b4dc3467f",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF261525.json",
+      "bytes": 1124,
+      "sha256": "3f240e435ad4d3e69fcdf8bc472a92c513f523dfd253edf4c80682c230b9508d",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF261792.json",
+      "bytes": 1203,
+      "sha256": "3e22ef674fc68395351c158247e471de27bb0f2a10f95ab26d851202255971d5",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF262010.json",
+      "bytes": 1124,
+      "sha256": "a4974d827785bcf7a48488d3b160d4691d5ef5a36c33573beb518d3b98deb9cd",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF262093.json",
+      "bytes": 1199,
+      "sha256": "60638217a37f2283bf7c62328821b2c6fa56c87990fbcb47a89d5f40dec92d3c",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF262229.json",
+      "bytes": 1226,
+      "sha256": "a84a21da1c1151e2324c07f121f414e2ee9e35d0f8ae3f81a8f2e997fa5c7519",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF262402.json",
+      "bytes": 1348,
+      "sha256": "53268e286d8ca87e8fd84ee2c2000f2aedbd37bb4c25680bf1754ec67681abb0",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF262686.json",
+      "bytes": 1141,
+      "sha256": "9efff7b2f695f9e4b066526872fbfd9942cb272a5a2fb21ec676eb6a97a3d6bc",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF262940.json",
+      "bytes": 1136,
+      "sha256": "ebfd5edaacdfb55fa43818a7a50a6d23af829f458aea159b8d7a9da2de5dbfd7",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF262952.json",
+      "bytes": 1228,
+      "sha256": "847ad5f15dc5cfbf138c0637dd4b800c23f0c3a59540261b87f2c877f318248e",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF263157.json",
+      "bytes": 1124,
+      "sha256": "03fdd644a47d865c24c50c709cd72346c894da61c5b01b9d1ef4589e9f07fabb",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF263605.json",
+      "bytes": 1191,
+      "sha256": "a92f56ea02948e3933cd0d90f37f0e9769abf72ae9e5d27b764c56540a59f237",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF264485.json",
+      "bytes": 1116,
+      "sha256": "486d06f6451ca41bb48da149c26dc40a9f4c46092a802bb2fe3be1b5a816d5ed",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF264537.json",
+      "bytes": 1171,
+      "sha256": "46b077ad3bc6cacc87a88458cb44f76d82a6c0aedc3310f8eba572c72fff599b",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF265331.json",
+      "bytes": 1242,
+      "sha256": "0257c96071c7a5966a2022268351638361af85dd573746f89e73e5580778964d",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF265485.json",
+      "bytes": 1210,
+      "sha256": "c1015e9511e792e0a10af42187040a13496ec8ee6bd9bc2e281df8ed9c3aa6ae",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF265510.json",
+      "bytes": 1147,
+      "sha256": "a7d3c29b738f19e54b21629f26f516f0ddf5ebf963e072d8156e74bf5a9e001e",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF265588.json",
+      "bytes": 1157,
+      "sha256": "64b544e89b048cea42479402112875e11a000735a7886c9d8b25af197ba5a9f6",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF265876.json",
+      "bytes": 1132,
+      "sha256": "9c409496af4d9442a00cf6d35276aaee9e9118495e14c09a6d9f63f3bb2668bc",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF265967.json",
+      "bytes": 1066,
+      "sha256": "a4cb6f231910d8ecd70406283ea998ab310c267d7b36c3c01cba485917f661bc",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF266428.json",
+      "bytes": 1182,
+      "sha256": "f32639ad46a190d5c41a6512569b8d713bc7614451fc84bab1731b2969edfb7d",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF266514.json",
+      "bytes": 1295,
+      "sha256": "ba30bd81a4d2d20996c96ba8823d1ce13c15c6c5c9801e0902a6e269ae651bd8",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF267001.json",
+      "bytes": 1150,
+      "sha256": "3345daa2139e1971e51246bcefa45ddb6f3e46d35b078c877ddb31e194d42425",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF267016.json",
+      "bytes": 1112,
+      "sha256": "280999e22ebdeca85383075859a9953b7c8edbc2a6eeb3b6395fb0ad8acb899a",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF267087.json",
+      "bytes": 1184,
+      "sha256": "77a338d47e6a98ee32d1f38e72e6c6898ac7e76fca90d1bbd6c3a9fc198de176",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF267089.json",
+      "bytes": 1118,
+      "sha256": "1da7117869dad22a40bd1b4ed8da67b6fdae55040d9e4ac2b5e46c00e14232d6",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF267096.json",
+      "bytes": 1086,
+      "sha256": "cf108d5c536eb3fca8a8348591c0a230c65096e7d690395a8eb42aace2ec4df7",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF267180.json",
+      "bytes": 1137,
+      "sha256": "8321ea3dac823dbb3fddd6b101932b0e3af7b1ad5b5fb882fb747d1afa5a2e18",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF267424.json",
+      "bytes": 1180,
+      "sha256": "89a48515ba45d84fe01a73a9ceed59fa7fea3cbcd66353eccd152365e577613c",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF267447.json",
+      "bytes": 1092,
+      "sha256": "cd972ddbb2cc1a6253db1c5b6e344c8c621a9501281200dece6d4d7a1feb4f59",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF267751.json",
+      "bytes": 1172,
+      "sha256": "e9171098c9929dd22a68c233b05e758f7a12a6b4eb9c92017738bdb99099fda3",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF267886.json",
+      "bytes": 1226,
+      "sha256": "72f32bd50705ab2e89130a64f3585effb08fa6331b39ec6860702795dc840a29",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF268047.json",
+      "bytes": 1178,
+      "sha256": "16895b126b7b71fee8058285785e0976a47b642ab21993a1d7d7894ebabb639c",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF268250.json",
+      "bytes": 1111,
+      "sha256": "45414f21135517223d0e672d4a5b0106fada7b1a88c282baa00a08a96c71ea8f",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF268596.json",
+      "bytes": 1127,
+      "sha256": "50a9d2547d4d99e389199f591f99ae0fee68e047f182de4071dbd54c127a444f",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF268647.json",
+      "bytes": 1143,
+      "sha256": "18727aaf100717c6a172f327eeebc7a8800f6b36cdfb258f71af4d6b5a442cd1",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF268680.json",
+      "bytes": 1105,
+      "sha256": "72769aec04077e8c40f2feb6c9410123753d3e2408c35ca7ebb74540c9faab81",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF268703.json",
+      "bytes": 1062,
+      "sha256": "a9def1a930a411693a258bb0e589a44a32918856eaa9a68b0b5aaa0e86558fc9",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF268741.json",
+      "bytes": 1132,
+      "sha256": "adc25d8d2df20455e0b402211055e80be7611c9e5b0952d725bb7de56c96fef1",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF269185.json",
+      "bytes": 1143,
+      "sha256": "1efa01b64a96efeffb36e2d7accad2946903b4df8b544a00c9a340fd9bc8ac15",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF269741.json",
+      "bytes": 1115,
+      "sha256": "5481bed68991e4018bb5ccd7e7a80e633863d5d2dfb206437d520b0d07089363",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF269750.json",
+      "bytes": 1065,
+      "sha256": "d510f9c20b69eaf49630cd019ac362bd362e6603f0b993d8ead001148e8c9b24",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF270210.json",
+      "bytes": 1155,
+      "sha256": "28726e9b49b26b51c5ae3973a8e6fa26929bcb7c4ee3ee4775a958721f34548f",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF270812.json",
+      "bytes": 1201,
+      "sha256": "66658d80d35ab24cac708d8e82df5dd084ed79d0aa01da6757442b7881022a4f",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF271640.json",
+      "bytes": 1185,
+      "sha256": "aada6b6a4f425cc75669536f701cd2de36ba5191320bc1f765037d37b46fb499",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF271649.json",
+      "bytes": 1296,
+      "sha256": "addd6e8676e08e506bee77f0601407948f5988e179b7e146880ff2cc507793c4",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF271781.json",
+      "bytes": 1204,
+      "sha256": "b6a033cae8d59f3a96c02628aa394d4d0c3e8201eae61894430b816223d9626c",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF272261.json",
+      "bytes": 1190,
+      "sha256": "467387bed5c2445d281839537c0a3aa499216fe7c8b76b8579bafe93363c0b4c",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF272299.json",
+      "bytes": 1117,
+      "sha256": "572d3fa83febb7068421466bd53e68dac4d6511ba0b128aebe4c8c7efd8b01b4",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF272340.json",
+      "bytes": 1114,
+      "sha256": "287bbe402cbcfc889eb719a6d81eb3ddefb091479c9d5761ca6167b775290e0b",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF272388.json",
+      "bytes": 1114,
+      "sha256": "84d7f58472e7119a3f9ec9aeb313e97d31378df62b8f1f66f0f3f939e0e14c1d",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF272527.json",
+      "bytes": 1088,
+      "sha256": "c811ac5c6f3742dd4c08234f7da5bd5de1e726c753a8d044bec1cf251c90f2ab",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF272560.json",
+      "bytes": 1110,
+      "sha256": "309a3a999ee6a2b7622723c084dfd5c5b8f7f2dca411d7bc186db3d3460865cf",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF272610.json",
+      "bytes": 1173,
+      "sha256": "a61c79cef438938d39b5ff189f224a8402ff9c184e44e478c4ef024b099b8052",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF273038.json",
+      "bytes": 1172,
+      "sha256": "eb1271b5b8cb5999cab0f2555b6e657cbcf32896a8fbdad77b3ad8afb6704400",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF273149.json",
+      "bytes": 1054,
+      "sha256": "df91dd629504a613cd6f95c98c45296b819abfb0e2b6e25f8f57658058e53b67",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF273158.json",
+      "bytes": 1125,
+      "sha256": "6d9e5bd48537befc87c66df79b29787f6e1cbe315dffb88897eafdc3f00090b2",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF273392.json",
+      "bytes": 1080,
+      "sha256": "0ad8164a506b2dab6f5db991a7b8f78e44f7e53879873eff44f2e6d67618ea94",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF273418.json",
+      "bytes": 1117,
+      "sha256": "6db1532f0af7c528b6c2a5acdc4303dfe1ce9c7cf8010cf15f096915727689c9",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF273477.json",
+      "bytes": 1153,
+      "sha256": "7f096b848fedab3950488973f12ccb32088b8d5663af326df34f9de534a8ecbe",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF273607.json",
+      "bytes": 1147,
+      "sha256": "911403045fdf342d6e288bdb38b8cfc875dc142032bc634752cb1c96997cdd36",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF273749.json",
+      "bytes": 1100,
+      "sha256": "318a5e22ad8671d0e92280724272b600643b43656b6a27dee40a954ceca9eca7",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF273959.json",
+      "bytes": 1246,
+      "sha256": "6f3da93cbb0a4bf3bd3e022dee93f9beb2b83d3a69c32fa4580c600578d28029",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF274272.json",
+      "bytes": 1050,
+      "sha256": "3ebac4c3dd78af74f4bfd67ba406be7314e35637c790b1730bcba1cfb9d38c31",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF274597.json",
+      "bytes": 1241,
+      "sha256": "a9d308e6df7140d58ebc20b18f22f19d555209c01936927d3d0f4f760737d880",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF274688.json",
+      "bytes": 1114,
+      "sha256": "fe504b80ce4bda794b1461467880cf454bc1eaba4c8588005b21289e6265fc34",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF274800.json",
+      "bytes": 1119,
+      "sha256": "697743a75ec495e274c207fdb941c0b377202750062ab00efc4e01208833909f",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF275019.json",
+      "bytes": 1251,
+      "sha256": "3dbfd745579856bd421cefb5924b304951adbe34a05a6b6ffb3358d2cca4bd46",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF275135.json",
+      "bytes": 1126,
+      "sha256": "cc00a8165b630d8d1fb4263596517933e624bbc499096d30dccee90905b73a89",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF275258.json",
+      "bytes": 1132,
+      "sha256": "8f131811d470aa9e97867330491f27d7b61f245f0a607dafc2c1f8d96a773e6f",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF275346.json",
+      "bytes": 1087,
+      "sha256": "c175f1395f9296f329a3e68450096f3ff8db2496b9b3584ca9931b80e620e674",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF275618.json",
+      "bytes": 1154,
+      "sha256": "37164c4247008f881700ba256b9ee7a13f10f45e0baad197e3c6f33e53152c82",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF276255.json",
+      "bytes": 1201,
+      "sha256": "fbbfe05e713a5b5e06717b1beadf5afe903f0cd383c08a9ddb182dcdba21eae3",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF276373.json",
+      "bytes": 1103,
+      "sha256": "9ea30792a8fe96a2c47a1a339b76d8a415694483ff0a6506fa98fdc6a5f53ea2",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF277395.json",
+      "bytes": 1096,
+      "sha256": "2b66dd0ec7faaa5e6f348de48bc6e5ca7ea1951fd2b73a678ae6513139a575de",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF277452.json",
+      "bytes": 1217,
+      "sha256": "e3a5d44c18bae0a6d5f666fa0c7729e863bf5fc98833c7532c548b7fe570f3bf",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF277867.json",
+      "bytes": 1145,
+      "sha256": "2a75764ea5326b9286caa3384cf499933d897be43b207d9741a1eb3eb61e5aa1",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF278046.json",
+      "bytes": 1074,
+      "sha256": "d81ef633fbe84435d7d591f04550c18cd00e1cdeed55cd03eb10249a7b14b04f",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF278166.json",
+      "bytes": 1142,
+      "sha256": "663c836ca888103addffd1f726839463e7be40b13c75899e1e4182516f8587ee",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF279159.json",
+      "bytes": 1201,
+      "sha256": "094513282e2e95bd32318369b647eed29b0a4bd349c737e04b9660f9b473e8ce",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/details/PF279434.json",
+      "bytes": 1093,
+      "sha256": "623a1c6a1d27482bc71d0a68f1076cc328bd1ee4f9f94428cecbd2cb9dd183d0",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/kopis_songpa_2025.xlsx",
+      "bytes": 50201,
+      "sha256": "54e2ddbc1afe5d67780fe9544279d2a601c31b316cb06571f4f98ed5285013a9",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D02/songpa_performances_2025.json",
+      "bytes": 371847,
+      "sha256": "b56666587a7ec3e42d81dd10c2efea97a72e71617bcb70f952236f5779eb8267",
+      "dataset_id": "D02"
+    },
+    {
+      "path": "raw/D03/서울교통공사_역별 일별 시간대별 승하차인원_20251231.csv",
+      "bytes": 25029452,
+      "sha256": "99591265daf498015499f03913cd3253a57c3ff976ae182f9c4af89fcca4e5ba",
+      "dataset_id": "D03",
+      "listed_date": "2026-06-08",
+      "download_form": {
+        "infId": "OA-12921",
+        "infSeq": 1,
+        "seq": "46"
+      }
+    },
+    {
+      "path": "raw/D04/서울교통공사_9호선2_3단계 역별일별시간대별승하차인원_20251231.csv",
+      "bytes": 1194056,
+      "sha256": "ba3ec930fa07575480e300a02a7b581e6ee2a5ee19eddb20912417861532899e",
+      "dataset_id": "D04",
+      "listed_date": "2026-10-02",
+      "download_form": {
+        "infId": "OA-22441",
+        "infSeq": 2,
+        "seq": "11"
+      }
+    },
+    {
+      "path": "raw/D05/20251122/000001.json.gz",
+      "bytes": 1407238,
+      "sha256": "ff7b263302e734480b03128593083bbe39212d1d6993e91ce9c34e77b3e5b686",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251122/010001.json.gz",
+      "bytes": 1712732,
+      "sha256": "98a9663da8cd31882276266dd0566b2802744e1303a97a989f36681f79a6eef0",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251122/020001.json.gz",
+      "bytes": 2113176,
+      "sha256": "4949b32beec03784ca8c859923f7370a5d8de3608d32538bd2bd3790992bcd8b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251122/030001.json.gz",
+      "bytes": 1776445,
+      "sha256": "934a565771e5656727cd3cc12029305be9f099ab4c24b3bcb620d5406fa6a96c",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251122/040001.json.gz",
+      "bytes": 1768082,
+      "sha256": "4edafd1914ab30fbbd8c64000ed499cad94848a6954b3436925f87e9dcb095c4",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251122/050001.json.gz",
+      "bytes": 1690992,
+      "sha256": "0667aadc2f87a87a14f689ca118cefbc6ce7805eb06e80ef5cf3ce7d35456f98",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251122/060001.json.gz",
+      "bytes": 1432232,
+      "sha256": "1673293c50cafed9e985d897be133e4cc8b12454c500c945a0c56138a16dc5b9",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251122/070001.json.gz",
+      "bytes": 2151102,
+      "sha256": "ac0a522f68d530b25259d47d4bc0b14765a9abf92b964006d85d8352263c3aef",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251122/080001.json.gz",
+      "bytes": 569120,
+      "sha256": "809180cbf9be2669122aeb1b53c590df734b26ff70ea8a87b6278b885e00117a",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251123/000001.json.gz",
+      "bytes": 1897423,
+      "sha256": "f1541d53fc35eb0e2d330327e614aeffaf8388a688977619baa673f096a6432a",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251123/010001.json.gz",
+      "bytes": 1706881,
+      "sha256": "a0fa2081818fefb322a9c2fd436a2e5b1c6bb287917eef6edd237e021128a401",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251123/020001.json.gz",
+      "bytes": 1698561,
+      "sha256": "ecb1e4ceb52fb70aed0cba223740a5ce7521f20729a8c39ea4486d7f4d3da603",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251123/030001.json.gz",
+      "bytes": 1472430,
+      "sha256": "761d3d19d9b55852dfa9c68df19fc78f528ecfa66d2b44f6573a4148cf650b5d",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251123/040001.json.gz",
+      "bytes": 1947747,
+      "sha256": "ed4ed0d2126219f28e2ab80d962abfa46641252605043736ac9ef947eb014136",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251123/050001.json.gz",
+      "bytes": 1502569,
+      "sha256": "fa3d4e78fa649bd10be95e704bf887863f7bd1d5e999e9e803841b6f22830c4b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251123/060001.json.gz",
+      "bytes": 1461685,
+      "sha256": "21ac3959d58fc03e0df602276bb3aaa863aeaa675cb2eef97605cf01dc27ff19",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251123/070001.json.gz",
+      "bytes": 2020779,
+      "sha256": "994d5dfa64c5b3910f8c7e19a8ccbe7f0534423cde9ac98b83d863957a6e9264",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251123/080001.json.gz",
+      "bytes": 454884,
+      "sha256": "cea3b530327834bd1f03318ed511912d57dd2c317db79ea9c0c0f38223a0a3fa",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251124/000001.json.gz",
+      "bytes": 1643831,
+      "sha256": "1a685cfee083fc1a90b6bb999add3384fa070bc96e2bc31be1075cfd43a19266",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251124/010001.json.gz",
+      "bytes": 1506562,
+      "sha256": "f637b3aba2e70a01bc332ce64d473d2af246517a077a48f3ec30452ca33864b3",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251124/020001.json.gz",
+      "bytes": 1925841,
+      "sha256": "152d679f7391a9717069b138273148744410c6447903df3454f429c1afd1dce6",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251124/030001.json.gz",
+      "bytes": 2029819,
+      "sha256": "52f46f7a5eea57a30af95a09ab343951637a849776d32c82e6a5ac9bde995174",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251124/040001.json.gz",
+      "bytes": 1579146,
+      "sha256": "01a0fa8f89c3e2798c7918ca64529327f453b8a34e5e70ce2881f94fcda34110",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251124/050001.json.gz",
+      "bytes": 1745610,
+      "sha256": "c295eca1a9b331b7d7836384aef0fa49f879945e713562ad8f767dc5eb1ff37f",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251124/060001.json.gz",
+      "bytes": 1676164,
+      "sha256": "91e36c8dbf645a6ccefc2a36c5ee45385b54b7e65da2069d818bc0a13f62cee7",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251124/070001.json.gz",
+      "bytes": 1618412,
+      "sha256": "7692ccdc3afb5043e61d1a5fe7cc5f55bbcb75a78993c48141ff3e1757f32572",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251124/080001.json.gz",
+      "bytes": 1903374,
+      "sha256": "8082081e4008fca5cb8cbf064926cf142e544d831986a6e1ecc57f89a4b239d8",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251124/090001.json.gz",
+      "bytes": 172976,
+      "sha256": "fb3a577919e970a54980e05b841a1a64feb465262da5e4abb09917eb16ceeb8e",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251125/000001.json.gz",
+      "bytes": 2088913,
+      "sha256": "8226f075e7de1017719e77d7fca4ca27b7227b348922f49f2029da398de150f8",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251125/010001.json.gz",
+      "bytes": 1879448,
+      "sha256": "7b36ff5b4eea713dd556f36c1e3f40ea6db4bd9dd5bfced404ab16cebf99a979",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251125/020001.json.gz",
+      "bytes": 1455302,
+      "sha256": "8a50fcd2001b8506c1a8de1a92985262c0fbc76bbb97b94a67101116d2f07f4c",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251125/030001.json.gz",
+      "bytes": 1591923,
+      "sha256": "9f027e1e0fa35dcbad7abd68a9c914a53a0790ba36abedf5062d9f9c9c173cd0",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251125/040001.json.gz",
+      "bytes": 1470480,
+      "sha256": "48f61eee5ff8358fbdef8a06b2924065194e9ed87df8cd96eb9d2c284a268e21",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251125/050001.json.gz",
+      "bytes": 1689684,
+      "sha256": "279fa6fb72d23d9ba900654e5059c7030a4b570800d66ff20e823fca37d686d7",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251125/060001.json.gz",
+      "bytes": 1792365,
+      "sha256": "20ba47ee73142776d8862c567669d50a8187682fb9af035414ba72e6a8f18093",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251125/070001.json.gz",
+      "bytes": 1798284,
+      "sha256": "93bc4a20205acfaeaf11388e83b729082fb446515d2fc86777aac39732c93370",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251125/080001.json.gz",
+      "bytes": 1879112,
+      "sha256": "2541a6a6d72012aacb4ddb354e36a16d1371c11b3a02322011639bf138e2f543",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251125/090001.json.gz",
+      "bytes": 380211,
+      "sha256": "7bc932a535020f86f232ae7ff166bb3b17dad7633bbb9db6c32d9fb675670898",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251126/000001.json.gz",
+      "bytes": 1699370,
+      "sha256": "0eabb460dcd8f26b0d95230f70934384e56f047ab3cb386fa902f0c262190537",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251126/010001.json.gz",
+      "bytes": 1498766,
+      "sha256": "bacd6ca32ad3761e79d834a2a93f2aec90e61df80cbc84ab489e3e3fc9af29b0",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251126/020001.json.gz",
+      "bytes": 1679690,
+      "sha256": "b37583782c81d5593cf751cd70445da0e7d0d9958b12bb69eef92102e13b4d7b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251126/030001.json.gz",
+      "bytes": 2117337,
+      "sha256": "601655793afb21d8673cd04809a88eb1fb3345e70429837c600c8992184c2511",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251126/040001.json.gz",
+      "bytes": 1928656,
+      "sha256": "b45a46525375d85e1b591c8d07c57f516e974bdb5596f62a7d9907b1cd75d9db",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251126/050001.json.gz",
+      "bytes": 1674886,
+      "sha256": "260d5dc16ae390b96be71dca865909bb7f777ba50196b3bb65ce759aa7187e3d",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251126/060001.json.gz",
+      "bytes": 1573483,
+      "sha256": "600322237ceff025cb51d6b69ce78804565820891c31564638eba541d9f0200f",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251126/070001.json.gz",
+      "bytes": 1958931,
+      "sha256": "437a12df128333179b80b53c6f4978713b58e2595000fb8dc7d1d3b99b2009f2",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251126/080001.json.gz",
+      "bytes": 1693013,
+      "sha256": "0a02b4dda26169497275ecb4bea778b7862c219f807fb14a46245f5df0bbd7d0",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251127/000001.json.gz",
+      "bytes": 1673057,
+      "sha256": "4daa359a0cd39ac328853badd64d723d58e082378ac27a16ee427670fd368f7d",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251127/010001.json.gz",
+      "bytes": 2027293,
+      "sha256": "b5ddb41ff252000e55012be15f664d111b95be606c2fb80b09b103a599c8225e",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251127/020001.json.gz",
+      "bytes": 1450626,
+      "sha256": "51b1516f76f3e42ce633e68d88e722fb6b1e92ec83e09c8d21cf374748ec4e5b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251127/030001.json.gz",
+      "bytes": 1734519,
+      "sha256": "e054fa669c27ca2d2bad3a13534ca9aabf3b870c939ccc49ca304689221b141d",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251127/040001.json.gz",
+      "bytes": 1628537,
+      "sha256": "70268bf86cf103a0149ad5df5f021fa4df06920eaadcf19827afe293350c6b85",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251127/050001.json.gz",
+      "bytes": 1703174,
+      "sha256": "366aff8696965e9f2dcb4ba7f1628dcee87dde1233d36218aca2f1be35a29f75",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251127/060001.json.gz",
+      "bytes": 1699777,
+      "sha256": "7591d750205d58853b1e2b904c8089a0242aa333e8a397b11fa39d6f14926885",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251127/070001.json.gz",
+      "bytes": 1862633,
+      "sha256": "b7e2a9eb77b8297659574c83a8f68bd7a20dd45137b131eab342fef1bf122ae9",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251127/080001.json.gz",
+      "bytes": 1952404,
+      "sha256": "0bace5bda6218f49f564c4fe6eeff3f5aabc5a44181b4376ba6c9526c31f4e35",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251128/000001.json.gz",
+      "bytes": 1599774,
+      "sha256": "0f349435d9eddacf5ed16d04274d086a19a0be6c00da3221a03d1a81b4c1e217",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251128/010001.json.gz",
+      "bytes": 2073673,
+      "sha256": "66204caf499ba77d9ce27653b6690072e12a57e467400b3de066e55853abddb7",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251128/020001.json.gz",
+      "bytes": 1713825,
+      "sha256": "4265bb0b6686895fc95131e03159f3d535ae7f89c19794d4e5d913a895febe79",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251128/030001.json.gz",
+      "bytes": 1817408,
+      "sha256": "3793a07a6f32f3d746b9dcc41c8b1e7319023c5d015a0a047fa660235b0c2bf0",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251128/040001.json.gz",
+      "bytes": 1757200,
+      "sha256": "9a46ddfaa72300e165219a50aa96b933a67151558677576e7154b9a42073cf8c",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251128/050001.json.gz",
+      "bytes": 1639960,
+      "sha256": "bab268142c68a58a5a88911e5cd66d2b90f6aecd5c5fd65d02d4754eaf5ed26b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251128/060001.json.gz",
+      "bytes": 1422593,
+      "sha256": "be5575db9ca7ae1ce6782716d91eb45df1542c11251c3718b57f32d840b8190c",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251128/070001.json.gz",
+      "bytes": 1874558,
+      "sha256": "f3bc9e50c0b7a34b5f83a597a67c19f0e2d27657cb909eeaf3522a6897551812",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251128/080001.json.gz",
+      "bytes": 1974513,
+      "sha256": "f23eb4d293abefa126966e344b882fc4c92b64903f40d9bcfe848d0b47e7c1f2",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251128/090001.json.gz",
+      "bytes": 11406,
+      "sha256": "c36844912bb9beb3abde8abe61eee4552ddfb7a755c92b35c56a5c235c3733b2",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251129/000001.json.gz",
+      "bytes": 2067264,
+      "sha256": "b1c4fb7515dbd54b7353cec3913d421395255cd09c12ca40a6c95123c570972a",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251129/010001.json.gz",
+      "bytes": 1550310,
+      "sha256": "fb81ee5202a483abdf79c2f2664cc3877ad191dd8d989e586fe117c89ef0d2d9",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251129/020001.json.gz",
+      "bytes": 1406140,
+      "sha256": "5df660115b1661948454b66cc6fd9f45c99ea9e0b897d53f498a0afc92c04537",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251129/030001.json.gz",
+      "bytes": 1895979,
+      "sha256": "42897dac773539ee24c423e89d4955e1ca13fa56d33b2016e36a45041883ae8d",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251129/040001.json.gz",
+      "bytes": 1859962,
+      "sha256": "49e56322eba96805f0fd0ec3e97fa79e2ed125974aaf7bf5b920914f49b27890",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251129/050001.json.gz",
+      "bytes": 1716600,
+      "sha256": "09dac43c861f0811812631c4125996a41504886d8aef4216a0f3e4b32235611b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251129/060001.json.gz",
+      "bytes": 1394859,
+      "sha256": "d70f90a17191a8181ea604a30758381649eb5f5f9bb30fa6bbeae9527333b4f7",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251129/070001.json.gz",
+      "bytes": 2208364,
+      "sha256": "62cdaecbd997b43f1d61ccbe04e9075165bba22f09cd9918a7d3013a564370fa",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251129/080001.json.gz",
+      "bytes": 483204,
+      "sha256": "dcbc377894267390cfd59f8f27f9c6c794d7137e65261b3fe905fe934afd68e7",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251130/000001.json.gz",
+      "bytes": 1679770,
+      "sha256": "7ef76a179d008178b9085a0b418ba489743d23cc04374efbefc08b018dc1b95a",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251130/010001.json.gz",
+      "bytes": 1693098,
+      "sha256": "31e407f04bba37e6a6e0ad315c15b52293e60ee3a16649e683544f1fa8791cd8",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251130/020001.json.gz",
+      "bytes": 1690628,
+      "sha256": "3670281a4f5547006918d709f9c3c4cff7902444475eb319c9cb9c8159f1ac9a",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251130/030001.json.gz",
+      "bytes": 1746726,
+      "sha256": "35ee73585627b823b7dbc4536c28d22b0ee81e9fc3f2821bfda63be7fb910ebc",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251130/040001.json.gz",
+      "bytes": 1776889,
+      "sha256": "d1d3c63e3827f8cdeb9fb26431be556bd808668c6d7c6cc27ce589447d22e473",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251130/050001.json.gz",
+      "bytes": 1693857,
+      "sha256": "7c41111be6c3b3c75826208b3546e37f5a526a0c6aaa61e322ddf89a258b91d3",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251130/060001.json.gz",
+      "bytes": 1686119,
+      "sha256": "42546433c8b299bd0194d7f4d865b0a58696f8aea4cc9a97d52a8e8efc2e6e7c",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251130/070001.json.gz",
+      "bytes": 1683216,
+      "sha256": "c731de8fd92ed0a7190e2dcd05770156035d507acce979db85cd8fc1282ee643",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251130/080001.json.gz",
+      "bytes": 391176,
+      "sha256": "b12df90a608bc00bc0160f8c35a1a6f52683df17f8dbc6b377c9a754da90a57b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251201/000001.json.gz",
+      "bytes": 1653519,
+      "sha256": "3308a92b957c4eaafa95a08cca3cb2cf85d685182b418ac53692627ddc104848",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251201/010001.json.gz",
+      "bytes": 1801460,
+      "sha256": "7709e9e60cb3a05c1fd3402758d65b835f6703307b0b5153af30461b4dcb4777",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251201/020001.json.gz",
+      "bytes": 1714810,
+      "sha256": "529d95d9470522c3806a9c60619533ea3197694d62111d5a463c9c7614730193",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251201/030001.json.gz",
+      "bytes": 1614346,
+      "sha256": "aa6fab4abacbfd53de69cc85ea0150d3feaa2ee71897647dfeae4610853ac41b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251201/040001.json.gz",
+      "bytes": 2113385,
+      "sha256": "98d74be2a0f37fc6d482c353b85375b2ceac19ea13f4c79f1947946ef0b0966a",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251201/050001.json.gz",
+      "bytes": 1583693,
+      "sha256": "8e9d87a7848dda45666bbb445d8704bc9a203afa024af7cef4ce8ecfcd3958fc",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251201/060001.json.gz",
+      "bytes": 1663566,
+      "sha256": "5e4562df403dc3b1f499e19d85985c2495d563a7f31d4adedc1b86db8bcc7b1c",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251201/070001.json.gz",
+      "bytes": 1299891,
+      "sha256": "3319e20126600b7ee1407d7573657b81beb0a6b54fce06bff1f8a82ff9d500af",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251201/080001.json.gz",
+      "bytes": 2282507,
+      "sha256": "3e52312de1c132349c37d6e836f763332abff7833efd65d1e5f7e305a11c6ad1",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251201/090001.json.gz",
+      "bytes": 129821,
+      "sha256": "2740b3e021eb863c237e75f018a7f648edfbae31b347f3df5a3d31bd580f1dac",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251202/000001.json.gz",
+      "bytes": 1709803,
+      "sha256": "a52060bbebb10c9b03c018429bba1afa072d70a506ad72d4c5d82480ace6c9ac",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251202/010001.json.gz",
+      "bytes": 1613665,
+      "sha256": "9f8a1bf6039529d9359869bfa47d4ce5304645e089fc03cf0f32a40d57851cde",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251202/020001.json.gz",
+      "bytes": 1611878,
+      "sha256": "f32753deaa5cfe72dea450b460e6a3521268681c9366156194182772d8fbb5b6",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251202/030001.json.gz",
+      "bytes": 1837770,
+      "sha256": "77e964f6ed3407b8e103807b4ec4d17900bd6845b2f411a9fc10da25221290dd",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251202/040001.json.gz",
+      "bytes": 1823892,
+      "sha256": "524993c59c153a3d64aa623a9c65725015eb95813b7ce62a8e470285ceba46b4",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251202/050001.json.gz",
+      "bytes": 2013374,
+      "sha256": "64e1b16f40a26e8f755748422a94483230c1c652af4b6ad63eff28a128e84c1e",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251202/060001.json.gz",
+      "bytes": 1509929,
+      "sha256": "2f1bc309928f6cdac01b44e8e053d02a9f42d3df9057a6e4d79d06c9248085b5",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251202/070001.json.gz",
+      "bytes": 1477043,
+      "sha256": "1d0414d2052f0001b140f4e2e341db5aa110507af6b1b553474f09a05fadb1f9",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251202/080001.json.gz",
+      "bytes": 2020893,
+      "sha256": "5db5a7b9bbe74da74ab87f75c94e68bd838de8d2c1616edc392bf8f38aad865f",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251202/090001.json.gz",
+      "bytes": 210290,
+      "sha256": "34ea03c7c40280a714c57cc25ff16c4e4cfcfc69e93b15363e29cd84f3a80fc7",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251203/000001.json.gz",
+      "bytes": 1679678,
+      "sha256": "1853faeb8db0ba6afdd6fcab503d1aa7093707d31f4a5a7f27a80c6c64787d0a",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251203/010001.json.gz",
+      "bytes": 1393338,
+      "sha256": "b461054d41cd2bfaec9f0a8a451c9f1707ce1ec1558d8a079f7fb254834a45e8",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251203/020001.json.gz",
+      "bytes": 2329117,
+      "sha256": "1cfcad2aab8d65325c0f9fe1662267568e2b8b5fdc28779d936b3a931bc6f054",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251203/030001.json.gz",
+      "bytes": 1549553,
+      "sha256": "88877a3402543dbd63415ca76eb536b31f7f5fa0b8460a6c68aefe2333c8b53b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251203/040001.json.gz",
+      "bytes": 1855403,
+      "sha256": "11d4646aaf62057b04ef21f8f12198aa4cc8dd7fac3affdaba316d5481937fe3",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251203/050001.json.gz",
+      "bytes": 1607298,
+      "sha256": "a24cd22e9e7cd131b6fcd103df606cb853ac891bf330e3a424aa5ff117b4be83",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251203/060001.json.gz",
+      "bytes": 1476780,
+      "sha256": "7f065a2f3579cd04d419fe04239488af9b8ba93bfabf91a95d57d95524017b50",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251203/070001.json.gz",
+      "bytes": 1791046,
+      "sha256": "78104bd79cf7665d53ffac8af03ed1978b15b3a68ece2331b2e0d5105489d32e",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251203/080001.json.gz",
+      "bytes": 2017613,
+      "sha256": "ad152f9292808c4df6a231563cb12f4a624cb9a2912bec33c46b884363c0fd6c",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251203/090001.json.gz",
+      "bytes": 173327,
+      "sha256": "29a13ab7a399d0600afd370e5ad0ebf0daa5680abd005280c58eeeb21b8a26ed",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251204/000001.json.gz",
+      "bytes": 2117859,
+      "sha256": "d295b4523953959269b4906cf3d5ba47c0f32a8d675f202a27c4a74badafb29d",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251204/010001.json.gz",
+      "bytes": 1545413,
+      "sha256": "506f158f4c4d1ea0a390e444962d6a45e9bb9a396265a9f619385943c45c14fb",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251204/020001.json.gz",
+      "bytes": 1443287,
+      "sha256": "b358fe5fefe893b3aa969452031fcd1a5cb666d44b6e819e277c7d034026c519",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251204/030001.json.gz",
+      "bytes": 1780608,
+      "sha256": "a27d50a937e3869397089486e815cd4f90325b1d0bff0417a3d7545c095268e7",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251204/040001.json.gz",
+      "bytes": 1794907,
+      "sha256": "00ed0a08b77808b9140107e6eb097edb530c5e73e6a4f32563ce44fbe2dc3832",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251204/050001.json.gz",
+      "bytes": 1630631,
+      "sha256": "d0f8d8d6d3f78c38c38562357efec07234b719f0fe9c694ec1b3ef1138928044",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251204/060001.json.gz",
+      "bytes": 1773859,
+      "sha256": "8c39e7c36fa03959b9ad4a9b4d3cd75d1a4e53039920d405d61c25914eb8aa27",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251204/070001.json.gz",
+      "bytes": 2074856,
+      "sha256": "e05787e5337b09d4c3f2dfcfbe01de5e4ac5bbbcecbf2404185b91cc29c2a1d1",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251204/080001.json.gz",
+      "bytes": 1776989,
+      "sha256": "6a552982e0899f7e8d54c5383333bb904fc5f20a588caa37c2af837989a70aaf",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251204/090001.json.gz",
+      "bytes": 74747,
+      "sha256": "03697b937496769418bf601c29589d42839163e2912679d875b0ce1d24be28c1",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251205/000001.json.gz",
+      "bytes": 1627715,
+      "sha256": "dab78e01501b736e9c758d09b950cd1e10259934d010e140a7005d0622c09abd",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251205/010001.json.gz",
+      "bytes": 1961314,
+      "sha256": "e729d37bd0a4d2a6241bdd11636dc2f0a3134a1924831c6099e18ac4034ecd06",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251205/020001.json.gz",
+      "bytes": 1673355,
+      "sha256": "886b05eeb42dbda259e338e72f4f7faace06c322eb89b159f9f07d615fef6924",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251205/030001.json.gz",
+      "bytes": 1902894,
+      "sha256": "c79de2f530a0d236e17160f7ec5d34603a674b096ad3de7400e1fa86572f3373",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251205/040001.json.gz",
+      "bytes": 1732861,
+      "sha256": "9821fb384193c0281ebe58dfb38cd13f78e637295fd6dbf72ed70db9d67f3934",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251205/050001.json.gz",
+      "bytes": 1710537,
+      "sha256": "64da51a101baace850d64d8ba00089b84eb1ced63be15bcb5d68fed2c3e64fa5",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251205/060001.json.gz",
+      "bytes": 1735386,
+      "sha256": "d395bcbec612b396ff48eb6fe67dd8b86274d8a6e4ebad944ec2c5086e71430b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251205/070001.json.gz",
+      "bytes": 1537689,
+      "sha256": "dbb7f581e39772a2ebd564816cc96253ff9f50ed79a59854feb4060954358d93",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251205/080001.json.gz",
+      "bytes": 2049470,
+      "sha256": "4925ae6694fdc0d1555ea7932bfed3a210827dbcd8b9d6b90e02fbdb823c6f75",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251205/090001.json.gz",
+      "bytes": 142577,
+      "sha256": "d01f423465c3c0a0428f6fa94dd8cdb3058c228c81510a35c48e241e0751fa5a",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251206/000001.json.gz",
+      "bytes": 1618310,
+      "sha256": "d0681abaf7bedf7a90e772749b70dc1382f9296607b4f0c9d48f862f3b753f73",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251206/010001.json.gz",
+      "bytes": 2212133,
+      "sha256": "33fec565e38e21ff8810c488724fd0e0cfbcb5979298480fb0441585ef9fb336",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251206/020001.json.gz",
+      "bytes": 1430137,
+      "sha256": "37bc302f5464edeb7467082e32de9e5036ddf48a4aa94f6b8d17f965a4245c91",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251206/030001.json.gz",
+      "bytes": 1566109,
+      "sha256": "a2d0e452df10642d930eb450a2197faf213801c342b4288f2e79d8562eff07ae",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251206/040001.json.gz",
+      "bytes": 1728494,
+      "sha256": "e2e1e1b54b11c51764ce4e96010640c7b8608c7a0284542546dc62cbc7e0a6bb",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251206/050001.json.gz",
+      "bytes": 1941445,
+      "sha256": "efe6dcdda64b26258a8030cb503524643fdf6a49ccd801db5d18f4ee9c515770",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251206/060001.json.gz",
+      "bytes": 1251055,
+      "sha256": "0da47d01d61067a6b57eac8e9c3df57313479b2a991587c742ee960ae43cb23f",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251206/070001.json.gz",
+      "bytes": 2317878,
+      "sha256": "6c25e6aebf4672bb41f3ee87611075f3d731187b145b292f3f588c92dc305c5e",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251206/080001.json.gz",
+      "bytes": 440184,
+      "sha256": "c38a9f263baba13215887cc5c3e27eb319808f1337d7934c5772e893b7278e8c",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251207/000001.json.gz",
+      "bytes": 1607636,
+      "sha256": "89d2e93d4ba8b7554701278d934bbd82e87367dec0c66cc420a9b6ed658a0df1",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251207/010001.json.gz",
+      "bytes": 1402963,
+      "sha256": "8e594e3cbd42a55296806bf4acc4febe6a61f7a6b9adaba3ff5938aef8bb4321",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251207/020001.json.gz",
+      "bytes": 1913328,
+      "sha256": "cab82d7e780f394cc44d55309f8b00d7e2aba100a8b8bd67c9bfcabc681c57e6",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251207/030001.json.gz",
+      "bytes": 1572279,
+      "sha256": "67c2acdb0ccc212c17ea8b8bada189e6b27f8cdb22241d6820f9f7fcde45342f",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251207/040001.json.gz",
+      "bytes": 1699593,
+      "sha256": "a9180f7a8e7bd677478c383491de05f3879d8a8fd5d6f1d59f71781c3c50b242",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251207/050001.json.gz",
+      "bytes": 1557978,
+      "sha256": "9672eaeecc6c9532773ec0368fae14c678762e46e124ca6fa5352ee2d1004096",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251207/060001.json.gz",
+      "bytes": 1642028,
+      "sha256": "d4e50b58aa92b257ffa96c2473e9097c1f4787b1243586abffc12ef4cd7e6faa",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251207/070001.json.gz",
+      "bytes": 2248771,
+      "sha256": "f1e616a84bcfb59fd6cdb4617e1a28e57a7408bc9ca3a0641112ffe8a54051e3",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251207/080001.json.gz",
+      "bytes": 353887,
+      "sha256": "ca3c3379bd0e59d3feff67dac7486c3cb25be82469ab6b117be5ef2a85259383",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251208/000001.json.gz",
+      "bytes": 1746603,
+      "sha256": "8e953ba1cba798078dbb500f97084970ce643a9c67cbed4e60f8db3170825ed0",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251208/010001.json.gz",
+      "bytes": 1845281,
+      "sha256": "1de38f650e762dd93aac7d9600b37a3ad3a79c7ac5358c05ff53edf4b954da63",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251208/020001.json.gz",
+      "bytes": 1873402,
+      "sha256": "81772203028b99446e1acc6010e981fd638cad611efe70196f2db3c6cab2f88b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251208/030001.json.gz",
+      "bytes": 1423357,
+      "sha256": "bbb791ae50fb857059073aa35c8e49b5391bb9c63c487c6991f99ee77eed92d1",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251208/040001.json.gz",
+      "bytes": 1856522,
+      "sha256": "2b948f763c9b1acb053a28d7e5b4a7d507c04e627b608b43d48ad5db0638423e",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251208/050001.json.gz",
+      "bytes": 1504478,
+      "sha256": "a50b6f91ae5eeda2753572fc32e1b6e45f9f7b6c9c7b3c1a57fcd8893e0eb553",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251208/060001.json.gz",
+      "bytes": 1643715,
+      "sha256": "05b4429092876cacd7f28209cf70f476f74598379c84416b47754397ac7db147",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251208/070001.json.gz",
+      "bytes": 1651231,
+      "sha256": "a1620afb2914e49c088f06ec6bbd17e4dcb2cc288eff713b3be4dbc2a865626d",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251208/080001.json.gz",
+      "bytes": 2116879,
+      "sha256": "2b8dedb47f346e7280604f6b7be0af641beb9c5116ce0b31c8bf3a57328cc4ad",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251208/090001.json.gz",
+      "bytes": 269725,
+      "sha256": "b53e2649810c819bb3a09f80197a15c620e8f37e325018112b29dc6141914be3",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251209/000001.json.gz",
+      "bytes": 1805063,
+      "sha256": "069559a719da03b4dd1820698f4768c93314bbc38f3e873e82060d47a814f17c",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251209/010001.json.gz",
+      "bytes": 1492057,
+      "sha256": "88c8fc5e7cff2a9753b24d7dd0f3038aaef2d2bc522fbcabc29db47d62ba82f0",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251209/020001.json.gz",
+      "bytes": 1557572,
+      "sha256": "8334356513257dd929096b5916eca10f3496fe57e652c364813114db949a7d3c",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251209/030001.json.gz",
+      "bytes": 1964110,
+      "sha256": "088a00b6d22d3d2494d2cadc7c7eadfc8c4a502167cdb3df0222837eedcff995",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251209/040001.json.gz",
+      "bytes": 1834629,
+      "sha256": "e33dd49e90c0596c2d9f8e7eb89e286f7823329e2d997943a18618070fd06349",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251209/050001.json.gz",
+      "bytes": 1542750,
+      "sha256": "2ef58682f21dfc355abdb988e584ba07dd56122d0176c6b39e567d0b37c66d03",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251209/060001.json.gz",
+      "bytes": 1671439,
+      "sha256": "d45904498357ae551e864bbb2363b865691609b8db4cf2dd37b8162b2accb5b3",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251209/070001.json.gz",
+      "bytes": 2034847,
+      "sha256": "19aea40137e965fbde05d34e1bc562d2f6cdfe297633c34663f57d30c0858ae7",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251209/080001.json.gz",
+      "bytes": 1856484,
+      "sha256": "3bf815689905ec02210bbb0cbdd6e06954ab9bdf9b55821da6d06479284d98de",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251209/090001.json.gz",
+      "bytes": 147951,
+      "sha256": "81ea18c9f61e79437d37f2956f85896d76885776e30b45b56fa82eea5ffe4fd4",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251210/000001.json.gz",
+      "bytes": 1670046,
+      "sha256": "e71aeb458fb3902ac4007961fc3db9d6d75d0169b0f9effa6042d06becd486f4",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251210/010001.json.gz",
+      "bytes": 1979475,
+      "sha256": "0a6ecdb855a9db5a6a3ccf59524508cea71c1bbbae09a47bd2ada55a83102588",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251210/020001.json.gz",
+      "bytes": 1447743,
+      "sha256": "c2dc3e633b1819bb0e64fd6c8100ef2b1d4e187fe0cdf81196c0d08fc46a762e",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251210/030001.json.gz",
+      "bytes": 1776883,
+      "sha256": "c440cc0314fdb0ec6640f60fb22d0e611a15a8a513d1a164aa47d72cf564e75d",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251210/040001.json.gz",
+      "bytes": 1842977,
+      "sha256": "b917508ab806e61f086becb262439e4aa0695fa57a43621e1e4772d51540a362",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251210/050001.json.gz",
+      "bytes": 1567820,
+      "sha256": "de00b284e81e324392b0d33578863517ada63ba8d4050d97610b58fd1782e964",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251210/060001.json.gz",
+      "bytes": 1602618,
+      "sha256": "64ccf9e1c41e22d0e29591a528b4b201842a020c757121abb2d46c7525ccacb6",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251210/070001.json.gz",
+      "bytes": 1766532,
+      "sha256": "71102f8673b58c90a3b906b7119a39da7eec1feee16d17b0f83a8c1ccd427fd8",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251210/080001.json.gz",
+      "bytes": 2015502,
+      "sha256": "aac2c150a202e67eee5eae5683fde835ddafe927baa318bc74a3fb3ae8abe145",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251210/090001.json.gz",
+      "bytes": 241124,
+      "sha256": "152dbf1a1cfdb3c57661246801fe4934172cfe203eb8fd2a0367f0898638e945",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251211/000001.json.gz",
+      "bytes": 1486580,
+      "sha256": "def1fe14660e9978674cffc6031c545f776679b1839fb7b4470e65a241809738",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251211/010001.json.gz",
+      "bytes": 1725974,
+      "sha256": "18b96ce8edcab32fab832a9e45bb7a91b942b0ffa1d9171f9c2763d4ec518799",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251211/020001.json.gz",
+      "bytes": 1878066,
+      "sha256": "923bfb3b16dcb4bae389a95c87f0f8cddfbdbeb8feb9b60c7f74fbf8db56a660",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251211/030001.json.gz",
+      "bytes": 1837349,
+      "sha256": "7657dcaeb0a46e5175a71a082b47c2f5cd1923061ddde9e06be7f409979f0330",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251211/040001.json.gz",
+      "bytes": 1991435,
+      "sha256": "2e30efbb5e766c2f9ecd1fc53b1fb2625fb1e5f70124663d3cf6e526d00f164b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251211/050001.json.gz",
+      "bytes": 1394271,
+      "sha256": "14367db4b3f08e3732c5d85649e3b40093c185a1ba5d5795cb7931559e586662",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251211/060001.json.gz",
+      "bytes": 1861096,
+      "sha256": "f5a5ef5203ff8b5e6e19e3fea3cf9d82a4cc9ee6df226ece708086e75e31ee84",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251211/070001.json.gz",
+      "bytes": 1646488,
+      "sha256": "9f049ce89f1a1e8ec187632abbca4605d7b57fa787eb5a37496d816ebf2630f8",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251211/080001.json.gz",
+      "bytes": 1832689,
+      "sha256": "8613dbe4acdf80af77d47c43d2d179eefe4b21b9f6e5adb2643ccc9c04c18239",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251211/090001.json.gz",
+      "bytes": 247861,
+      "sha256": "2bf7b435805bcf1b054e11adc1638e3dd464c547d4c043e3768ae05efd3fe300",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251212/000001.json.gz",
+      "bytes": 1676720,
+      "sha256": "c941c85baafc46a7df772d266a35c266b03268784c9440f68a03a0c882279f96",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251212/010001.json.gz",
+      "bytes": 2044399,
+      "sha256": "d4afb3c91b955402b8ffd096d93215db34ca3dbea50c3ea534ada5c88e637d7f",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251212/020001.json.gz",
+      "bytes": 1454032,
+      "sha256": "78e7c1c5d8111429b26350a442b7a2f2dfc630346de8ddfec2b02027b777c594",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251212/030001.json.gz",
+      "bytes": 1828128,
+      "sha256": "685b4415b20e401139b308231b5e9c73cdcd11ac3ce3a37c5bab3c32ee5313db",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251212/040001.json.gz",
+      "bytes": 1633600,
+      "sha256": "68ec76afc3711f9904b7842518eceb782d412ced3f4789341021bb6cb0de5613",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251212/050001.json.gz",
+      "bytes": 1708791,
+      "sha256": "6b14f64ba50e98bfff7d6f90ec327ab953f0a371112550b8329aad39dab12cea",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251212/060001.json.gz",
+      "bytes": 1700855,
+      "sha256": "db63adb6cfff89916833a64827122e02600e29ed9716b1b860f4530a9b57cd81",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251212/070001.json.gz",
+      "bytes": 1735782,
+      "sha256": "b9702e9f81593e9d026a589eb2e2f29505f483f161365f6c07e8f677bce9a376",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251212/080001.json.gz",
+      "bytes": 1974786,
+      "sha256": "506a6a40226f2e11f527de0b88932e933bae0cf5a92c5424b693252d76298079",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251212/090001.json.gz",
+      "bytes": 222828,
+      "sha256": "b8c549c50a750ddb6796b52b6115cceb49638c515c7a02a186d8c75c6f9d7363",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251213/000001.json.gz",
+      "bytes": 2124844,
+      "sha256": "f05d258ece95c7b8dd238c474a6cf7a10a976fb9ebbe4e9d7d10fb4cf111b2fc",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251213/010001.json.gz",
+      "bytes": 1475112,
+      "sha256": "59b2000091854787ea57d2c37030a38bb4cce2166a9d11d82b325368e29d9efb",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251213/020001.json.gz",
+      "bytes": 1479573,
+      "sha256": "ebd03b6780a4d9616330587db5b7b595a39488c9c6138da92a823a8c190bfabf",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251213/030001.json.gz",
+      "bytes": 1826896,
+      "sha256": "89202ae1a2cc8dcedd65c8190558857c91fa97ac09dbb9128f94b7103f3390af",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251213/040001.json.gz",
+      "bytes": 1801900,
+      "sha256": "f688475df3ea516a2273f1fef634e4273dff3ba5704bdf20e8f36b3b2d5036ee",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251213/050001.json.gz",
+      "bytes": 1700871,
+      "sha256": "b40f39b7489d5e52f230fd9f8b2cad42abc1280d1856f375e4ea37d89f937e9b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251213/060001.json.gz",
+      "bytes": 1657090,
+      "sha256": "33e1f32c5cf788a3eb68dafcb0631e2ac9ba99cf0ae15a36cd945095cb7c3a35",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251213/070001.json.gz",
+      "bytes": 1886172,
+      "sha256": "d8a1a15171d7ce37cbac5c847770cd7afc6b58d0239f9c43212b18624ee468ba",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251213/080001.json.gz",
+      "bytes": 577378,
+      "sha256": "d3a3c91d279ca7066d7091f50f9b991498fe7e937cf595efd7d46421b9c4c431",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251214/000001.json.gz",
+      "bytes": 1637571,
+      "sha256": "f6ddcd7c9962d0c67fbe43c2d7bda39e32980021b6b112d1c91cb743048080f0",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251214/010001.json.gz",
+      "bytes": 1687223,
+      "sha256": "db6ee902554f77590750edbbcdd8445de7a3355878c4632ee48cc706e3bbc139",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251214/020001.json.gz",
+      "bytes": 1604994,
+      "sha256": "ad732d09432826c46b20006bd79c82c62721d7d625ce32d14b50d979c325764b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251214/030001.json.gz",
+      "bytes": 1582869,
+      "sha256": "22f9dda56000ab572544b38426d2ac32ee197aa2b818d9778e9606aba28e6fa5",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251214/040001.json.gz",
+      "bytes": 1610609,
+      "sha256": "5b2b1814a5d25ad3190595a8acb97d2d42ec4e69b69399fc15203a69b51d30b8",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251214/050001.json.gz",
+      "bytes": 1997999,
+      "sha256": "df3b238c0bff93ee9aac526dfee87638cbd492e60a540f9223906a8345999390",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251214/060001.json.gz",
+      "bytes": 1835013,
+      "sha256": "1e76f7d6e49aa3129a0954e701c71d8e222ec7507b93b9475c0920bedb6515a7",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251214/070001.json.gz",
+      "bytes": 1794568,
+      "sha256": "7dcf68ef225dc19f24789b8ad36dd2e43a3638bea6dba01accf48c28f84fe52d",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251214/080001.json.gz",
+      "bytes": 226256,
+      "sha256": "d0b66e03621c742850171cbfe2222d29663bf7f62ab0aa861a733f1abd1ac297",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251215/000001.json.gz",
+      "bytes": 1818914,
+      "sha256": "d76f70ee74569ee2792d0228dcf65ce8155252a1a2e243fb883debce2d8bc736",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251215/010001.json.gz",
+      "bytes": 1718083,
+      "sha256": "9d8684b8232dfa5321aa2c055c2660055a4d86194821404debefeaf8a8b6a0bb",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251215/020001.json.gz",
+      "bytes": 1632519,
+      "sha256": "c32b460bbb56bdf294b3b85115d131d8c037171379f7830fffa67062f12289f5",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251215/030001.json.gz",
+      "bytes": 1876375,
+      "sha256": "9e25d19ad91d6db12186361a9ee53b41477f5e0d6440f29c651ce18cd2df947f",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251215/040001.json.gz",
+      "bytes": 1650535,
+      "sha256": "1e154592705aa2b5f5455a0d53b9f2261a8a4946553c7b15b403aa45a03e9f1a",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251215/050001.json.gz",
+      "bytes": 1845130,
+      "sha256": "63bd447440c35c242fe5b0235a6438ac266a6a287710f64136ac18f70552c4c8",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251215/060001.json.gz",
+      "bytes": 1604990,
+      "sha256": "b30f55ca7a38f4d79ef5207cd9b3e0053ee65abca886bb5acd6e141ec87c4f71",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251215/070001.json.gz",
+      "bytes": 1328185,
+      "sha256": "6f6f9c67e5de1554b53839d3dbeac32ced7737bba07c7ecfb8c2c0ae05313f08",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251215/080001.json.gz",
+      "bytes": 2209457,
+      "sha256": "610455287955d5a6d89b31ff4def64eb7ab6f6fd72b4e8f895add1c9e082dfc2",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251215/090001.json.gz",
+      "bytes": 259284,
+      "sha256": "28af49d106f510af68c0fc291d86ff694a32cdc56ff7da8e818dfa55eda3ed9b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251216/000001.json.gz",
+      "bytes": 1390805,
+      "sha256": "2590195bcfa8e49beb0d3e48d9f8268390e8e82c4ed558ad6930522b2bf48093",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251216/010001.json.gz",
+      "bytes": 1730840,
+      "sha256": "78105ad238fef353aa7e660295f0de0d178b55216223f07e2944b7b05b7993d4",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251216/020001.json.gz",
+      "bytes": 2211101,
+      "sha256": "6ec69ab3c3fb3639fa1a812abfc4be3f0ecf10992087afc1ab4a75cf5c6a9944",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251216/030001.json.gz",
+      "bytes": 1772926,
+      "sha256": "553694f79750a551a4da912b9242d41b0180ca83037014d5f331d16f0976c75f",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251216/040001.json.gz",
+      "bytes": 1936280,
+      "sha256": "7b2527f8448b60f5edd064b725a2d9ba568c6e7b238762ae3ab44d67d94d8692",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251216/050001.json.gz",
+      "bytes": 1421683,
+      "sha256": "46d641249bad93d40b8f2218b68a6365ac0382f835c106b8d417e8d10c178492",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251216/060001.json.gz",
+      "bytes": 1652572,
+      "sha256": "91421141f4eb01c7f658a9cb3696abfd977025c1aef88b2fc45c26a0b082d3dc",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251216/070001.json.gz",
+      "bytes": 1831397,
+      "sha256": "bde08bdd213a8711a3f9af2f1400f51ff6c8f933de7c4e276fbdd654af743637",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251216/080001.json.gz",
+      "bytes": 1823204,
+      "sha256": "48987e9a860dc23b8ea471dfd1fa4b33c719d39424cebc1c480cd3b79c6beab4",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251216/090001.json.gz",
+      "bytes": 236634,
+      "sha256": "773d70cc0dcf2c0e3fe928f812c67e81eaafd18500f18f21083699c3338e641f",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251217/000001.json.gz",
+      "bytes": 1781070,
+      "sha256": "9d95af7b3b0397a3233c3ddad14d48fc301730c98f3f678b789b40d580ae0310",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251217/010001.json.gz",
+      "bytes": 1513546,
+      "sha256": "f1e25af2b61df2340da3952954b32821c2c7bd99da328841439f0bc435bfd90c",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251217/020001.json.gz",
+      "bytes": 1566686,
+      "sha256": "539d4c453e8efbbaf845737edf0fb2446ba7f6270ee9d80e69170b9b39a6cd93",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251217/030001.json.gz",
+      "bytes": 2009673,
+      "sha256": "c93bab923420c7c4e4a9b8f49ab84844826b96d25397f604d38a3176988dc7ab",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251217/040001.json.gz",
+      "bytes": 1604971,
+      "sha256": "dfb692604b84966052a2df638c52c5020740fd3ac24fcd3a2610e0d3232f781a",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251217/050001.json.gz",
+      "bytes": 1491906,
+      "sha256": "93d9868ffc4475e5666f83485ca60e771b650c05c959850d86459bb3eabee5af",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251217/060001.json.gz",
+      "bytes": 1497140,
+      "sha256": "a982e0f48fc1b5711d5c4e1a6ed9c82112b9b1de861a6a60d22178fb141c8454",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251217/070001.json.gz",
+      "bytes": 2200913,
+      "sha256": "197ebbf368ec1c052f2baa4c915a7210be1404a34853c1d1b90a6f6e70d25bed",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251217/080001.json.gz",
+      "bytes": 2146665,
+      "sha256": "dcb68264d883657263df1aed83884182de2f44b33c8abd329c335b9954be99e1",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251217/090001.json.gz",
+      "bytes": 139303,
+      "sha256": "aaa134cad41df4580a68a3d39f0968540d67694fbcca685de816f5ab5fc9ac5f",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251218/000001.json.gz",
+      "bytes": 1903224,
+      "sha256": "a9dcc71b4eff4a8d62fde4315df036ae644a500077db557665b6ceb1624d6022",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251218/010001.json.gz",
+      "bytes": 1678051,
+      "sha256": "9d714ecfcc03570ca04b77c24067fc6aac0249f51e17c134042923e9616be39e",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251218/020001.json.gz",
+      "bytes": 1701233,
+      "sha256": "a6bf2e25467db9070debc8ae143490279a6a3361a894d5354be2c67de65abf47",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251218/030001.json.gz",
+      "bytes": 1641021,
+      "sha256": "c096a40b1494528f1baf32d546bc9c95394e19d5d5f147b0720641afe734e9e5",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251218/040001.json.gz",
+      "bytes": 1832574,
+      "sha256": "eaf8a80a1a631be8f2bccb5f31b409a98537109282b1c55461a51c9fac891acd",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251218/050001.json.gz",
+      "bytes": 1539476,
+      "sha256": "8d27a615bd1d52c51461c28c8b9beba4e477040839d7c26fcf32d1150930cec3",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251218/060001.json.gz",
+      "bytes": 1653531,
+      "sha256": "bfe05aaac33ea0368e1e4faffa12d52099c287e427e3a507efa21e666a55fb74",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251218/070001.json.gz",
+      "bytes": 1684730,
+      "sha256": "d164976371c0673b4008758c8a5ebc07d8e34a5db6f66efac47a7a43f48bd616",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251218/080001.json.gz",
+      "bytes": 2083324,
+      "sha256": "9c3a55b0f017971d1b8b66c3b4324dd4188d4755d5e77532ebaad6943d90da8d",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251218/090001.json.gz",
+      "bytes": 292998,
+      "sha256": "20c41b2f0f804f2c9be99bde8c69a1608d0934c4a57963e5b47366f4dc1dba83",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251219/000001.json.gz",
+      "bytes": 1336043,
+      "sha256": "2857ab8d42e1bc5106a97546b33e1d93d5235b86e295bba39e265d95b01473bb",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251219/010001.json.gz",
+      "bytes": 1590995,
+      "sha256": "c83ecd7150808c21890ee9e90dd75a91120fb4dee6b71825b3902f3e8a239772",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251219/020001.json.gz",
+      "bytes": 2082034,
+      "sha256": "c97c1c9419939d66517c24a5d0e97950e0864fefb9e875d0cdd4ba634d686508",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251219/030001.json.gz",
+      "bytes": 1977481,
+      "sha256": "13b1e16a64321970bfa9087ba4769e349d2fa5dcaf09b48ea16de1f13ed37709",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251219/040001.json.gz",
+      "bytes": 1940592,
+      "sha256": "396b828dcb1561f564eabd302150353a09d976f1fc695448f6717cab0d1fabb9",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251219/050001.json.gz",
+      "bytes": 1723603,
+      "sha256": "28a7d61afa9cc38bd21b35e434424dbef67d6c9b0ce6e2fc11f6f17846d66de9",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251219/060001.json.gz",
+      "bytes": 1443500,
+      "sha256": "d72dd99917687ac838e341e837ea0eea8a6c7049a03842bb0c3c980a04969687",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251219/070001.json.gz",
+      "bytes": 1542768,
+      "sha256": "4554ef5cb14e2c72a394e1aa849a0ddb9f5f6c258fe644b3dcf48ab0c4c3a7a5",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251219/080001.json.gz",
+      "bytes": 2083068,
+      "sha256": "ca323e52aabbd482f78a8c64f10ae2795d4253743858bdca6bbe04db6eb9e2e0",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251219/090001.json.gz",
+      "bytes": 280559,
+      "sha256": "6269a769ec658d1ca01bedd021225e2a3229b625abe3cf81c2863248239f21db",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251220/000001.json.gz",
+      "bytes": 1473884,
+      "sha256": "4820c7ce130605806ffdf3a3d1c494fa9c3b9da03e4b86107cd94d2149f7118f",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251220/010001.json.gz",
+      "bytes": 1735087,
+      "sha256": "2343c423a353b51ed36e41324510faa56a897fe329f82fa5187e70fab92e97ee",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251220/020001.json.gz",
+      "bytes": 1694801,
+      "sha256": "42a041437a74a688309ba76a5742feddeed6f06d07daf14873c2f43fa9d7a179",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251220/030001.json.gz",
+      "bytes": 2074447,
+      "sha256": "a9fb87b0c99f8ee30d676d53b049d0d40ac9f40212bb8118553554d94f9451e9",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251220/040001.json.gz",
+      "bytes": 2007922,
+      "sha256": "36735df19ff8dbaf94f1057545f1e8fa0170b2922ee2e9a3f9696bd3c4dbf273",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251220/050001.json.gz",
+      "bytes": 1617026,
+      "sha256": "eb27e7872cc297b76baff374f294773eeec4edab6e9ac8facde7d778ee16e26f",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251220/060001.json.gz",
+      "bytes": 1589648,
+      "sha256": "c3ed6f1c89e9d7add771d29dd942ba1ca53c231dab0ff6d7c16feb05b371a1a8",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251220/070001.json.gz",
+      "bytes": 1735434,
+      "sha256": "3190d580d33ed0cf76c2ea459974bbbd0667d82f410025e7e53c691d745e07a2",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251220/080001.json.gz",
+      "bytes": 601528,
+      "sha256": "e70a1907774b30a68356002e9908dfc2d26c85ba664e49dc23e3f9dd20349f09",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251221/000001.json.gz",
+      "bytes": 1993666,
+      "sha256": "f7a382baf09172d51f23ef6ffe288bab416c21e178c775a7be5b7aa44ad18ac9",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251221/010001.json.gz",
+      "bytes": 1522394,
+      "sha256": "50012ecbca720578a7f466cf8f07e2f00a62072e29c7ffa876d813ff535af6f2",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251221/020001.json.gz",
+      "bytes": 1353686,
+      "sha256": "756599fccde64b1ebb80a03464ce441dfb896a68a3734a2d102b4c28ef9bc949",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251221/030001.json.gz",
+      "bytes": 1734416,
+      "sha256": "eb9bfaa1ac0f4f18aa3d490f3524e9934c583de66ff8a2647ea6ba219c67469d",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251221/040001.json.gz",
+      "bytes": 1986955,
+      "sha256": "05c7ef0221816dfb753a8cf626ff885cda6097f90e3cf29669a942e3eff0c1f9",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251221/050001.json.gz",
+      "bytes": 1158976,
+      "sha256": "772482004b058820821245626c7bdf80b5fb007d9e43701a3bd23a1fbe42bb66",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251221/060001.json.gz",
+      "bytes": 1861468,
+      "sha256": "1d7dc5fdf9741e9d720ec98304cfb71d6d42e335ffda476829e22978af669c59",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251221/070001.json.gz",
+      "bytes": 2104102,
+      "sha256": "b408f20bf15edfc29cccc10302dff512a9b9373767f57bd52bc909f7f8cb1a54",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251221/080001.json.gz",
+      "bytes": 343315,
+      "sha256": "887be3123717d3c83b524234d5cd163e4f5e36e135ed5bc7fa87fd2cd8816486",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251222/000001.json.gz",
+      "bytes": 1576512,
+      "sha256": "7c71e73d29d26626b3ca41f25fa3a75395ce1da1cf24eab18d8e882d6ddc8604",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251222/010001.json.gz",
+      "bytes": 1782113,
+      "sha256": "8a7d0eb20abb4875fdb21b6899777d0ec220f08c1f0225a4d0743c3513127d7a",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251222/020001.json.gz",
+      "bytes": 1850306,
+      "sha256": "bc6b07f13486067700723a1317ea0a408827514b1cda31dfe0cc90b069049b82",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251222/030001.json.gz",
+      "bytes": 1688950,
+      "sha256": "d1f78a512b40a2d46549156d6556cf87c8380450c48a9e39136e1afc1650723c",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251222/040001.json.gz",
+      "bytes": 1611406,
+      "sha256": "ead3a33f2c2dfc4e358337862a2302e91121a7137b4478d091a5ddd0ccc7f5bd",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251222/050001.json.gz",
+      "bytes": 1835539,
+      "sha256": "777ac0ebdb50f1628442945d52b8121db59b0550d352eeceba952e493d4cde65",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251222/060001.json.gz",
+      "bytes": 1579826,
+      "sha256": "09c2b6aadfbbd9d7a139c0a6a7f38c15f420fde380622dba43820b96cd9f3012",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251222/070001.json.gz",
+      "bytes": 1792963,
+      "sha256": "2be8057b7ada1219141413c28a9bc90bd294b5bd1e25c3b066c7d67eeeab8e55",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251222/080001.json.gz",
+      "bytes": 1913597,
+      "sha256": "d6473d0c9e9acd86310cc2475839c5d67da9fec2cc9e2cbe092ad878a3e12c9f",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251222/090001.json.gz",
+      "bytes": 300416,
+      "sha256": "c8eb24d2b42b279f9da6760aede7188ecc49a4290f0a6d4f4afbf8886b9724f7",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251223/000001.json.gz",
+      "bytes": 1492043,
+      "sha256": "f57935545629fd5dadc8cc9121e761373f80db90d32bd7d6b733394dfaf120d0",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251223/010001.json.gz",
+      "bytes": 1985300,
+      "sha256": "2019f3ee68514c394f8e18fdbe1675b26fd2f25cf2ed74eda8d6ad9b9b7e0af7",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251223/020001.json.gz",
+      "bytes": 1933843,
+      "sha256": "6d8cc0f81c8eeb921a3c7a6ce3343df137a1332d595b1012182a9eb12be13caf",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251223/030001.json.gz",
+      "bytes": 1776851,
+      "sha256": "503fe8305fdaefea3022cae5aec2838923a21d0c115785a5e747a7de1fc6e7c5",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251223/040001.json.gz",
+      "bytes": 1634621,
+      "sha256": "90589d76693135e713776cd6f15190b0dcccfebee78956fc3f89babcfed4839c",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251223/050001.json.gz",
+      "bytes": 1316076,
+      "sha256": "a8d3642b916214d7a0ca3f8fc5da578ecf063c7d1f95eb0da4529cc5171aa24a",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251223/060001.json.gz",
+      "bytes": 1826458,
+      "sha256": "f00c0a39a4ffe93c3b3e277146d5938edb4637cfaa99a3544eeef905d60e2ee8",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251223/070001.json.gz",
+      "bytes": 1670704,
+      "sha256": "76b4bbbcfcf2771b050e47fd5fd41d85cacfc011bf10651f7a313a7bd88b3080",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251223/080001.json.gz",
+      "bytes": 2041059,
+      "sha256": "3d30ef20612e1176b8cdfe6f59d6bf6ece5f33b33cb38e834a716b7d600bdeb7",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251223/090001.json.gz",
+      "bytes": 364270,
+      "sha256": "f974602461240fe533dc2ed9fd645956b315d6d8c73f74d8b32529251dca2d8f",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251224/000001.json.gz",
+      "bytes": 1657046,
+      "sha256": "529b5b54c2086e63c0cc95a67708111683fa4e0badbc66c828af7058e1486fbe",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251224/010001.json.gz",
+      "bytes": 2063107,
+      "sha256": "a781995f70853ffa980ac39257132ac7c6f4b217caff9bc8f7ae2df0dc289fc0",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251224/020001.json.gz",
+      "bytes": 1453526,
+      "sha256": "619a38ab9cd77435f8b71951b83e0cc94c9ea12e89f789995b7ca43a47240de6",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251224/030001.json.gz",
+      "bytes": 1658469,
+      "sha256": "0bf1e3759b9daacf97ea014547fc774c819256b0b7a2ce9e5086468c3b5cb583",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251224/040001.json.gz",
+      "bytes": 1700970,
+      "sha256": "ae3bff6dd58db24ff7a3b8e90385f0b9bd354e1674b314565bbd2df859a4c502",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251224/050001.json.gz",
+      "bytes": 1580681,
+      "sha256": "22a1a64d336f241a8afda6cd9eaade06156423cf35b7c967d0e4660d026e60d5",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251224/060001.json.gz",
+      "bytes": 1837253,
+      "sha256": "3de91f1266b6326ca778912381e7323bb8ae92edbe75930ddae162537d508617",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251224/070001.json.gz",
+      "bytes": 1599428,
+      "sha256": "f6a3ee628b8b7eba2beddbcf1140a8cb0944768107e9deee26d129a5502e8bcf",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251224/080001.json.gz",
+      "bytes": 2133651,
+      "sha256": "0211d73071a0003e1a3befefbb8eec7eae987f72ba3d88c7e36963572d664753",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251224/090001.json.gz",
+      "bytes": 356625,
+      "sha256": "1b02d73b67fb9a37374beb95e8343fbbe27164810050ce40ba1277ba6acbff27",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251225/000001.json.gz",
+      "bytes": 1670371,
+      "sha256": "dd8e8ad23b98503ef5f581a3695b9946a096488132e2d129af0514061d45edcc",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251225/010001.json.gz",
+      "bytes": 1709625,
+      "sha256": "fb63c7df8715a4bbb7e70d544bdbfc55719dd3a86cc82d8fa3e55a1b694f55e3",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251225/020001.json.gz",
+      "bytes": 1715005,
+      "sha256": "270681c6bfbc8a25c4819296f5d1b0e8854dbca7c509bd26e2ad42b04142d7bc",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251225/030001.json.gz",
+      "bytes": 1720457,
+      "sha256": "c84de5defcbd849fae08278d085337b49d96a1c81adfa07c92d7370558e445cd",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251225/040001.json.gz",
+      "bytes": 1686137,
+      "sha256": "d952e2441444389e23024c12149d5b2fddbe8a1ff0a83e1a2e4eecddf875f5cc",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251225/050001.json.gz",
+      "bytes": 1661920,
+      "sha256": "1cb4d4b29a5372fd6383ed49c915ea372814515ec38dbfb8fcd6591d1c7818fd",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251225/060001.json.gz",
+      "bytes": 1682001,
+      "sha256": "9e170590433a9bee3fefb35b289e33e287e2fc4c3580b7724273889518cc4c0f",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251225/070001.json.gz",
+      "bytes": 1776795,
+      "sha256": "7910aaad72bafea198d8457698ded7b13b63682ce62da82a956caf5688b85ecf",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251225/080001.json.gz",
+      "bytes": 501288,
+      "sha256": "ac45997c6404df0f07e7228d203224dcc32bd52469665c24decfce2a1f092045",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251226/000001.json.gz",
+      "bytes": 2086659,
+      "sha256": "36ae4f228e1cc040be3bb0743ac8d5467e25f5ad7eb411000a488ae8297f0b92",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251226/010001.json.gz",
+      "bytes": 1263605,
+      "sha256": "01668d321b4ec83e931898d8c2b34ab45c3fab328c3b9028180c05ffd471c1f8",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251226/020001.json.gz",
+      "bytes": 1956047,
+      "sha256": "9dfd6d2a84c4e59a8d99967fc75c059fa7b75e2b67cbb723bd1e721608d2813a",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251226/030001.json.gz",
+      "bytes": 1532362,
+      "sha256": "0c791bdcfa22479f0325a0cda47641d69805c3aceb0cbfec90c818e78a6a4d87",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251226/040001.json.gz",
+      "bytes": 1519902,
+      "sha256": "fc777f8a982f586d32c09e8780c3a03687371d72eec1e1c77935b8cb2748b624",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251226/050001.json.gz",
+      "bytes": 1871190,
+      "sha256": "efb0644fd0d9d6b7ac6e3b57a368fffabe734cae96164f091cf625964583ef28",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251226/060001.json.gz",
+      "bytes": 1655833,
+      "sha256": "d3e1eab3cd7a85a01380ef7672f3af60a9cdcef02ce5380bb133219dcf7e2f93",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251226/070001.json.gz",
+      "bytes": 1840989,
+      "sha256": "9527797e487ffb9240a1afad411554e662da58c0c5b58c50b12c4f8a14f11907",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251226/080001.json.gz",
+      "bytes": 1836773,
+      "sha256": "b8c6476eeb29502a196c2653a16a7b5c23009880d2dc8fe1458c32999a1804c3",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251226/090001.json.gz",
+      "bytes": 336222,
+      "sha256": "7a5455af6be7ad6c62a294b5c988df3a10210364871810a1699dc2ad5fa7f57e",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251227/000001.json.gz",
+      "bytes": 1482448,
+      "sha256": "956f5d4bfedc9df7655a83873622538b540676621570d1dce0a662236e4772f3",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251227/010001.json.gz",
+      "bytes": 1635628,
+      "sha256": "ca6867897e24e2242f968e4a5c4912211f59633da14159b540465be45021c4af",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251227/020001.json.gz",
+      "bytes": 1804083,
+      "sha256": "7faa725679e5f794db99079b69e7cf297d1a2bd31d35c600c4b95dbc56877115",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251227/030001.json.gz",
+      "bytes": 1722455,
+      "sha256": "65469e7d661ba5aebb8938da998d99a1fc822485bd9349069a417c59b12d072c",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251227/040001.json.gz",
+      "bytes": 1537788,
+      "sha256": "9c0a611077f784afcc88bbe40959b6f349b81b2dac24a077cf04c7663636d9bd",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251227/050001.json.gz",
+      "bytes": 1769790,
+      "sha256": "7444b1120308e7b0abc82c292e7f27210653fb1ea3e65391a3f4640f6b016ce7",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251227/060001.json.gz",
+      "bytes": 2049625,
+      "sha256": "7d44af9c4aaf84c5583b7aa2f64d227ad55a004f82046459d7b3562763a7bded",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251227/070001.json.gz",
+      "bytes": 1977165,
+      "sha256": "8ae9081a6f6d4368b162ece84e3a8a87809b9642ebe927cc92dcaed1584c6948",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251227/080001.json.gz",
+      "bytes": 478450,
+      "sha256": "d5510ece16a395a5acb68b3a655718a7527cfc3bb441da2eee0a7df64ee6e66d",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251228/000001.json.gz",
+      "bytes": 1634522,
+      "sha256": "d460631f6e451a24364c644e4cff0d430e899e39ea614c30af899f54214b8153",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251228/010001.json.gz",
+      "bytes": 1881366,
+      "sha256": "45e802322b65bb47b0c3da49ba9b430bb8bdb8eee1574cbb67977541283d21be",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251228/020001.json.gz",
+      "bytes": 1362017,
+      "sha256": "d5fda97253d79490342cb670f45152f0bd42102510e92b4a07f65e3b953fec89",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251228/030001.json.gz",
+      "bytes": 1860670,
+      "sha256": "7e4827a31b1849a86c794b45fe4245ea81af401b1e14cf3772a550c69031b1bc",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251228/040001.json.gz",
+      "bytes": 1935768,
+      "sha256": "67ec9ae10930589c9d5a13a03f92c7e733a5c85b9f635a8ed61124a535df7d1b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251228/050001.json.gz",
+      "bytes": 1408481,
+      "sha256": "f311cb6bca5a38273273223a1e0903b8b0279e8e4bd4939a0959ce4f93e1156d",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251228/060001.json.gz",
+      "bytes": 1786377,
+      "sha256": "23f53ad5a71c6d55ca306f00bffb63bd20f2906029813acdb5b0f799c90493e8",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251228/070001.json.gz",
+      "bytes": 1573182,
+      "sha256": "34414ec92b5486abe8f6fb8b414a520a24aead130eb61b7624f8caae0a64f5fd",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251228/080001.json.gz",
+      "bytes": 484923,
+      "sha256": "ae16c69ea755e3f0d3468f6398dbcac040490716716e425829a5ce60c2341ce3",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251229/002501.json.gz",
+      "bytes": 448885,
+      "sha256": "76d8cae4a4a6df3139d2caceb15512fe388dbf8f9aa4a7f1bf7cab429dae692b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251229/007501.json.gz",
+      "bytes": 354567,
+      "sha256": "3140a5e824a543619c012331c3e71403ac3eb007a2a154646924f0ed881dadb6",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251229/012501.json.gz",
+      "bytes": 490939,
+      "sha256": "d23e9f8ca4654ac8e1ab1b94d4cc607a54de853621da3ad358e485b306836958",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251229/015001.json.gz",
+      "bytes": 515005,
+      "sha256": "efb01ded78ec9be005f8c4a4a9ffa7dfef31754f883a91104ede566eae597318",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251229/017501.json.gz",
+      "bytes": 391400,
+      "sha256": "3cd7be84d705ac9a1239e6fbcf47a1b3c5775e178dcf249e737ea3f273744ec1",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251229/020001.json.gz",
+      "bytes": 2127332,
+      "sha256": "629ecf64260fa6b8a912e0d71159c9e9f0c1707b784132c37ca14239f0f2a5e9",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251229/030001.json.gz",
+      "bytes": 1927903,
+      "sha256": "10a6309b7b4ea428fbdab2c9ef9df1b72fedfd025d6cbaa0fbe727fc23a287b5",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251229/040001.json.gz",
+      "bytes": 1782593,
+      "sha256": "6c906bfc21bfb43001cff73b78cf3580fe87c2070786353bd974ddd685d6ad78",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251229/050001.json.gz",
+      "bytes": 2167994,
+      "sha256": "befa892730492a47550ff3a544232c5e2b3ccbd885f497fc8adb4cec1b043252",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251229/060001.json.gz",
+      "bytes": 1851713,
+      "sha256": "eaaaee851f191249e3f889f52945ebf45d15a66d89f959848a0b6051198efeed",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251229/070001.json.gz",
+      "bytes": 1979293,
+      "sha256": "5e11539ffcabfeb2ca761342191298f94e8a78fca11876a9ce68e9fa10d2b269",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251229/080001.json.gz",
+      "bytes": 2216116,
+      "sha256": "3ebd86ba3c279bada3e5629618b07997ced1fc17ab9ec185531267d05ca10c59",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251229/090001.json.gz",
+      "bytes": 726409,
+      "sha256": "c7fbabe2a6f794b5f5d90f08f9ec62b9da3ee73316ab98fb1f26dffbcd972fbb",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251230/002501.json.gz",
+      "bytes": 423936,
+      "sha256": "0fa1d71aeb3e30630f838af9f277110d691e33d7643e407a90c4e81dbdacaa7f",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251230/007501.json.gz",
+      "bytes": 545951,
+      "sha256": "2bf7478aac39881bbfcaa4863add1f6506f22380a95efc2fb39920cbd3caf642",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251230/012501.json.gz",
+      "bytes": 418607,
+      "sha256": "e09aa9bbff8f058d97a256813f1e3bc4a133c15fbcf39e5e259abc82c444705d",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251230/015001.json.gz",
+      "bytes": 329338,
+      "sha256": "739ca1f28affa51c7f0be9808971b6f2a3fe7e08bd4f213c00136041ff5ccab8",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251230/017501.json.gz",
+      "bytes": 464343,
+      "sha256": "56b2a74429f84778eb381bbf75ded561d3ae385ee4d03d994b4269f184d7b94c",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251230/020001.json.gz",
+      "bytes": 2064381,
+      "sha256": "55e9e3990eddaef39761a55a08f1cd53696d1197af1928f3d9f693e3c0e25774",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251230/030001.json.gz",
+      "bytes": 2215873,
+      "sha256": "efa0bf2a585623bb98a85efccefd0b9ef6a8d0dbf7ccdd74ebf7be154632bf6d",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251230/040001.json.gz",
+      "bytes": 2094453,
+      "sha256": "b88de3a8d182ab987d93c180f5cb91b4eee900170296c1345edb335f9058e7dc",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251230/050001.json.gz",
+      "bytes": 1996268,
+      "sha256": "cbbb93e7bf4c9c47bc40cfc70ab6291ef36de83bce014eab790af3acd49caa9b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251230/060001.json.gz",
+      "bytes": 1581738,
+      "sha256": "39bd7c80459c7ccf15f4ee289cc117694929b7e17cdc23c658c81cf9fcc31efa",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251230/070001.json.gz",
+      "bytes": 2007644,
+      "sha256": "d1767b5f6046aecce1c50c85f4d4358f589e06ae47566615f971dfc52e1faa8a",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251230/080001.json.gz",
+      "bytes": 1760413,
+      "sha256": "9d0e79d158e9c09ef582690ce6f9d73a176426f51ca3236b6c28603e217658b5",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251230/090001.json.gz",
+      "bytes": 368438,
+      "sha256": "8f955558686d229f3f9d2e5c910574bf0a675a361d1027a0b3c2130525f308e2",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251231/000001.json.gz",
+      "bytes": 2341919,
+      "sha256": "5ef5ddd3d3619e3d697895426ace9dad1ccc55d9fd6e6230b8550c6ed95e07b9",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251231/010001.json.gz",
+      "bytes": 1551411,
+      "sha256": "48620c32069ef0aaaa921ab83759525c56b03c9bcd335d62833f6be07891ec66",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251231/020001.json.gz",
+      "bytes": 1532779,
+      "sha256": "6ffa6094f974507f99a17d27d5ac2e1bcf737a3c8e09d592f3fa7384475d4ad2",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251231/030001.json.gz",
+      "bytes": 1475232,
+      "sha256": "9ff144e6d3f7cd0b846def99cdaae1eb14fe0e2e46b9844eb701f72a609ced4d",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251231/040001.json.gz",
+      "bytes": 1396704,
+      "sha256": "9be3a0f9bf0108366a78c4ec9125f6bc10e05318538483df77880561208fb900",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251231/050001.json.gz",
+      "bytes": 1972567,
+      "sha256": "6b1e891c0fa290c59d7a91acbba8c459576c01b91bb9a40eb4f952704a90edb2",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251231/060001.json.gz",
+      "bytes": 1656277,
+      "sha256": "48894b93c82ea5911d6c5d2a5502f252b239a32ffb2fa4f0c3c806c6034f18d1",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251231/070001.json.gz",
+      "bytes": 1999174,
+      "sha256": "922d88ceb58d31a937f0d5607ddb7b59066a3cab6a8f8eb988db3537feb5a3bc",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251231/080001.json.gz",
+      "bytes": 1709791,
+      "sha256": "9b8b1fd96e0c90f1d41182258f3e3ca86ea2625f214f064d877a802fb9da1857",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/20251231/090001.json.gz",
+      "bytes": 583270,
+      "sha256": "aef49655c9a9f2a3c1bcf03c6e7eb4d2f6fe8af8ba38e19f444d980aedd7a1c2",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202501.csv.gz",
+      "bytes": 27217319,
+      "sha256": "e010b69f9720d1086a5f51529668597e99dfd400fdbed24d89647d8fa4b3ac7c",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202502.csv.gz",
+      "bytes": 24826101,
+      "sha256": "2473b665f81f2f2ef23a3d83174eadc931951543f5e3225cb811689461397dc9",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202503.csv.gz",
+      "bytes": 27481034,
+      "sha256": "f88357327fc730c1097bedcfc1a18deeef73d9b174d2984b4e68c9849f12c136",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202504.csv.gz",
+      "bytes": 26688361,
+      "sha256": "bc1e297901769c89afe710f2155bc443f684f30493f047e21a5c5089d77c4450",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202505.csv.gz",
+      "bytes": 27522188,
+      "sha256": "a2055c874198ac8d599198d3edf79b2a21fcd8710b9367f0d548d8871fa13519",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202506.csv.gz",
+      "bytes": 26577609,
+      "sha256": "1aa408c5dc653356474a468ca62200206bd9f051d5791a177aa1ad919ed23800",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202507.csv.gz",
+      "bytes": 27581910,
+      "sha256": "47f41cfccb8e3b18a88040b22628242ab2458fc5aafc8835b31dc73334f34fea",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202508.csv.gz",
+      "bytes": 27532379,
+      "sha256": "7629c49192d3333817e515a7465d63eca2d944bbc1d6439258840ce183b596e2",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202509.csv.gz",
+      "bytes": 26832028,
+      "sha256": "de21d0bc3e7cd7bfb52023b7c4ab5535a9aee48e655ba7488410764ffc61538a",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202510.csv.gz",
+      "bytes": 27518086,
+      "sha256": "9f54bb77f2fee6b685aaa6c259f4aefe22ce12a2390cb5fe24bb0d4ff1ae850b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202511.csv.gz",
+      "bytes": 25982362,
+      "sha256": "62085fda5173bd6d0dcbbb636a71d0c4c0a189a71277086b2b712f6a88b3bea5",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202512.csv.gz",
+      "bytes": 26829457,
+      "sha256": "57a47d925c6df64c752cd904f4ce752860ed2aec2cbbc4cedd85fa9997a2a315",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/date_availability_2025.json",
+      "bytes": 7262,
+      "sha256": "3718efef61b0eac2a423ce139c41b2bd3664e675f375fe5b78c56dbec657c52d",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/download_counts.json",
+      "bytes": 54152,
+      "sha256": "7927ba636fea9d3c81edb304b6aa28e738d5aa36e382b29a35bc282471218266",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/monthly_hourly_totals/2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(01월).csv.gz",
+      "bytes": 3557447,
+      "sha256": "6134acbffed6e4d6ad726029abacd8e5195223280be193c46d0c3a954e4b2f8d",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/monthly_hourly_totals/2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(02월).csv.gz",
+      "bytes": 3467107,
+      "sha256": "d9b7e7798d78cbfeb364fcc16b66339f864930e13210b21e6d804ffed3d044a9",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/monthly_hourly_totals/2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(03월).csv.gz",
+      "bytes": 3112752,
+      "sha256": "c0bb9d2c78481c722c8b690839d445d0a898d7d32b6707c6da30521379856d1d",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/monthly_hourly_totals/2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(04월).csv.gz",
+      "bytes": 3591848,
+      "sha256": "c9b40d75b1aecd00448e03ab08e3e4dee8bd5abbc3ed175a793cd09ef8d28e02",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/monthly_hourly_totals/2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(05월).csv.gz",
+      "bytes": 3543106,
+      "sha256": "1d65af9085ac3b7e9eea133e107c17cb423d177130851be2a30953a3ac3b329a",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/monthly_hourly_totals/2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(06월).csv.gz",
+      "bytes": 3512613,
+      "sha256": "6e1d68efd81fed16caa78db41453f248d32f19b3731e3049efd91e8c6e262866",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/monthly_hourly_totals/2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(07월).csv.gz",
+      "bytes": 3552744,
+      "sha256": "fce1381897c7968a923cb0bd8c85999bd9d87dd77730884d4e57264e899361c0",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/monthly_hourly_totals/2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(08월).csv.gz",
+      "bytes": 3550443,
+      "sha256": "c5102a9016022ce6dc5c706132efe2cad0b506c2a4eceed93345058f3db95750",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/monthly_hourly_totals/2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(09월).csv.gz",
+      "bytes": 3664985,
+      "sha256": "f27e93ad701be76f8843f75bae32bdf338319d745ed8ccd9d4fdb11d0be46380",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/monthly_hourly_totals/2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(10월).csv.gz",
+      "bytes": 3509998,
+      "sha256": "5d8d01657ceaebd2d87a2ce276ffee2eb7db4deab2105fd54be21786032ac2b7",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/monthly_hourly_totals/2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(11월).csv.gz",
+      "bytes": 3538718,
+      "sha256": "611fb31b11a41da74db43fe274ae5236fb0135ebbb447d4e02b5d5a930f4c55b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/monthly_hourly_totals/2025년_버스노선별_정류장별_시간대별_승하차_인원_정보(12월).csv.gz",
+      "bytes": 3619023,
+      "sha256": "1d929ea06e12f5cef63485ecad02afb364de0454fc3a3cbe331db9b1ef50770b",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24123/2025-01-01.json.gz",
+      "bytes": 1237,
+      "sha256": "ee8d53081af17639e870b754b919e5e9a34370f32a68bec68fc505ce9315ac02",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24123/2025-01-15.json.gz",
+      "bytes": 1233,
+      "sha256": "25d4cc3263b9d934d23123e7409e7ff28fd28d8b10c9f137c8967635abf5071a",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24123/2025-01-29.json.gz",
+      "bytes": 1233,
+      "sha256": "ee1f32d8de54e5147df79c0e81e29e8b262b047444261dde7f7f1f64933aaeec",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24127/2025-01-01.json.gz",
+      "bytes": 956,
+      "sha256": "6c99b849eb1daf53dc5599882b070c5b0d8d1f34d5dd36acfdb05a33ce506d9f",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24127/2025-01-15.json.gz",
+      "bytes": 945,
+      "sha256": "81df455c29df33997ff1d44511fc20100e78089882a3f66ba833c3a0081966f0",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24127/2025-01-29.json.gz",
+      "bytes": 942,
+      "sha256": "d4a8d8a9c5cc2e47bee08c9c3bfc956e059ed528a58db4cd751424eda246e255",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24211/2025-01-01.json.gz",
+      "bytes": 918,
+      "sha256": "1d328bb558e621055f1abe74fb04e50cb7c40e738cf6cbf9d6838e4caa150990",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24211/2025-01-15.json.gz",
+      "bytes": 910,
+      "sha256": "e0b7b0a9f790b6dec580e32a1b6db0e861d3216c8b2a9c82aeed02caa36d2aed",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24221/2025-01-01.json.gz",
+      "bytes": 1007,
+      "sha256": "d8657ee90a98607c8817cb0a856fa41a759500af5a952089afa312dab869a652",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24221/2025-01-15.json.gz",
+      "bytes": 1006,
+      "sha256": "03bb391144b11943ae55a5ee4b095965c9bee04adf4859d525d8bcfe6f8da6cf",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24221/2025-01-29.json.gz",
+      "bytes": 1001,
+      "sha256": "002c4d8ed5df3a7c0215f49e387251678b1ea5b857012d361db4c90bff0146be",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24222/2025-01-01.json.gz",
+      "bytes": 963,
+      "sha256": "f5333961118775851cd98870ed9e5dfdd7ef4f6a78506110c4cd9f5cbf63c098",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24222/2025-01-15.json.gz",
+      "bytes": 957,
+      "sha256": "94f9d257838d8cedd7b749e77356f09d0fbf2ea9808efb54954072f3ba9a89a1",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24222/2025-01-29.json.gz",
+      "bytes": 974,
+      "sha256": "9eb415e62741a6ce1962ad36727c10d3c261df300e64aaf810911a1e9a662766",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24231/2025-01-01.json.gz",
+      "bytes": 1183,
+      "sha256": "c44367f944eb280926d6b97104e6d91dfe8f8e6d02bc634ed9af74c31cc196a7",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24231/2025-01-15.json.gz",
+      "bytes": 1173,
+      "sha256": "ec04c9989359b589d14386431850019732844226eddbe304f3cc777573c7e1d6",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24231/2025-01-29.json.gz",
+      "bytes": 1158,
+      "sha256": "67f9ff6c3d0bb8f1f74cbe646bc9e164e8d57851cafcf0db71fd426399a61245",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24233/2025-01-01.json.gz",
+      "bytes": 906,
+      "sha256": "2f0607e631bac0ec7bc605d3c071e72b2ee35e926d6fc39b81b4365aa1e77dd7",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24233/2025-01-15.json.gz",
+      "bytes": 898,
+      "sha256": "a0a97fa5306a8784e09e9b2a23d61e9cf62389090168738f9e0be66c51277d66",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24233/2025-01-29.json.gz",
+      "bytes": 919,
+      "sha256": "cb958e94c7061e298845bb8205a070b0d83ac001ffb7467b242c8c3ad77a974d",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24239/2025-01-01.json.gz",
+      "bytes": 976,
+      "sha256": "7b2e0457c3ccdf669587a3730cdf939213b5376da6107d12fecb98b89748faa5",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24239/2025-01-15.json.gz",
+      "bytes": 977,
+      "sha256": "71f05e1742e17958812e7b68627e02948efed115710578026aa80d06aac6c462",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24239/2025-01-29.json.gz",
+      "bytes": 984,
+      "sha256": "8e730fe31fc4c73716dd111432fbfc94cec499a03051ab9830c132a2c33a050a",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24240/2025-01-01.json.gz",
+      "bytes": 888,
+      "sha256": "25f6e68604785c50a5a2e3da53288620587083bc08912952eb5560653866a4c2",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24240/2025-01-15.json.gz",
+      "bytes": 881,
+      "sha256": "314e9a1f58d88461f608c3a9b0dee8ce14d7eff889f3378b786be4ad1ff48395",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24240/2025-01-29.json.gz",
+      "bytes": 903,
+      "sha256": "b9e0b948f930427af89fb5a1254431deecef61bc6b7827b273eed678465c3886",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24241/2025-01-01.json.gz",
+      "bytes": 1011,
+      "sha256": "7bae93bcf360b766cd9e47f84a0c34bd6e8566782f9c6147ed5e6b5bd380ee6c",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24241/2025-01-15.json.gz",
+      "bytes": 1007,
+      "sha256": "1786b0d1b8f712d3095d8dafddb3c7036bcc8189d85d90c7da05424d5aae3fa0",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24241/2025-01-29.json.gz",
+      "bytes": 1022,
+      "sha256": "e860483597ae53639b4b778aa5453406be1a1b96e1f840dbf4cfc1558eb2423f",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24244/2025-01-01.json.gz",
+      "bytes": 1224,
+      "sha256": "93132523028a791d020cf77fc98bfc020ad2abece2082a09fa56c991d27410f8",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24244/2025-01-15.json.gz",
+      "bytes": 1225,
+      "sha256": "9b2e5cece79d1a41b91bf527d6e8102af587a4e0ba28405e67d7b08bc47c7a86",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24244/2025-01-29.json.gz",
+      "bytes": 1237,
+      "sha256": "62a8ae81b9776b58e8be1102ed9f88127a2708f2063cc4334287b146331aa26e",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24245/2025-01-01.json.gz",
+      "bytes": 1215,
+      "sha256": "8e1520bd73a6bbd7b1c7ac0116481c432cdab38b6f5f4246fc3c1942e39de05e",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24245/2025-01-15.json.gz",
+      "bytes": 1238,
+      "sha256": "e9937ee3a62e55513cf0351f697ac7de1dcc9f557a3809fc29960a1ac86ec2fc",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24245/2025-01-29.json.gz",
+      "bytes": 1242,
+      "sha256": "c38a7ac0a518ee37a971b831de02e4c19484a7cb2cd41e7e764b22a73e77f25e",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24246/2025-01-01.json.gz",
+      "bytes": 792,
+      "sha256": "6a9d5bd6586ee4a55f98393ed49ba373595d499279f63632587c8505e0044fff",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24246/2025-01-15.json.gz",
+      "bytes": 803,
+      "sha256": "249020edd96437c6363919f38a30784f7b4f800b284989ee6714907d2df42da3",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24246/2025-01-29.json.gz",
+      "bytes": 803,
+      "sha256": "71ad06549efbed00839cbdaf72ed247ae558684df68512ade601d870fa3dd4a3",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24396/2025-01-01.json.gz",
+      "bytes": 1103,
+      "sha256": "e7f1e07c489bec387d1704444ba07e81eeded4a0ff65b515bf391d1a19649803",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24396/2025-01-15.json.gz",
+      "bytes": 1121,
+      "sha256": "8fbbe94dcae6f5c654a502d96a309e618f32b3ae9bd22049b6d5213c700352d4",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/24396/2025-01-29.json.gz",
+      "bytes": 1106,
+      "sha256": "39b051ad85494e4c8f8e1f314c181d008f4db60d96bf0769ab8bf367142ce504",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/coverage.json",
+      "bytes": 93388,
+      "sha256": "dd3783013b613497d1c8ad3488e81d7b7896aeca059b81ee4267e63df48fae5e",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/partial_samples/24221/2025-01-01_to_02.json.gz",
+      "bytes": 385,
+      "sha256": "ef3a36762bb775d1cb1bab9ca3555f8fcb806e250d51d44c76c6acfdb07884ad",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D05/stcis/stations.json",
+      "bytes": 5522,
+      "sha256": "8ff5bc341ec8c38bd627f8f250bf9d72694078a6c446a537c9aff3efb189215e",
+      "dataset_id": "D05"
+    },
+    {
+      "path": "raw/D06/coverage.json",
+      "bytes": 6663,
+      "sha256": "19fc97bb09ebce90cf73722e1a79b2093627c5c72cea40acf091b8e087816396",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/coverage.json",
+      "bytes": 55794,
+      "sha256": "e5146c16f154eeae48611d9cd3d230a93fdd1317f6081d22543d295e315c4d42",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/public_preview_20251207.json",
+      "bytes": 4615,
+      "sha256": "34658b102e1170059f75691bba78f9c9aedec89bb5407d59f63a2b8f443188d0",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/requested_period_source_rows.parquet",
+      "bytes": 1453913,
+      "sha256": "155dffbaaf5ab7265d24de89fbd875a63790e9cd4e1a3416162a3439798375c8",
+      "dataset_id": "D06",
+      "rows": 67716
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0001.xml.gz",
+      "bytes": 366532,
+      "sha256": "fa9c6005feea0c938bec2aca33cc58282830d50f466423af78257873ab403568",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0002.xml.gz",
+      "bytes": 361360,
+      "sha256": "1a2c31626c0e719bf9ed578107536360d27fbcf268f2da461f7df688dbbb8b2e",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0003.xml.gz",
+      "bytes": 361367,
+      "sha256": "d121dc0cdbd1744d21f261b1646d6eb3baee3de62288c13e08beb99aaa4cdd50",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0004.xml.gz",
+      "bytes": 362099,
+      "sha256": "01f7e43ee1456f73c9eebdae8b08371bab90b72a4a0d148fc7e46efaf92b9f9b",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0005.xml.gz",
+      "bytes": 362359,
+      "sha256": "36a46911cf240c26e327fb33085140a2006abd1ea66b47e6b849962002ad9c72",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0006.xml.gz",
+      "bytes": 361370,
+      "sha256": "ff3adaed5efb83979251c266976b37a1c93fea49c3154fda491773683fd6a9cb",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0007.xml.gz",
+      "bytes": 361975,
+      "sha256": "28f5d5b2a91f89ba4e21a2604338faaddb893c71c3c63b1cb23ce0b973127fd0",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0008.xml.gz",
+      "bytes": 368022,
+      "sha256": "1e07bc743210e952882b07f7f92027b8e099d8b277c814718000d255bc73d001",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0009.xml.gz",
+      "bytes": 360052,
+      "sha256": "056008a0062c7827af753800166cd8a93c718a46f72e1c0fd923d985800fd925",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0036.xml.gz",
+      "bytes": 360939,
+      "sha256": "065b7790452180e37f8c91fa44f08600336f720e3bd54dc8e16e3d4e8b45a939",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0080.xml.gz",
+      "bytes": 365383,
+      "sha256": "e3bf88866ecf254c61a2d5461ee181eceedd9d70d70f2bd59b51ff37f08f9a31",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0083.xml.gz",
+      "bytes": 361263,
+      "sha256": "abb5ef948ddf82a101ed192e84c4721e61a4e731148e14230c99b3d1764bc281",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0084.xml.gz",
+      "bytes": 361373,
+      "sha256": "639907bd9f4443aeeea6bb8c26436f1784035511181c1d99bd151d2b73233b7d",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0086.xml.gz",
+      "bytes": 336849,
+      "sha256": "a8399607d14483cee7c789cfbf5d2e81a7a33751056530f502c255f8cbd5401e",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0089.xml.gz",
+      "bytes": 284562,
+      "sha256": "1639e671b5b5f716c28ebeb303e7f3296810f50075878e7c2ff3c70d615736b5",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0090.xml.gz",
+      "bytes": 287057,
+      "sha256": "a7a5f814864057699b854437f0a131e372a3cbbe121f2dde5af7c51e12fabc77",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0092.xml.gz",
+      "bytes": 285658,
+      "sha256": "dbccdb4a49765efecad0f7d4988ce43fe6747aebee79c7da93a8bdd040279569",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0093.xml.gz",
+      "bytes": 281926,
+      "sha256": "00a6c754f5a30aa3606eb656072d721118d3404ee6bb9152896ca607dad63d42",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0094.xml.gz",
+      "bytes": 296015,
+      "sha256": "aff93d836f9bce34f9ff803c18d1ddcaa9a97f982cab3bd38301ca1e4fe3631f",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0126.xml.gz",
+      "bytes": 243306,
+      "sha256": "8acccfd73beff8e8e3a174b8e524448e0d681470a256ac3a24297e985c2a514b",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0131.xml.gz",
+      "bytes": 285378,
+      "sha256": "23ed4ac7f27707737b48f10681b1031ee759c5c20f1f87e87c6b277b8165c3ad",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/10000-0215.xml.gz",
+      "bytes": 361980,
+      "sha256": "08058a081b21ed85e26b1a7cd9cf4707f479bf8b6b49a8228121a6c9bf42e9f9",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/5000-0173.xml.gz",
+      "bytes": 147029,
+      "sha256": "1550f17243bf35295290b114ba6416afd795be9561be043333925d1b89219b61",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/5000-0174.xml.gz",
+      "bytes": 144673,
+      "sha256": "ec06859f3c7899ea1a01a8d7fd779bc076a19e6b310dfc9a10a5c5fcb4eefded",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/5000-0175.xml.gz",
+      "bytes": 142237,
+      "sha256": "dd27e437e27a8b32a4782204d4965e33334326a28bd3855d57ce99de275bcf77",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/5000-0176.xml.gz",
+      "bytes": 143373,
+      "sha256": "d2feada369c74cc7bfc7b82ed0db017a9b022c34d95ea8e46702d33d6344f425",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/5000-0181.xml.gz",
+      "bytes": 143672,
+      "sha256": "a665901ae85c77061e7487bc12a66a3bc756dbc26d4aafe6be03463b0e7297ad",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/culture_api/responses/5000-0182.xml.gz",
+      "bytes": 143232,
+      "sha256": "5ed01182a813895e72c00b6d3e8555cd0410e8b2daf8d2474b2b534ebfd1683b",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/monthly/KS_OLPARK_VHCLE_USE_STTUS_202501.csv.gz",
+      "bytes": 6363296,
+      "sha256": "7c56993ab29422568269b55b7f2c03f0a630d3ae52d2a14fefe565ced8a7e57a",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/monthly/KS_OLPARK_VHCLE_USE_STTUS_202502.csv.gz",
+      "bytes": 8172814,
+      "sha256": "8f1c2b776cd66e5fff6128ba4c224584b27762079edde872f0280841f78c108f",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/monthly/KS_OLPARK_VHCLE_USE_STTUS_202503.csv.gz",
+      "bytes": 9018877,
+      "sha256": "c0b08797c53161eff8e3c2fca91633b1424eb97c5a0bdfb7eb72141e6c6012a5",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/monthly/KS_OLPARK_VHCLE_USE_STTUS_202504.csv.gz",
+      "bytes": 19879469,
+      "sha256": "82f95bd0ceb60b4c3453edfbbfb65e10233d96c78d49d81e46388ec4ebe5f3e4",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/monthly/KS_OLPARK_VHCLE_USE_STTUS_202505.csv.gz",
+      "bytes": 10312460,
+      "sha256": "c9a5298d44e3fc68a3fb21d09bc6d3752b7ac1c679715002e103e47d7af174ed",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/monthly/KS_OLPARK_VHCLE_USE_STTUS_202507.csv.gz",
+      "bytes": 17654640,
+      "sha256": "2589c31bcb0622afc3704658bb4c30c606e477575e6f3495f7182f1076916712",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/monthly/KS_OLPARK_VHCLE_USE_STTUS_202508.csv.gz",
+      "bytes": 9406814,
+      "sha256": "f61152cde2413353d97d4b237b5cc73481d7f11d170421d2a7accde2ee2d0125",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/monthly/KS_OLPARK_VHCLE_USE_STTUS_202509.csv.gz",
+      "bytes": 9463559,
+      "sha256": "d240a83e9b13f8e44994faa305df939183b910e07765377ac2511f18cb9ae890",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/monthly/KS_OLPARK_VHCLE_USE_STTUS_202510.csv.gz",
+      "bytes": 9486169,
+      "sha256": "4af2c848a5ac18d562f2c724f1bc1176f5973a351e68d68b0fa478089a055071",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/monthly/KS_OLPARK_VHCLE_USE_STTUS_202511.csv.gz",
+      "bytes": 7543886,
+      "sha256": "9d0c2c1d30666bec86def0d2baf352b91d19e80b60cba9d1505aaa3f274b84aa",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/monthly/KS_OLPARK_VHCLE_USE_STTUS_202512.csv.gz",
+      "bytes": 19752454,
+      "sha256": "541d95a273be65c0ae77d9457c66e67e4a40c45038f28e01a1b8ab9a52b8389c",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/parking_column_definition.json",
+      "bytes": 979,
+      "sha256": "3129a2b9eac89540e877f64a267db3a2530e0276eb19528932e49fabcf4c3e75",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D06/parking_public_preview.json",
+      "bytes": 4526,
+      "sha256": "dbe64f0bbe88f3c256793bedd302eecc64fa08c9074cdd1f02a9d1040ea3e5b7",
+      "dataset_id": "D06"
+    },
+    {
+      "path": "raw/D07/asos_108_202501.json.gz",
+      "bytes": 31600,
+      "sha256": "6d80a31cdccc4e3bf1b4ea97564c0b0fec0b72258688a05f5926cb3ba7da618b",
+      "dataset_id": "D07"
+    },
+    {
+      "path": "raw/D07/asos_108_202502.json.gz",
+      "bytes": 28548,
+      "sha256": "d7cfe0240d22a9ec25753727d34365179b45f0a06ab9aea0d89fa83731a91faa",
+      "dataset_id": "D07"
+    },
+    {
+      "path": "raw/D07/asos_108_202503.json.gz",
+      "bytes": 36750,
+      "sha256": "836a5ad366fffaa2bd08ed0d062127aef406cb093133db87fd6f7d4045eb2393",
+      "dataset_id": "D07"
+    },
+    {
+      "path": "raw/D07/asos_108_202504.json.gz",
+      "bytes": 36923,
+      "sha256": "6cb8d4a249722f2ef2dbe0ac1472344e2a60b0c5dbfb34793ed1182346405011",
+      "dataset_id": "D07"
+    },
+    {
+      "path": "raw/D07/asos_108_202505.json.gz",
+      "bytes": 38437,
+      "sha256": "8a68938fd6f919ba2bf1398c9243c5cebcafffca9ff60ab219531952e63fab6e",
+      "dataset_id": "D07"
+    },
+    {
+      "path": "raw/D07/asos_108_202506.json.gz",
+      "bytes": 37187,
+      "sha256": "10cd920da73df7391d8ea8df1e79e11b5afae4eacaf19b7157a7acc30aff838b",
+      "dataset_id": "D07"
+    },
+    {
+      "path": "raw/D07/asos_108_202507.json.gz",
+      "bytes": 36814,
+      "sha256": "e9cf51476e3975da0712066a90c3581b20828644574843cd5e3c2e056d16485f",
+      "dataset_id": "D07"
+    },
+    {
+      "path": "raw/D07/asos_108_202508.json.gz",
+      "bytes": 37812,
+      "sha256": "817bec7d147b23b83cd58e2dfca9b12bd41abf5eed260cf23b78ae864d59a9ed",
+      "dataset_id": "D07"
+    },
+    {
+      "path": "raw/D07/asos_108_202509.json.gz",
+      "bytes": 36793,
+      "sha256": "0a7286e388f42148156d2b7b5e062fef41879e917386f23ea95aca73ccf03913",
+      "dataset_id": "D07"
+    },
+    {
+      "path": "raw/D07/asos_108_202510.json.gz",
+      "bytes": 36708,
+      "sha256": "64a5d44b5bc69a0f89a75d5142506ce7672ee749d33218006454a7f3504edec4",
+      "dataset_id": "D07"
+    },
+    {
+      "path": "raw/D07/asos_108_202511.json.gz",
+      "bytes": 35080,
+      "sha256": "ee5225228068869985b028925b54e5cb7233689b271ef91ea192d847893a2fdc",
+      "dataset_id": "D07"
+    },
+    {
+      "path": "raw/D07/asos_108_202512.json.gz",
+      "bytes": 35041,
+      "sha256": "3bd15869cbe947241990bd9647aede1748a96962d6a949442fc8f4fb2396b942",
+      "dataset_id": "D07"
+    },
+    {
+      "path": "raw/D08/coverage_1700_2000.json",
+      "bytes": 63877,
+      "sha256": "bd877bd920072197f142b01be98c027cb60ea8cbff20555803abebdb65843394",
+      "dataset_id": "D08"
+    },
+    {
+      "path": "raw/D08/kma_grid_definition.pdf",
+      "bytes": 208585,
+      "sha256": "f5caebd454e023c61e13da17e8df98c4d6e8d3b73363af68199bac896ac28f1e",
+      "dataset_id": "D08"
+    },
+    {
+      "path": "raw/D08/kma_grid_stations_20260701.xlsx",
+      "bytes": 697050,
+      "sha256": "746b5e5be10430106abccc795a16c16d0f1fd0f081e8ab2765d0adc983a003c1",
+      "dataset_id": "D08"
+    },
+    {
+      "path": "raw/D08/live_20261120_0500_62_126.json.gz",
+      "bytes": 4608,
+      "sha256": "062ddf0ba6eb6603d4fa88318f98088934eba1217187065b6706c868a995dbaa",
+      "dataset_id": "D08"
+    },
+    {
+      "path": "raw/D08/live_20261120_0500_63_126.json.gz",
+      "bytes": 4605,
+      "sha256": "dcf090e789f14a632be6292c4f2587d80d5bc1fe0db27c02518e911ac837d4aa",
+      "dataset_id": "D08"
+    },
+    {
+      "path": "raw/D08/park_grid_01_1700_2000.json.gz",
+      "bytes": 9212,
+      "sha256": "801bfc3ea1b3b9497b49c6c2bb7c6c516b3be44b89370fd563b7ed17f306b8de",
+      "dataset_id": "D08"
+    },
+    {
+      "path": "raw/D08/park_grid_02_1700_2000.json.gz",
+      "bytes": 8503,
+      "sha256": "cf0871361833419823229a16ef1dbc02ab45264231d4d69db0338286239f3a45",
+      "dataset_id": "D08"
+    },
+    {
+      "path": "raw/D08/park_grid_03_1700_2000.json.gz",
+      "bytes": 9051,
+      "sha256": "ec6e28a13333078b5fd3259e6431d233da1dec7b0ac71621f73f8b2e650f4a64",
+      "dataset_id": "D08"
+    },
+    {
+      "path": "raw/D08/park_grid_04_1700_2000.json.gz",
+      "bytes": 8619,
+      "sha256": "2f214e60252af0a100a40a345072d37aacb82a13b8ea5aef428372a117904bd6",
+      "dataset_id": "D08"
+    },
+    {
+      "path": "raw/D08/park_grid_05_1700_2000.json.gz",
+      "bytes": 9268,
+      "sha256": "4fa50b060abf2284b058038b3952957fcf83210fa61cd513f97849bccba58ee3",
+      "dataset_id": "D08"
+    },
+    {
+      "path": "raw/D08/park_grid_06_1700_2000.json.gz",
+      "bytes": 9317,
+      "sha256": "dae3608a51de19d50837c2dcad01739cc692ac6217b156d1dafdabc02e5c7854",
+      "dataset_id": "D08"
+    },
+    {
+      "path": "raw/D08/park_grid_07_1700_2000.json.gz",
+      "bytes": 9772,
+      "sha256": "f5e0f8a48997e77fac2e6625ae84b9c11ac09195b8e4061c2b695f9e64f9a61d",
+      "dataset_id": "D08"
+    },
+    {
+      "path": "raw/D08/park_grid_08_1700_2000.json.gz",
+      "bytes": 9909,
+      "sha256": "d9eb1971e3eb8065b43d982714c9e584cf57fe6ddf5f8684ad239483b44dd037",
+      "dataset_id": "D08"
+    },
+    {
+      "path": "raw/D08/park_grid_09_1700_2000.json.gz",
+      "bytes": 9521,
+      "sha256": "ad11de10738e0d3d6dfe4ac4a5dfe82b89c0d879a04be45e16e488246b946a0f",
+      "dataset_id": "D08"
+    },
+    {
+      "path": "raw/D08/park_grid_10_1700_2000.json.gz",
+      "bytes": 9879,
+      "sha256": "f9477d17fe4b1f8d953ade2dd0267940fcad182f5b436dbdd393109da6316def",
+      "dataset_id": "D08"
+    },
+    {
+      "path": "raw/D08/park_grid_11_1700_2000.json.gz",
+      "bytes": 8808,
+      "sha256": "2345a68867883ce27b1063ffb16f19f4ffa34e1628f353a5ddcafd4949782af6",
+      "dataset_id": "D08"
+    },
+    {
+      "path": "raw/D08/park_grid_12_1700_2000.json.gz",
+      "bytes": 9443,
+      "sha256": "b4320da4f5a71c9fed8074e0a5b4f229a960054cba108a6f43a3d55bede146e3",
+      "dataset_id": "D08"
+    },
+    {
+      "path": "raw/D08/point_archive/20261121163408.zip",
+      "bytes": 5816323,
+      "sha256": "2b2d0c1bbf31e31bf39a2fe43aa161022485f4a1e40383d743a8aa60c6600c3c",
+      "dataset_id": "D08"
+    },
+    {
+      "path": "raw/D08/point_archive/20261121163518.zip",
+      "bytes": 1358385,
+      "sha256": "54f0432465d546fcafce84f47f9b27ebf7dd9d239e3c47a0fc2171bb6f79a31b",
+      "dataset_id": "D08"
+    },
+    {
+      "path": "raw/D08/point_archive/coverage.json",
+      "bytes": 4619,
+      "sha256": "4710e24fe1cd2f36ea5e03c094d2519cca0a9188272e2036e5e279428826e03e",
+      "dataset_id": "D08"
+    },
+    {
+      "path": "raw/D09/서울시버스정류소위치정보(20241209).xlsx",
+      "bytes": 742919,
+      "sha256": "5ae361afa5526b83cf59a05b14859883ee1074df1b4d76723ceef4dff12543d2",
+      "dataset_id": "D09",
+      "listed_date": "2024-12-10",
+      "download_form": {
+        "infId": "OA-15067",
+        "infSeq": 1,
+        "seq": "37"
+      }
+    },
+    {
+      "path": "raw/D09/서울시버스정류소위치정보(20250204).xlsx",
+      "bytes": 743564,
+      "sha256": "80f3715ac1e6ce61fb968d28fdf67187b32955b12d388c68bf05c974b68c7da9",
+      "dataset_id": "D09",
+      "listed_date": "2025-02-06",
+      "download_form": {
+        "infId": "OA-15067",
+        "infSeq": 1,
+        "seq": "38"
+      }
+    },
+    {
+      "path": "raw/D09/서울시버스정류소위치정보(20250513).xlsx",
+      "bytes": 745568,
+      "sha256": "b75026e17043549ff88d6af2e82c92c0291cbc0f8db1465c148a90248554a5b9",
+      "dataset_id": "D09",
+      "listed_date": "2025-05-13",
+      "download_form": {
+        "infId": "OA-15067",
+        "infSeq": 1,
+        "seq": "41"
+      }
+    },
+    {
+      "path": "raw/D09/서울시버스정류소위치정보(20250624).xlsx",
+      "bytes": 747635,
+      "sha256": "01751ab5d657ce90070f8c95b7014a4ac44b764957de6bd445fb3d7be07a0273",
+      "dataset_id": "D09",
+      "listed_date": "2025-06-24",
+      "download_form": {
+        "infId": "OA-15067",
+        "infSeq": 1,
+        "seq": "42"
+      }
+    },
+    {
+      "path": "raw/D09/서울시버스정류소위치정보(20250801).xlsx",
+      "bytes": 747736,
+      "sha256": "ad8f1facc543a2e4e849e162f67396bae48c985f717d62715e5eb368d6f7a0e9",
+      "dataset_id": "D09",
+      "listed_date": "2025-08-01",
+      "download_form": {
+        "infId": "OA-15067",
+        "infSeq": 1,
+        "seq": "43"
+      }
+    },
+    {
+      "path": "raw/D09/서울시버스정류소위치정보(20250901).xlsx",
+      "bytes": 747804,
+      "sha256": "1cedf844e7d15a80815b0b08f96064965edcfa62e7b7545a6aedebab169af8de",
+      "dataset_id": "D09",
+      "listed_date": "2025-09-01",
+      "download_form": {
+        "infId": "OA-15067",
+        "infSeq": 1,
+        "seq": "44"
+      }
+    },
+    {
+      "path": "raw/D09/서울시버스정류소위치정보(20251002).xlsx",
+      "bytes": 746879,
+      "sha256": "80039e38e036a6079ab40720ca2fd1217f7dae79182cae0cd0615cbb15600d16",
+      "dataset_id": "D09",
+      "listed_date": "2025-10-02",
+      "download_form": {
+        "infId": "OA-15067",
+        "infSeq": 1,
+        "seq": "45"
+      }
+    },
+    {
+      "path": "raw/D09/서울시버스정류소위치정보(20251103).xlsx",
+      "bytes": 747722,
+      "sha256": "9c11551963a5fb83c6f8c2b4963165a7c2f68a5f30a338e3f8adca6e454b0310",
+      "dataset_id": "D09",
+      "listed_date": "2025-11-03",
+      "download_form": {
+        "infId": "OA-15067",
+        "infSeq": 1,
+        "seq": "46"
+      }
+    },
+    {
+      "path": "raw/D09/서울시버스정류소위치정보(20251117).xlsx",
+      "bytes": 742421,
+      "sha256": "3efcee39bedb9cf6e928248afde1ce778bac4c810f6a7c05d5b9c1de3b8a786b",
+      "dataset_id": "D09",
+      "listed_date": "2025-11-17",
+      "download_form": {
+        "infId": "OA-15067",
+        "infSeq": 1,
+        "seq": "47"
+      }
+    },
+    {
+      "path": "raw/D09/서울시버스정류소위치정보(20251209).xlsx",
+      "bytes": 741384,
+      "sha256": "ca1dcc407723dc232619b9c3b29bf235afb0259fd9d5540cf00dab0dee393c69",
+      "dataset_id": "D09",
+      "listed_date": "2025-12-11",
+      "download_form": {
+        "infId": "OA-15067",
+        "infSeq": 1,
+        "seq": "48"
+      }
+    },
+    {
+      "path": "raw/D09/컬럼정의_서울시 버스정류소 위치정보.xlsx",
+      "bytes": 9207,
+      "sha256": "04d179b155b79f8eecc09748d1da7c10ac5f6d5c2184294414be54f7836cb347",
+      "dataset_id": "D09",
+      "listed_date": "2024-04-23",
+      "download_form": {
+        "infId": "OA-15067",
+        "infSeq": 1,
+        "seq": "31"
+      }
+    },
+    {
+      "path": "raw/D10/seoul_walk_network.csv.gz",
+      "bytes": 23336958,
+      "sha256": "ac312f0db0ed4f349c8fdc98b7e881d59a8b48674b391e932896b75648ad53e6",
+      "dataset_id": "D10"
+    },
+    {
+      "path": "raw/D10/도보네트워크_링크노드유형코드.xlsx",
+      "bytes": 12510,
+      "sha256": "c718a21352d91b2a9be50e8c52ed886d92a495adb14070995b487b0ca5ab4e4f",
+      "dataset_id": "D10",
+      "listed_date": "2024-07-05",
+      "download_form": {
+        "infId": "OA-21208",
+        "infSeq": 3,
+        "seq": "1"
+      }
+    },
+    {
+      "path": "raw/D11/annual_notice.html",
+      "bytes": 12340,
+      "sha256": "f99638bbab200a4a02663c2ce8ec8735e83918231bf177d939ee2af934a16eac",
+      "dataset_id": "D11"
+    },
+    {
+      "path": "raw/D11/calendar.html",
+      "bytes": 81661,
+      "sha256": "83e90eaf10b14ba35405e138e0d7480e6ba7fc32776f67fc5238a326ac478a26",
+      "dataset_id": "D11"
+    },
+    {
+      "path": "raw/D11/holidays_api_2025.json",
+      "bytes": 1880,
+      "sha256": "a02474419f7a9c9f0c1e1454503cb298b6ce3f4b1680e12252a65901e190c358",
+      "dataset_id": "D11"
+    },
+    {
+      "path": "raw/D11/jan27.html",
+      "bytes": 166148,
+      "sha256": "f691e268ad96766d76c31b7c87d40d39493c4d680e2f858920b4c588806fa54d",
+      "dataset_id": "D11"
+    },
+    {
+      "path": "raw/D11/jun03.html",
+      "bytes": 169192,
+      "sha256": "c8a740c8c6e78bee06eac2fda8678b3394d1d47c6f1bcd010db126cf28f5d9b6",
+      "dataset_id": "D11"
+    },
+    {
+      "path": "prepared/asos_seoul_hourly_2025.parquet",
+      "bytes": 105434,
+      "sha256": "89f23f3eefaec8049b0a1b4deb3aec93da922e0b461e9d8e5d1848888fe1772d",
+      "rows": 8760
+    },
+    {
+      "path": "prepared/bus_park_daily_totals_2025.parquet",
+      "bytes": 1304100,
+      "sha256": "1394eee40caa0773163fe6c101b0f5bec23461f5fa01a0d47410053590f27574",
+      "rows": 263563
+    },
+    {
+      "path": "prepared/bus_park_monthly_hourly_totals_2025.parquet",
+      "bytes": 537486,
+      "sha256": "5017f789a02e29411c485b4b7a0e97ad71b0d1dcf9c08f5db7b647be3499e62d",
+      "rows": 214152
+    },
+    {
+      "path": "prepared/bus_park_station_hours_2025.parquet",
+      "bytes": 1166852,
+      "sha256": "a34da03711b536ce05d361d4979bcded46a99dabd422f5bec24c18ebb724e0e4",
+      "rows": 979272
+    },
+    {
+      "path": "prepared/bus_park_stcis_stop_hours_2025.parquet",
+      "bytes": 22255,
+      "sha256": "b2163d0966f122a32c82d7c638f36a25e846eb0375f8c8cc3eeba76c90aa740b",
+      "rows": 13776
+    },
+    {
+      "path": "prepared/bus_stop_locations.parquet",
+      "bytes": 1160769,
+      "sha256": "09e01e4d6e600abcb7c805da71ea0838e2a3905fe3d307cb9e6c0ff218e3a30f",
+      "rows": 112995
+    },
+    {
+      "path": "prepared/calendar_2025.csv",
+      "bytes": 29029,
+      "sha256": "2d811161c1096d72084f56d48e6c57106f07c6034abf891d964617457eba935b",
+      "rows": 365
+    },
+    {
+      "path": "prepared/event_schedule_review.csv",
+      "bytes": 3198,
+      "sha256": "ab5fb68d1530666984641134f9d3014c4432624f51efdbd64102fa80f58825c0",
+      "rows": 12
+    },
+    {
+      "path": "prepared/event_sessions_2025.csv",
+      "bytes": 183106,
+      "sha256": "98924f5bc234ac9cc94cd5f7a21af4c7dfa2acafff535f20e85f372951dea723",
+      "rows": 521
+    },
+    {
+      "path": "prepared/kopis_park_performances_2025.csv",
+      "bytes": 54488,
+      "sha256": "d7bfd14f35e4d900326f6f8530764e5876eef8cdedafdabe6a2fd74cbd65d40c",
+      "rows": 127
+    },
+    {
+      "path": "prepared/olympicpark_events_2025.csv",
+      "bytes": 40234,
+      "sha256": "38865a6d2dfb19cacad44a7f93b22b9c2d580cecf689c8fb7db8c521a541b861",
+      "rows": 125
+    },
+    {
+      "path": "prepared/park_forecast_1700_for_2000_2025.parquet",
+      "bytes": 86459,
+      "sha256": "ad716a68c3b22fc327a47dba4ef25b36649ee444f8c44bde138c5012c01a4f22",
+      "rows": 4380
+    },
+    {
+      "path": "prepared/park_forecast_all_issues_2025.parquet",
+      "bytes": 3430479,
+      "sha256": "0f1926155ad4e5ada6dd6aa566bd05c3201541af5e3a9656ce2c3b49fed3c00b",
+      "rows": 2505360
+    },
+    {
+      "path": "prepared/park_station_boardings_2025.csv",
+      "bytes": 2401580,
+      "sha256": "cb72a74110c017e39a61b3373e644c763ce73856283b2bcdc1a110516e0c2769",
+      "rows": 32120
+    },
+    {
+      "path": "prepared/parking_culture_api_lane_hourly_2025.parquet",
+      "bytes": 10983,
+      "sha256": "e93b7fc1dae445c40ae539c3f8fb9e37a90011b2952939fc45fc17da25297bb7",
+      "rows": 3929
+    },
+    {
+      "path": "prepared/parking_gate_hourly_2025.parquet",
+      "bytes": 200327,
+      "sha256": "c21ff1ed80407c4a045e370a708a4cb6b7d59d684703381d9b14d9dfbccad8f6",
+      "rows": 96881
+    },
+    {
+      "path": "prepared/rail_station_intervals_2025.parquet",
+      "bytes": 7560769,
+      "sha256": "a692629a7441a7199800d89aa29ee53cec7d0d848ebd1bed4f84672a45ab9e36",
+      "rows": 4212312
+    },
+    {
+      "path": "prepared/walk_network_songpa_gangdong.parquet",
+      "bytes": 1803125,
+      "sha256": "1c5cf7a8712635997d66e7138fd0a545531e97b8e32bf18d0475ebb10aba084b",
+      "rows": 41053
+    }
+  ]
+}
