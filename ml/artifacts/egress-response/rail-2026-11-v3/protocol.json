@@ -1,0 +1,62 @@
+{
+  "format": "olpark-event-response-bundle/1",
+  "version": "v3",
+  "frozen_at": "2026-11-25T11:40:54+09:00",
+  "specification": {
+    "name": "v3",
+    "share": [
+      "season",
+      "level",
+      "audience"
+    ],
+    "timing": [
+      "runtime",
+      "act"
+    ],
+    "scale": "attendance",
+    "forecast_scale": "forecast",
+    "options": {
+      "loss_scale": 5000.0,
+      "share_cap": 1.0,
+      "scale_limit_hours": 1.0
+    },
+    "act_lag_days": 14,
+    "train_start": "2023-01-01"
+  },
+  "chosen_on": "Written after the v2 held-out score (2026-08-01..11-15). The D-1 specification is v2's unchanged. The day-of signal was changed to the people who arrived and stayed after the alighting excess alone ran high in the autumn; that choice was made with the autumn evenings in view.",
+  "development_evidence": "development.json: rolling monthly origins 2025-04..2026-11, all seen before.",
+  "day_of_signal": "staying_arrivals",
+  "held_out": {
+    "counts": "Boardings at the four station-lines on dates after 2026-11-19, from any source not obtained by the time this file was written.",
+    "primary": "Monthly origins from the month after 2026-11-19, D-1 public attendance estimate, against the weekday-median baseline of the preceding 365 days, on every site-hour 06-23 that the source provides.",
+    "metrics": [
+      "egress-window total WAPE and bias per site-day",
+      "peak-hour shortfall",
+      "egress-window hourly MAE with its paired date-bootstrap interval",
+      "coverage of the 80% bands in calibration.json",
+      "the same for the day-of update with calibration_day_of.json"
+    ],
+    "decision_rule": "Scored once and reported as it comes out. The specification is not changed after scoring."
+  },
+  "fingerprints": {
+    "code": {
+      "schedule.py": "31dc74aa003a2b38ff1351f89542d8d9ca98c39e4352c94ebb124deb36be1f85",
+      "response_data.py": "b5299cfde08e2a7a0eefaa90b2f20354a8f4bd4e437abe66d949e76e03c43083",
+      "response_features.py": "4285b67cc671736315fcf50b8ead3ee91758050f8cbe0de1b795f68171cbb0a3",
+      "attendance.py": "dc3993aca8abf8a5bc94decd343b0dda18557528cc279937484da7651c79e640",
+      "response.py": "b85345f4134be37c5a3b123aa4c7becee1a9f668b4973e59e6d37a21113a97a6",
+      "response_backtest.py": "9e437f00f1a84b24e5546d0a78d4df80a0546bb895420a96bd35d7a64d2d3487",
+      "response_train.py": "2702f2334820cfe491c97fa9ad83e3c50db3b117c54e2b00cba8961f9c139e1d",
+      "nowcast.py": "572939ac7236441323e1963c9bb8ee8a0d826af9ffd52c88f4af077852511f96"
+    },
+    "inputs": {
+      "audience_types.csv": "ed37a0a1fbe55c32b8bbe6b9107ada896bd19d0daead4d5df6e536a7bac9e7cf",
+      "calendar.csv": "04107b02019dcce12351245e66b16c5ed1cc639c50231ece637d5e6901400fb2",
+      "kopis_hall_daily_2026.csv": "0ccdb0c10660bee9fa9333fde363dd9e1ecb82f7beea7b1e51918e278505b69e",
+      "rail_hourly.parquet": "a1556639102c201336edfbfb5b7c5003acfbf116c4a07003dd54397652048da9",
+      "sessions.parquet": "87ca802dd3f0b117cc789a166566427fb347a77d128f0fdbd27d8b8888adeea3",
+      "summary.json": "e7aafd3695da037931587640e7885d179a3dbe72bcd0df445ad81c3d171a6ecf",
+      "unresolved_programmes.csv": "175bf606cf5a424046c25e1f0fa009a265dc14955a982f777ecd29468e724bdf"
+    }
+  }
+}

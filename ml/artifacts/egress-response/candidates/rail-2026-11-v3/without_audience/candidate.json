@@ -1,0 +1,48 @@
+{
+  "candidate": {
+    "name": "without_audience",
+    "what": "The rule in use with the audience categories taken out of the rail share.",
+    "share_features": [
+      "season_cos",
+      "season_sin",
+      "before_2024",
+      "before_2025",
+      "before_2026",
+      "before_2027",
+      "before_2028",
+      "before_2029",
+      "before_2030"
+    ],
+    "timing_features": [
+      "runtime_dev",
+      "runtime_missing",
+      "act_shift_hist"
+    ],
+    "options": {
+      "loss_scale": 5000.0,
+      "share_cap": 1.0,
+      "scale_limit_hours": 1.0
+    },
+    "act_lag_days": 14,
+    "ticket_era_from": "2025-01-01"
+  },
+  "beside_bundle": "rail-2026-11-v3",
+  "trained_through": "2026-11-15",
+  "fitted_at": "2026-11-25T17:20:41+09:00",
+  "files_sha256": {
+    "model.json": "acb5bae6ad710dd57afe04a36a686911c01a61b71a26750910f5393e7bf584f0",
+    "act_history.csv": "9507270f9e602ed71ec9225390d8c672bc91fefe24eee3801f07fac4160c6659"
+  },
+  "share_effects": {
+    "season_cos": -0.1429852924254655,
+    "season_sin": -0.027174385538724144,
+    "before_2024": 0.046941549931471115,
+    "before_2025": -0.2170196568110264,
+    "before_2026": -0.1583646166613016,
+    "before_2027": 9.999992707743681e-10,
+    "before_2028": 9.999992707743708e-10,
+    "before_2029": 9.999992707743681e-10,
+    "before_2030": 9.999992707743708e-10
+  },
+  "status": "candidate: not read by the packet builder"
+}

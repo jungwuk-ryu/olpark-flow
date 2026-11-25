@@ -1,0 +1,66 @@
+{
+  "input_version": "olpark-operator-scenario/1.0",
+  "usage": "synthetic_example",
+  "network_revision": "48e50c3614e2b8786062278ede9c2b822ea6f4b7",
+  "scenario_id": "two-venues-midnight",
+  "assumptions_version": "fixture-assumptions-1",
+  "data_snapshot": "fixture-operator-brief-1",
+  "as_of": "2025-11-29T22:00:00+09:00",
+  "issued_at": "2025-11-29T22:00:12+09:00",
+  "horizon": {"start": "2025-11-29T23:55:00+09:00", "end": "2025-11-30T00:10:00+09:00"},
+  "availability": {
+    "open_except_listed_confirmed": true,
+    "evidence_ids": ["example-route-policy"],
+    "closures": [
+      {"element_id": "e-station-a", "start": "2025-11-30T00:00:00+09:00",
+       "end": "2025-11-30T00:05:00+09:00", "evidence_ids": ["example-route-policy"]}
+    ]
+  },
+  "events": [
+    {
+      "event_id": "synthetic-dome-session", "event_revision": "a1", "venue_id": "kspo-dome",
+      "status": "scheduled", "expected_end_at": "2025-11-29T23:50:00+09:00",
+      "total_exit_persons": 105, "fixed_before_persons": 1, "fixed_after_persons": 1,
+      "undated_within_persons": 3, "evidence_ids": ["example-headcount", "example-timing"],
+      "departure_bins": [
+        {"start": "2025-11-29T23:50:00+09:00", "share_bps": 1000},
+        {"start": "2025-11-29T23:55:00+09:00", "share_bps": 3000},
+        {"start": "2025-11-30T00:00:00+09:00", "share_bps": 4000},
+        {"start": "2025-11-30T00:10:00+09:00", "share_bps": 2000}
+      ],
+      "route_shares": [
+        {"origin_node_id": "n-kspo-exit-south", "destination_id": "n-dest-a",
+         "first_mode": "rail", "share_bps": 5000, "evidence_ids": ["example-choice"]},
+        {"origin_node_id": "n-kspo-exit-east", "destination_id": "n-dest-b",
+         "first_mode": "rail", "share_bps": 3000, "evidence_ids": ["example-choice"]},
+        {"origin_node_id": "n-kspo-exit-east", "destination_id": "P1",
+         "first_mode": "parked_vehicle", "share_bps": 1000, "evidence_ids": ["example-choice"]}
+      ]
+    },
+    {
+      "event_id": "synthetic-hall-session", "event_revision": "b1", "venue_id": "olympic-hall",
+      "status": "scheduled", "expected_end_at": "2025-11-29T23:55:00+09:00",
+      "total_exit_persons": 17, "fixed_before_persons": 0, "fixed_after_persons": 0,
+      "undated_within_persons": 0, "evidence_ids": ["example-headcount", "example-timing"],
+      "departure_bins": [{"start": "2025-11-30T00:00:00+09:00", "share_bps": 10000}],
+      "route_shares": [
+        {"origin_node_id": null, "destination_id": "n-dest-a", "first_mode": "rail",
+         "share_bps": 10000, "evidence_ids": ["example-choice"]}
+      ]
+    }
+  ],
+  "evidence": [
+    {"id": "example-headcount", "kind": "operator_input", "ref": "fixture:headcount-v1",
+     "available_at": "2025-11-29T21:30:00+09:00",
+     "description": "사용 예제를 위해 설정한 가상 회차 두 개의 인원이다. 행사별 퇴장 인원은 현장에서는 운영자가 확인한다."},
+    {"id": "example-timing", "kind": "assumption", "ref": "fixture:departure-v1",
+     "available_at": "2025-11-29T21:35:00+09:00",
+     "description": "퇴장 시각과 구간별 비율은 예제의 운영 가정이다. 현장 5분 퇴장 정확도는 미검증 상태다."},
+    {"id": "example-choice", "kind": "assumption", "ref": "fixture:first-mode-v1",
+     "available_at": "2025-11-29T21:40:00+09:00",
+     "description": "첫 교통수단과 출구·목적지의 예제 비율이다. DOME 회차의 남은 10%는 수단이 미정이다."},
+    {"id": "example-route-policy", "kind": "operator_input", "ref": "fixture:closures-v1",
+     "available_at": "2025-11-29T21:55:00+09:00",
+     "description": "고정 경로 목록 중 올림픽공원역 3번 출구 계단의 5분 통제를 가정한 실험 입력이다."}
+  ]
+}

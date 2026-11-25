@@ -1,0 +1,32 @@
+{
+  "station": "올림픽공원역 5·9호선 개찰구 승차",
+  "network_edge": "e-station-a",
+  "evenings": 25,
+  "first": "2026-08-01",
+  "last": "2026-11-15",
+  "design_rule": {
+    "width_m": 3,
+    "type": "stairs",
+    "persons_per_metre_per_min": 65.60000000000001,
+    "persons_per_min": 196.8,
+    "persons_per_5_min": 984.0
+  },
+  "evenings_whose_busiest_5_min_passed_the_design_rule": 21,
+  "busiest_5_min": {
+    "median": 1190.0,
+    "p90": 1464.6,
+    "max": 1625.0,
+    "evenings_between_1400_and_1470": 6
+  },
+  "largest_sustained_rate_per_5_min": {
+    "over_10_min": 1487.5,
+    "over_15_min": 1387.3333333333333,
+    "over_20_min": 1310.25,
+    "over_30_min": 1104.3333333333333
+  },
+  "rule": "90th percentile of the evenings' busiest five minutes, rounded down to a multiple of 50",
+  "capacity_persons_per_5_min": 1450.0,
+  "capacity_persons_per_min": 290.0,
+  "ratio_to_design_rule": 1.4735772357723576,
+  "reading": "Lower bound: what the gates passed, not what the entrances could pass. It stands for every entrance the crowd uses, placed on the one entrance the network draws."
+}

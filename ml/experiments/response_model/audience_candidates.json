@@ -1,0 +1,2818 @@
+{
+  "status": "development: every month had been seen when the candidates were written",
+  "origins": [
+    "2025-04-01",
+    "2025-05-01",
+    "2025-06-01",
+    "2025-07-01",
+    "2025-08-01",
+    "2025-09-01",
+    "2025-10-01",
+    "2025-11-01",
+    "2025-12-01",
+    "2026-01-01",
+    "2026-02-01",
+    "2026-03-01",
+    "2026-04-01",
+    "2026-05-01",
+    "2026-06-01",
+    "2026-07-01",
+    "2026-08-01",
+    "2026-09-01",
+    "2026-10-01",
+    "2026-11-01"
+  ],
+  "first": "2025-04-01",
+  "last": "2026-11-15",
+  "per_ticket_at_kspo_dome": {
+    "foreign": {
+      "dates": 2,
+      "programmes": 1,
+      "median": 0.8873102711824834,
+      "p25": 0.8873102711824834,
+      "p75": 0.8873102711824834,
+      "min": 0.8873102711824834,
+      "max": 0.8873102711824834
+    },
+    "general": {
+      "dates": 25,
+      "programmes": 10,
+      "median": 0.8638710425920627,
+      "p25": 0.8069558234321118,
+      "p75": 1.1244852576415643,
+      "min": 0.5057094022626939,
+      "max": 1.7029002574062235
+    },
+    "idol": {
+      "dates": 131,
+      "programmes": 48,
+      "median": 1.0430541428358264,
+      "p25": 0.9493587378209406,
+      "p75": 1.1461408415373646,
+      "min": 0.7670788744770106,
+      "max": 2.3794687365131604
+    },
+    "senior": {
+      "dates": 18,
+      "programmes": 7,
+      "median": 0.6901875295114708,
+      "p25": 0.6350861504769089,
+      "p75": 0.7661518687993312,
+      "min": 0.5272028415112185,
+      "max": 1.1072498693014587
+    }
+  },
+  "candidates": {
+    "in_use": {
+      "name": "in_use",
+      "what": "The rule in use, run through this script's own loop.",
+      "share_features": [
+        "season_cos",
+        "season_sin",
+        "before_2024",
+        "before_2025",
+        "before_2026",
+        "before_2027",
+        "before_2028",
+        "before_2029",
+        "before_2030",
+        "aud_general",
+        "aud_senior",
+        "aud_foreign"
+      ],
+      "timing_features": [
+        "runtime_dev",
+        "runtime_missing",
+        "act_shift_hist"
+      ],
+      "options": {
+        "loss_scale": 5000.0,
+        "share_cap": 1.0,
+        "scale_limit_hours": 1.0
+      },
+      "act_lag_days": 14,
+      "ticket_era_from": "2025-01-01"
+    },
+    "without_audience": {
+      "name": "without_audience",
+      "what": "The rule in use with the audience categories taken out of the rail share.",
+      "share_features": [
+        "season_cos",
+        "season_sin",
+        "before_2024",
+        "before_2025",
+        "before_2026",
+        "before_2027",
+        "before_2028",
+        "before_2029",
+        "before_2030"
+      ],
+      "timing_features": [
+        "runtime_dev",
+        "runtime_missing",
+        "act_shift_hist"
+      ],
+      "options": {
+        "loss_scale": 5000.0,
+        "share_cap": 1.0,
+        "scale_limit_hours": 1.0
+      },
+      "act_lag_days": 14,
+      "ticket_era_from": "2025-01-01"
+    },
+    "ticketed_audience": {
+      "name": "ticketed_audience",
+      "what": "Audience effect learned from the years with ticket counts; earlier years get their own.",
+      "share_features": [
+        "season_cos",
+        "season_sin",
+        "before_2024",
+        "before_2025",
+        "before_2026",
+        "before_2027",
+        "before_2028",
+        "before_2029",
+        "before_2030",
+        "aud_general_ticketed",
+        "aud_senior_ticketed",
+        "aud_foreign_ticketed",
+        "aud_general_earlier",
+        "aud_senior_earlier",
+        "aud_foreign_earlier"
+      ],
+      "timing_features": [
+        "runtime_dev",
+        "runtime_missing",
+        "act_shift_hist"
+      ],
+      "options": {
+        "loss_scale": 5000.0,
+        "share_cap": 1.0,
+        "scale_limit_hours": 1.0
+      },
+      "act_lag_days": 14,
+      "ticket_era_from": "2025-01-01"
+    },
+    "act_share": {
+      "name": "act_share",
+      "what": "The rule in use plus the act's own earlier rail share per ticket (years with ticket counts).",
+      "share_features": [
+        "season_cos",
+        "season_sin",
+        "before_2024",
+        "before_2025",
+        "before_2026",
+        "before_2027",
+        "before_2028",
+        "before_2029",
+        "before_2030",
+        "aud_general",
+        "aud_senior",
+        "aud_foreign",
+        "act_share_ticketed"
+      ],
+      "timing_features": [
+        "runtime_dev",
+        "runtime_missing",
+        "act_shift_hist"
+      ],
+      "options": {
+        "loss_scale": 5000.0,
+        "share_cap": 1.0,
+        "scale_limit_hours": 1.0
+      },
+      "act_lag_days": 14,
+      "ticket_era_from": "2025-01-01"
+    },
+    "ticketed_audience_act_share": {
+      "name": "ticketed_audience_act_share",
+      "what": "Every audience category by era, plus the act's own earlier rail share per ticket.",
+      "share_features": [
+        "season_cos",
+        "season_sin",
+        "before_2024",
+        "before_2025",
+        "before_2026",
+        "before_2027",
+        "before_2028",
+        "before_2029",
+        "before_2030",
+        "aud_general_ticketed",
+        "aud_senior_ticketed",
+        "aud_foreign_ticketed",
+        "aud_general_earlier",
+        "aud_senior_earlier",
+        "aud_foreign_earlier",
+        "act_share_ticketed"
+      ],
+      "timing_features": [
+        "runtime_dev",
+        "runtime_missing",
+        "act_shift_hist"
+      ],
+      "options": {
+        "loss_scale": 5000.0,
+        "share_cap": 1.0,
+        "scale_limit_hours": 1.0
+      },
+      "act_lag_days": 14,
+      "ticket_era_from": "2025-01-01"
+    },
+    "act_share_all_years": {
+      "name": "act_share_all_years",
+      "what": "The rule in use plus the act's earlier rail share from every year.",
+      "share_features": [
+        "season_cos",
+        "season_sin",
+        "before_2024",
+        "before_2025",
+        "before_2026",
+        "before_2027",
+        "before_2028",
+        "before_2029",
+        "before_2030",
+        "aud_general",
+        "aud_senior",
+        "aud_foreign",
+        "act_share_hist"
+      ],
+      "timing_features": [
+        "runtime_dev",
+        "runtime_missing",
+        "act_shift_hist"
+      ],
+      "options": {
+        "loss_scale": 5000.0,
+        "share_cap": 1.0,
+        "scale_limit_hours": 1.0
+      },
+      "act_lag_days": 14,
+      "ticket_era_from": "2025-01-01"
+    },
+    "without_audience_act_share": {
+      "name": "without_audience_act_share",
+      "what": "No audience category; the act's own earlier rail share per ticket instead.",
+      "share_features": [
+        "season_cos",
+        "season_sin",
+        "before_2024",
+        "before_2025",
+        "before_2026",
+        "before_2027",
+        "before_2028",
+        "before_2029",
+        "before_2030",
+        "act_share_ticketed"
+      ],
+      "timing_features": [
+        "runtime_dev",
+        "runtime_missing",
+        "act_shift_hist"
+      ],
+      "options": {
+        "loss_scale": 5000.0,
+        "share_cap": 1.0,
+        "scale_limit_hours": 1.0
+      },
+      "act_lag_days": 14,
+      "ticket_era_from": "2025-01-01"
+    },
+    "ticketed_senior": {
+      "name": "ticketed_senior",
+      "what": "Only the senior-audience effect is learned from the years with ticket counts.",
+      "share_features": [
+        "season_cos",
+        "season_sin",
+        "before_2024",
+        "before_2025",
+        "before_2026",
+        "before_2027",
+        "before_2028",
+        "before_2029",
+        "before_2030",
+        "aud_general",
+        "aud_foreign",
+        "aud_senior_ticketed",
+        "aud_senior_earlier"
+      ],
+      "timing_features": [
+        "runtime_dev",
+        "runtime_missing",
+        "act_shift_hist"
+      ],
+      "options": {
+        "loss_scale": 5000.0,
+        "share_cap": 1.0,
+        "scale_limit_hours": 1.0
+      },
+      "act_lag_days": 14,
+      "ticket_era_from": "2025-01-01"
+    },
+    "ticketed_senior_act_share": {
+      "name": "ticketed_senior_act_share",
+      "what": "The senior-audience effect on the rail share is learned from the sessions that have a ticket count (from 2025-01-01); earlier years get their own, so a small crowd is not read as a crowd that rides less. An act's own earlier rail share per ticket, from those same years, moves its forecast.",
+      "share_features": [
+        "season_cos",
+        "season_sin",
+        "before_2024",
+        "before_2025",
+        "before_2026",
+        "before_2027",
+        "before_2028",
+        "before_2029",
+        "before_2030",
+        "aud_general",
+        "aud_foreign",
+        "aud_senior_ticketed",
+        "aud_senior_earlier",
+        "act_share_ticketed"
+      ],
+      "timing_features": [
+        "runtime_dev",
+        "runtime_missing",
+        "act_shift_hist"
+      ],
+      "options": {
+        "loss_scale": 5000.0,
+        "share_cap": 1.0,
+        "scale_limit_hours": 1.0
+      },
+      "act_lag_days": 14,
+      "ticket_era_from": "2025-01-01"
+    }
+  },
+  "in_use": {
+    "all_dates": {
+      "site_days": 926,
+      "total_wape_pct": 20.545599125465046,
+      "total_bias_pct": -10.413277575681024,
+      "peak_wape_pct": 27.81187665686409,
+      "peak_bias_pct": -20.0783562972088,
+      "peak_shortfall_pct": 32.616856717403856,
+      "peak_hour_hit_pct": 65.33477321814254,
+      "peak_hour_mae": 0.4352051835853132
+    },
+    "event_dates": {
+      "site_days": 926,
+      "total_wape_pct": 20.545599125465046,
+      "total_bias_pct": -10.413277575681024,
+      "peak_wape_pct": 27.81187665686409,
+      "peak_bias_pct": -20.0783562972088,
+      "peak_shortfall_pct": 32.616856717403856,
+      "peak_hour_hit_pct": 65.33477321814254,
+      "peak_hour_mae": 0.4352051835853132
+    }
+  },
+  "same_as_the_stored_development_run": {
+    "in_use": {
+      "rows": 36828,
+      "largest_difference": 0.0
+    },
+    "without_audience": {
+      "rows": 36828,
+      "largest_difference": 0.0
+    }
+  },
+  "against_the_rule_in_use": {
+    "without_audience": {
+      "event_dates": {
+        "dates": 238,
+        "candidate": {
+          "site_days": 926,
+          "total_wape_pct": 20.66916395641522,
+          "total_bias_pct": -8.901730328759108,
+          "peak_wape_pct": 27.526125028674564,
+          "peak_bias_pct": -19.11234512498631,
+          "peak_shortfall_pct": 31.761012338654183,
+          "peak_hour_hit_pct": 65.2267818574514,
+          "peak_hour_mae": 0.4287257019438445,
+          "egress_mae": 328.2425407581861
+        },
+        "in_use": {
+          "site_days": 926,
+          "total_wape_pct": 20.545599125465046,
+          "total_bias_pct": -10.413277575681024,
+          "peak_wape_pct": 27.81187665686409,
+          "peak_bias_pct": -20.0783562972088,
+          "peak_shortfall_pct": 32.616856717403856,
+          "peak_hour_hit_pct": 65.33477321814254,
+          "peak_hour_mae": 0.4352051835853132,
+          "egress_mae": 327.66434427521347
+        },
+        "egress_mae_minus_in_use": {
+          "days": 238,
+          "rows": 3392,
+          "mae_diff": 0.578196482972639,
+          "ci95": [
+            -3.340390724008114,
+            4.456155619668681
+          ],
+          "share_of_draws_better": 0.37875
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": 0.12356483095017293,
+          "ci95": [
+            -0.5364431909325138,
+            0.7833194671818274
+          ],
+          "dates_candidate_better": 112
+        }
+      },
+      "senior_audience_dates": {
+        "dates": 41,
+        "candidate": {
+          "site_days": 158,
+          "total_wape_pct": 19.230282691790215,
+          "total_bias_pct": 1.2171652522425755,
+          "peak_wape_pct": 24.6235789934047,
+          "peak_bias_pct": -12.222151691566413,
+          "peak_shortfall_pct": 24.542722731142355,
+          "peak_hour_hit_pct": 63.92405063291139,
+          "peak_hour_mae": 0.4936708860759494,
+          "egress_mae": 262.2341703996065
+        },
+        "in_use": {
+          "site_days": 158,
+          "total_wape_pct": 18.79427559366004,
+          "total_bias_pct": -9.319033364874336,
+          "peak_wape_pct": 27.638190381887842,
+          "peak_bias_pct": -20.521804815898463,
+          "peak_shortfall_pct": 30.124407551913976,
+          "peak_hour_hit_pct": 63.92405063291139,
+          "peak_hour_mae": 0.5126582278481012,
+          "egress_mae": 247.89211669094135
+        },
+        "egress_mae_minus_in_use": {
+          "days": 41,
+          "rows": 688,
+          "mae_diff": 14.34205370866517,
+          "ci95": [
+            1.5535390361141383,
+            26.397825449689893
+          ],
+          "share_of_draws_better": 0.01425
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": 0.4360070981301794,
+          "ci95": [
+            -2.6014865428899268,
+            3.584090335766804
+          ],
+          "dates_candidate_better": 19
+        }
+      },
+      "senior_audience_dates_at_kspo_dome": {
+        "dates": 15,
+        "candidate": {
+          "site_days": 60,
+          "total_wape_pct": 22.350157578276306,
+          "total_bias_pct": 2.409471232302131,
+          "peak_wape_pct": 33.11287507945553,
+          "peak_bias_pct": -21.964869151799583,
+          "peak_shortfall_pct": 30.63043306522518,
+          "peak_hour_hit_pct": 63.33333333333333,
+          "peak_hour_mae": 0.5166666666666667,
+          "egress_mae": 311.24007180431875
+        },
+        "in_use": {
+          "site_days": 60,
+          "total_wape_pct": 24.346316508407956,
+          "total_bias_pct": -15.3649503687848,
+          "peak_wape_pct": 41.48444507536942,
+          "peak_bias_pct": -38.36099319841103,
+          "peak_shortfall_pct": 42.38455391174001,
+          "peak_hour_hit_pct": 65.0,
+          "peak_hour_mae": 0.5333333333333333,
+          "egress_mae": 297.0653924131383
+        },
+        "egress_mae_minus_in_use": {
+          "days": 15,
+          "rows": 236,
+          "mae_diff": 14.174679391180433,
+          "ci95": [
+            -11.995277873717384,
+            39.55954544385561
+          ],
+          "share_of_draws_better": 0.1405
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": -1.9961589301316578,
+          "ci95": [
+            -8.852254993249295,
+            5.633294675906677
+          ],
+          "dates_candidate_better": 8
+        }
+      },
+      "event_dates_without_a_senior_session": {
+        "dates": 197,
+        "candidate": {
+          "site_days": 768,
+          "total_wape_pct": 20.98424618221136,
+          "total_bias_pct": -11.117537998679474,
+          "peak_wape_pct": 28.084165697742073,
+          "peak_bias_pct": -20.437046992542626,
+          "peak_shortfall_pct": 33.14879365655649,
+          "peak_hour_hit_pct": 65.49479166666666,
+          "peak_hour_mae": 0.4153645833333333,
+          "egress_mae": 345.03756990267686
+        },
+        "in_use": {
+          "site_days": 768,
+          "total_wape_pct": 20.92909909176289,
+          "total_bias_pct": -10.652892135952172,
+          "peak_wape_pct": 27.845269410645706,
+          "peak_bias_pct": -19.99309931762619,
+          "peak_shortfall_pct": 33.09605256237084,
+          "peak_hour_hit_pct": 65.625,
+          "peak_hour_mae": 0.4192708333333333,
+          "egress_mae": 347.9614199327502
+        },
+        "egress_mae_minus_in_use": {
+          "days": 197,
+          "rows": 2704,
+          "mae_diff": -2.923850030073389,
+          "ci95": [
+            -6.455612478607043,
+            0.4400699660477391
+          ],
+          "share_of_draws_better": 0.95375
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": 0.05514709044847365,
+          "ci95": [
+            -0.41301246710499695,
+            0.5228153314119645
+          ],
+          "dates_candidate_better": 93
+        }
+      },
+      "by_period": {
+        "2025-04..12": {
+          "dates": 113,
+          "candidate": {
+            "site_days": 452,
+            "total_wape_pct": 18.215408151231987,
+            "total_bias_pct": -6.869148776161552,
+            "peak_wape_pct": 29.768960639354496,
+            "peak_bias_pct": -23.526325070209055,
+            "peak_shortfall_pct": 33.872314784461665,
+            "peak_hour_hit_pct": 67.69911504424779,
+            "peak_hour_mae": 0.4026548672566372,
+            "egress_mae": 308.676703095446
+          },
+          "in_use": {
+            "site_days": 452,
+            "total_wape_pct": 17.769415799184284,
+            "total_bias_pct": -8.652578026121695,
+            "peak_wape_pct": 30.406865284143354,
+            "peak_bias_pct": -24.70455447895601,
+            "peak_shortfall_pct": 34.92437304892454,
+            "peak_hour_hit_pct": 68.36283185840708,
+            "peak_hour_mae": 0.40707964601769914,
+            "egress_mae": 304.3814553008959
+          },
+          "egress_mae_minus_in_use": {
+            "days": 113,
+            "rows": 1608,
+            "mae_diff": 4.295247794550161,
+            "ci95": [
+              0.3265768281829773,
+              8.563244049186542
+            ],
+            "share_of_draws_better": 0.017
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": 0.44599235204770477,
+            "ci95": [
+              -0.45645066551370406,
+              1.304702408782957
+            ],
+            "dates_candidate_better": 51
+          }
+        },
+        "2026-01..07": {
+          "dates": 85,
+          "candidate": {
+            "site_days": 314,
+            "total_wape_pct": 23.179279974416698,
+            "total_bias_pct": -11.329737702069826,
+            "peak_wape_pct": 25.58252560793986,
+            "peak_bias_pct": -17.106522631021264,
+            "peak_shortfall_pct": 25.899956440325276,
+            "peak_hour_hit_pct": 67.83439490445859,
+            "peak_hour_mae": 0.3853503184713376,
+            "egress_mae": 338.2096652732918
+          },
+          "in_use": {
+            "site_days": 314,
+            "total_wape_pct": 23.61797146260423,
+            "total_bias_pct": -13.251991488977277,
+            "peak_wape_pct": 25.8986973712287,
+            "peak_bias_pct": -18.404704737412548,
+            "peak_shortfall_pct": 26.936600455372066,
+            "peak_hour_hit_pct": 67.51592356687898,
+            "peak_hour_mae": 0.3885350318471338,
+            "egress_mae": 342.6019249367218
+          },
+          "egress_mae_minus_in_use": {
+            "days": 85,
+            "rows": 1200,
+            "mae_diff": -4.392259663429983,
+            "ci95": [
+              -12.991090250088078,
+              3.963236555878152
+            ],
+            "share_of_draws_better": 0.8435
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": -0.43869148818753095,
+            "ci95": [
+              -1.626119518342325,
+              0.885252118985881
+            ],
+            "dates_candidate_better": 41
+          }
+        },
+        "2026-08..11": {
+          "dates": 40,
+          "candidate": {
+            "site_days": 160,
+            "total_wape_pct": 21.062219229971316,
+            "total_bias_pct": -8.359171950226582,
+            "peak_wape_pct": 25.519302632240688,
+            "peak_bias_pct": -10.496507648185638,
+            "peak_shortfall_pct": 40.21244647710368,
+            "peak_hour_hit_pct": 53.125,
+            "peak_hour_mae": 0.5875,
+            "egress_mae": 361.63520778482894
+          },
+          "in_use": {
+            "site_days": 160,
+            "total_wape_pct": 20.411711704031674,
+            "total_bias_pct": -8.112394642475138,
+            "peak_wape_pct": 24.629178263339796,
+            "peak_bias_pct": -9.94890948240416,
+            "peak_shortfall_pct": 39.99283997227982,
+            "peak_hour_hit_pct": 52.5,
+            "peak_hour_mae": 0.60625,
+            "egress_mae": 361.0783659822219
+          },
+          "egress_mae_minus_in_use": {
+            "days": 40,
+            "rows": 584,
+            "mae_diff": 0.5568418026070429,
+            "ci95": [
+              -5.55182416882288,
+              7.186615646324459
+            ],
+            "share_of_draws_better": 0.44825
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": 0.6505075259396363,
+            "ci95": [
+              -0.32095945375635315,
+              1.7837705211642025
+            ],
+            "dates_candidate_better": 20
+          }
+        }
+      }
+    },
+    "ticketed_audience": {
+      "event_dates": {
+        "dates": 238,
+        "candidate": {
+          "site_days": 926,
+          "total_wape_pct": 20.69448880116143,
+          "total_bias_pct": -10.342789980557017,
+          "peak_wape_pct": 27.749885913458783,
+          "peak_bias_pct": -20.07693270206232,
+          "peak_shortfall_pct": 32.67266113518711,
+          "peak_hour_hit_pct": 65.01079913606912,
+          "peak_hour_mae": 0.43412526997840173,
+          "egress_mae": 328.95854105945773
+        },
+        "in_use": {
+          "site_days": 926,
+          "total_wape_pct": 20.545599125465046,
+          "total_bias_pct": -10.413277575681024,
+          "peak_wape_pct": 27.81187665686409,
+          "peak_bias_pct": -20.0783562972088,
+          "peak_shortfall_pct": 32.616856717403856,
+          "peak_hour_hit_pct": 65.33477321814254,
+          "peak_hour_mae": 0.4352051835853132,
+          "egress_mae": 327.66434427521347
+        },
+        "egress_mae_minus_in_use": {
+          "days": 238,
+          "rows": 3392,
+          "mae_diff": 1.2941967842442557,
+          "ci95": [
+            -0.6984439206327928,
+            3.2651986552533026
+          ],
+          "share_of_draws_better": 0.103
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": 0.14888967569638578,
+          "ci95": [
+            -0.22827839060012742,
+            0.5107672899197617
+          ],
+          "dates_candidate_better": 95
+        }
+      },
+      "senior_audience_dates": {
+        "dates": 41,
+        "candidate": {
+          "site_days": 158,
+          "total_wape_pct": 18.049795687445563,
+          "total_bias_pct": -3.6797273905905086,
+          "peak_wape_pct": 25.045327622747507,
+          "peak_bias_pct": -15.948730623619685,
+          "peak_shortfall_pct": 26.55214393104458,
+          "peak_hour_hit_pct": 63.29113924050633,
+          "peak_hour_mae": 0.5063291139240507,
+          "egress_mae": 249.8529616886945
+        },
+        "in_use": {
+          "site_days": 158,
+          "total_wape_pct": 18.79427559366004,
+          "total_bias_pct": -9.319033364874336,
+          "peak_wape_pct": 27.638190381887842,
+          "peak_bias_pct": -20.521804815898463,
+          "peak_shortfall_pct": 30.124407551913976,
+          "peak_hour_hit_pct": 63.92405063291139,
+          "peak_hour_mae": 0.5126582278481012,
+          "egress_mae": 247.89211669094135
+        },
+        "egress_mae_minus_in_use": {
+          "days": 41,
+          "rows": 688,
+          "mae_diff": 1.9608449977531734,
+          "ci95": [
+            -5.527431486738904,
+            8.839692891761228
+          ],
+          "share_of_draws_better": 0.3015
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": -0.744479906214476,
+          "ci95": [
+            -2.4097732577682582,
+            0.9545634250873516
+          ],
+          "dates_candidate_better": 24
+        }
+      },
+      "senior_audience_dates_at_kspo_dome": {
+        "dates": 15,
+        "candidate": {
+          "site_days": 60,
+          "total_wape_pct": 22.150279097698075,
+          "total_bias_pct": -5.250916639394483,
+          "peak_wape_pct": 35.135124301445884,
+          "peak_bias_pct": -28.917747912345646,
+          "peak_shortfall_pct": 34.78081600042115,
+          "peak_hour_hit_pct": 63.33333333333333,
+          "peak_hour_mae": 0.5166666666666667,
+          "egress_mae": 293.91123783550535
+        },
+        "in_use": {
+          "site_days": 60,
+          "total_wape_pct": 24.346316508407956,
+          "total_bias_pct": -15.3649503687848,
+          "peak_wape_pct": 41.48444507536942,
+          "peak_bias_pct": -38.36099319841103,
+          "peak_shortfall_pct": 42.38455391174001,
+          "peak_hour_hit_pct": 65.0,
+          "peak_hour_mae": 0.5333333333333333,
+          "egress_mae": 297.0653924131383
+        },
+        "egress_mae_minus_in_use": {
+          "days": 15,
+          "rows": 236,
+          "mae_diff": -3.154154577632931,
+          "ci95": [
+            -19.50383873124706,
+            12.530074248807686
+          ],
+          "share_of_draws_better": 0.657
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": -2.1960374107098874,
+          "ci95": [
+            -6.224068533140818,
+            2.3286711303954557
+          ],
+          "dates_candidate_better": 9
+        }
+      },
+      "event_dates_without_a_senior_session": {
+        "dates": 197,
+        "candidate": {
+          "site_days": 768,
+          "total_wape_pct": 21.273616359010692,
+          "total_bias_pct": -11.801848933564386,
+          "peak_wape_pct": 28.269861651910862,
+          "peak_bias_pct": -20.870616806261474,
+          "peak_shortfall_pct": 33.849385801785324,
+          "peak_hour_hit_pct": 65.36458333333334,
+          "peak_hour_mae": 0.4192708333333333,
+          "egress_mae": 349.0859961656283
+        },
+        "in_use": {
+          "site_days": 768,
+          "total_wape_pct": 20.92909909176289,
+          "total_bias_pct": -10.652892135952172,
+          "peak_wape_pct": 27.845269410645706,
+          "peak_bias_pct": -19.99309931762619,
+          "peak_shortfall_pct": 33.09605256237084,
+          "peak_hour_hit_pct": 65.625,
+          "peak_hour_mae": 0.4192708333333333,
+          "egress_mae": 347.9614199327502
+        },
+        "egress_mae_minus_in_use": {
+          "days": 197,
+          "rows": 2704,
+          "mae_diff": 1.1245762328780813,
+          "ci95": [
+            -0.5843205316010525,
+            2.912810238716509
+          ],
+          "share_of_draws_better": 0.10025
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": 0.3445172672478029,
+          "ci95": [
+            0.08094377239489602,
+            0.6017304972485421
+          ],
+          "dates_candidate_better": 71
+        }
+      },
+      "by_period": {
+        "2025-04..12": {
+          "dates": 113,
+          "candidate": {
+            "site_days": 452,
+            "total_wape_pct": 18.08639174571674,
+            "total_bias_pct": -8.93030380629465,
+            "peak_wape_pct": 30.685229732836113,
+            "peak_bias_pct": -24.888305343388154,
+            "peak_shortfall_pct": 35.16296011468302,
+            "peak_hour_hit_pct": 67.92035398230088,
+            "peak_hour_mae": 0.40486725663716816,
+            "egress_mae": 305.6525227068341
+          },
+          "in_use": {
+            "site_days": 452,
+            "total_wape_pct": 17.769415799184284,
+            "total_bias_pct": -8.652578026121695,
+            "peak_wape_pct": 30.406865284143354,
+            "peak_bias_pct": -24.70455447895601,
+            "peak_shortfall_pct": 34.92437304892454,
+            "peak_hour_hit_pct": 68.36283185840708,
+            "peak_hour_mae": 0.40707964601769914,
+            "egress_mae": 304.3814553008959
+          },
+          "egress_mae_minus_in_use": {
+            "days": 113,
+            "rows": 1608,
+            "mae_diff": 1.271067405938184,
+            "ci95": [
+              -0.9788790071783221,
+              3.374098969748787
+            ],
+            "share_of_draws_better": 0.12075
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": 0.3169759465324557,
+            "ci95": [
+              -0.2606045169542577,
+              0.8454411191043598
+            ],
+            "dates_candidate_better": 38
+          }
+        },
+        "2026-01..07": {
+          "dates": 85,
+          "candidate": {
+            "site_days": 314,
+            "total_wape_pct": 23.48804804393072,
+            "total_bias_pct": -12.649314818464434,
+            "peak_wape_pct": 25.567971187785155,
+            "peak_bias_pct": -18.073185462498493,
+            "peak_shortfall_pct": 26.66638457513934,
+            "peak_hour_hit_pct": 67.19745222929936,
+            "peak_hour_mae": 0.3885350318471338,
+            "egress_mae": 343.81751631835783
+          },
+          "in_use": {
+            "site_days": 314,
+            "total_wape_pct": 23.61797146260423,
+            "total_bias_pct": -13.251991488977277,
+            "peak_wape_pct": 25.8986973712287,
+            "peak_bias_pct": -18.404704737412548,
+            "peak_shortfall_pct": 26.936600455372066,
+            "peak_hour_hit_pct": 67.51592356687898,
+            "peak_hour_mae": 0.3885350318471338,
+            "egress_mae": 342.6019249367218
+          },
+          "egress_mae_minus_in_use": {
+            "days": 85,
+            "rows": 1200,
+            "mae_diff": 1.215591381636041,
+            "ci95": [
+              -2.9609122446235414,
+              5.551762606689053
+            ],
+            "share_of_draws_better": 0.29275
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": -0.1299234186735004,
+            "ci95": [
+              -0.7999999663668399,
+              0.534208645693871
+            ],
+            "dates_candidate_better": 44
+          }
+        },
+        "2026-08..11": {
+          "dates": 40,
+          "candidate": {
+            "site_days": 160,
+            "total_wape_pct": 20.799707458567415,
+            "total_bias_pct": -8.424204838472686,
+            "peak_wape_pct": 24.195419701528998,
+            "peak_bias_pct": -10.216887046201574,
+            "peak_shortfall_pct": 40.315048830107585,
+            "peak_hour_hit_pct": 52.5,
+            "peak_hour_mae": 0.60625,
+            "egress_mae": 362.5977657175723
+          },
+          "in_use": {
+            "site_days": 160,
+            "total_wape_pct": 20.411711704031674,
+            "total_bias_pct": -8.112394642475138,
+            "peak_wape_pct": 24.629178263339796,
+            "peak_bias_pct": -9.94890948240416,
+            "peak_shortfall_pct": 39.99283997227982,
+            "peak_hour_hit_pct": 52.5,
+            "peak_hour_mae": 0.60625,
+            "egress_mae": 361.0783659822219
+          },
+          "egress_mae_minus_in_use": {
+            "days": 40,
+            "rows": 584,
+            "mae_diff": 1.5193997353504565,
+            "ci95": [
+              -3.3569637434804775,
+              6.641862856936425
+            ],
+            "share_of_draws_better": 0.28475
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": 0.38799575453573765,
+            "ci95": [
+              -0.3682622875650866,
+              1.1883876091906251
+            ],
+            "dates_candidate_better": 13
+          }
+        }
+      }
+    },
+    "act_share": {
+      "event_dates": {
+        "dates": 238,
+        "candidate": {
+          "site_days": 926,
+          "total_wape_pct": 20.530310960658127,
+          "total_bias_pct": -10.360609153126369,
+          "peak_wape_pct": 27.757066298743812,
+          "peak_bias_pct": -20.00563731021259,
+          "peak_shortfall_pct": 32.56000979785707,
+          "peak_hour_hit_pct": 65.33477321814254,
+          "peak_hour_mae": 0.4352051835853132,
+          "egress_mae": 327.589391547992
+        },
+        "in_use": {
+          "site_days": 926,
+          "total_wape_pct": 20.545599125465046,
+          "total_bias_pct": -10.413277575681024,
+          "peak_wape_pct": 27.81187665686409,
+          "peak_bias_pct": -20.0783562972088,
+          "peak_shortfall_pct": 32.616856717403856,
+          "peak_hour_hit_pct": 65.33477321814254,
+          "peak_hour_mae": 0.4352051835853132,
+          "egress_mae": 327.66434427521347
+        },
+        "egress_mae_minus_in_use": {
+          "days": 238,
+          "rows": 3392,
+          "mae_diff": -0.0749527272215215,
+          "ci95": [
+            -0.33894151581564996,
+            0.17716588916192963
+          ],
+          "share_of_draws_better": 0.71825
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": -0.015288164806921824,
+          "ci95": [
+            -0.07165259843811733,
+            0.03875922802367542
+          ],
+          "dates_candidate_better": 135
+        }
+      },
+      "senior_audience_dates": {
+        "dates": 41,
+        "candidate": {
+          "site_days": 158,
+          "total_wape_pct": 18.78465445890229,
+          "total_bias_pct": -9.245557348379085,
+          "peak_wape_pct": 27.56445491142679,
+          "peak_bias_pct": -20.47755357550393,
+          "peak_shortfall_pct": 30.052458852811913,
+          "peak_hour_hit_pct": 63.92405063291139,
+          "peak_hour_mae": 0.5126582278481012,
+          "egress_mae": 247.7915982238248
+        },
+        "in_use": {
+          "site_days": 158,
+          "total_wape_pct": 18.79427559366004,
+          "total_bias_pct": -9.319033364874336,
+          "peak_wape_pct": 27.638190381887842,
+          "peak_bias_pct": -20.521804815898463,
+          "peak_shortfall_pct": 30.124407551913976,
+          "peak_hour_hit_pct": 63.92405063291139,
+          "peak_hour_mae": 0.5126582278481012,
+          "egress_mae": 247.89211669094135
+        },
+        "egress_mae_minus_in_use": {
+          "days": 41,
+          "rows": 688,
+          "mae_diff": -0.10051846711653448,
+          "ci95": [
+            -0.39245991577934775,
+            0.15328815913384622
+          ],
+          "share_of_draws_better": 0.7615
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": -0.009621134757748335,
+          "ci95": [
+            -0.10475963659840343,
+            0.10471031153708134
+          ],
+          "dates_candidate_better": 23
+        }
+      },
+      "senior_audience_dates_at_kspo_dome": {
+        "dates": 15,
+        "candidate": {
+          "site_days": 60,
+          "total_wape_pct": 24.27677770194266,
+          "total_bias_pct": -15.375247384661725,
+          "peak_wape_pct": 41.47760316959369,
+          "peak_bias_pct": -38.366461824838666,
+          "peak_shortfall_pct": 42.368337903507864,
+          "peak_hour_hit_pct": 65.0,
+          "peak_hour_mae": 0.5333333333333333,
+          "egress_mae": 296.8326182453036
+        },
+        "in_use": {
+          "site_days": 60,
+          "total_wape_pct": 24.346316508407956,
+          "total_bias_pct": -15.3649503687848,
+          "peak_wape_pct": 41.48444507536942,
+          "peak_bias_pct": -38.36099319841103,
+          "peak_shortfall_pct": 42.38455391174001,
+          "peak_hour_hit_pct": 65.0,
+          "peak_hour_mae": 0.5333333333333333,
+          "egress_mae": 297.0653924131383
+        },
+        "egress_mae_minus_in_use": {
+          "days": 15,
+          "rows": 236,
+          "mae_diff": -0.23277416783474725,
+          "ci95": [
+            -0.4037578887651472,
+            -0.09355423172395207
+          ],
+          "share_of_draws_better": 1.0
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": -0.06953880646529984,
+          "ci95": [
+            -0.12890389523920365,
+            -0.020975296997137634
+          ],
+          "dates_candidate_better": 12
+        }
+      },
+      "event_dates_without_a_senior_session": {
+        "dates": 197,
+        "candidate": {
+          "site_days": 768,
+          "total_wape_pct": 20.91256997644431,
+          "total_bias_pct": -10.60478010256836,
+          "peak_wape_pct": 27.79409757616106,
+          "peak_bias_pct": -19.914907149440985,
+          "peak_shortfall_pct": 33.042109096228316,
+          "peak_hour_hit_pct": 65.625,
+          "peak_hour_mae": 0.4192708333333333,
+          "egress_mae": 347.892972097928
+        },
+        "in_use": {
+          "site_days": 768,
+          "total_wape_pct": 20.92909909176289,
+          "total_bias_pct": -10.652892135952172,
+          "peak_wape_pct": 27.845269410645706,
+          "peak_bias_pct": -19.99309931762619,
+          "peak_shortfall_pct": 33.09605256237084,
+          "peak_hour_hit_pct": 65.625,
+          "peak_hour_mae": 0.4192708333333333,
+          "egress_mae": 347.9614199327502
+        },
+        "egress_mae_minus_in_use": {
+          "days": 197,
+          "rows": 2704,
+          "mae_diff": -0.06844783482219871,
+          "ci95": [
+            -0.4005492520641856,
+            0.24819042017835966
+          ],
+          "share_of_draws_better": 0.665
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": -0.016529115318576846,
+          "ci95": [
+            -0.08134943601068027,
+            0.048188919757124825
+          ],
+          "dates_candidate_better": 112
+        }
+      },
+      "by_period": {
+        "2025-04..12": {
+          "dates": 113,
+          "candidate": {
+            "site_days": 452,
+            "total_wape_pct": 17.77941465155738,
+            "total_bias_pct": -8.61977411402979,
+            "peak_wape_pct": 30.39100621476292,
+            "peak_bias_pct": -24.678183103148182,
+            "peak_shortfall_pct": 34.90102481230023,
+            "peak_hour_hit_pct": 68.36283185840708,
+            "peak_hour_mae": 0.40707964601769914,
+            "egress_mae": 304.33943806208924
+          },
+          "in_use": {
+            "site_days": 452,
+            "total_wape_pct": 17.769415799184284,
+            "total_bias_pct": -8.652578026121695,
+            "peak_wape_pct": 30.406865284143354,
+            "peak_bias_pct": -24.70455447895601,
+            "peak_shortfall_pct": 34.92437304892454,
+            "peak_hour_hit_pct": 68.36283185840708,
+            "peak_hour_mae": 0.40707964601769914,
+            "egress_mae": 304.3814553008959
+          },
+          "egress_mae_minus_in_use": {
+            "days": 113,
+            "rows": 1608,
+            "mae_diff": -0.042017238806609965,
+            "ci95": [
+              -0.17005867050048293,
+              0.09267550132616054
+            ],
+            "share_of_draws_better": 0.7395
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": 0.009998852373097136,
+            "ci95": [
+              -0.015335054646570201,
+              0.041772307054731096
+            ],
+            "dates_candidate_better": 72
+          }
+        },
+        "2026-01..07": {
+          "dates": 85,
+          "candidate": {
+            "site_days": 314,
+            "total_wape_pct": 23.610001652337246,
+            "total_bias_pct": -13.099920316625374,
+            "peak_wape_pct": 25.821110042388767,
+            "peak_bias_pct": -18.219574241880597,
+            "peak_shortfall_pct": 26.817794945222666,
+            "peak_hour_hit_pct": 67.51592356687898,
+            "peak_hour_mae": 0.3885350318471338,
+            "egress_mae": 342.66520698463904
+          },
+          "in_use": {
+            "site_days": 314,
+            "total_wape_pct": 23.61797146260423,
+            "total_bias_pct": -13.251991488977277,
+            "peak_wape_pct": 25.8986973712287,
+            "peak_bias_pct": -18.404704737412548,
+            "peak_shortfall_pct": 26.936600455372066,
+            "peak_hour_hit_pct": 67.51592356687898,
+            "peak_hour_mae": 0.3885350318471338,
+            "egress_mae": 342.6019249367218
+          },
+          "egress_mae_minus_in_use": {
+            "days": 85,
+            "rows": 1200,
+            "mae_diff": 0.06328204791725377,
+            "ci95": [
+              -0.49537328939663255,
+              0.6347331569408219
+            ],
+            "share_of_draws_better": 0.40925
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": -0.007969810266981611,
+            "ci95": [
+              -0.11056155395875925,
+              0.09914235016054213
+            ],
+            "dates_candidate_better": 44
+          }
+        },
+        "2026-08..11": {
+          "dates": 40,
+          "candidate": {
+            "site_days": 160,
+            "total_wape_pct": 20.309759658918438,
+            "total_bias_pct": -8.253409877516587,
+            "peak_wape_pct": 24.511358416871243,
+            "peak_bias_pct": -10.020033516260545,
+            "peak_shortfall_pct": 39.99048231832615,
+            "peak_hour_hit_pct": 52.5,
+            "peak_hour_mae": 0.60625,
+            "egress_mae": 360.6286838105865
+          },
+          "in_use": {
+            "site_days": 160,
+            "total_wape_pct": 20.411711704031674,
+            "total_bias_pct": -8.112394642475138,
+            "peak_wape_pct": 24.629178263339796,
+            "peak_bias_pct": -9.94890948240416,
+            "peak_shortfall_pct": 39.99283997227982,
+            "peak_hour_hit_pct": 52.5,
+            "peak_hour_mae": 0.60625,
+            "egress_mae": 361.0783659822219
+          },
+          "egress_mae_minus_in_use": {
+            "days": 40,
+            "rows": 584,
+            "mae_diff": -0.44968217163540525,
+            "ci95": [
+              -1.373468801336868,
+              0.42079694766085984
+            ],
+            "share_of_draws_better": 0.832
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": -0.10195204511323891,
+            "ci95": [
+              -0.29947779697505333,
+              0.08521475047867691
+            ],
+            "dates_candidate_better": 19
+          }
+        }
+      }
+    },
+    "ticketed_audience_act_share": {
+      "event_dates": {
+        "dates": 238,
+        "candidate": {
+          "site_days": 926,
+          "total_wape_pct": 20.669541675878065,
+          "total_bias_pct": -10.247940259599071,
+          "peak_wape_pct": 27.663751880424062,
+          "peak_bias_pct": -19.981951918841826,
+          "peak_shortfall_pct": 32.589350069921394,
+          "peak_hour_hit_pct": 65.11879049676025,
+          "peak_hour_mae": 0.4319654427645788,
+          "egress_mae": 328.78917915925354
+        },
+        "in_use": {
+          "site_days": 926,
+          "total_wape_pct": 20.545599125465046,
+          "total_bias_pct": -10.413277575681024,
+          "peak_wape_pct": 27.81187665686409,
+          "peak_bias_pct": -20.0783562972088,
+          "peak_shortfall_pct": 32.616856717403856,
+          "peak_hour_hit_pct": 65.33477321814254,
+          "peak_hour_mae": 0.4352051835853132,
+          "egress_mae": 327.66434427521347
+        },
+        "egress_mae_minus_in_use": {
+          "days": 238,
+          "rows": 3392,
+          "mae_diff": 1.1248348840400162,
+          "ci95": [
+            -0.8869624957168001,
+            3.150426615478043
+          ],
+          "share_of_draws_better": 0.14075
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": 0.12394255041301912,
+          "ci95": [
+            -0.26177984935070825,
+            0.4986565954202479
+          ],
+          "dates_candidate_better": 103
+        }
+      },
+      "senior_audience_dates": {
+        "dates": 41,
+        "candidate": {
+          "site_days": 158,
+          "total_wape_pct": 18.059183729803536,
+          "total_bias_pct": -3.5394815269590807,
+          "peak_wape_pct": 24.91680172839138,
+          "peak_bias_pct": -15.881797535890794,
+          "peak_shortfall_pct": 26.437342496034997,
+          "peak_hour_hit_pct": 64.55696202531645,
+          "peak_hour_mae": 0.4873417721518987,
+          "egress_mae": 249.40177776984265
+        },
+        "in_use": {
+          "site_days": 158,
+          "total_wape_pct": 18.79427559366004,
+          "total_bias_pct": -9.319033364874336,
+          "peak_wape_pct": 27.638190381887842,
+          "peak_bias_pct": -20.521804815898463,
+          "peak_shortfall_pct": 30.124407551913976,
+          "peak_hour_hit_pct": 63.92405063291139,
+          "peak_hour_mae": 0.5126582278481012,
+          "egress_mae": 247.89211669094135
+        },
+        "egress_mae_minus_in_use": {
+          "days": 41,
+          "rows": 688,
+          "mae_diff": 1.5096610789013296,
+          "ci95": [
+            -6.026377957529267,
+            8.45439847304024
+          ],
+          "share_of_draws_better": 0.3445
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": -0.7350918638565029,
+          "ci95": [
+            -2.4373056850157555,
+            0.9998241411351974
+          ],
+          "dates_candidate_better": 24
+        }
+      },
+      "senior_audience_dates_at_kspo_dome": {
+        "dates": 15,
+        "candidate": {
+          "site_days": 60,
+          "total_wape_pct": 22.13595747250476,
+          "total_bias_pct": -5.246876719281538,
+          "peak_wape_pct": 35.11436817309482,
+          "peak_bias_pct": -28.94441819722759,
+          "peak_shortfall_pct": 34.777323914469,
+          "peak_hour_hit_pct": 63.33333333333333,
+          "peak_hour_mae": 0.5166666666666667,
+          "egress_mae": 293.6984023952199
+        },
+        "in_use": {
+          "site_days": 60,
+          "total_wape_pct": 24.346316508407956,
+          "total_bias_pct": -15.3649503687848,
+          "peak_wape_pct": 41.48444507536942,
+          "peak_bias_pct": -38.36099319841103,
+          "peak_shortfall_pct": 42.38455391174001,
+          "peak_hour_hit_pct": 65.0,
+          "peak_hour_mae": 0.5333333333333333,
+          "egress_mae": 297.0653924131383
+        },
+        "egress_mae_minus_in_use": {
+          "days": 15,
+          "rows": 236,
+          "mae_diff": -3.3669900179184116,
+          "ci95": [
+            -19.624175838774477,
+            12.115264264998128
+          ],
+          "share_of_draws_better": 0.666
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": -2.2103590359031977,
+          "ci95": [
+            -6.180352772334475,
+            2.255921168306397
+          ],
+          "dates_candidate_better": 9
+        }
+      },
+      "event_dates_without_a_senior_session": {
+        "dates": 197,
+        "candidate": {
+          "site_days": 768,
+          "total_wape_pct": 21.24115061401249,
+          "total_bias_pct": -11.716939933934723,
+          "peak_wape_pct": 28.191877836777028,
+          "peak_bias_pct": -20.770243600468618,
+          "peak_shortfall_pct": 33.772129044285094,
+          "peak_hour_hit_pct": 65.234375,
+          "peak_hour_mae": 0.4205729166666667,
+          "egress_mae": 348.9883404595178
+        },
+        "in_use": {
+          "site_days": 768,
+          "total_wape_pct": 20.92909909176289,
+          "total_bias_pct": -10.652892135952172,
+          "peak_wape_pct": 27.845269410645706,
+          "peak_bias_pct": -19.99309931762619,
+          "peak_shortfall_pct": 33.09605256237084,
+          "peak_hour_hit_pct": 65.625,
+          "peak_hour_mae": 0.4192708333333333,
+          "egress_mae": 347.9614199327502
+        },
+        "egress_mae_minus_in_use": {
+          "days": 197,
+          "rows": 2704,
+          "mae_diff": 1.0269205267676111,
+          "ci95": [
+            -0.7028291267919393,
+            2.831992869027258
+          ],
+          "share_of_draws_better": 0.1205
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": 0.3120515222496007,
+          "ci95": [
+            0.033521187211403014,
+            0.5894534636196571
+          ],
+          "dates_candidate_better": 79
+        }
+      },
+      "by_period": {
+        "2025-04..12": {
+          "dates": 113,
+          "candidate": {
+            "site_days": 452,
+            "total_wape_pct": 18.078462109963684,
+            "total_bias_pct": -8.894134344393525,
+            "peak_wape_pct": 30.6690142138626,
+            "peak_bias_pct": -24.863448369418585,
+            "peak_shortfall_pct": 35.13975376760749,
+            "peak_hour_hit_pct": 67.69911504424779,
+            "peak_hour_mae": 0.40707964601769914,
+            "egress_mae": 305.61732542796847
+          },
+          "in_use": {
+            "site_days": 452,
+            "total_wape_pct": 17.769415799184284,
+            "total_bias_pct": -8.652578026121695,
+            "peak_wape_pct": 30.406865284143354,
+            "peak_bias_pct": -24.70455447895601,
+            "peak_shortfall_pct": 34.92437304892454,
+            "peak_hour_hit_pct": 68.36283185840708,
+            "peak_hour_mae": 0.40707964601769914,
+            "egress_mae": 304.3814553008959
+          },
+          "egress_mae_minus_in_use": {
+            "days": 113,
+            "rows": 1608,
+            "mae_diff": 1.2358701270726093,
+            "ci95": [
+              -0.9980925782268006,
+              3.3685849445990512
+            ],
+            "share_of_draws_better": 0.1275
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": 0.30904631077939976,
+            "ci95": [
+              -0.2697168901537627,
+              0.8374495894837239
+            ],
+            "dates_candidate_better": 38
+          }
+        },
+        "2026-01..07": {
+          "dates": 85,
+          "candidate": {
+            "site_days": 314,
+            "total_wape_pct": 23.45992185185655,
+            "total_bias_pct": -12.467461581238531,
+            "peak_wape_pct": 25.48724291990212,
+            "peak_bias_pct": -17.847176243702997,
+            "peak_shortfall_pct": 26.52505156776469,
+            "peak_hour_hit_pct": 67.51592356687898,
+            "peak_hour_mae": 0.3821656050955414,
+            "egress_mae": 343.7569722231979
+          },
+          "in_use": {
+            "site_days": 314,
+            "total_wape_pct": 23.61797146260423,
+            "total_bias_pct": -13.251991488977277,
+            "peak_wape_pct": 25.8986973712287,
+            "peak_bias_pct": -18.404704737412548,
+            "peak_shortfall_pct": 26.936600455372066,
+            "peak_hour_hit_pct": 67.51592356687898,
+            "peak_hour_mae": 0.3885350318471338,
+            "egress_mae": 342.6019249367218
+          },
+          "egress_mae_minus_in_use": {
+            "days": 85,
+            "rows": 1200,
+            "mae_diff": 1.1550472864761743,
+            "ci95": [
+              -3.018931539094402,
+              5.432838819551606
+            ],
+            "share_of_draws_better": 0.3055
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": -0.15804961074767593,
+            "ci95": [
+              -0.8430747439716187,
+              0.5139329701988289
+            ],
+            "dates_candidate_better": 50
+          }
+        },
+        "2026-08..11": {
+          "dates": 40,
+          "candidate": {
+            "site_days": 160,
+            "total_wape_pct": 20.73661215335725,
+            "total_bias_pct": -8.387107710596494,
+            "peak_wape_pct": 23.87744665280178,
+            "peak_bias_pct": -10.239378226021529,
+            "peak_shortfall_pct": 40.19318438954785,
+            "peak_hour_hit_pct": 53.125,
+            "peak_hour_mae": 0.6,
+            "egress_mae": 361.83539341126226
+          },
+          "in_use": {
+            "site_days": 160,
+            "total_wape_pct": 20.411711704031674,
+            "total_bias_pct": -8.112394642475138,
+            "peak_wape_pct": 24.629178263339796,
+            "peak_bias_pct": -9.94890948240416,
+            "peak_shortfall_pct": 39.99283997227982,
+            "peak_hour_hit_pct": 52.5,
+            "peak_hour_mae": 0.60625,
+            "egress_mae": 361.0783659822219
+          },
+          "egress_mae_minus_in_use": {
+            "days": 40,
+            "rows": 584,
+            "mae_diff": 0.7570274290403601,
+            "ci95": [
+              -4.437450990329362,
+              6.094318239621993
+            ],
+            "share_of_draws_better": 0.39725
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": 0.3249004493255685,
+            "ci95": [
+              -0.503635922772095,
+              1.202938324592758
+            ],
+            "dates_candidate_better": 15
+          }
+        }
+      }
+    },
+    "act_share_all_years": {
+      "event_dates": {
+        "dates": 238,
+        "candidate": {
+          "site_days": 926,
+          "total_wape_pct": 20.533951940125245,
+          "total_bias_pct": -9.256383426922907,
+          "peak_wape_pct": 27.63112721272678,
+          "peak_bias_pct": -18.906886055329725,
+          "peak_shortfall_pct": 31.803387262258536,
+          "peak_hour_hit_pct": 64.90280777537797,
+          "peak_hour_mae": 0.43952483801295894,
+          "egress_mae": 326.8025963825127
+        },
+        "in_use": {
+          "site_days": 926,
+          "total_wape_pct": 20.545599125465046,
+          "total_bias_pct": -10.413277575681024,
+          "peak_wape_pct": 27.81187665686409,
+          "peak_bias_pct": -20.0783562972088,
+          "peak_shortfall_pct": 32.616856717403856,
+          "peak_hour_hit_pct": 65.33477321814254,
+          "peak_hour_mae": 0.4352051835853132,
+          "egress_mae": 327.66434427521347
+        },
+        "egress_mae_minus_in_use": {
+          "days": 238,
+          "rows": 3392,
+          "mae_diff": -0.8617478927007274,
+          "ci95": [
+            -3.8567402793343417,
+            2.1871057270144
+          ],
+          "share_of_draws_better": 0.70625
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": -0.011647185339797955,
+          "ci95": [
+            -0.6423529302454545,
+            0.657930271303091
+          ],
+          "dates_candidate_better": 124
+        }
+      },
+      "senior_audience_dates": {
+        "dates": 41,
+        "candidate": {
+          "site_days": 158,
+          "total_wape_pct": 18.42321260611828,
+          "total_bias_pct": -8.390908799318659,
+          "peak_wape_pct": 27.724850921584117,
+          "peak_bias_pct": -19.138882926504603,
+          "peak_shortfall_pct": 29.1518868783087,
+          "peak_hour_hit_pct": 64.55696202531645,
+          "peak_hour_mae": 0.4873417721518987,
+          "egress_mae": 247.2846137420574
+        },
+        "in_use": {
+          "site_days": 158,
+          "total_wape_pct": 18.79427559366004,
+          "total_bias_pct": -9.319033364874336,
+          "peak_wape_pct": 27.638190381887842,
+          "peak_bias_pct": -20.521804815898463,
+          "peak_shortfall_pct": 30.124407551913976,
+          "peak_hour_hit_pct": 63.92405063291139,
+          "peak_hour_mae": 0.5126582278481012,
+          "egress_mae": 247.89211669094135
+        },
+        "egress_mae_minus_in_use": {
+          "days": 41,
+          "rows": 688,
+          "mae_diff": -0.6075029488839627,
+          "ci95": [
+            -6.849506835720032,
+            6.219086741041534
+          ],
+          "share_of_draws_better": 0.5685
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": -0.3710629875417562,
+          "ci95": [
+            -1.9621270521869025,
+            1.1637614387091464
+          ],
+          "dates_candidate_better": 18
+        }
+      },
+      "senior_audience_dates_at_kspo_dome": {
+        "dates": 15,
+        "candidate": {
+          "site_days": 60,
+          "total_wape_pct": 23.61112480814059,
+          "total_bias_pct": -12.991937382256303,
+          "peak_wape_pct": 39.695572563999676,
+          "peak_bias_pct": -35.32572269495933,
+          "peak_shortfall_pct": 39.84011228018718,
+          "peak_hour_hit_pct": 65.0,
+          "peak_hour_mae": 0.48333333333333334,
+          "egress_mae": 293.2852088801305
+        },
+        "in_use": {
+          "site_days": 60,
+          "total_wape_pct": 24.346316508407956,
+          "total_bias_pct": -15.3649503687848,
+          "peak_wape_pct": 41.48444507536942,
+          "peak_bias_pct": -38.36099319841103,
+          "peak_shortfall_pct": 42.38455391174001,
+          "peak_hour_hit_pct": 65.0,
+          "peak_hour_mae": 0.5333333333333333,
+          "egress_mae": 297.0653924131383
+        },
+        "egress_mae_minus_in_use": {
+          "days": 15,
+          "rows": 236,
+          "mae_diff": -3.780183533007843,
+          "ci95": [
+            -18.807384849943073,
+            15.313044507908577
+          ],
+          "share_of_draws_better": 0.67425
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": -0.7351917002673707,
+          "ci95": [
+            -4.966204852084652,
+            3.802450358717491
+          ],
+          "dates_candidate_better": 6
+        }
+      },
+      "event_dates_without_a_senior_session": {
+        "dates": 197,
+        "candidate": {
+          "site_days": 768,
+          "total_wape_pct": 20.996155781251577,
+          "total_bias_pct": -9.445902658801089,
+          "peak_wape_pct": 27.6131079838971,
+          "peak_bias_pct": -18.862282563209764,
+          "peak_shortfall_pct": 32.31316213931902,
+          "peak_hour_hit_pct": 64.97395833333334,
+          "peak_hour_mae": 0.4296875,
+          "egress_mae": 347.03498249813157
+        },
+        "in_use": {
+          "site_days": 768,
+          "total_wape_pct": 20.92909909176289,
+          "total_bias_pct": -10.652892135952172,
+          "peak_wape_pct": 27.845269410645706,
+          "peak_bias_pct": -19.99309931762619,
+          "peak_shortfall_pct": 33.09605256237084,
+          "peak_hour_hit_pct": 65.625,
+          "peak_hour_mae": 0.4192708333333333,
+          "egress_mae": 347.9614199327502
+        },
+        "egress_mae_minus_in_use": {
+          "days": 197,
+          "rows": 2704,
+          "mae_diff": -0.9264374346186023,
+          "ci95": [
+            -4.338562468749538,
+            2.600862704857363
+          ],
+          "share_of_draws_better": 0.69625
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": 0.06705668948868844,
+          "ci95": [
+            -0.6188799945442673,
+            0.7885741926232466
+          ],
+          "dates_candidate_better": 106
+        }
+      },
+      "by_period": {
+        "2025-04..12": {
+          "dates": 113,
+          "candidate": {
+            "site_days": 452,
+            "total_wape_pct": 18.38263374262273,
+            "total_bias_pct": -6.287934011414127,
+            "peak_wape_pct": 29.471713266931065,
+            "peak_bias_pct": -22.282910575385795,
+            "peak_shortfall_pct": 33.165295410149305,
+            "peak_hour_hit_pct": 66.8141592920354,
+            "peak_hour_mae": 0.42035398230088494,
+            "egress_mae": 304.47713768716477
+          },
+          "in_use": {
+            "site_days": 452,
+            "total_wape_pct": 17.769415799184284,
+            "total_bias_pct": -8.652578026121695,
+            "peak_wape_pct": 30.406865284143354,
+            "peak_bias_pct": -24.70455447895601,
+            "peak_shortfall_pct": 34.92437304892454,
+            "peak_hour_hit_pct": 68.36283185840708,
+            "peak_hour_mae": 0.40707964601769914,
+            "egress_mae": 304.3814553008959
+          },
+          "egress_mae_minus_in_use": {
+            "days": 113,
+            "rows": 1608,
+            "mae_diff": 0.09568238626891509,
+            "ci95": [
+              -4.802767839589419,
+              5.14902899802323
+            ],
+            "share_of_draws_better": 0.4945
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": 0.6132179434384485,
+            "ci95": [
+              -0.5263405320308769,
+              1.8150302193635561
+            ],
+            "dates_candidate_better": 56
+          }
+        },
+        "2026-01..07": {
+          "dates": 85,
+          "candidate": {
+            "site_days": 314,
+            "total_wape_pct": 23.04818980882191,
+            "total_bias_pct": -12.831150367251425,
+            "peak_wape_pct": 26.175770982322906,
+            "peak_bias_pct": -18.142441923816815,
+            "peak_shortfall_pct": 26.964793922447683,
+            "peak_hour_hit_pct": 68.15286624203821,
+            "peak_hour_mae": 0.37898089171974525,
+            "egress_mae": 341.4929911630176
+          },
+          "in_use": {
+            "site_days": 314,
+            "total_wape_pct": 23.61797146260423,
+            "total_bias_pct": -13.251991488977277,
+            "peak_wape_pct": 25.8986973712287,
+            "peak_bias_pct": -18.404704737412548,
+            "peak_shortfall_pct": 26.936600455372066,
+            "peak_hour_hit_pct": 67.51592356687898,
+            "peak_hour_mae": 0.3885350318471338,
+            "egress_mae": 342.6019249367218
+          },
+          "egress_mae_minus_in_use": {
+            "days": 85,
+            "rows": 1200,
+            "mae_diff": -1.10893377370415,
+            "ci95": [
+              -6.04977494478057,
+              3.81863076315592
+            ],
+            "share_of_draws_better": 0.67125
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": -0.5697816537823172,
+            "ci95": [
+              -1.4923817156202737,
+              0.33132633653650273
+            ],
+            "dates_candidate_better": 45
+          }
+        },
+        "2026-08..11": {
+          "dates": 40,
+          "candidate": {
+            "site_days": 160,
+            "total_wape_pct": 20.098123005052635,
+            "total_bias_pct": -8.392257707730428,
+            "peak_wape_pct": 25.625997427577637,
+            "peak_bias_pct": -10.342799133382709,
+            "peak_shortfall_pct": 39.96848751979737,
+            "peak_hour_hit_pct": 53.125,
+            "peak_hour_mae": 0.6125,
+            "egress_mae": 358.0883221453789
+          },
+          "in_use": {
+            "site_days": 160,
+            "total_wape_pct": 20.411711704031674,
+            "total_bias_pct": -8.112394642475138,
+            "peak_wape_pct": 24.629178263339796,
+            "peak_bias_pct": -9.94890948240416,
+            "peak_shortfall_pct": 39.99283997227982,
+            "peak_hour_hit_pct": 52.5,
+            "peak_hour_mae": 0.60625,
+            "egress_mae": 361.0783659822219
+          },
+          "egress_mae_minus_in_use": {
+            "days": 40,
+            "rows": 584,
+            "mae_diff": -2.9900438368429842,
+            "ci95": [
+              -8.902811572562523,
+              2.943453352608478
+            ],
+            "share_of_draws_better": 0.8455
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": -0.3135886989790424,
+            "ci95": [
+              -1.0336211264358839,
+              0.45566567584377743
+            ],
+            "dates_candidate_better": 23
+          }
+        }
+      }
+    },
+    "without_audience_act_share": {
+      "event_dates": {
+        "dates": 238,
+        "candidate": {
+          "site_days": 926,
+          "total_wape_pct": 20.65255636072436,
+          "total_bias_pct": -8.822229726463036,
+          "peak_wape_pct": 27.489694630800397,
+          "peak_bias_pct": -19.002856707221685,
+          "peak_shortfall_pct": 31.69887914143399,
+          "peak_hour_hit_pct": 65.2267818574514,
+          "peak_hour_mae": 0.42764578833693306,
+          "egress_mae": 328.2326421120332
+        },
+        "in_use": {
+          "site_days": 926,
+          "total_wape_pct": 20.545599125465046,
+          "total_bias_pct": -10.413277575681024,
+          "peak_wape_pct": 27.81187665686409,
+          "peak_bias_pct": -20.0783562972088,
+          "peak_shortfall_pct": 32.616856717403856,
+          "peak_hour_hit_pct": 65.33477321814254,
+          "peak_hour_mae": 0.4352051835853132,
+          "egress_mae": 327.66434427521347
+        },
+        "egress_mae_minus_in_use": {
+          "days": 238,
+          "rows": 3392,
+          "mae_diff": 0.5682978368197047,
+          "ci95": [
+            -3.2963587079205534,
+            4.409760909191806
+          ],
+          "share_of_draws_better": 0.37925
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": 0.10695723525931555,
+          "ci95": [
+            -0.5559483610827292,
+            0.755869369271629
+          ],
+          "dates_candidate_better": 117
+        }
+      },
+      "senior_audience_dates": {
+        "dates": 41,
+        "candidate": {
+          "site_days": 158,
+          "total_wape_pct": 19.283602968418858,
+          "total_bias_pct": 1.2487571961858135,
+          "peak_wape_pct": 24.502025502955814,
+          "peak_bias_pct": -12.143135078096874,
+          "peak_shortfall_pct": 24.432018140079666,
+          "peak_hour_hit_pct": 64.55696202531645,
+          "peak_hour_mae": 0.4810126582278481,
+          "egress_mae": 261.69772586461596
+        },
+        "in_use": {
+          "site_days": 158,
+          "total_wape_pct": 18.79427559366004,
+          "total_bias_pct": -9.319033364874336,
+          "peak_wape_pct": 27.638190381887842,
+          "peak_bias_pct": -20.521804815898463,
+          "peak_shortfall_pct": 30.124407551913976,
+          "peak_hour_hit_pct": 63.92405063291139,
+          "peak_hour_mae": 0.5126582278481012,
+          "egress_mae": 247.89211669094135
+        },
+        "egress_mae_minus_in_use": {
+          "days": 41,
+          "rows": 688,
+          "mae_diff": 13.805609173674645,
+          "ci95": [
+            1.1556807887358302,
+            25.793354725889603
+          ],
+          "share_of_draws_better": 0.01675
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": 0.4893273747588204,
+          "ci95": [
+            -2.5359929288922896,
+            3.6467267414921167
+          ],
+          "dates_candidate_better": 19
+        }
+      },
+      "senior_audience_dates_at_kspo_dome": {
+        "dates": 15,
+        "candidate": {
+          "site_days": 60,
+          "total_wape_pct": 22.38961638964974,
+          "total_bias_pct": 2.477586843294502,
+          "peak_wape_pct": 32.97490311680608,
+          "peak_bias_pct": -21.97439578213974,
+          "peak_shortfall_pct": 30.519996288052532,
+          "peak_hour_hit_pct": 63.33333333333333,
+          "peak_hour_mae": 0.5166666666666667,
+          "egress_mae": 310.6913070812173
+        },
+        "in_use": {
+          "site_days": 60,
+          "total_wape_pct": 24.346316508407956,
+          "total_bias_pct": -15.3649503687848,
+          "peak_wape_pct": 41.48444507536942,
+          "peak_bias_pct": -38.36099319841103,
+          "peak_shortfall_pct": 42.38455391174001,
+          "peak_hour_hit_pct": 65.0,
+          "peak_hour_mae": 0.5333333333333333,
+          "egress_mae": 297.0653924131383
+        },
+        "egress_mae_minus_in_use": {
+          "days": 15,
+          "rows": 236,
+          "mae_diff": 13.625914668078934,
+          "ci95": [
+            -12.305310409531128,
+            38.81102241745443
+          ],
+          "share_of_draws_better": 0.148
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": -1.9567001187582187,
+          "ci95": [
+            -8.78988959990226,
+            5.656672785743238
+          ],
+          "dates_candidate_better": 8
+        }
+      },
+      "event_dates_without_a_senior_session": {
+        "dates": 197,
+        "candidate": {
+          "site_days": 768,
+          "total_wape_pct": 20.952325975120733,
+          "total_bias_pct": -11.027546491344996,
+          "peak_wape_pct": 28.064100982601712,
+          "peak_bias_pct": -20.321700095411988,
+          "peak_shortfall_pct": 33.095998748131045,
+          "peak_hour_hit_pct": 65.36458333333334,
+          "peak_hour_mae": 0.4166666666666667,
+          "egress_mae": 345.1616444708435
+        },
+        "in_use": {
+          "site_days": 768,
+          "total_wape_pct": 20.92909909176289,
+          "total_bias_pct": -10.652892135952172,
+          "peak_wape_pct": 27.845269410645706,
+          "peak_bias_pct": -19.99309931762619,
+          "peak_shortfall_pct": 33.09605256237084,
+          "peak_hour_hit_pct": 65.625,
+          "peak_hour_mae": 0.4192708333333333,
+          "egress_mae": 347.9614199327502
+        },
+        "egress_mae_minus_in_use": {
+          "days": 197,
+          "rows": 2704,
+          "mae_diff": -2.7997754619067,
+          "ci95": [
+            -6.325170128451856,
+            0.5456350775901772
+          ],
+          "share_of_draws_better": 0.946
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": 0.023226883357843366,
+          "ci95": [
+            -0.44223607165285794,
+            0.49538524789436955
+          ],
+          "dates_candidate_better": 98
+        }
+      },
+      "by_period": {
+        "2025-04..12": {
+          "dates": 113,
+          "candidate": {
+            "site_days": 452,
+            "total_wape_pct": 18.218368059959246,
+            "total_bias_pct": -6.8157217790133,
+            "peak_wape_pct": 29.755217864971417,
+            "peak_bias_pct": -23.490509016193986,
+            "peak_shortfall_pct": 33.84719160392817,
+            "peak_hour_hit_pct": 67.69911504424779,
+            "peak_hour_mae": 0.4026548672566372,
+            "egress_mae": 308.71971599963007
+          },
+          "in_use": {
+            "site_days": 452,
+            "total_wape_pct": 17.769415799184284,
+            "total_bias_pct": -8.652578026121695,
+            "peak_wape_pct": 30.406865284143354,
+            "peak_bias_pct": -24.70455447895601,
+            "peak_shortfall_pct": 34.92437304892454,
+            "peak_hour_hit_pct": 68.36283185840708,
+            "peak_hour_mae": 0.40707964601769914,
+            "egress_mae": 304.3814553008959
+          },
+          "egress_mae_minus_in_use": {
+            "days": 113,
+            "rows": 1608,
+            "mae_diff": 4.3382606987342065,
+            "ci95": [
+              0.3545907899602137,
+              8.629812136238014
+            ],
+            "share_of_draws_better": 0.0155
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": 0.4489522607749631,
+            "ci95": [
+              -0.45376228833600285,
+              1.3067405369638283
+            ],
+            "dates_candidate_better": 51
+          }
+        },
+        "2026-01..07": {
+          "dates": 85,
+          "candidate": {
+            "site_days": 314,
+            "total_wape_pct": 23.143952360652463,
+            "total_bias_pct": -11.191383684270178,
+            "peak_wape_pct": 25.52578725258527,
+            "peak_bias_pct": -16.88113871789199,
+            "peak_shortfall_pct": 25.77561687771022,
+            "peak_hour_hit_pct": 67.83439490445859,
+            "peak_hour_mae": 0.3821656050955414,
+            "egress_mae": 338.12383644732586
+          },
+          "in_use": {
+            "site_days": 314,
+            "total_wape_pct": 23.61797146260423,
+            "total_bias_pct": -13.251991488977277,
+            "peak_wape_pct": 25.8986973712287,
+            "peak_bias_pct": -18.404704737412548,
+            "peak_shortfall_pct": 26.936600455372066,
+            "peak_hour_hit_pct": 67.51592356687898,
+            "peak_hour_mae": 0.3885350318471338,
+            "egress_mae": 342.6019249367218
+          },
+          "egress_mae_minus_in_use": {
+            "days": 85,
+            "rows": 1200,
+            "mae_diff": -4.478088489395882,
+            "ci95": [
+              -13.062905930607444,
+              3.7896179711165434
+            ],
+            "share_of_draws_better": 0.85175
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": -0.47401910195176283,
+            "ci95": [
+              -1.6543006865116705,
+              0.8309276869041566
+            ],
+            "dates_candidate_better": 46
+          }
+        },
+        "2026-08..11": {
+          "dates": 40,
+          "candidate": {
+            "site_days": 160,
+            "total_wape_pct": 21.039248645534308,
+            "total_bias_pct": -8.355605533824496,
+            "peak_wape_pct": 25.46423230388681,
+            "peak_bias_pct": -10.45461276591609,
+            "peak_shortfall_pct": 40.194491380890504,
+            "peak_hour_hit_pct": 53.125,
+            "peak_hour_mae": 0.5875,
+            "egress_mae": 361.6356420887337
+          },
+          "in_use": {
+            "site_days": 160,
+            "total_wape_pct": 20.411711704031674,
+            "total_bias_pct": -8.112394642475138,
+            "peak_wape_pct": 24.629178263339796,
+            "peak_bias_pct": -9.94890948240416,
+            "peak_shortfall_pct": 39.99283997227982,
+            "peak_hour_hit_pct": 52.5,
+            "peak_hour_mae": 0.60625,
+            "egress_mae": 361.0783659822219
+          },
+          "egress_mae_minus_in_use": {
+            "days": 40,
+            "rows": 584,
+            "mae_diff": 0.5572761065118045,
+            "ci95": [
+              -5.4550564050372525,
+              7.028969157238321
+            ],
+            "share_of_draws_better": 0.44875
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": 0.6275369415026277,
+            "ci95": [
+              -0.3487387936964366,
+              1.7863797029998458
+            ],
+            "dates_candidate_better": 20
+          }
+        }
+      }
+    },
+    "ticketed_senior": {
+      "event_dates": {
+        "dates": 238,
+        "candidate": {
+          "site_days": 926,
+          "total_wape_pct": 20.560033670408362,
+          "total_bias_pct": -10.286836255941282,
+          "peak_wape_pct": 27.710104798864336,
+          "peak_bias_pct": -20.05776921798037,
+          "peak_shortfall_pct": 32.57301912049692,
+          "peak_hour_hit_pct": 65.33477321814254,
+          "peak_hour_mae": 0.4319654427645788,
+          "egress_mae": 328.32802905912297
+        },
+        "in_use": {
+          "site_days": 926,
+          "total_wape_pct": 20.545599125465046,
+          "total_bias_pct": -10.413277575681024,
+          "peak_wape_pct": 27.81187665686409,
+          "peak_bias_pct": -20.0783562972088,
+          "peak_shortfall_pct": 32.616856717403856,
+          "peak_hour_hit_pct": 65.33477321814254,
+          "peak_hour_mae": 0.4352051835853132,
+          "egress_mae": 327.66434427521347
+        },
+        "egress_mae_minus_in_use": {
+          "days": 238,
+          "rows": 3392,
+          "mae_diff": 0.6636847839094825,
+          "ci95": [
+            -1.1687818706350832,
+            2.466590487826151
+          ],
+          "share_of_draws_better": 0.2425
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": 0.014434544943318637,
+          "ci95": [
+            -0.3351219973097957,
+            0.3445673037160626
+          ],
+          "dates_candidate_better": 106
+        }
+      },
+      "senior_audience_dates": {
+        "dates": 41,
+        "candidate": {
+          "site_days": 158,
+          "total_wape_pct": 18.24100164759794,
+          "total_bias_pct": -3.6450758856447707,
+          "peak_wape_pct": 25.42515998239356,
+          "peak_bias_pct": -16.01725455112827,
+          "peak_shortfall_pct": 26.835037208463646,
+          "peak_hour_hit_pct": 63.92405063291139,
+          "peak_hour_mae": 0.4936708860759494,
+          "egress_mae": 251.91125392751408
+        },
+        "in_use": {
+          "site_days": 158,
+          "total_wape_pct": 18.79427559366004,
+          "total_bias_pct": -9.319033364874336,
+          "peak_wape_pct": 27.638190381887842,
+          "peak_bias_pct": -20.521804815898463,
+          "peak_shortfall_pct": 30.124407551913976,
+          "peak_hour_hit_pct": 63.92405063291139,
+          "peak_hour_mae": 0.5126582278481012,
+          "egress_mae": 247.89211669094135
+        },
+        "egress_mae_minus_in_use": {
+          "days": 41,
+          "rows": 688,
+          "mae_diff": 4.019137236572777,
+          "ci95": [
+            -3.6290985480336415,
+            11.146264587648735
+          ],
+          "share_of_draws_better": 0.13875
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": -0.5532739460620985,
+          "ci95": [
+            -2.2501529633843522,
+            1.1693968615236594
+          ],
+          "dates_candidate_better": 24
+        }
+      },
+      "senior_audience_dates_at_kspo_dome": {
+        "dates": 15,
+        "candidate": {
+          "site_days": 60,
+          "total_wape_pct": 22.24348493411094,
+          "total_bias_pct": -5.174845689021053,
+          "peak_wape_pct": 35.459981391034596,
+          "peak_bias_pct": -28.876373390430228,
+          "peak_shortfall_pct": 35.093300080806905,
+          "peak_hour_hit_pct": 63.33333333333333,
+          "peak_hour_mae": 0.5166666666666667,
+          "egress_mae": 296.51155859476665
+        },
+        "in_use": {
+          "site_days": 60,
+          "total_wape_pct": 24.346316508407956,
+          "total_bias_pct": -15.3649503687848,
+          "peak_wape_pct": 41.48444507536942,
+          "peak_bias_pct": -38.36099319841103,
+          "peak_shortfall_pct": 42.38455391174001,
+          "peak_hour_hit_pct": 65.0,
+          "peak_hour_mae": 0.5333333333333333,
+          "egress_mae": 297.0653924131383
+        },
+        "egress_mae_minus_in_use": {
+          "days": 15,
+          "rows": 236,
+          "mae_diff": -0.5538338183715636,
+          "ci95": [
+            -17.923040780162367,
+            15.997664591316543
+          ],
+          "share_of_draws_better": 0.53825
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": -2.102831574297017,
+          "ci95": [
+            -6.145312572186156,
+            2.4514962644727114
+          ],
+          "dates_candidate_better": 9
+        }
+      },
+      "event_dates_without_a_senior_session": {
+        "dates": 197,
+        "candidate": {
+          "site_days": 768,
+          "total_wape_pct": 21.067848866424608,
+          "total_bias_pct": -11.741230508008393,
+          "peak_wape_pct": 28.149406060126545,
+          "peak_bias_pct": -20.834594625973445,
+          "peak_shortfall_pct": 33.676197925028994,
+          "peak_hour_hit_pct": 65.625,
+          "peak_hour_mae": 0.4192708333333333,
+          "egress_mae": 347.7713505423134
+        },
+        "in_use": {
+          "site_days": 768,
+          "total_wape_pct": 20.92909909176289,
+          "total_bias_pct": -10.652892135952172,
+          "peak_wape_pct": 27.845269410645706,
+          "peak_bias_pct": -19.99309931762619,
+          "peak_shortfall_pct": 33.09605256237084,
+          "peak_hour_hit_pct": 65.625,
+          "peak_hour_mae": 0.4192708333333333,
+          "egress_mae": 347.9614199327502
+        },
+        "egress_mae_minus_in_use": {
+          "days": 197,
+          "rows": 2704,
+          "mae_diff": -0.19006939043679874,
+          "ci95": [
+            -1.441659873986205,
+            1.1605473467820435
+          ],
+          "share_of_draws_better": 0.614
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": 0.1387497746617179,
+          "ci95": [
+            -0.04505758115840053,
+            0.3163866941158424
+          ],
+          "dates_candidate_better": 82
+        }
+      },
+      "by_period": {
+        "2025-04..12": {
+          "dates": 113,
+          "candidate": {
+            "site_days": 452,
+            "total_wape_pct": 17.81812410108145,
+            "total_bias_pct": -8.613847651865175,
+            "peak_wape_pct": 30.26255556017448,
+            "peak_bias_pct": -24.58545033952735,
+            "peak_shortfall_pct": 34.782112719787676,
+            "peak_hour_hit_pct": 67.92035398230088,
+            "peak_hour_mae": 0.40707964601769914,
+            "egress_mae": 304.1644667583659
+          },
+          "in_use": {
+            "site_days": 452,
+            "total_wape_pct": 17.769415799184284,
+            "total_bias_pct": -8.652578026121695,
+            "peak_wape_pct": 30.406865284143354,
+            "peak_bias_pct": -24.70455447895601,
+            "peak_shortfall_pct": 34.92437304892454,
+            "peak_hour_hit_pct": 68.36283185840708,
+            "peak_hour_mae": 0.40707964601769914,
+            "egress_mae": 304.3814553008959
+          },
+          "egress_mae_minus_in_use": {
+            "days": 113,
+            "rows": 1608,
+            "mae_diff": -0.2169885425299544,
+            "ci95": [
+              -1.9792781535451567,
+              1.5173305756471582
+            ],
+            "share_of_draws_better": 0.60425
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": 0.04870830189717103,
+            "ci95": [
+              -0.44182506861972726,
+              0.49245791560804786
+            ],
+            "dates_candidate_better": 42
+          }
+        },
+        "2026-01..07": {
+          "dates": 85,
+          "candidate": {
+            "site_days": 314,
+            "total_wape_pct": 23.555226580768007,
+            "total_bias_pct": -12.774272120085742,
+            "peak_wape_pct": 25.86403912981619,
+            "peak_bias_pct": -18.30188074096063,
+            "peak_shortfall_pct": 26.885948622160964,
+            "peak_hour_hit_pct": 67.83439490445859,
+            "peak_hour_mae": 0.3821656050955414,
+            "egress_mae": 344.69425402773925
+          },
+          "in_use": {
+            "site_days": 314,
+            "total_wape_pct": 23.61797146260423,
+            "total_bias_pct": -13.251991488977277,
+            "peak_wape_pct": 25.8986973712287,
+            "peak_bias_pct": -18.404704737412548,
+            "peak_shortfall_pct": 26.936600455372066,
+            "peak_hour_hit_pct": 67.51592356687898,
+            "peak_hour_mae": 0.3885350318471338,
+            "egress_mae": 342.6019249367218
+          },
+          "egress_mae_minus_in_use": {
+            "days": 85,
+            "rows": 1200,
+            "mae_diff": 2.092329091017471,
+            "ci95": [
+              -2.195336705152765,
+              6.491819111782202
+            ],
+            "share_of_draws_better": 0.17275
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": -0.06274488183621724,
+            "ci95": [
+              -0.7153454023905784,
+              0.5856637401272948
+            ],
+            "dates_candidate_better": 44
+          }
+        },
+        "2026-08..11": {
+          "dates": 40,
+          "candidate": {
+            "site_days": 160,
+            "total_wape_pct": 20.525505204738216,
+            "total_bias_pct": -8.623008739724446,
+            "peak_wape_pct": 24.48787456067987,
+            "peak_bias_pct": -10.446388722224317,
+            "peak_shortfall_pct": 40.273316957187646,
+            "peak_hour_hit_pct": 53.125,
+            "peak_hour_mae": 0.6,
+            "egress_mae": 361.23134792432495
+          },
+          "in_use": {
+            "site_days": 160,
+            "total_wape_pct": 20.411711704031674,
+            "total_bias_pct": -8.112394642475138,
+            "peak_wape_pct": 24.629178263339796,
+            "peak_bias_pct": -9.94890948240416,
+            "peak_shortfall_pct": 39.99283997227982,
+            "peak_hour_hit_pct": 52.5,
+            "peak_hour_mae": 0.60625,
+            "egress_mae": 361.0783659822219
+          },
+          "egress_mae_minus_in_use": {
+            "days": 40,
+            "rows": 584,
+            "mae_diff": 0.1529819421030267,
+            "ci95": [
+              -3.3503832696770073,
+              3.752452595261925
+            ],
+            "share_of_draws_better": 0.4765
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": 0.11379350070654441,
+            "ci95": [
+              -0.46324349130052406,
+              0.7818893244196382
+            ],
+            "dates_candidate_better": 20
+          }
+        }
+      }
+    },
+    "ticketed_senior_act_share": {
+      "event_dates": {
+        "dates": 238,
+        "candidate": {
+          "site_days": 926,
+          "total_wape_pct": 20.525729374607703,
+          "total_bias_pct": -10.231025915335179,
+          "peak_wape_pct": 27.649252056834225,
+          "peak_bias_pct": -19.967584962338517,
+          "peak_shortfall_pct": 32.50937450558749,
+          "peak_hour_hit_pct": 65.2267818574514,
+          "peak_hour_mae": 0.4330453563714903,
+          "egress_mae": 328.25728323391695
+        },
+        "in_use": {
+          "site_days": 926,
+          "total_wape_pct": 20.545599125465046,
+          "total_bias_pct": -10.413277575681024,
+          "peak_wape_pct": 27.81187665686409,
+          "peak_bias_pct": -20.0783562972088,
+          "peak_shortfall_pct": 32.616856717403856,
+          "peak_hour_hit_pct": 65.33477321814254,
+          "peak_hour_mae": 0.4352051835853132,
+          "egress_mae": 327.66434427521347
+        },
+        "egress_mae_minus_in_use": {
+          "days": 238,
+          "rows": 3392,
+          "mae_diff": 0.5929389587034363,
+          "ci95": [
+            -1.2545230193184482,
+            2.4528975364768817
+          ],
+          "share_of_draws_better": 0.2705
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": -0.01986975085734338,
+          "ci95": [
+            -0.3798501921058557,
+            0.3136715498690408
+          ],
+          "dates_candidate_better": 112
+        }
+      },
+      "senior_audience_dates": {
+        "dates": 41,
+        "candidate": {
+          "site_days": 158,
+          "total_wape_pct": 18.218614561267298,
+          "total_bias_pct": -3.6159143402833474,
+          "peak_wape_pct": 25.30405262030623,
+          "peak_bias_pct": -15.969768666322087,
+          "peak_shortfall_pct": 26.736652995448416,
+          "peak_hour_hit_pct": 63.92405063291139,
+          "peak_hour_mae": 0.4936708860759494,
+          "egress_mae": 251.32437636240604
+        },
+        "in_use": {
+          "site_days": 158,
+          "total_wape_pct": 18.79427559366004,
+          "total_bias_pct": -9.319033364874336,
+          "peak_wape_pct": 27.638190381887842,
+          "peak_bias_pct": -20.521804815898463,
+          "peak_shortfall_pct": 30.124407551913976,
+          "peak_hour_hit_pct": 63.92405063291139,
+          "peak_hour_mae": 0.5126582278481012,
+          "egress_mae": 247.89211669094135
+        },
+        "egress_mae_minus_in_use": {
+          "days": 41,
+          "rows": 688,
+          "mae_diff": 3.4322596714647275,
+          "ci95": [
+            -4.223079800908018,
+            10.519512108249993
+          ],
+          "share_of_draws_better": 0.1825
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": -0.5756610323927425,
+          "ci95": [
+            -2.2539308851720428,
+            1.1426349169279741
+          ],
+          "dates_candidate_better": 24
+        }
+      },
+      "senior_audience_dates_at_kspo_dome": {
+        "dates": 15,
+        "candidate": {
+          "site_days": 60,
+          "total_wape_pct": 22.227709535168977,
+          "total_bias_pct": -5.189334744911135,
+          "peak_wape_pct": 35.43095334581512,
+          "peak_bias_pct": -28.893097626690572,
+          "peak_shortfall_pct": 35.079122735523136,
+          "peak_hour_hit_pct": 63.33333333333333,
+          "peak_hour_mae": 0.5166666666666667,
+          "egress_mae": 296.20255549927
+        },
+        "in_use": {
+          "site_days": 60,
+          "total_wape_pct": 24.346316508407956,
+          "total_bias_pct": -15.3649503687848,
+          "peak_wape_pct": 41.48444507536942,
+          "peak_bias_pct": -38.36099319841103,
+          "peak_shortfall_pct": 42.38455391174001,
+          "peak_hour_hit_pct": 65.0,
+          "peak_hour_mae": 0.5333333333333333,
+          "egress_mae": 297.0653924131383
+        },
+        "egress_mae_minus_in_use": {
+          "days": 15,
+          "rows": 236,
+          "mae_diff": -0.86283691386832,
+          "ci95": [
+            -18.05353816911796,
+            15.616064305333193
+          ],
+          "share_of_draws_better": 0.552
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": -2.1186069732389843,
+          "ci95": [
+            -6.127220991495629,
+            2.349313460396282
+          ],
+          "dates_candidate_better": 9
+        }
+      },
+      "event_dates_without_a_senior_session": {
+        "dates": 197,
+        "candidate": {
+          "site_days": 768,
+          "total_wape_pct": 21.030934973169725,
+          "total_bias_pct": -11.679584688181796,
+          "peak_wape_pct": 28.10013781256528,
+          "peak_bias_pct": -20.73620122321052,
+          "peak_shortfall_pct": 33.61923231136003,
+          "peak_hour_hit_pct": 65.49479166666666,
+          "peak_hour_mae": 0.4205729166666667,
+          "egress_mae": 347.83192817755577
+        },
+        "in_use": {
+          "site_days": 768,
+          "total_wape_pct": 20.92909909176289,
+          "total_bias_pct": -10.652892135952172,
+          "peak_wape_pct": 27.845269410645706,
+          "peak_bias_pct": -19.99309931762619,
+          "peak_shortfall_pct": 33.09605256237084,
+          "peak_hour_hit_pct": 65.625,
+          "peak_hour_mae": 0.4192708333333333,
+          "egress_mae": 347.9614199327502
+        },
+        "egress_mae_minus_in_use": {
+          "days": 197,
+          "rows": 2704,
+          "mae_diff": -0.12949175519440675,
+          "ci95": [
+            -1.4698269593468813,
+            1.2551061618912287
+          ],
+          "share_of_draws_better": 0.588
+        },
+        "total_wape_points_minus_in_use": {
+          "difference": 0.10183588140683457,
+          "ci95": [
+            -0.09488742102921117,
+            0.29140115374098957
+          ],
+          "dates_candidate_better": 88
+        }
+      },
+      "by_period": {
+        "2025-04..12": {
+          "dates": 113,
+          "candidate": {
+            "site_days": 452,
+            "total_wape_pct": 17.810630144146337,
+            "total_bias_pct": -8.578067580558129,
+            "peak_wape_pct": 30.243681082618796,
+            "peak_bias_pct": -24.55704450595173,
+            "peak_shortfall_pct": 34.75696684020783,
+            "peak_hour_hit_pct": 67.92035398230088,
+            "peak_hour_mae": 0.40707964601769914,
+            "egress_mae": 304.11607125933665
+          },
+          "in_use": {
+            "site_days": 452,
+            "total_wape_pct": 17.769415799184284,
+            "total_bias_pct": -8.652578026121695,
+            "peak_wape_pct": 30.406865284143354,
+            "peak_bias_pct": -24.70455447895601,
+            "peak_shortfall_pct": 34.92437304892454,
+            "peak_hour_hit_pct": 68.36283185840708,
+            "peak_hour_mae": 0.40707964601769914,
+            "egress_mae": 304.3814553008959
+          },
+          "egress_mae_minus_in_use": {
+            "days": 113,
+            "rows": 1608,
+            "mae_diff": -0.26538404155920886,
+            "ci95": [
+              -2.029784845057851,
+              1.495393435772929
+            ],
+            "share_of_draws_better": 0.6245
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": 0.04121434496205461,
+            "ci95": [
+              -0.44603955313955684,
+              0.4858767136848682
+            ],
+            "dates_candidate_better": 43
+          }
+        },
+        "2026-01..07": {
+          "dates": 85,
+          "candidate": {
+            "site_days": 314,
+            "total_wape_pct": 23.503483580717546,
+            "total_bias_pct": -12.665684817095268,
+            "peak_wape_pct": 25.810008891700182,
+            "peak_bias_pct": -18.1111074089044,
+            "peak_shortfall_pct": 26.77900049263885,
+            "peak_hour_hit_pct": 67.51592356687898,
+            "peak_hour_mae": 0.3853503184713376,
+            "egress_mae": 344.7392642599157
+          },
+          "in_use": {
+            "site_days": 314,
+            "total_wape_pct": 23.61797146260423,
+            "total_bias_pct": -13.251991488977277,
+            "peak_wape_pct": 25.8986973712287,
+            "peak_bias_pct": -18.404704737412548,
+            "peak_shortfall_pct": 26.936600455372066,
+            "peak_hour_hit_pct": 67.51592356687898,
+            "peak_hour_mae": 0.3885350318471338,
+            "egress_mae": 342.6019249367218
+          },
+          "egress_mae_minus_in_use": {
+            "days": 85,
+            "rows": 1200,
+            "mae_diff": 2.1373393231939084,
+            "ci95": [
+              -2.0645819747480845,
+              6.525330626982857
+            ],
+            "share_of_draws_better": 0.16375
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": -0.11448788188668368,
+            "ci95": [
+              -0.7773326560692968,
+              0.5362479340905174
+            ],
+            "dates_candidate_better": 50
+          }
+        },
+        "2026-08..11": {
+          "dates": 40,
+          "candidate": {
+            "site_days": 160,
+            "total_wape_pct": 20.46204368375649,
+            "total_bias_pct": -8.644363745709043,
+            "peak_wape_pct": 24.278653571048213,
+            "peak_bias_pct": -10.42161711004928,
+            "peak_shortfall_pct": 40.200723878660874,
+            "peak_hour_hit_pct": 53.125,
+            "peak_hour_mae": 0.6,
+            "egress_mae": 360.86120724749003
+          },
+          "in_use": {
+            "site_days": 160,
+            "total_wape_pct": 20.411711704031674,
+            "total_bias_pct": -8.112394642475138,
+            "peak_wape_pct": 24.629178263339796,
+            "peak_bias_pct": -9.94890948240416,
+            "peak_shortfall_pct": 39.99283997227982,
+            "peak_hour_hit_pct": 52.5,
+            "peak_hour_mae": 0.60625,
+            "egress_mae": 361.0783659822219
+          },
+          "egress_mae_minus_in_use": {
+            "days": 40,
+            "rows": 584,
+            "mae_diff": -0.21715873473189287,
+            "ci95": [
+              -3.9385918205197976,
+              3.5714648977171612
+            ],
+            "share_of_draws_better": 0.54725
+          },
+          "total_wape_points_minus_in_use": {
+            "difference": 0.05033197972481209,
+            "ci95": [
+              -0.5543115039878719,
+              0.7235803064987898
+            ],
+            "dates_candidate_better": 19
+          }
+        }
+      }
+    }
+  }
+}

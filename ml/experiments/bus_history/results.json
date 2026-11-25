@@ -1,0 +1,493 @@
+{
+  "experiment": "D05 archived daily boardings, source-registration proxy, retrospective zero-shot",
+  "data_audit": {
+    "total_city_rows_scanned": 14940136,
+    "scoped_original_rows": 23183,
+    "scoped_prepared_rows": 23183,
+    "multiset_mismatches": 0,
+    "sha256": {
+      "prepared/bus_park_daily_totals_2025.parquet": "1394eee40caa0773163fe6c101b0f5bec23461f5fa01a0d47410053590f27574",
+      "prepared/bus_park_stcis_stop_hours_2025.parquet": "b2163d0966f122a32c82d7c638f36a25e846eb0375f8c8cc3eeba76c90aa740b",
+      "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202501.csv.gz": "e010b69f9720d1086a5f51529668597e99dfd400fdbed24d89647d8fa4b3ac7c",
+      "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202502.csv.gz": "2473b665f81f2f2ef23a3d83174eadc931951543f5e3225cb811689461397dc9",
+      "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202503.csv.gz": "f88357327fc730c1097bedcfc1a18deeef73d9b174d2984b4e68c9849f12c136",
+      "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202504.csv.gz": "bc1e297901769c89afe710f2155bc443f684f30493f047e21a5c5089d77c4450",
+      "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202505.csv.gz": "a2055c874198ac8d599198d3edf79b2a21fcd8710b9367f0d548d8871fa13519",
+      "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202506.csv.gz": "1aa408c5dc653356474a468ca62200206bd9f051d5791a177aa1ad919ed23800",
+      "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202507.csv.gz": "47f41cfccb8e3b18a88040b22628242ab2458fc5aafc8835b31dc73334f34fea",
+      "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202508.csv.gz": "7629c49192d3333817e515a7465d63eca2d944bbc1d6439258840ce183b596e2",
+      "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202509.csv.gz": "de21d0bc3e7cd7bfb52023b7c4ab5535a9aee48e655ba7488410764ffc61538a",
+      "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202510.csv.gz": "9f54bb77f2fee6b685aaa6c259f4aefe22ce12a2390cb5fe24bb0d4ff1ae850b",
+      "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202511.csv.gz": "62085fda5173bd6d0dcbbb636a71d0c4c0a189a71277086b2b712f6a88b3bea5",
+      "raw/D05/daily_totals/BUS_STATION_BOARDING_MONTH_202512.csv.gz": "57a47d925c6df64c752cd904f4ce752860ed2aec2cbbc4cedd85fa9997a2a315"
+    },
+    "archive_manifest_as_of_kst": "2026-11-22T21:59:47+09:00",
+    "extra_rows_with_same_service_date_ars_and_short_route_number": 931,
+    "registration_lag_days_to_number_of_source_rows": {
+      "3": 23183
+    },
+    "stop_days_with_multiple_registration_dates": 0,
+    "stop_days": 5110,
+    "service_date_range": [
+      "2025-01-01",
+      "2025-12-31"
+    ],
+    "registration_date_range": [
+      "2025-01-04",
+      "2026-01-03"
+    ],
+    "boarding_total_2025": 2560448,
+    "stops": [
+      "24123",
+      "24127",
+      "24211",
+      "24221",
+      "24222",
+      "24231",
+      "24233",
+      "24239",
+      "24240",
+      "24241",
+      "24244",
+      "24245",
+      "24246",
+      "24396"
+    ]
+  },
+  "chronos_repo": "amazon/chronos-2",
+  "weight_revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+  "package_code_revision": "1224fafa91e1ecd6674f5204066b159e40b5e4a1",
+  "model_file_sha256": {
+    "model.safetensors": "ddcda3c7508bf2528087723e98a20707cc04b7f370ae275a9fd88078ddba4f42",
+    "config.json": "ef1143bfdc9c0376d9a056eefca46cb4b1ec3d0ffacd541ff56feb40fb708031"
+  },
+  "parameters": 119477664,
+  "local_weight_updates": 0,
+  "execution": {
+    "python": "3.12.13",
+    "device": "cpu",
+    "dtype": "float32",
+    "intraop_threads": 4,
+    "interop_threads": 1,
+    "cross_learning": false,
+    "versions": {
+      "chronos-forecasting": "2.3.3.dev0",
+      "torch": "2.8.0",
+      "transformers": "4.57.6",
+      "accelerate": "1.12.0",
+      "numpy": "2.2.6",
+      "pandas": "2.3.3",
+      "pyarrow": "21.0.0",
+      "safetensors": "0.8.0",
+      "einops": "0.8.2",
+      "huggingface-hub": "0.36.2"
+    }
+  },
+  "origin": "17:00 Asia/Seoul on the previous civil day",
+  "issue_policy": "Latest registration date across all archived route variants, next 00:00 Asia/Seoul. No receipt log.",
+  "training": {
+    "first_date": "2025-01-01",
+    "last_date": "2025-08-31",
+    "stop_days": 3402,
+    "days": 243,
+    "last_label_proxy_available_at": "2025-09-04T00:00:00+09:00"
+  },
+  "september_october": "Released observations may enter later contexts. No tuning or model selection.",
+  "evaluation": {
+    "first_date": "2025-11-01",
+    "last_date": "2025-12-31",
+    "history_day_range": [
+      300,
+      360
+    ],
+    "horizon_days_seen": [
+      5
+    ],
+    "negative_quantiles_clipped_p10_p50_p90": [
+      0,
+      0,
+      0
+    ]
+  },
+  "all": {
+    "dates": 61,
+    "stop_days": 854,
+    "observed_boardings": 448670,
+    "metrics": {
+      "weekday_median_frozen": {
+        "mae_boardings": 46.03747072599531,
+        "wape_percent": 8.762787795038669
+      },
+      "weekday_median_available": {
+        "mae_boardings": 42.76580796252927,
+        "wape_percent": 8.140058394811332
+      },
+      "chronos_p50": {
+        "mae_boardings": 39.78939881201929,
+        "wape_percent": 7.573527667431404
+      }
+    },
+    "raw_80pct_interval_coverage_percent": 80.6791569086651,
+    "raw_80pct_interval_mean_width_boardings": 119.18146851917061
+  },
+  "paired_difference": {
+    "ordering": "available weekday median minus Chronos-2 P50",
+    "delta_mae_boardings": 2.9764091505099795,
+    "delta_wape_percentage_points": 0.5665307273799279,
+    "dates_with_lower_chronos_absolute_error": 37,
+    "block_bootstrap": {
+      "unit": "consecutive KST service days with all 14 ARS retained",
+      "length_days": 7,
+      "replicates": 4000,
+      "seed": 20261123,
+      "delta_mae_95pct_percentile": [
+        -0.14465598613372724,
+        6.277532488624162
+      ],
+      "delta_wape_pp_95pct_percentile": [
+        -0.02774156546428828,
+        1.17035865507676
+      ]
+    }
+  },
+  "by_month": {
+    "2025-11": {
+      "dates": 30,
+      "stop_days": 420,
+      "observed_boardings": 219158,
+      "metrics": {
+        "weekday_median_frozen": {
+          "mae_boardings": 41.576190476190476,
+          "wape_percent": 7.967767546701467
+        },
+        "weekday_median_available": {
+          "mae_boardings": 38.66309523809524,
+          "wape_percent": 7.409494519935389
+        },
+        "chronos_p50": {
+          "mae_boardings": 34.926529811677476,
+          "wape_percent": 6.693409558813523
+        }
+      },
+      "raw_80pct_interval_coverage_percent": 84.28571428571429,
+      "raw_80pct_interval_mean_width_boardings": 116.30634359178089
+    },
+    "2025-12": {
+      "dates": 31,
+      "stop_days": 434,
+      "observed_boardings": 229512,
+      "metrics": {
+        "weekday_median_frozen": {
+          "mae_boardings": 50.354838709677416,
+          "wape_percent": 9.521942207814842
+        },
+        "weekday_median_available": {
+          "mae_boardings": 46.736175115207374,
+          "wape_percent": 8.837664261563665
+        },
+        "chronos_p50": {
+          "mae_boardings": 44.4954010704146,
+          "wape_percent": 8.413940911394583
+        }
+      },
+      "raw_80pct_interval_coverage_percent": 77.18894009216591,
+      "raw_80pct_interval_mean_width_boardings": 121.96384748116067
+    }
+  },
+  "by_ars": {
+    "24123": {
+      "dates": 61,
+      "stop_days": 61,
+      "observed_boardings": 56728,
+      "metrics": {
+        "weekday_median_frozen": {
+          "mae_boardings": 64.84426229508196,
+          "wape_percent": 6.972747144267381
+        },
+        "weekday_median_available": {
+          "mae_boardings": 53.90163934426229,
+          "wape_percent": 5.796079537441828
+        },
+        "chronos_p50": {
+          "mae_boardings": 46.0979254050333,
+          "wape_percent": 4.956940928125496
+        }
+      },
+      "raw_80pct_interval_coverage_percent": 83.60655737704919,
+      "raw_80pct_interval_mean_width_boardings": 164.11237122582608
+    },
+    "24127": {
+      "dates": 61,
+      "stop_days": 61,
+      "observed_boardings": 3822,
+      "metrics": {
+        "weekday_median_frozen": {
+          "mae_boardings": 22.39344262295082,
+          "wape_percent": 35.74045002616431
+        },
+        "weekday_median_available": {
+          "mae_boardings": 19.81967213114754,
+          "wape_percent": 31.632653061224488
+        },
+        "chronos_p50": {
+          "mae_boardings": 10.278463582523534,
+          "wape_percent": 16.40466453516315
+        }
+      },
+      "raw_80pct_interval_coverage_percent": 80.32786885245902,
+      "raw_80pct_interval_mean_width_boardings": 27.368455292748624
+    },
+    "24211": {
+      "dates": 61,
+      "stop_days": 61,
+      "observed_boardings": 12912,
+      "metrics": {
+        "weekday_median_frozen": {
+          "mae_boardings": 13.60655737704918,
+          "wape_percent": 6.42812887236679
+        },
+        "weekday_median_available": {
+          "mae_boardings": 13.672131147540984,
+          "wape_percent": 6.45910780669145
+        },
+        "chronos_p50": {
+          "mae_boardings": 15.709874137503203,
+          "wape_percent": 7.421796177104208
+        }
+      },
+      "raw_80pct_interval_coverage_percent": 78.68852459016394,
+      "raw_80pct_interval_mean_width_boardings": 44.442400697801936
+    },
+    "24221": {
+      "dates": 61,
+      "stop_days": 61,
+      "observed_boardings": 17627,
+      "metrics": {
+        "weekday_median_frozen": {
+          "mae_boardings": 22.114754098360656,
+          "wape_percent": 7.653032280024962
+        },
+        "weekday_median_available": {
+          "mae_boardings": 20.39344262295082,
+          "wape_percent": 7.057355193736881
+        },
+        "chronos_p50": {
+          "mae_boardings": 18.007513077532657,
+          "wape_percent": 6.231680363813991
+        }
+      },
+      "raw_80pct_interval_coverage_percent": 81.9672131147541,
+      "raw_80pct_interval_mean_width_boardings": 66.2067916119685
+    },
+    "24222": {
+      "dates": 61,
+      "stop_days": 61,
+      "observed_boardings": 15018,
+      "metrics": {
+        "weekday_median_frozen": {
+          "mae_boardings": 21.778688524590162,
+          "wape_percent": 8.84605140498069
+        },
+        "weekday_median_available": {
+          "mae_boardings": 21.18032786885246,
+          "wape_percent": 8.603009721667332
+        },
+        "chronos_p50": {
+          "mae_boardings": 21.036775682793287,
+          "wape_percent": 8.54470180217333
+        }
+      },
+      "raw_80pct_interval_coverage_percent": 83.60655737704919,
+      "raw_80pct_interval_mean_width_boardings": 66.18156182961386
+    },
+    "24231": {
+      "dates": 61,
+      "stop_days": 61,
+      "observed_boardings": 47117,
+      "metrics": {
+        "weekday_median_frozen": {
+          "mae_boardings": 72.36065573770492,
+          "wape_percent": 9.368168601566314
+        },
+        "weekday_median_available": {
+          "mae_boardings": 62.868852459016395,
+          "wape_percent": 8.139312774582422
+        },
+        "chronos_p50": {
+          "mae_boardings": 52.711353239465936,
+          "wape_percent": 6.824272656594057
+        }
+      },
+      "raw_80pct_interval_coverage_percent": 78.68852459016394,
+      "raw_80pct_interval_mean_width_boardings": 146.57287397540983
+    },
+    "24233": {
+      "dates": 61,
+      "stop_days": 61,
+      "observed_boardings": 11302,
+      "metrics": {
+        "weekday_median_frozen": {
+          "mae_boardings": 22.811475409836067,
+          "wape_percent": 12.311980180499027
+        },
+        "weekday_median_available": {
+          "mae_boardings": 22.83606557377049,
+          "wape_percent": 12.325252167757919
+        },
+        "chronos_p50": {
+          "mae_boardings": 22.409566410252307,
+          "wape_percent": 12.095058848216162
+        }
+      },
+      "raw_80pct_interval_coverage_percent": 77.04918032786885,
+      "raw_80pct_interval_mean_width_boardings": 61.11410322345671
+    },
+    "24239": {
+      "dates": 61,
+      "stop_days": 61,
+      "observed_boardings": 21280,
+      "metrics": {
+        "weekday_median_frozen": {
+          "mae_boardings": 32.17213114754098,
+          "wape_percent": 9.222274436090226
+        },
+        "weekday_median_available": {
+          "mae_boardings": 30.565573770491802,
+          "wape_percent": 8.761748120300751
+        },
+        "chronos_p50": {
+          "mae_boardings": 28.266422959624744,
+          "wape_percent": 8.102687032599198
+        }
+      },
+      "raw_80pct_interval_coverage_percent": 88.52459016393442,
+      "raw_80pct_interval_mean_width_boardings": 109.73236033955558
+    },
+    "24240": {
+      "dates": 61,
+      "stop_days": 61,
+      "observed_boardings": 11133,
+      "metrics": {
+        "weekday_median_frozen": {
+          "mae_boardings": 28.172131147540984,
+          "wape_percent": 15.436090900925178
+        },
+        "weekday_median_available": {
+          "mae_boardings": 27.524590163934427,
+          "wape_percent": 15.081289858977813
+        },
+        "chronos_p50": {
+          "mae_boardings": 24.376061111200052,
+          "wape_percent": 13.356145942542021
+        }
+      },
+      "raw_80pct_interval_coverage_percent": 83.60655737704919,
+      "raw_80pct_interval_mean_width_boardings": 70.76953462694512
+    },
+    "24241": {
+      "dates": 61,
+      "stop_days": 61,
+      "observed_boardings": 16012,
+      "metrics": {
+        "weekday_median_frozen": {
+          "mae_boardings": 35.721311475409834,
+          "wape_percent": 13.60854359230577
+        },
+        "weekday_median_available": {
+          "mae_boardings": 31.221311475409838,
+          "wape_percent": 11.894204346739945
+        },
+        "chronos_p50": {
+          "mae_boardings": 29.1121708604156,
+          "wape_percent": 11.090697117695177
+        }
+      },
+      "raw_80pct_interval_coverage_percent": 75.40983606557377,
+      "raw_80pct_interval_mean_width_boardings": 78.41624075467469
+    },
+    "24244": {
+      "dates": 61,
+      "stop_days": 61,
+      "observed_boardings": 83380,
+      "metrics": {
+        "weekday_median_frozen": {
+          "mae_boardings": 151.3360655737705,
+          "wape_percent": 11.07159990405373
+        },
+        "weekday_median_available": {
+          "mae_boardings": 142.0737704918033,
+          "wape_percent": 10.39397937155193
+        },
+        "chronos_p50": {
+          "mae_boardings": 135.16476490458504,
+          "wape_percent": 9.888523218013537
+        }
+      },
+      "raw_80pct_interval_coverage_percent": 80.32786885245902,
+      "raw_80pct_interval_mean_width_boardings": 364.07506923988217
+    },
+    "24245": {
+      "dates": 61,
+      "stop_days": 61,
+      "observed_boardings": 103292,
+      "metrics": {
+        "weekday_median_frozen": {
+          "mae_boardings": 100.1639344262295,
+          "wape_percent": 5.915269333539867
+        },
+        "weekday_median_available": {
+          "mae_boardings": 100.13934426229508,
+          "wape_percent": 5.9138171397591295
+        },
+        "chronos_p50": {
+          "mae_boardings": 107.05314261014344,
+          "wape_percent": 6.322117588214722
+        }
+      },
+      "raw_80pct_interval_coverage_percent": 83.60655737704919,
+      "raw_80pct_interval_mean_width_boardings": 319.9021496381916
+    },
+    "24246": {
+      "dates": 61,
+      "stop_days": 61,
+      "observed_boardings": 2102,
+      "metrics": {
+        "weekday_median_frozen": {
+          "mae_boardings": 7.10655737704918,
+          "wape_percent": 20.623215984776404
+        },
+        "weekday_median_available": {
+          "mae_boardings": 6.877049180327869,
+          "wape_percent": 19.957183634633683
+        },
+        "chronos_p50": {
+          "mae_boardings": 6.282900669535652,
+          "wape_percent": 18.232965786949325
+        }
+      },
+      "raw_80pct_interval_coverage_percent": 78.68852459016394,
+      "raw_80pct_interval_mean_width_boardings": 24.108865550306977
+    },
+    "24396": {
+      "dates": 61,
+      "stop_days": 61,
+      "observed_boardings": 46945,
+      "metrics": {
+        "weekday_median_frozen": {
+          "mae_boardings": 49.942622950819676,
+          "wape_percent": 6.489508999893492
+        },
+        "weekday_median_available": {
+          "mae_boardings": 45.64754098360656,
+          "wape_percent": 5.931409095750346
+        },
+        "chronos_p50": {
+          "mae_boardings": 40.544648717661374,
+          "wape_percent": 5.268342894402692
+        }
+      },
+      "raw_80pct_interval_coverage_percent": 75.40983606557377,
+      "raw_80pct_interval_mean_width_boardings": 125.53778126200692
+    }
+  }
+}

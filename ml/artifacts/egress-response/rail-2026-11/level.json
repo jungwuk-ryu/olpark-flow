@@ -1,0 +1,27 @@
+{
+  "ratio": 1.1603831950183094,
+  "statistic": "median over evenings",
+  "months": [
+    "2026-02",
+    "2026-03",
+    "2026-04",
+    "2026-05",
+    "2026-06",
+    "2026-07"
+  ],
+  "site_days": 133,
+  "rule": {
+    "lookback_months": 6,
+    "min_site_days": 30,
+    "limits": [
+      0.8,
+      1.5
+    ],
+    "sites_for_ratio": [
+      "9:4136",
+      "5:2556"
+    ],
+    "status": "post-hoc; not part of the frozen evaluation"
+  },
+  "meaning": "observed over forecast crowd boardings at the two Olympic Park station-lines in recent held-out months"
+}

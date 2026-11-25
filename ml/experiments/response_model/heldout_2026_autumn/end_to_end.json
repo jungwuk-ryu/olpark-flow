@@ -1,0 +1,133 @@
+{
+  "station": "올림픽공원역 5·9호선 합계",
+  "network_node": "n-dest-a",
+  "packet": "D-1, public notice only, bundle fitted through 2026-07-31",
+  "by_kind": {
+    "dome": {
+      "evenings": 24,
+      "people_delivered_over_observed_crowd": {
+        "median": 0.7312818007844956,
+        "p10": 0.4854825852519157,
+        "p90": 0.8654601144382623
+      },
+      "busiest_five_minutes_delivered_over_observed": {
+        "median": 0.8055861316890505,
+        "p10": 0.6586788204334402,
+        "p90": 1.0052345046761157
+      },
+      "busiest_five_minutes_time_error_min": {
+        "mean": 10.208333333333334,
+        "mean_abs": 20.208333333333332
+      },
+      "minutes_above_half_peak_median": {
+        "delivered": 35.0,
+        "observed": 20.0
+      },
+      "largest_queue_persons": {
+        "median": 2619.0,
+        "max": 2839.0
+      },
+      "minutes_with_a_queue_median": 31.0,
+      "queue_person_minutes_median": 53378.5,
+      "t10_error_min": {
+        "mean": 36.17873545189375,
+        "mean_abs": 38.333261734306255,
+        "sd": 28.64929080199544
+      },
+      "t50_error_min": {
+        "mean": 9.461976628562118,
+        "mean_abs": 19.33334869588167,
+        "sd": 22.175187923035473
+      },
+      "t90_error_min": {
+        "mean": -45.33562906200863,
+        "mean_abs": 49.83774107143112,
+        "sd": 38.22488604482445
+      }
+    },
+    "festival": {
+      "evenings": 4,
+      "people_delivered_over_observed_crowd": {
+        "median": 0.0,
+        "p10": 0.0,
+        "p90": 0.0
+      },
+      "busiest_five_minutes_delivered_over_observed": {
+        "median": 0.04568320526531407,
+        "p10": 0.03760851911173691,
+        "p90": 0.11632720826219516
+      },
+      "busiest_five_minutes_time_error_min": {
+        "mean": -152.5,
+        "mean_abs": 152.5
+      },
+      "minutes_above_half_peak_median": {
+        "delivered": 0.0,
+        "observed": 27.5
+      },
+      "largest_queue_persons": {
+        "median": 0.0,
+        "max": 0.0
+      },
+      "minutes_with_a_queue_median": 0.0,
+      "queue_person_minutes_median": 0.0,
+      "t10_error_min": {
+        "mean": NaN,
+        "mean_abs": NaN,
+        "sd": NaN
+      },
+      "t50_error_min": {
+        "mean": NaN,
+        "mean_abs": NaN,
+        "sd": NaN
+      },
+      "t90_error_min": {
+        "mean": NaN,
+        "mean_abs": NaN,
+        "sd": NaN
+      }
+    },
+    "hall": {
+      "evenings": 11,
+      "people_delivered_over_observed_crowd": {
+        "median": 0.0,
+        "p10": 0.0,
+        "p90": 0.0
+      },
+      "busiest_five_minutes_delivered_over_observed": {
+        "median": 0.07933293477182539,
+        "p10": 0.03167533022690438,
+        "p90": 0.20291642277070066
+      },
+      "busiest_five_minutes_time_error_min": {
+        "mean": -109.54545454545455,
+        "mean_abs": 109.54545454545455
+      },
+      "minutes_above_half_peak_median": {
+        "delivered": 0.0,
+        "observed": 15.0
+      },
+      "largest_queue_persons": {
+        "median": 0.0,
+        "max": 0.0
+      },
+      "minutes_with_a_queue_median": 0.0,
+      "queue_person_minutes_median": 0.0,
+      "t10_error_min": {
+        "mean": NaN,
+        "mean_abs": NaN,
+        "sd": NaN
+      },
+      "t50_error_min": {
+        "mean": NaN,
+        "mean_abs": NaN,
+        "sd": NaN
+      },
+      "t90_error_min": {
+        "mean": NaN,
+        "mean_abs": NaN,
+        "sd": NaN
+      }
+    }
+  }
+}

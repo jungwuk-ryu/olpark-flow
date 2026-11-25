@@ -1,0 +1,319 @@
+{
+  "station": "올림픽공원역 5·9호선 합계",
+  "forecast": "locked: fitted through 2026-07-31, D-1 attendance estimate",
+  "window": "from one hour after the last large session's posted start to midnight",
+  "by_kind": {
+    "dome": {
+      "evenings": 22,
+      "hourly_fit": {
+        "busiest_five_minutes_forecast_over_observed": {
+          "median": 0.4468832048607576,
+          "p10": 0.365487605478506,
+          "p90": 0.648662441945259
+        },
+        "the_same_if_the_evening_total_were_right": {
+          "median": 0.4873939028467399,
+          "p10": 0.35249558729369906,
+          "p90": 0.6834268509504234
+        },
+        "busiest_five_minutes_time_error_min": {
+          "mean": 15.454545454545455,
+          "mean_abs": 20.90909090909091
+        },
+        "minutes_above_half_peak_median": 70.0,
+        "t10_error_min": {
+          "mean": 22.892969222514093,
+          "mean_abs": 25.4778820397859,
+          "sd": 18.781677361277573
+        },
+        "t50_error_min": {
+          "mean": 25.591681243788354,
+          "mean_abs": 25.645467163246323,
+          "sd": 18.797017752261713
+        },
+        "t90_error_min": {
+          "mean": 20.691394562668805,
+          "mean_abs": 28.38293794227434,
+          "sd": 27.470949093814653
+        }
+      },
+      "single_show": {
+        "busiest_five_minutes_forecast_over_observed": {
+          "median": 0.5878988026441274,
+          "p10": 0.46902616229848365,
+          "p90": 0.8378672270464614
+        },
+        "the_same_if_the_evening_total_were_right": {
+          "median": 0.6297166359447148,
+          "p10": 0.45919569782429515,
+          "p90": 0.8825612922836807
+        },
+        "busiest_five_minutes_time_error_min": {
+          "mean": 13.636363636363637,
+          "mean_abs": 20.0
+        },
+        "minutes_above_half_peak_median": 50.0,
+        "t10_error_min": {
+          "mean": 25.88221820199593,
+          "mean_abs": 27.600892839299025,
+          "sd": 18.879446321734388
+        },
+        "t50_error_min": {
+          "mean": 23.07527404886736,
+          "mean_abs": 23.478202627140853,
+          "sd": 18.80406140464929
+        },
+        "t90_error_min": {
+          "mean": 12.154510343546834,
+          "mean_abs": 24.746035402086363,
+          "sd": 28.430612573598186
+        }
+      },
+      "observed": {
+        "busiest_five_minutes_median": 1220.0,
+        "busiest_five_minutes_max": 1625.0,
+        "minutes_above_half_peak_median": 20.0,
+        "minutes_from_10_to_90_pct_median": 107.96141062292634
+      }
+    },
+    "festival": {
+      "evenings": 6,
+      "hourly_fit": {
+        "busiest_five_minutes_forecast_over_observed": {
+          "median": 0.6331140446819656,
+          "p10": 0.43475221328609115,
+          "p90": 0.7488586447067749
+        },
+        "the_same_if_the_evening_total_were_right": {
+          "median": 0.5693008103575332,
+          "p10": 0.39767601018510934,
+          "p90": 0.628217539405898
+        },
+        "busiest_five_minutes_time_error_min": {
+          "mean": 43.333333333333336,
+          "mean_abs": 65.0
+        },
+        "minutes_above_half_peak_median": 100.0,
+        "t10_error_min": {
+          "mean": 24.421689283323378,
+          "mean_abs": 24.421689283323378,
+          "sd": 18.023009028595478
+        },
+        "t50_error_min": {
+          "mean": 38.26712032856062,
+          "mean_abs": 50.579350305141965,
+          "sd": 52.611949921287405
+        },
+        "t90_error_min": {
+          "mean": 38.686836842480034,
+          "mean_abs": 46.0337474869043,
+          "sd": 56.64100207230617
+        }
+      },
+      "single_show": {
+        "busiest_five_minutes_forecast_over_observed": {
+          "median": 0.6812379603254415,
+          "p10": 0.43475221328609115,
+          "p90": 0.8171373050861375
+        },
+        "the_same_if_the_evening_total_were_right": {
+          "median": 0.6073699518696433,
+          "p10": 0.39767601018510934,
+          "p90": 0.6870583228297051
+        },
+        "busiest_five_minutes_time_error_min": {
+          "mean": 40.833333333333336,
+          "mean_abs": 62.5
+        },
+        "minutes_above_half_peak_median": 95.0,
+        "t10_error_min": {
+          "mean": 25.102332385274394,
+          "mean_abs": 25.102332385274394,
+          "sd": 17.17175287029356
+        },
+        "t50_error_min": {
+          "mean": 37.21324360957855,
+          "mean_abs": 49.5254735861599,
+          "sd": 53.23298759159246
+        },
+        "t90_error_min": {
+          "mean": 37.88295233581937,
+          "mean_abs": 45.6998367327061,
+          "sd": 56.8477133939257
+        }
+      },
+      "observed": {
+        "busiest_five_minutes_median": 813.0,
+        "busiest_five_minutes_max": 1222.0,
+        "minutes_above_half_peak_median": 35.0,
+        "minutes_from_10_to_90_pct_median": 153.66455163134617
+      }
+    },
+    "hall": {
+      "evenings": 11,
+      "hourly_fit": {
+        "busiest_five_minutes_forecast_over_observed": {
+          "median": 0.289428035714025,
+          "p10": 0.19746246299033576,
+          "p90": 0.6807995498093222
+        },
+        "the_same_if_the_evening_total_were_right": {
+          "median": 0.35951451615521895,
+          "p10": 0.28346770836495383,
+          "p90": 0.6934505883267371
+        },
+        "busiest_five_minutes_time_error_min": {
+          "mean": -2.272727272727273,
+          "mean_abs": 45.0
+        },
+        "minutes_above_half_peak_median": 110.0,
+        "t10_error_min": {
+          "mean": 35.30910233230663,
+          "mean_abs": 35.30910233230663,
+          "sd": 24.604237058672187
+        },
+        "t50_error_min": {
+          "mean": 25.417260884388103,
+          "mean_abs": 40.71557197951242,
+          "sd": 44.87931433541097
+        },
+        "t90_error_min": {
+          "mean": 35.916967105844606,
+          "mean_abs": 38.02560213847774,
+          "sd": 33.123139762755905
+        }
+      },
+      "single_show": {
+        "busiest_five_minutes_forecast_over_observed": {
+          "median": 0.289428035714025,
+          "p10": 0.19746246299033576,
+          "p90": 0.6807995498093222
+        },
+        "the_same_if_the_evening_total_were_right": {
+          "median": 0.35951451615521895,
+          "p10": 0.28346770836495383,
+          "p90": 0.6934505883267371
+        },
+        "busiest_five_minutes_time_error_min": {
+          "mean": -2.272727272727273,
+          "mean_abs": 45.0
+        },
+        "minutes_above_half_peak_median": 110.0,
+        "t10_error_min": {
+          "mean": 35.30910233230663,
+          "mean_abs": 35.30910233230663,
+          "sd": 24.604237058672187
+        },
+        "t50_error_min": {
+          "mean": 25.417260884388103,
+          "mean_abs": 40.71557197951242,
+          "sd": 44.87931433541097
+        },
+        "t90_error_min": {
+          "mean": 35.916967105844606,
+          "mean_abs": 38.02560213847774,
+          "sd": 33.123139762755905
+        }
+      },
+      "observed": {
+        "busiest_five_minutes_median": 349.0,
+        "busiest_five_minutes_max": 1324.0,
+        "minutes_above_half_peak_median": 15.0,
+        "minutes_from_10_to_90_pct_median": 133.05909975134205
+      }
+    }
+  },
+  "dome_single_show_curve": {
+    "evenings": 22,
+    "rule": "KSPO DOME session expected to bring at least 70% of the evening's station crowd",
+    "published": {
+      "shape": 1.5,
+      "scale_hours": 0.45,
+      "onset_shift_minutes": 11.0,
+      "end_time_sd_minutes": 27.2
+    },
+    "fitted_on_five_minute_counts": {
+      "shape": 1.0,
+      "scale_hours": 0.6,
+      "median_shift_minutes": 2.5,
+      "mean_shift_minutes": 2.9545454545454546,
+      "shift_sd_minutes": 18.38101113235977,
+      "shift_p10_p90_minutes": [
+        -19.499999999999996,
+        25.0
+      ]
+    },
+    "each_evening_left_out_knowing_its_size_and_onset": {
+      "busiest_five_minutes_forecast_over_observed": {
+        "median": 0.9225173122842514,
+        "p10": 0.6896558010411168,
+        "p90": 1.4608670804298745
+      }
+    },
+    "surge_onset_minutes_after_posted_start": {
+      "median": 152.5,
+      "sd": 28.553270499162565,
+      "p10": 121.0,
+      "p90": 169.5
+    },
+    "share_of_the_two_hour_wave_boarded_after_onset": {
+      "+5min": {
+        "median": 0.06472628815531173,
+        "p10": 0.04085012185434655,
+        "p90": 0.1253960287032004
+      },
+      "+10min": {
+        "median": 0.18146690609007388,
+        "p10": 0.0828949102092756,
+        "p90": 0.34405915666857434
+      },
+      "+15min": {
+        "median": 0.29733018129988203,
+        "p10": 0.11477436508836963,
+        "p90": 0.5156345411283974
+      },
+      "+20min": {
+        "median": 0.406129313010205,
+        "p10": 0.14767370009046116,
+        "p90": 0.6174991062637264
+      },
+      "+30min": {
+        "median": 0.5670109997755849,
+        "p10": 0.182719630023926,
+        "p90": 0.7223481250545363
+      },
+      "+40min": {
+        "median": 0.6828667118589018,
+        "p10": 0.2857131637336031,
+        "p90": 0.8103898898631626
+      },
+      "+60min": {
+        "median": 0.8054546105582845,
+        "p10": 0.3765699074234766,
+        "p90": 0.9111032581356864
+      },
+      "+90min": {
+        "median": 0.9082492407204341,
+        "p10": 0.806254857791841,
+        "p90": 0.9730705483046223
+      },
+      "+120min": {
+        "median": 0.9999999999999998,
+        "p10": 0.9999999999999992,
+        "p90": 1.0000000000000004
+      }
+    },
+    "busiest_five_minutes": {
+      "persons_median": 1220.0,
+      "persons_p10": 972.4,
+      "persons_p90": 1464.9,
+      "persons_max": 1625.0,
+      "share_of_evening_crowd_median": 0.1310068109975016,
+      "share_of_evening_crowd_p10_p90": [
+        0.08968409237755522,
+        0.17658375573829613
+      ],
+      "correlation_with_crowd_size": 0.051898205106279544
+    }
+  }
+}

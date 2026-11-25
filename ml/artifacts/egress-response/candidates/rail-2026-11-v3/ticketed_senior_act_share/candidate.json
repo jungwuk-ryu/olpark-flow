@@ -1,0 +1,58 @@
+{
+  "candidate": {
+    "name": "ticketed_senior_act_share",
+    "what": "The senior-audience effect on the rail share is learned from the sessions that have a ticket count (from 2025-01-01); earlier years get their own, so a small crowd is not read as a crowd that rides less. An act's own earlier rail share per ticket, from those same years, moves its forecast.",
+    "share_features": [
+      "season_cos",
+      "season_sin",
+      "before_2024",
+      "before_2025",
+      "before_2026",
+      "before_2027",
+      "before_2028",
+      "before_2029",
+      "before_2030",
+      "aud_general",
+      "aud_foreign",
+      "aud_senior_ticketed",
+      "aud_senior_earlier",
+      "act_share_ticketed"
+    ],
+    "timing_features": [
+      "runtime_dev",
+      "runtime_missing",
+      "act_shift_hist"
+    ],
+    "options": {
+      "loss_scale": 5000.0,
+      "share_cap": 1.0,
+      "scale_limit_hours": 1.0
+    },
+    "act_lag_days": 14,
+    "ticket_era_from": "2025-01-01"
+  },
+  "beside_bundle": "rail-2026-11-v3",
+  "trained_through": "2026-11-15",
+  "fitted_at": "2026-11-25T17:21:11+09:00",
+  "files_sha256": {
+    "model.json": "cd1331429e06780e105672f79871615b6059d6a53789b5119db065b9c00ac2a2",
+    "act_history.csv": "29188b0d44ce794a000cbcb705303b0c26b098fe7934b2879781ccb94d745964"
+  },
+  "share_effects": {
+    "season_cos": -0.11015994152177863,
+    "season_sin": -0.013228305600752539,
+    "before_2024": 0.04548862452951227,
+    "before_2025": -0.15468657621533563,
+    "before_2026": -0.15117008276811061,
+    "before_2027": 9.999998465447917e-10,
+    "before_2028": 9.999998465447913e-10,
+    "before_2029": 9.999998465447917e-10,
+    "before_2030": 9.999998465447913e-10,
+    "aud_general": -0.0614591966209906,
+    "aud_foreign": 0.08278080192205745,
+    "aud_senior_ticketed": -0.19194123335758725,
+    "aud_senior_earlier": -0.6985713684130037,
+    "act_share_ticketed": -0.21220384265098263
+  },
+  "status": "candidate: not read by the packet builder"
+}

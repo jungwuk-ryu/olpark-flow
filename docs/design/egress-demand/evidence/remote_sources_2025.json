@@ -1,0 +1,98 @@
+{
+  "source_commit": "48e50c3614e2b8786062278ede9c2b822ea6f4b7",
+  "source_files": {
+    "API_CPM_008": {
+      "permalink": "https://github.com/jungwuk-ryu/olpark-flow/blob/48e50c3614e2b8786062278ede9c2b822ea6f4b7/geo/data/olympicpark_inout_2025_full.csv.gz",
+      "sha256": "97a69c0e4ef2e140789622b6064e3d96f865a5bca985fa8481a2a3edf6fc76b5",
+      "bytes": 32828737
+    },
+    "API_CPM_009": {
+      "permalink": "https://github.com/jungwuk-ryu/olpark-flow/blob/48e50c3614e2b8786062278ede9c2b822ea6f4b7/geo/data/olympicpark_linked_2025.csv.gz",
+      "sha256": "c8642669bdab15a7625d77d7fd8aaa6b5b7c5ce0a5d59799104e46e258aa2015",
+      "bytes": 122437
+    }
+  },
+  "unit": "입·출차는 차량 건수, 집계 시간대는 한국 현지시각 [h, h+1시간).",
+  "API_CPM_008": {
+    "rows": 2411225,
+    "entry_time_range_kst": [
+      "2025-01-01 00:00:00",
+      "2025-12-07 16:08:25"
+    ],
+    "exit_time_range_kst": [
+      "2025-01-01 00:05:00",
+      "2026-02-17 14:51:17"
+    ],
+    "entry_dates_with_records_in_2025": 308,
+    "entries_by_month_2025": {
+      "01": 188895,
+      "02": 239885,
+      "03": 268051,
+      "04": 291217,
+      "05": 304213,
+      "06": 280427,
+      "07": 297554,
+      "08": 65534,
+      "09": 65534,
+      "10": 278847,
+      "11": 65534,
+      "12": 65534
+    },
+    "recorded_movements_2025_07_31": {
+      "IN": 0,
+      "OUT": 264
+    },
+    "december_cutoff_kst": "2025-12-07 16:08:25",
+    "recorded_exits_after_cutoff_through_end_of_2025": 3555,
+    "recorded_exits_in_2026": 19,
+    "entry_later_than_exit_rows": 6288
+  },
+  "API_CPM_009": {
+    "rows": 7803,
+    "issued_at_range_kst": [
+      "2025-01-01 00:00:00",
+      "2025-12-31 14:00:00"
+    ],
+    "calendar_hours_2025": 8760,
+    "absent_hours": 957,
+    "holiday_named_hours": 432,
+    "holiday_blank_hours": 7371,
+    "weekend_and_holiday_named_hours": 48,
+    "source_holiday_labels_by_hour": {
+      "개천절": 24,
+      "광복절": 24,
+      "구정 연휴": 72,
+      "대통령선거": 24,
+      "부처님오신날(5.5.) 대체공휴일": 24,
+      "삼일절": 24,
+      "삼일절(3.3.) 대체공휴일": 24,
+      "신정": 24,
+      "어린이날": 24,
+      "임시 공휴일": 24,
+      "추석 연휴": 72,
+      "추석 연휴(10.5.) 대체공휴일": 24,
+      "한글날": 24,
+      "현충일": 24
+    }
+  },
+  "checks_over_all_009_rows": {
+    "hours_with_any_008_entry_or_exit": 7803,
+    "active_hours_without_009_row": 0,
+    "009_rows_without_008_activity": 0,
+    "parking_formula": "S[-1]=0; S[h]=S[h-1]+IN_008[h]-OUT_008[h]; compare parking_count[h] to S[h].",
+    "parking_matches_including_reversed_pairs": 7803,
+    "parking_matches_excluding_reversed_pairs": 7704,
+    "visitor_formula": "visitor_count[h] = parking_count[h] * (5 if KST Saturday/Sunday or nonblank 009 holiday[h] else 3)",
+    "visitor_matches": 7803,
+    "rows_by_visitor_multiplier": {
+      "3": 5224,
+      "5": 2579
+    }
+  },
+  "interpretation": [
+    "휴일은 009 응답의 ‘휴일’ 항목에 기록된 명칭이다. 빈칸은 제공자 표기의 부재이며 법정 공휴일 여부는 별도로 대조하지 않았다.",
+    "역전된 쌍도 각각의 원래 입·출차 시각에 집계했다. 역전 쌍 전체를 제외한 결과를 민감도 비교용으로 함께 제시한다.",
+    "두 수식은 고정한 원본에서 관찰한 수치 관계다. 시작 잔액 0은 재현 연산의 초기값이다. 제공기관 산식·실제 점유·관객 수의 독립 검증에는 현장 자료가 필요하다.",
+    "009의 두 수치로 008에 없는 입차나 특정 공연의 관람·퇴장 인원을 복원할 수 없다. 두 자료를 독립된 정답으로 교차 검증하면 같은 장부를 중복 평가한다."
+  ]
+}

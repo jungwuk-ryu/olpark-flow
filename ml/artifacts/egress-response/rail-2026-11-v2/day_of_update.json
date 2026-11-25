@@ -1,0 +1,19 @@
+{
+  "intercept": 0.06965343853222396,
+  "slope": 0.48574440494167365,
+  "evenings": 179,
+  "log_residual_sd": 0.2297869953387536,
+  "arrival_hours": 8,
+  "update_from_hours_after_start": 1,
+  "multiplier_limits": [
+    0.5,
+    2.5
+  ],
+  "sites": [
+    "9:4136",
+    "5:2556"
+  ],
+  "usual_alightings": "usual_alightings.csv",
+  "usual_alightings_through": "2026-07-31",
+  "meaning": "multiplier for forecast crowd boardings = exp(intercept) * (arrival excess / forecast crowd) ** slope"
+}

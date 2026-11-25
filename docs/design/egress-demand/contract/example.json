@@ -1,0 +1,150 @@
+{
+  "contract_version": "olpark-demand/1.0",
+  "usage": "synthetic_example",
+  "run_id": "example-run-002",
+  "supersedes_run_id": "example-run-001",
+  "as_of": "2026-11-28T22:45:00+09:00",
+  "issued_at": "2026-11-28T22:45:12+09:00",
+  "timezone": "Asia/Seoul",
+  "versions": {
+    "network_revision": "48e50c3614e2b8786062278ede9c2b822ea6f4b7",
+    "mapping_version": "example-routing-v1",
+    "availability_version": "example-normal-routes-v1",
+    "data_snapshot": "example-data-v1",
+    "model_bundle": "example-model-v1",
+    "operator_input_snapshot": "example-brief-v2",
+    "assumptions_version": "example-assumptions-v1",
+    "producer_revision": "example-producer-v1"
+  },
+  "scenario": {
+    "scenario_id": "example-central",
+    "kind": "operator_scenario",
+    "seed": 17,
+    "draw_set_id": null,
+    "draw_index": null,
+    "evidence_ids": ["brief", "allocation"]
+  },
+  "horizon": {
+    "start": "2026-11-28T23:30:00+09:00",
+    "end": "2026-11-29T01:00:00+09:00",
+    "bin_minutes": 5,
+    "time_basis": "venue_exit_departure",
+    "unit": "persons"
+  },
+  "events": [
+    {
+      "event_id": "example-show-a",
+      "event_revision": "a-v2",
+      "venue_id": "kspo-dome",
+      "status": "scheduled",
+      "expected_end_at": "2026-11-28T23:25:00+09:00",
+      "ledger": {
+        "total_exit_persons": 120,
+        "departed_before_horizon_persons": 12,
+        "routed_within_horizon_persons": 80,
+        "unassigned_within_horizon_persons": 20,
+        "remaining_after_horizon_persons": 8
+      },
+      "od": [
+        {
+          "origin_node_id": "n-kspo-exit-south",
+          "destination_node_id": "n-dest-a",
+          "first_mode": "rail",
+          "departure_start": "2026-11-28T23:55:00+09:00",
+          "persons": 48,
+          "evidence_ids": ["allocation"]
+        },
+        {
+          "origin_node_id": "n-kspo-exit-east",
+          "destination_node_id": "n-dest-b",
+          "first_mode": "rail",
+          "departure_start": "2026-11-29T00:00:00+09:00",
+          "persons": 32,
+          "evidence_ids": ["allocation"]
+        }
+      ],
+      "unrouted": [
+        {
+          "departure_start": "2026-11-29T00:00:00+09:00",
+          "origin_node_id": "n-kspo-exit-east",
+          "intended_destination_id": "P1",
+          "first_mode": "parked_vehicle",
+          "reason": "unmapped_destination",
+          "persons": 10,
+          "evidence_ids": ["allocation"]
+        },
+        {
+          "departure_start": null,
+          "origin_node_id": null,
+          "intended_destination_id": null,
+          "first_mode": "unknown",
+          "reason": "unknown_first_mode",
+          "persons": 10,
+          "evidence_ids": ["allocation"]
+        }
+      ],
+      "evidence_ids": ["brief", "allocation"]
+    },
+    {
+      "event_id": "example-show-b",
+      "event_revision": "b-v1",
+      "venue_id": "olympic-hall",
+      "status": "scheduled",
+      "expected_end_at": "2026-11-28T23:20:00+09:00",
+      "ledger": {
+        "total_exit_persons": 24,
+        "departed_before_horizon_persons": 2,
+        "routed_within_horizon_persons": 0,
+        "unassigned_within_horizon_persons": 18,
+        "remaining_after_horizon_persons": 4
+      },
+      "od": [],
+      "unrouted": [{
+        "departure_start": "2026-11-28T23:50:00+09:00",
+        "origin_node_id": null,
+        "intended_destination_id": "n-dest-a",
+        "first_mode": "rail",
+        "reason": "unmapped_origin",
+        "persons": 18,
+        "evidence_ids": ["allocation"]
+      }],
+      "evidence_ids": ["brief", "allocation"]
+    }
+  ],
+  "totals": {
+    "total_exit_persons": 144,
+    "departed_before_horizon_persons": 14,
+    "routed_within_horizon_persons": 80,
+    "unassigned_within_horizon_persons": 38,
+    "remaining_after_horizon_persons": 12
+  },
+  "vehicle_gate_forecasts": [{
+    "gate_id": "gate-east-2",
+    "interval_start": "2026-11-29T00:00:00+09:00",
+    "interval_end": "2026-11-29T01:00:00+09:00",
+    "source_resolution_minutes": 60,
+    "scope": "all_traffic",
+    "time_basis": "vehicle_exit_passage",
+    "unit": "vehicles",
+    "vehicles": 35,
+    "prediction_interval": null,
+    "evidence_ids": ["gate-forecast"]
+  }],
+  "evidence": [
+    {
+      "id": "brief", "kind": "operator_input", "ref": "fixture:brief-v2",
+      "available_at": "2026-11-28T22:40:00+09:00",
+      "description": "가상 공연 두 회차의 관객수와 종료 예정시각을 설정한 예제 입력이다."
+    },
+    {
+      "id": "allocation", "kind": "assumption", "ref": "fixture:allocation-v1",
+      "available_at": "2026-11-28T22:41:00+09:00",
+      "description": "자정 경계, 주차장 보행 경로 미연결, 올림픽홀 출발 노드 미등록을 검산하기 위해 설정한 인원과 출발시각이다."
+    },
+    {
+      "id": "gate-forecast", "kind": "model", "ref": "fixture:gate-forecast-v1",
+      "available_at": "2026-11-28T22:44:00+09:00",
+      "description": "동2문으로 1시간 동안 출차하는 전체 차량의 가상 예측값이다. 이 예제의 예측구간은 미발행 상태다."
+    }
+  ]
+}

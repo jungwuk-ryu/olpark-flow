@@ -1,0 +1,102 @@
+{
+  "question": "operator hourly files (model's training source) over Seoul's card-based daily table, same station-line and date",
+  "dates": "every third date from 2026-03-14 to the end of each operator file",
+  "by_site_direction": {
+    "5:2556:off": {
+      "days": 37,
+      "operator_total": 236267,
+      "card_total": 234663,
+      "ratio_of_totals": 1.0068,
+      "median_daily_ratio": 1.0071,
+      "daily_ratio_p10_p90": [
+        1.0047,
+        1.01
+      ],
+      "share_before_06": 0.0047
+    },
+    "5:2556:on": {
+      "days": 37,
+      "operator_total": 253926,
+      "card_total": 252549,
+      "ratio_of_totals": 1.0055,
+      "median_daily_ratio": 1.0059,
+      "daily_ratio_p10_p90": [
+        1.0037,
+        1.0083
+      ],
+      "share_before_06": 0.009
+    },
+    "8:2814:off": {
+      "days": 37,
+      "operator_total": 335878,
+      "card_total": 333379,
+      "ratio_of_totals": 1.0075,
+      "median_daily_ratio": 1.0074,
+      "daily_ratio_p10_p90": [
+        1.0063,
+        1.0089
+      ],
+      "share_before_06": 0.0059
+    },
+    "8:2814:on": {
+      "days": 37,
+      "operator_total": 325255,
+      "card_total": 322545,
+      "ratio_of_totals": 1.0084,
+      "median_daily_ratio": 1.0083,
+      "daily_ratio_p10_p90": [
+        1.0073,
+        1.0101
+      ],
+      "share_before_06": 0.0086
+    },
+    "9:4135:off": {
+      "days": 46,
+      "operator_total": 148496,
+      "card_total": 148496,
+      "ratio_of_totals": 1.0,
+      "median_daily_ratio": 1.0,
+      "daily_ratio_p10_p90": [
+        1.0,
+        1.0
+      ],
+      "share_before_06": 0.0036
+    },
+    "9:4135:on": {
+      "days": 47,
+      "operator_total": 170388,
+      "card_total": 170494,
+      "ratio_of_totals": 0.9994,
+      "median_daily_ratio": 0.9995,
+      "daily_ratio_p10_p90": [
+        0.9989,
+        0.9998
+      ],
+      "share_before_06": 0.0143
+    },
+    "9:4136:off": {
+      "days": 46,
+      "operator_total": 569173,
+      "card_total": 569164,
+      "ratio_of_totals": 1.0,
+      "median_daily_ratio": 1.0,
+      "daily_ratio_p10_p90": [
+        1.0,
+        1.0001
+      ],
+      "share_before_06": 0.0022
+    },
+    "9:4136:on": {
+      "days": 47,
+      "operator_total": 578985,
+      "card_total": 579775,
+      "ratio_of_totals": 0.9986,
+      "median_daily_ratio": 0.999,
+      "daily_ratio_p10_p90": [
+        0.9983,
+        0.9994
+      ],
+      "share_before_06": 0.0092
+    }
+  }
+}

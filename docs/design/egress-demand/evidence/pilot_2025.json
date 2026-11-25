@@ -1,0 +1,324 @@
+{
+  "study": "올림픽공원 2025년 지하철 승차·차량 출차 회고 예비실험",
+  "command_from_repo_root": "python docs/design/egress-demand/evidence/reproduce_pilot.py",
+  "python": "3.12.13",
+  "packages": {
+    "catboost": "1.2.10",
+    "numpy": "2.5.5",
+    "pandas": "3.1.1",
+    "pyarrow": "26.0.1",
+    "scipy": "1.18.1",
+    "tzdata": "2026.6"
+  },
+  "script_sha256": "e3739a95f7055d2882a83783b84fd6c664d87995a3d2973356012dd747b56a91",
+  "prepared_file_fingerprints": {
+    "calendar_2025.csv": {
+      "sha256": "2d811161c1096d72084f56d48e6c57106f07c6034abf891d964617457eba935b",
+      "bytes": 29029
+    },
+    "event_sessions_2025.csv": {
+      "sha256": "98924f5bc234ac9cc94cd5f7a21af4c7dfa2acafff535f20e85f372951dea723",
+      "bytes": 183106
+    },
+    "park_station_boardings_2025.csv": {
+      "sha256": "cb72a74110c017e39a61b3373e644c763ce73856283b2bcdc1a110516e0c2769",
+      "bytes": 2401580
+    },
+    "parking_gate_hourly_2025.parquet": {
+      "sha256": "c21ff1ed80407c4a045e370a708a4cb6b7d59d684703381d9b14d9dfbccad8f6",
+      "bytes": 200327
+    }
+  },
+  "protocol": {
+    "timezone": "Asia/Seoul",
+    "hours_inclusive": [
+      6,
+      23
+    ],
+    "event_cutoff": "공연 시작일 자정 이전에 최초 등록한 회차. 수정 이력은 확인되지 않았다.",
+    "end_window": "예정 시작 + 단일 30~600분 런타임에 해당하는 시각을 내림한 시간칸과 다음 두 시간칸. 같은 날짜만 사용.",
+    "outcomes": {
+      "rail": "역·호선별 시간당 총승차 인원",
+      "parking": "출입문별 시간당 총출차 대수"
+    },
+    "holiday_inputs": "당일 지정공휴일은 임시 공휴일 발표일을 비교했다. 다음날 휴일은 정제 달력 값을 사용했다.",
+    "parking_selection": "세 출구 모두 기록이 있는 시간. 7/31~8/3 제외, 12월 제외. 저수요·결측 시간 선택 편향이 가능하다.",
+    "features": {
+      "calendar": [
+        "site",
+        "hour",
+        "weekday",
+        "holiday",
+        "next_day_off"
+      ],
+      "additional_schedule": [
+        "sessions_today",
+        "starting",
+        "ending_0h",
+        "ending_1h",
+        "ending_2h",
+        "dome_ending",
+        "arena_ending",
+        "other_ending"
+      ]
+    },
+    "catboost": {
+      "iterations": 450,
+      "depth": 6,
+      "learning_rate": 0.05,
+      "loss_function": "Poisson",
+      "random_seed": 13,
+      "thread_count": 4,
+      "allow_writing_files": false,
+      "verbose": false,
+      "early_stopping_rounds": 60,
+      "prediction_type": "Exponent",
+      "cat_features": [
+        "site"
+      ]
+    },
+    "baseline": "1~8월 학습의 지점×시각×요일 중앙값. 미관측 조합은 지점×시각 중앙값.",
+    "paired_bootstrap": {
+      "resampling_unit": "공연 종료창이 있는 시험일",
+      "seed": 20261122,
+      "replicates": 10000,
+      "statistic": "날짜별로 함께 추출한 모든 지점·시간에서 절대오차 차이 합을 행 수(MAE) 또는 관측량 합(WAPE)으로 나눔",
+      "sign": "후보 − 요일·시간 중앙값. 음수는 후보 개선",
+      "interval": "양측 95% percentile (numpy quantile, linear)",
+      "units": {
+        "rail_mae": "명/역·호선·시간",
+        "parking_mae": "대/출입문·시간",
+        "wape_pp": "%p"
+      }
+    },
+    "limits": [
+      "공연 종료는 예정값이며 실제 관객 수·날씨·교통수단 선택은 실험 입력에 포함되지 않았다.",
+      "철도 연간 파일의 게시 시점이 2025년 뒤여서 실시간 조달 성능을 입증할 수 없다.",
+      "각 구간은 이미 학습한 고정 모델과 선별된 시험 날짜에 조건부다. 39일·16일의 작은 표본과 같은 투어·연속일의 상관은 별도 검증이 필요하다.",
+      "이미 열람한 2025년 시험 구간은 탐색용이다. 배포 판정은 사전등록한 미래 공연일에서 실시한다."
+    ]
+  },
+  "modes": {
+    "rail": {
+      "sites": [
+        "5:2556",
+        "8:2814",
+        "9:4135",
+        "9:4136"
+      ],
+      "splits": {
+        "train": {
+          "rows": 17496,
+          "days": 243,
+          "first_date": "2025-01-01",
+          "last_date": "2025-08-31"
+        },
+        "validation": {
+          "rows": 4392,
+          "days": 61,
+          "first_date": "2025-09-01",
+          "last_date": "2025-10-31"
+        },
+        "test": {
+          "rows": 4392,
+          "days": 61,
+          "first_date": "2025-11-01",
+          "last_date": "2025-12-31"
+        }
+      },
+      "median_fallback_test_rows": 0,
+      "fitted_trees": {
+        "catboost_calendar": 279,
+        "catboost_schedule": 449
+      },
+      "test_scopes": {
+        "all": {
+          "rows": 4392,
+          "days": 61,
+          "first_date": "2025-11-01",
+          "last_date": "2025-12-31",
+          "observed_sum": 1616597,
+          "metrics": {
+            "weekday_hour_median": {
+              "mae": 78.75,
+              "wape_pct": 21.4
+            },
+            "catboost_calendar": {
+              "mae": 83.64,
+              "wape_pct": 22.72
+            },
+            "catboost_schedule": {
+              "mae": 86.09,
+              "wape_pct": 23.39
+            }
+          }
+        },
+        "scheduled_end_window": {
+          "rows": 968,
+          "days": 39,
+          "first_date": "2025-11-01",
+          "last_date": "2025-12-31",
+          "observed_sum": 492269,
+          "metrics": {
+            "weekday_hour_median": {
+              "mae": 206.82,
+              "wape_pct": 40.67
+            },
+            "catboost_calendar": {
+              "mae": 210.2,
+              "wape_pct": 41.33
+            },
+            "catboost_schedule": {
+              "mae": 215.54,
+              "wape_pct": 42.38
+            }
+          },
+          "paired_candidate_minus_median": {
+            "catboost_calendar": {
+              "mae": {
+                "estimate": 3.38,
+                "percentile_95_ci": [
+                  -6.23,
+                  13.15
+                ]
+              },
+              "wape_pp": {
+                "estimate": 0.66,
+                "percentile_95_ci": [
+                  -1.2,
+                  2.65
+                ]
+              }
+            },
+            "catboost_schedule": {
+              "mae": {
+                "estimate": 8.71,
+                "percentile_95_ci": [
+                  -14.65,
+                  28.53
+                ]
+              },
+              "wape_pp": {
+                "estimate": 1.71,
+                "percentile_95_ci": [
+                  -2.85,
+                  5.7
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "parking": {
+      "sites": [
+        "남2",
+        "동2",
+        "북2"
+      ],
+      "splits": {
+        "train": {
+          "rows": 12282,
+          "days": 239,
+          "first_date": "2025-01-01",
+          "last_date": "2025-08-31"
+        },
+        "validation": {
+          "rows": 3168,
+          "days": 61,
+          "first_date": "2025-09-01",
+          "last_date": "2025-10-31"
+        },
+        "test": {
+          "rows": 1551,
+          "days": 30,
+          "first_date": "2025-11-01",
+          "last_date": "2025-11-30"
+        }
+      },
+      "median_fallback_test_rows": 3,
+      "fitted_trees": {
+        "catboost_calendar": 271,
+        "catboost_schedule": 346
+      },
+      "test_scopes": {
+        "all": {
+          "rows": 1551,
+          "days": 30,
+          "first_date": "2025-11-01",
+          "last_date": "2025-11-30",
+          "observed_sum": 245793,
+          "metrics": {
+            "weekday_hour_median": {
+              "mae": 30.42,
+              "wape_pct": 19.19
+            },
+            "catboost_calendar": {
+              "mae": 31.62,
+              "wape_pct": 19.95
+            },
+            "catboost_schedule": {
+              "mae": 29.88,
+              "wape_pct": 18.85
+            }
+          }
+        },
+        "scheduled_end_window": {
+          "rows": 180,
+          "days": 16,
+          "first_date": "2025-11-01",
+          "last_date": "2025-11-30",
+          "observed_sum": 43675,
+          "metrics": {
+            "weekday_hour_median": {
+              "mae": 108.06,
+              "wape_pct": 44.53
+            },
+            "catboost_calendar": {
+              "mae": 107.24,
+              "wape_pct": 44.2
+            },
+            "catboost_schedule": {
+              "mae": 94.84,
+              "wape_pct": 39.09
+            }
+          },
+          "paired_candidate_minus_median": {
+            "catboost_calendar": {
+              "mae": {
+                "estimate": -0.82,
+                "percentile_95_ci": [
+                  -6.86,
+                  5.3
+                ]
+              },
+              "wape_pp": {
+                "estimate": -0.34,
+                "percentile_95_ci": [
+                  -2.8,
+                  2.3
+                ]
+              }
+            },
+            "catboost_schedule": {
+              "mae": {
+                "estimate": -13.22,
+                "percentile_95_ci": [
+                  -25.77,
+                  -3.32
+                ]
+              },
+              "wape_pp": {
+                "estimate": -5.45,
+                "percentile_95_ci": [
+                  -10.47,
+                  -1.39
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

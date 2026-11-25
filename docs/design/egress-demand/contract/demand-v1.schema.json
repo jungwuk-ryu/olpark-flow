@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:olpark-flow:egress-demand:1.0",
+  "title": "올림픽공원 퇴장 수요 교환안 1.0",
+  "description": "한 예측 기준시각의 여러 공연에 대해 함께 실현될 수 있는 시나리오 한 개를 전달한다. 수신자는 스키마 검사 후 버전, 근거 가용시각, 인원 합계, 시간 경계, 중복, 경로와 통제를 검산한다.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "usage", "run_id", "supersedes_run_id", "as_of", "issued_at", "timezone", "versions", "scenario", "horizon", "events", "totals", "vehicle_gate_forecasts", "evidence"],
+  "properties": {
+    "contract_version": {"const": "olpark-demand/1.0"},
+    "usage": {"enum": ["synthetic_example", "historical_replay", "shadow", "operations"]},
+    "run_id": {"$ref": "#/$defs/id"},
+    "supersedes_run_id": {
+      "description": "같은 운영 건에서 대체할 이전 실행 ID. 최초 발행은 null이며 이전 본문은 보존한다.",
+      "oneOf": [{"type": "null"}, {"$ref": "#/$defs/id"}]
+    },
+    "as_of": {"$ref": "#/$defs/kst"},
+    "issued_at": {"$ref": "#/$defs/kst"},
+    "timezone": {"const": "Asia/Seoul"},
+    "versions": {
+      "type": "object",
+      "description": "이름별 레지스트리가 불변 스냅샷을 가리킨다. network_revision은 보행망 코드 및 기초 그래프의 Git 커밋이다. mapping_version은 목적지 및 첫 교통수단 대응표, availability_version은 해당 운영안의 시간별 경로 가용 상태를 고정한다.",
+      "additionalProperties": false,
+      "required": ["network_revision", "mapping_version", "availability_version", "data_snapshot", "model_bundle", "operator_input_snapshot", "assumptions_version", "producer_revision"],
+      "properties": {
+        "network_revision": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+        "mapping_version": {"$ref": "#/$defs/id"},
+        "availability_version": {"$ref": "#/$defs/id"},
+        "data_snapshot": {"$ref": "#/$defs/id"},
+        "model_bundle": {"$ref": "#/$defs/id"},
+        "operator_input_snapshot": {"$ref": "#/$defs/id"},
+        "assumptions_version": {"$ref": "#/$defs/id"},
+        "producer_revision": {"$ref": "#/$defs/id"}
+      }
+    },
+    "scenario": {
+      "description": "operator_scenario는 운영 가정을 적용한 한 가지 경우이다. joint_predictive_draw는 한 번에 함께 뽑은 표본이며, 같은 draw_set_id의 개별 표본을 각각 보행망에 통과시켜 지표 분포를 계산한다. 셀별 주변 분위수를 더한 값을 한 시나리오로 간주할 수 없다.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scenario_id", "kind", "seed", "draw_set_id", "draw_index", "evidence_ids"],
+      "properties": {
+        "scenario_id": {"$ref": "#/$defs/id"},
+        "kind": {"enum": ["operator_scenario", "joint_predictive_draw"]},
+        "seed": {"$ref": "#/$defs/count"},
+        "draw_set_id": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/id"}]},
+        "draw_index": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/count"}]},
+        "evidence_ids": {"$ref": "#/$defs/refs"}
+      },
+      "if": {"properties": {"kind": {"const": "operator_scenario"}}},
+      "then": {"properties": {"draw_set_id": {"type": "null"}, "draw_index": {"type": "null"}}},
+      "else": {"properties": {"draw_set_id": {"type": "string"}, "draw_index": {"type": "integer"}}}
+    },
+    "horizon": {
+      "description": "서울시각 5분 경계의 [start,end). 출발량은 공연장 출구를 통과하는 사람 수다. 이동 시간과 대기는 보행망에서 계산한다.",
+      "type": "object", "additionalProperties": false,
+      "required": ["start", "end", "bin_minutes", "time_basis", "unit"],
+      "properties": {
+        "start": {"$ref": "#/$defs/kst"}, "end": {"$ref": "#/$defs/kst"},
+        "bin_minutes": {"const": 5}, "time_basis": {"const": "venue_exit_departure"}, "unit": {"const": "persons"}
+      }
+    },
+    "events": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/event"}},
+    "totals": {"$ref": "#/$defs/ledger"},
+    "vehicle_gate_forecasts": {
+      "description": "게이트를 통과해 출차하는 전체 차량에 대한 구간별 중앙 예측값. 일반 이용객도 포함한다. 인원 장부와 별개인 검증·표시 지표다. 셀이 없으면 해당 구간·게이트에 대한 예측이 없는 상태이다.",
+      "type": "array", "items": {"$ref": "#/$defs/vehicle"}
+    },
+    "evidence": {
+      "description": "ref는 로컬 자료나 접근 통제된 스냅샷의 식별자다. 증거가 예측에 사용 가능했던 최초 시각을 기재한다.",
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "kind", "ref", "available_at", "description"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "kind": {"enum": ["observed", "operator_input", "assumption", "model"]},
+          "ref": {"type": "string", "minLength": 1},
+          "available_at": {"$ref": "#/$defs/kst"},
+          "description": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:/-]*$"},
+    "count": {"type": "integer", "minimum": 0, "maximum": 9007199254740991},
+    "positive_count": {"type": "integer", "minimum": 1, "maximum": 9007199254740991},
+    "kst": {"type": "string", "format": "date-time", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\+09:00$"},
+    "refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+    "ledger": {
+      "description": "한 사람을 처음 퇴장하는 시각과 첫 교통수단으로 한 번 센다. total_exit_persons는 시작 전 퇴장 + 기간 안 배정 + 기간 안 미배정 + 종료 이후 잔류 인원의 합이다. 경계 시각 end에 출발하는 사람은 종료 이후 잔류에 속한다.",
+      "type": "object", "additionalProperties": false,
+      "required": ["total_exit_persons", "departed_before_horizon_persons", "routed_within_horizon_persons", "unassigned_within_horizon_persons", "remaining_after_horizon_persons"],
+      "properties": {
+        "total_exit_persons": {"$ref": "#/$defs/count"},
+        "departed_before_horizon_persons": {"$ref": "#/$defs/count"},
+        "routed_within_horizon_persons": {"$ref": "#/$defs/count"},
+        "unassigned_within_horizon_persons": {"$ref": "#/$defs/count"},
+        "remaining_after_horizon_persons": {"$ref": "#/$defs/count"}
+      }
+    },
+    "event": {
+      "type": "object", "additionalProperties": false,
+      "required": ["event_id", "event_revision", "venue_id", "status", "expected_end_at", "ledger", "od", "unrouted", "evidence_ids"],
+      "properties": {
+        "event_id": {"$ref": "#/$defs/id", "description": "1회차의 안정적인 식별자다."},
+        "event_revision": {"$ref": "#/$defs/id"},
+        "venue_id": {"$ref": "#/$defs/id"},
+        "status": {"enum": ["scheduled", "in_progress", "cancelled_before_admission", "cancelled_after_admission"]},
+        "expected_end_at": {
+          "description": "발표 또는 운영 입력 기준의 종료 예상시각. 취소 또는 종료 미확정 시 null을 허용한다.",
+          "oneOf": [{"type": "null"}, {"$ref": "#/$defs/kst"}]
+        },
+        "ledger": {"$ref": "#/$defs/ledger"},
+        "od": {
+          "description": "유효 경로에 배정한 양의 출발 인원만 적는다. 출구·목적지·첫 교통수단·출발 구간의 조합은 공연별로 한 번만 나온다.",
+          "type": "array", "items": {"$ref": "#/$defs/od"}
+        },
+        "unrouted": {
+          "description": "기간 안에 출발할 것으로 보지만 실행 경로를 배정하지 못한 인원과 사유다. 보행망의 다른 방면으로 재분배할 때는 운영 승인 후 새 실행을 낸다.",
+          "type": "array", "items": {"$ref": "#/$defs/unrouted"}
+        },
+        "evidence_ids": {"$ref": "#/$defs/refs"}
+      }
+    },
+    "od": {
+      "type": "object", "additionalProperties": false,
+      "required": ["origin_node_id", "destination_node_id", "first_mode", "departure_start", "persons", "evidence_ids"],
+      "properties": {
+        "origin_node_id": {"$ref": "#/$defs/id"},
+        "destination_node_id": {"$ref": "#/$defs/id"},
+        "first_mode": {"enum": ["rail", "bus", "parked_vehicle", "taxi_pickup", "walk_only"]},
+        "departure_start": {"$ref": "#/$defs/kst"},
+        "persons": {"$ref": "#/$defs/positive_count"},
+        "evidence_ids": {"$ref": "#/$defs/refs"}
+      }
+    },
+    "unrouted": {
+      "type": "object", "additionalProperties": false,
+      "required": ["departure_start", "origin_node_id", "intended_destination_id", "first_mode", "reason", "persons", "evidence_ids"],
+      "properties": {
+        "departure_start": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/kst"}]},
+        "origin_node_id": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/id"}]},
+        "intended_destination_id": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/id"}]},
+        "first_mode": {"enum": ["rail", "bus", "parked_vehicle", "taxi_pickup", "walk_only", "unknown"]},
+        "reason": {"enum": ["unmapped_origin", "unmapped_destination", "route_closed", "unreachable", "unknown_first_mode", "time_unresolved"]},
+        "persons": {"$ref": "#/$defs/positive_count"},
+        "evidence_ids": {"$ref": "#/$defs/refs"}
+      }
+    },
+    "vehicle": {
+      "type": "object", "additionalProperties": false,
+      "required": ["gate_id", "interval_start", "interval_end", "source_resolution_minutes", "scope", "time_basis", "unit", "vehicles", "prediction_interval", "evidence_ids"],
+      "properties": {
+        "gate_id": {"$ref": "#/$defs/id"},
+        "interval_start": {"$ref": "#/$defs/kst"},
+        "interval_end": {"$ref": "#/$defs/kst"},
+        "source_resolution_minutes": {"$ref": "#/$defs/positive_count"},
+        "scope": {"const": "all_traffic"},
+        "time_basis": {"const": "vehicle_exit_passage"},
+        "unit": {"const": "vehicles"},
+        "vehicles": {"$ref": "#/$defs/count"},
+        "prediction_interval": {
+          "description": "게이트 1곳·시간구간 1개의 주변 예측구간이다. 독립된 교정 자료에서 검증한 버전을 붙인다. null은 구간 미발행이다.",
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object", "additionalProperties": false,
+              "required": ["lower_quantile", "upper_quantile", "lower_vehicles", "upper_vehicles", "calibration_version"],
+              "properties": {
+                "lower_quantile": {"type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 0.5},
+                "upper_quantile": {"type": "number", "exclusiveMinimum": 0.5, "exclusiveMaximum": 1},
+                "lower_vehicles": {"$ref": "#/$defs/count"},
+                "upper_vehicles": {"$ref": "#/$defs/count"},
+                "calibration_version": {"$ref": "#/$defs/id"}
+              }
+            }
+          ]
+        },
+        "evidence_ids": {"$ref": "#/$defs/refs"}
+      }
+    }
+  }
+}

@@ -1,0 +1,231 @@
+{
+  "dome_tickets_per_session": {
+    "2025": {
+      "sessions": 115,
+      "mean": 9899.0,
+      "median": 9796.0
+    },
+    "2026": {
+      "sessions": 98,
+      "mean": 9956.0,
+      "median": 10270.0
+    }
+  },
+  "attendance_model_fitted_through_2025_scored_on_2026": {
+    "dome": {
+      "sessions": 98,
+      "mean_tickets": 9955.897959183674,
+      "mae_listed_seats": 5090.9795918367345,
+      "bias_listed_seats": 5044.102040816327,
+      "mae_venue_median": 1663.9999999999998,
+      "mae_model": 1534.5201202776225,
+      "bias_model": -28.74568788615243,
+      "inside_80_band_pct": 83.6734693877551,
+      "act_with_history": {
+        "sessions": 42,
+        "mae_model": 1304.6421854096902,
+        "mae_venue_median": 1606.7619047619041
+      },
+      "act_without_history": {
+        "sessions": 56,
+        "mae_model": 1706.9285714285709,
+        "mae_venue_median": 1706.9285714285709
+      }
+    },
+    "arena": {
+      "sessions": 26,
+      "mean_tickets": 2922.923076923077,
+      "mae_listed_seats": 2080.076923076923,
+      "bias_listed_seats": 2080.076923076923,
+      "mae_venue_median": 511.57692307692236,
+      "mae_model": 468.5369333981394,
+      "bias_model": 349.5369333981387,
+      "inside_80_band_pct": 69.23076923076923,
+      "act_with_history": {
+        "sessions": 12,
+        "mae_model": 675.1633556959689,
+        "mae_venue_median": 768.4166666666652
+      },
+      "act_without_history": {
+        "sessions": 14,
+        "mae_model": 291.4285714285712,
+        "mae_venue_median": 291.4285714285712
+      }
+    },
+    "hall": {
+      "sessions": 93,
+      "mean_tickets": 2149.6021505376343,
+      "mae_listed_seats": 589.6021505376344,
+      "bias_listed_seats": 302.39784946236557,
+      "mae_venue_median": 559.0270854022706,
+      "mae_model": 562.6198110753611,
+      "bias_model": 154.57977255342055,
+      "inside_80_band_pct": 80.64516129032258,
+      "act_with_history": {
+        "sessions": 17,
+        "mae_model": 362.1603794676453,
+        "mae_venue_median": 342.5060566677976
+      },
+      "act_without_history": {
+        "sessions": 76,
+        "mae_model": 607.459420777087,
+        "mae_venue_median": 607.459420777087
+      }
+    },
+    "festival": {
+      "sessions": 9,
+      "mean_tickets": 10402.555555555555,
+      "mae_listed_seats": 2809.0,
+      "bias_listed_seats": -402.55555555555554,
+      "mae_venue_median": 3862.9856724365504,
+      "mae_model": 4586.110710475348,
+      "bias_model": 3043.2456956668325,
+      "inside_80_band_pct": 55.55555555555556,
+      "act_with_history": {
+        "sessions": 8,
+        "mae_model": 4338.902772986543,
+        "mae_venue_median": 3525.3871051928954
+      },
+      "act_without_history": {
+        "sessions": 1,
+        "mae_model": 6563.774210385791,
+        "mae_venue_median": 6563.774210385791
+      }
+    }
+  },
+  "rail_2026_01_07": {
+    "given_tickets": {
+      "all": {
+        "rows": 14148,
+        "days": 212,
+        "mae": 86.33103148183879,
+        "wape_pct": 21.77987823790871,
+        "bias_pct": -12.951328203625078,
+        "rmse": 236.49223562680925
+      },
+      "egress_window": {
+        "rows": 1200,
+        "days": 85,
+        "mae": 337.72002446621815,
+        "wape_pct": 39.01789315094437,
+        "bias_pct": -18.281816020672473,
+        "rmse": 691.2248634929429
+      },
+      "other_hours": {
+        "rows": 12948,
+        "days": 212,
+        "mae": 63.032700343342086,
+        "wape_pct": 17.86146697233424,
+        "bias_pct": -11.739643237653105,
+        "rmse": 129.73421070245197
+      },
+      "window": {
+        "site_days": 314,
+        "total_wape_pct": 23.167241736167057,
+        "total_bias_pct": -18.281816020672473,
+        "peak_wape_pct": 26.92344869987667,
+        "peak_bias_pct": -23.35693117161058,
+        "peak_shortfall_pct": 29.772533258021678,
+        "peak_hour_hit_pct": 68.47133757961782,
+        "peak_hour_mae": 0.37261146496815284
+      }
+    },
+    "public_estimate_frozen": {
+      "all": {
+        "rows": 14148,
+        "days": 212,
+        "mae": 87.33436932592767,
+        "wape_pct": 22.033003628636127,
+        "bias_pct": -12.999181618290105,
+        "rmse": 239.08974771963855
+      },
+      "egress_window": {
+        "rows": 1200,
+        "days": 85,
+        "mae": 349.0688384821448,
+        "wape_pct": 40.329058555966604,
+        "bias_pct": -18.33937702984007,
+        "rmse": 701.7351473161959
+      },
+      "other_hours": {
+        "rows": 12948,
+        "days": 212,
+        "mae": 63.07723594722359,
+        "wape_pct": 17.874086949163566,
+        "bias_pct": -11.785289997558154,
+        "rmse": 129.70711000711307
+      },
+      "window": {
+        "site_days": 314,
+        "total_wape_pct": 25.48286751094555,
+        "total_bias_pct": -18.33937702984007,
+        "peak_wape_pct": 29.50524976531289,
+        "peak_bias_pct": -24.354286302931577,
+        "peak_shortfall_pct": 31.352196083639388,
+        "peak_hour_hit_pct": 69.7452229299363,
+        "peak_hour_mae": 0.35987261146496813
+      }
+    },
+    "weekday_median": {
+      "all": {
+        "rows": 14148,
+        "days": 212,
+        "mae": 100.99045801526718,
+        "wape_pct": 25.478206862683734,
+        "bias_pct": -14.572338957639122,
+        "rmse": 314.51420376884323
+      },
+      "egress_window": {
+        "rows": 1200,
+        "days": 85,
+        "mae": 459.31041666666664,
+        "wape_pct": 53.06562673901616,
+        "bias_pct": -39.73539996649536,
+        "rmse": 976.3528813694019
+      },
+      "other_hours": {
+        "rows": 12948,
+        "days": 212,
+        "mae": 67.78193543404387,
+        "wape_pct": 19.207249482909816,
+        "bias_pct": -8.852467949819218,
+        "rmse": 140.4983302258855
+      },
+      "window": {
+        "site_days": 314,
+        "total_wape_pct": 42.59301871061038,
+        "total_bias_pct": -39.73539996649536,
+        "peak_wape_pct": 48.01072971561506,
+        "peak_bias_pct": -44.5407586763519,
+        "peak_shortfall_pct": 55.73802402316859,
+        "peak_hour_hit_pct": 58.59872611464968,
+        "peak_hour_mae": 0.5095541401273885
+      }
+    },
+    "given_minus_public_egress_window_mae": {
+      "days": 85,
+      "rows": 1200,
+      "mae_diff": -11.348814015926672,
+      "ci95": [
+        -25.231183664697564,
+        3.9273124086181244
+      ],
+      "share_of_draws_better": 0.93425
+    },
+    "sessions_with_tickets_pct": 89.14285714285714
+  },
+  "observed_over_forecast_with_tickets": {
+    "evenings": 85,
+    "median_ratio": 1.0898653301679864,
+    "sum_ratio": 1.263566779413629,
+    "by_month": {
+      "2026-01": 1.21706762311065,
+      "2026-02": 0.9631013233042343,
+      "2026-03": 1.1154746360863288,
+      "2026-04": 1.0857527966455363,
+      "2026-05": 1.1611142771750333,
+      "2026-06": 2.3990877765982774,
+      "2026-07": 1.105441116768149
+    }
+  }
+}

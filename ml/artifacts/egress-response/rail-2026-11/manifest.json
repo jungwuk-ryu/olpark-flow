@@ -1,0 +1,100 @@
+{
+  "format": "olpark-event-response-bundle/1",
+  "trained_through": "2026-07-31",
+  "sites": [
+    "5:2556",
+    "8:2814",
+    "9:4135",
+    "9:4136"
+  ],
+  "fitted_at": "2026-11-25T02:47:56+09:00",
+  "readable": {
+    "counts_per_attendee": {
+      "dome": {
+        "5:2556": 0.19021495534477387,
+        "8:2814": 0.005022308068791763,
+        "9:4135": 0.0038097933359486553,
+        "9:4136": 0.43892881254925104
+      },
+      "arena": {
+        "5:2556": 0.14132891955840723,
+        "8:2814": 0.0137863519656014,
+        "9:4135": 0.009381954460203236,
+        "9:4136": 0.6944064040851643
+      },
+      "hall": {
+        "5:2556": 0.15414835666896615,
+        "8:2814": 0.021822320718978685,
+        "9:4135": 0.011223489160052348,
+        "9:4136": 0.9831870484049913
+      },
+      "woori": {
+        "5:2556": 0.004179221938068934,
+        "8:2814": 0.004144698536736996,
+        "9:4135": 0.00449292653932677,
+        "9:4136": 0.002451676905248051
+      },
+      "festival": {
+        "5:2556": 0.14419152048450437,
+        "8:2814": 0.020452356669507444,
+        "9:4135": 0.011978571817163199,
+        "9:4136": 0.37165406324808953
+      }
+    },
+    "onset_lag_hours": {
+      "dome": 2.504756238310595,
+      "arena": 2.130203623193703,
+      "hall": 1.846473715130549,
+      "woori": 1.6874285373672862,
+      "festival": 8.151514485920575
+    },
+    "gamma_scale_hours": {
+      "dome": 0.4529022012939671,
+      "arena": 0.6671303999217693,
+      "hall": 0.9565034147867687,
+      "woori": 0.44996225217380886,
+      "festival": 0.9786944141621149
+    },
+    "mean_lag_hours": {
+      "dome": 3.410560640898529,
+      "arena": 3.4644644230372417,
+      "hall": 3.759480544704086,
+      "woori": 2.5873530417149038,
+      "festival": 10.108903314244806
+    },
+    "share_effects": {
+      "season_cos": -0.13380898049333667,
+      "season_sin": -0.0023209917912445158,
+      "era_2023": -0.2331506316723402,
+      "era_2024": -0.2720721386075475,
+      "aud_general": -0.03222979076561151,
+      "aud_senior": -0.43105189792310306,
+      "aud_foreign": 0.09367681743640807
+    },
+    "timing_effects_hours": {
+      "runtime_dev": 0.5942851802056717,
+      "runtime_missing": 0.19955810041907165,
+      "act_shift_hist": 0.9581659686268629
+    }
+  },
+  "files_sha256": {
+    "MODEL_CARD.md": "228d0374933748563acc569bfbdb2dbd868a33632fcbbb7604f1a3ea4974d579",
+    "act_history.csv": "74f4eaa8f3cf1dbc982bc9f0f9a3f049f19368a177804e3691df91b11de96680",
+    "attendance.json": "97703d36153fa8148301680941b89d5d0b6f60a7a8d51b4cfc7e160d3ab0bd29",
+    "attendance_history.csv": "cc861956a1e643e21f9fc88e24aa7eec182efd6f4486c0c787af7be726a3f6a2",
+    "calibration.json": "c2ef2811c715b03b4d17477f6871048075cce65ddc73249f6d2068fb98aad439",
+    "calibration_2025.json": "3a39c2417a7d9ab8ee47ca99b7ca2520c8eec152ec340452c78e5a80fa49f506",
+    "development.json": "abcfca837d3bee723ee347dd108a5852209cdd21f1df03936f065640db0f9f68",
+    "development_forecasts.parquet": "5f5c910ba659e791e8b5b423db81b4284615a8893b5825d9b9828fa51da03f03",
+    "heldout.json": "814028e93fbcc2d491b01c4d46544f4217a374f99108bb4ba9e4c08313ab40ce",
+    "heldout_forecasts.parquet": "40e5014e3d6ffcf83d0c5415391b8f43b35fff8e370f420420fbd2f9b27440d4",
+    "level.json": "78a764b1b57e25efdd0173e545842e6944da0ed9c6b47aa9b62e85614a330f22",
+    "model.json": "5a2d4f6b4e25353afe3b061b5a9295c477501fa228ef0667326b99e5ad1187d4",
+    "protocol.json": "2a0148d49017fd7ff3753a6834a7072d97a123249e3fe42132cac49909fe0188",
+    "single_show_curve.json": "feeb08f385b459650adfff60f7a9f82e770aa705c15dc53c5b4836766056f731"
+  },
+  "calibration": {
+    "calibration.json": "bands used by forecasts; from level-tracked held-out forecasts",
+    "calibration_2025.json": "bands the frozen 2026 evaluation used"
+  }
+}

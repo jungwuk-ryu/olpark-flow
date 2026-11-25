@@ -1,0 +1,101 @@
+{
+  "evenings": 22,
+  "hours": 76,
+  "station": "올림픽공원역 5·9호선 합계, 퇴장 시간대",
+  "forecast": "locked D-1 forecast of the v2 bundle (fitted through 2026-07-31)",
+  "reading": "upper bounds: the end time and the crowd size are read from the counts themselves",
+  "centre_moved_minutes": {
+    "mean": -25.22727272727273,
+    "mean_abs": 25.22727272727273
+  },
+  "scores": {
+    "weekday_median": {
+      "hourly_mae": 1673.171052631579,
+      "window_total_wape_pct": 29.02902810525976,
+      "window_total_bias_pct": -26.20004521942959,
+      "peak_hour_hit_pct": 45.45454545454545,
+      "peak_shortfall_pct": 52.82143618853871
+    },
+    "d1": {
+      "hourly_mae": 1728.3549108848824,
+      "window_total_wape_pct": 13.23260476440885,
+      "window_total_bias_pct": -1.9248343844657205,
+      "peak_hour_hit_pct": 40.909090909090914,
+      "peak_shortfall_pct": 41.80908086845546
+    },
+    "end_time_known": {
+      "hourly_mae": 714.6727792833834,
+      "window_total_wape_pct": 12.666406921608113,
+      "window_total_bias_pct": -2.6527739326675834,
+      "peak_hour_hit_pct": 86.36363636363636,
+      "peak_shortfall_pct": 12.037623713380915
+    },
+    "crowd_size_known": {
+      "hourly_mae": 1689.6642023550503,
+      "window_total_wape_pct": 2.9429444697780225,
+      "window_total_bias_pct": 1.9571713158884618,
+      "peak_hour_hit_pct": 40.909090909090914,
+      "peak_shortfall_pct": 38.517513573970405
+    },
+    "both_known": {
+      "hourly_mae": 663.8390920463531,
+      "window_total_wape_pct": 3.3415421586000362,
+      "window_total_bias_pct": 1.2929964016362498,
+      "peak_hour_hit_pct": 86.36363636363636,
+      "peak_shortfall_pct": 7.9040568767295145
+    }
+  },
+  "minus_d1": {
+    "end_time_known": {
+      "mae_diff": -1013.6821316014995,
+      "ci95": [
+        -1402.3274047647149,
+        -646.1796450839772
+      ]
+    },
+    "crowd_size_known": {
+      "mae_diff": -38.69070852983232,
+      "ci95": [
+        -132.29872320718556,
+        58.41462566299569
+      ]
+    },
+    "both_known": {
+      "mae_diff": -1064.5158188385294,
+      "ci95": [
+        -1481.5309835665103,
+        -674.1522905755381
+      ]
+    }
+  },
+  "minus_weekday_median": {
+    "d1": {
+      "mae_diff": 55.18385825330359,
+      "ci95": [
+        -182.06005698893782,
+        298.7474219029936
+      ]
+    },
+    "end_time_known": {
+      "mae_diff": -958.4982733481953,
+      "ci95": [
+        -1210.8133602378018,
+        -719.4609073126612
+      ]
+    },
+    "crowd_size_known": {
+      "mae_diff": 16.493149723471298,
+      "ci95": [
+        -240.04334563385714,
+        279.6109993886626
+      ]
+    },
+    "both_known": {
+      "mae_diff": -1009.3319605852258,
+      "ci95": [
+        -1282.0331394190202,
+        -738.1477927172183
+      ]
+    }
+  }
+}

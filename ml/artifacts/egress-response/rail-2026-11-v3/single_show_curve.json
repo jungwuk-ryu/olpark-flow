@@ -1,0 +1,24 @@
+{
+  "venue_groups": [
+    "dome"
+  ],
+  "shape": 1.0,
+  "scale_hours": 0.6,
+  "onset_shift_minutes": 5.0,
+  "end_time_sd_minutes": 17.87374329660388,
+  "evenings": 23,
+  "first": "2026-08-01",
+  "last": "2026-11-15",
+  "basis": "Five-minute boardings at Olympic Park station (lines 5 and 9, Seoul card-tag files) on evenings led by a KSPO DOME session, each evening allowed its own time shift.",
+  "busiest_five_minutes_observed": {
+    "persons_median": 1190.0,
+    "persons_p10": 972.8,
+    "persons_p90": 1464.8,
+    "persons_max": 1625.0,
+    "share_of_evening_crowd_median": 0.13573159662437598,
+    "correlation_with_crowd_size": 0.031992568636066955,
+    "note": "Boardings of everyone at the gates, usual riders included. The peak does not grow with the crowd; a larger crowd keeps the gates busy for longer."
+  },
+  "fitted_on_the_evenings_it_describes": true,
+  "source": "experiments/response_model/station_curve_5min.py"
+}
