@@ -1,0 +1,258 @@
+{
+  "bundle": "rail-2026-11-v2",
+  "evenings": 61,
+  "first": "2025-01-05",
+  "last": "2026-07-29",
+  "station": "올림픽공원역 5·9호선 합계",
+  "selection": "KSPO DOME session with at least 80% of the evening's expected crowd",
+  "hourly_fit": {
+    "shape": 2.0,
+    "scale_hours": 0.460998209969185,
+    "sse_without_shift": 402821489.47640496,
+    "sse_with_own_shift": 78974237.7857456
+  },
+  "single_show": {
+    "shape": 1.5,
+    "scale_hours": 0.45,
+    "sse_with_own_shift": 63085457.11468373,
+    "mean_delay_after_onset_minutes": 40.5,
+    "end_time_shift_sd_minutes": 27.2,
+    "end_time_shift_mean_minutes": 11.0
+  },
+  "grid": [
+    {
+      "shape": 1.5,
+      "scale_hours": 0.45,
+      "sse": 63085457.1147,
+      "shift_mean_hours": 0.1831,
+      "shift_sd_hours": 0.4539
+    },
+    {
+      "shape": 1.5,
+      "scale_hours": 0.35,
+      "sse": 63390815.2374,
+      "shift_mean_hours": 0.2883,
+      "shift_sd_hours": 0.4737
+    },
+    {
+      "shape": 2.0,
+      "scale_hours": 0.35,
+      "sse": 63664996.8134,
+      "shift_mean_hours": 0.1284,
+      "shift_sd_hours": 0.4618
+    },
+    {
+      "shape": 2.0,
+      "scale_hours": 0.3,
+      "sse": 63998649.0854,
+      "shift_mean_hours": 0.2199,
+      "shift_sd_hours": 0.4721
+    },
+    {
+      "shape": 3.0,
+      "scale_hours": 0.25,
+      "sse": 65176832.7291,
+      "shift_mean_hours": 0.0628,
+      "shift_sd_hours": 0.4593
+    },
+    {
+      "shape": 1.5,
+      "scale_hours": 0.3,
+      "sse": 66830761.4321,
+      "shift_mean_hours": 0.3538,
+      "shift_sd_hours": 0.4759
+    },
+    {
+      "shape": 3.0,
+      "scale_hours": 0.2,
+      "sse": 66911156.268,
+      "shift_mean_hours": 0.2008,
+      "shift_sd_hours": 0.478
+    },
+    {
+      "shape": 2.0,
+      "scale_hours": 0.25,
+      "sse": 67613251.7675,
+      "shift_mean_hours": 0.2964,
+      "shift_sd_hours": 0.4751
+    },
+    {
+      "shape": 3.0,
+      "scale_hours": 0.3,
+      "sse": 68566509.2833,
+      "shift_mean_hours": -0.0628,
+      "shift_sd_hours": 0.4503
+    },
+    {
+      "shape": 3.0,
+      "scale_hours": 0.175,
+      "sse": 69328726.2294,
+      "shift_mean_hours": 0.276,
+      "shift_sd_hours": 0.4785
+    },
+    {
+      "shape": 1.5,
+      "scale_hours": 0.25,
+      "sse": 71173476.7758,
+      "shift_mean_hours": 0.418,
+      "shift_sd_hours": 0.4747
+    },
+    {
+      "shape": 2.0,
+      "scale_hours": 0.2,
+      "sse": 73304167.7953,
+      "shift_mean_hours": 0.3893,
+      "shift_sd_hours": 0.4785
+    },
+    {
+      "shape": 3.0,
+      "scale_hours": 0.15,
+      "sse": 75267853.0058,
+      "shift_mean_hours": 0.3484,
+      "shift_sd_hours": 0.4766
+    },
+    {
+      "shape": 2.0,
+      "scale_hours": 0.45,
+      "sse": 76543004.5142,
+      "shift_mean_hours": -0.0068,
+      "shift_sd_hours": 0.4332
+    },
+    {
+      "shape": 2.0,
+      "scale_hours": 0.175,
+      "sse": 78010770.5989,
+      "shift_mean_hours": 0.4467,
+      "shift_sd_hours": 0.4748
+    },
+    {
+      "shape": 3.0,
+      "scale_hours": 0.125,
+      "sse": 78238665.1268,
+      "shift_mean_hours": 0.4249,
+      "shift_sd_hours": 0.4773
+    },
+    {
+      "shape": 1.5,
+      "scale_hours": 0.2,
+      "sse": 78372930.2263,
+      "shift_mean_hours": 0.5041,
+      "shift_sd_hours": 0.4758
+    },
+    {
+      "shape": 2.0,
+      "scale_hours": 0.15,
+      "sse": 80462917.9558,
+      "shift_mean_hours": 0.4891,
+      "shift_sd_hours": 0.4811
+    },
+    {
+      "shape": 3.0,
+      "scale_hours": 0.35,
+      "sse": 81586536.6493,
+      "shift_mean_hours": -0.1708,
+      "shift_sd_hours": 0.4372
+    },
+    {
+      "shape": 1.5,
+      "scale_hours": 0.175,
+      "sse": 82782959.8908,
+      "shift_mean_hours": 0.541,
+      "shift_sd_hours": 0.4761
+    },
+    {
+      "shape": 2.0,
+      "scale_hours": 0.125,
+      "sse": 85590554.568,
+      "shift_mean_hours": 0.5492,
+      "shift_sd_hours": 0.477
+    },
+    {
+      "shape": 3.0,
+      "scale_hours": 0.1,
+      "sse": 86798592.3159,
+      "shift_mean_hours": 0.5096,
+      "shift_sd_hours": 0.4741
+    },
+    {
+      "shape": 1.5,
+      "scale_hours": 0.125,
+      "sse": 87485975.8195,
+      "shift_mean_hours": 0.6366,
+      "shift_sd_hours": 0.4871
+    },
+    {
+      "shape": 1.5,
+      "scale_hours": 0.15,
+      "sse": 87617702.1257,
+      "shift_mean_hours": 0.5792,
+      "shift_sd_hours": 0.4832
+    },
+    {
+      "shape": 3.0,
+      "scale_hours": 0.08,
+      "sse": 88322406.2725,
+      "shift_mean_hours": 0.556,
+      "shift_sd_hours": 0.4551
+    },
+    {
+      "shape": 2.0,
+      "scale_hours": 0.1,
+      "sse": 94049055.2039,
+      "shift_mean_hours": 0.6202,
+      "shift_sd_hours": 0.4851
+    },
+    {
+      "shape": 2.0,
+      "scale_hours": 0.08,
+      "sse": 95371068.5529,
+      "shift_mean_hours": 0.6721,
+      "shift_sd_hours": 0.479
+    },
+    {
+      "shape": 1.5,
+      "scale_hours": 0.1,
+      "sse": 97322395.8214,
+      "shift_mean_hours": 0.679,
+      "shift_sd_hours": 0.4616
+    },
+    {
+      "shape": 1.5,
+      "scale_hours": 0.08,
+      "sse": 110240174.797,
+      "shift_mean_hours": 0.7227,
+      "shift_sd_hours": 0.466
+    },
+    {
+      "shape": 3.0,
+      "scale_hours": 0.45,
+      "sse": 144202761.8244,
+      "shift_mean_hours": -0.3456,
+      "shift_sd_hours": 0.4121
+    }
+  ],
+  "five_minute_check_2026_11_07": {
+    "hourly_fit_curve": {
+      "shape": 2.0,
+      "scale_hours": 0.460998209969185,
+      "rmse_per_5min": 100.5,
+      "peak_per_5min": 579.8,
+      "onset": "20:42",
+      "minutes_above_half_peak": 65
+    },
+    "single_show_curve": {
+      "shape": 1.5,
+      "scale_hours": 0.45,
+      "rmse_per_5min": 60.2,
+      "peak_per_5min": 777.3,
+      "onset": "20:51",
+      "minutes_above_half_peak": 45
+    },
+    "observed": {
+      "peak_per_5min": 1064.0,
+      "crowd_boardings": 8761.0,
+      "minutes_above_half_peak": 45
+    }
+  },
+  "reading": "Hourly counts bound the width only loosely: several widths fit almost equally once each evening has its own shift. The five-minute evening is one show. Treat the single-show curve as the better description of one evening's peak, not as a measured quantity."
+}

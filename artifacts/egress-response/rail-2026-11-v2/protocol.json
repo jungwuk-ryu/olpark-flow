@@ -1,0 +1,61 @@
+{
+  "format": "olpark-event-response-bundle/1",
+  "version": "v2",
+  "frozen_at": "2026-11-25T03:43:21+09:00",
+  "specification": {
+    "name": "v2",
+    "share": [
+      "season",
+      "level",
+      "audience"
+    ],
+    "timing": [
+      "runtime",
+      "act"
+    ],
+    "scale": "attendance",
+    "forecast_scale": "forecast",
+    "options": {
+      "loss_scale": 5000.0,
+      "share_cap": 1.0,
+      "scale_limit_hours": 1.0
+    },
+    "act_lag_days": 14,
+    "train_start": "2023-01-01"
+  },
+  "chosen_on": "Written after the v1 held-out score (2026-01..07). Level steps and the share cap answer what that score showed; no value in it was searched for on those months.",
+  "development_evidence": "development.json: rolling monthly origins 2025-04..2026-07, all seen before.",
+  "held_out": {
+    "counts": "Boardings at the four station-lines on dates after 2026-07-31, from any source not obtained by the time this file was written.",
+    "primary": "Monthly origins from 2026-08, D-1 public attendance estimate, against the weekday-median baseline of the preceding 365 days, on every site-hour 06-23 that the source provides.",
+    "metrics": [
+      "egress-window total WAPE and bias per site-day",
+      "peak-hour shortfall",
+      "egress-window hourly MAE with its paired date-bootstrap interval",
+      "coverage of the 80% bands in calibration.json",
+      "the same for the day-of update with calibration_day_of.json"
+    ],
+    "decision_rule": "Scored once and reported as it comes out. The specification is not changed after scoring."
+  },
+  "fingerprints": {
+    "code": {
+      "schedule.py": "31dc74aa003a2b38ff1351f89542d8d9ca98c39e4352c94ebb124deb36be1f85",
+      "response_data.py": "cb40e65abb9d8471370b775ff6b5a02baeed8c00166d19dbab29a7717b00ccc8",
+      "response_features.py": "4fb1e3ed8dfafb3ea1632d0628c8cac8596193b0545d751dfd10f825f810776d",
+      "attendance.py": "dc3993aca8abf8a5bc94decd343b0dda18557528cc279937484da7651c79e640",
+      "response.py": "b85345f4134be37c5a3b123aa4c7becee1a9f668b4973e59e6d37a21113a97a6",
+      "response_backtest.py": "262c6127b30039931d4d08f68190b5885988eba1e5d4d02cbfa31ea47a11a6de",
+      "response_train.py": "9ba93d43902ec084e7090a8e4b4d0710c1a2f7e47704d210380a4a2233043af0",
+      "nowcast.py": "72f54861d2f831dcff225359ddd3eaa5e9ac9618b6fd80ec9986a116a17147c0"
+    },
+    "inputs": {
+      "audience_types.csv": "ed37a0a1fbe55c32b8bbe6b9107ada896bd19d0daead4d5df6e536a7bac9e7cf",
+      "calendar.csv": "04107b02019dcce12351245e66b16c5ed1cc639c50231ece637d5e6901400fb2",
+      "kopis_hall_daily_2026.csv": "0ccdb0c10660bee9fa9333fde363dd9e1ecb82f7beea7b1e51918e278505b69e",
+      "rail_hourly.parquet": "9c2b053c5c933b85ed24d561ef5890143540743b9de0f49651579d94d473425a",
+      "sessions.parquet": "87ca802dd3f0b117cc789a166566427fb347a77d128f0fdbd27d8b8888adeea3",
+      "summary.json": "ffcffd0a01a38197902d728599c79dcb9feda40424511583047d73975ab8e900",
+      "unresolved_programmes.csv": "175bf606cf5a424046c25e1f0fa009a265dc14955a982f777ecd29468e724bdf"
+    }
+  }
+}

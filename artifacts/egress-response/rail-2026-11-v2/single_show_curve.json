@@ -1,0 +1,37 @@
+{
+  "venue_groups": [
+    "dome"
+  ],
+  "shape": 1.5,
+  "scale_hours": 0.45,
+  "onset_shift_minutes": 11.0,
+  "end_time_sd_minutes": 27.2,
+  "evenings": 61,
+  "first": "2025-01-05",
+  "last": "2026-07-29",
+  "basis": "Hourly boardings of KSPO DOME evenings with one dominant session, each evening allowed its own end-time shift.",
+  "five_minute_check": {
+    "hourly_fit_curve": {
+      "shape": 2.0,
+      "scale_hours": 0.460998209969185,
+      "rmse_per_5min": 100.5,
+      "peak_per_5min": 579.8,
+      "onset": "20:42",
+      "minutes_above_half_peak": 65
+    },
+    "single_show_curve": {
+      "shape": 1.5,
+      "scale_hours": 0.45,
+      "rmse_per_5min": 60.2,
+      "peak_per_5min": 777.3,
+      "onset": "20:51",
+      "minutes_above_half_peak": 45
+    },
+    "observed": {
+      "peak_per_5min": 1064.0,
+      "crowd_boardings": 8761.0,
+      "minutes_above_half_peak": 45
+    }
+  },
+  "source": "experiments/response_model/within_event_curve.py"
+}

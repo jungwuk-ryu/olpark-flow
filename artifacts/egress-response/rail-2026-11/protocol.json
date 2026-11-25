@@ -1,0 +1,59 @@
+{
+  "format": "olpark-event-response-bundle/1",
+  "frozen_at": "2026-11-25T02:46:34+09:00",
+  "specification": {
+    "share": [
+      "season",
+      "era",
+      "audience"
+    ],
+    "timing": [
+      "runtime",
+      "act"
+    ],
+    "scale": "attendance",
+    "forecast_scale": "forecast",
+    "options": {
+      "loss_scale": 5000.0
+    },
+    "act_lag_days": 14,
+    "train_start": "2023-01-01"
+  },
+  "chosen_on": "Rolling monthly origins April-October 2025. November-December 2025 had been viewed while choosing the loss and the background weighting; it is reported, not used to choose.",
+  "held_out": {
+    "counts": "Rail boardings 2026-01-01..2026-06-30 (lines 5, 8) and ..2026-07-31 (line 9), never fitted or scored before this file was written.",
+    "primary": "Rolling monthly origins 2026-01..2026-07 with the D-1 public attendance estimate, against the weekday-median baseline fitted on the preceding 365 days, on every site-hour 06-23.",
+    "metrics": [
+      "egress-window hourly MAE and its paired date-bootstrap 95% interval",
+      "egress-window total WAPE and bias per site-day",
+      "peak-hour shortfall",
+      "all-hours MAE",
+      "coverage of the 80% bands calibrated on 2025 development forecasts"
+    ],
+    "secondary": [
+      "model fitted through 2025-12-31 and not refreshed",
+      "training cut-off 60 and 180 days before each month",
+      "like-for-like with the 2025 bundle: fitted through 2025-08-30, scored on its published end-window rows"
+    ],
+    "decision_rule": "Whatever these comparisons show is reported. The specification is not changed after scoring."
+  },
+  "fingerprints": {
+    "code": {
+      "schedule.py": "31dc74aa003a2b38ff1351f89542d8d9ca98c39e4352c94ebb124deb36be1f85",
+      "response_data.py": "b750367e32c923e5183bd7aaf46919662e0f746561a6076224ff58dd61cd6803",
+      "response_features.py": "74b01c548af3de17f86a37e7770a08a9e0bb8e868d05b60f3752d9c789dd03e7",
+      "attendance.py": "dc3993aca8abf8a5bc94decd343b0dda18557528cc279937484da7651c79e640",
+      "response.py": "780520d86363f9e0db39a7fb92f8f5cf9bf893b5e22cec6f0eca3c091f2192f7",
+      "response_backtest.py": "262c6127b30039931d4d08f68190b5885988eba1e5d4d02cbfa31ea47a11a6de",
+      "response_train.py": "b0e8bf3987e402e2f6fd8e3dc461287fae52d00e87dc34d010ef2f4cac7e6af2"
+    },
+    "inputs": {
+      "audience_types.csv": "dde12467c9453a931a3425161f82a9d66ca8c188319ceb922017cf0718080840",
+      "calendar.csv": "608fbc983b7380e52761e740d36f4fb95eb117d9419887bce967f732f2b44e1a",
+      "rail_hourly.parquet": "9c2b053c5c933b85ed24d561ef5890143540743b9de0f49651579d94d473425a",
+      "sessions.parquet": "394cefd1a9255ab2b6e9734e961767cf4ba65d0f909aee22dda064582798a317",
+      "summary.json": "038ea168a25d12c2f96157d0dd62926513d7c65c71b423d4899654fb0f4a49d4",
+      "unresolved_programmes.csv": "175bf606cf5a424046c25e1f0fa009a265dc14955a982f777ecd29468e724bdf"
+    }
+  }
+}
