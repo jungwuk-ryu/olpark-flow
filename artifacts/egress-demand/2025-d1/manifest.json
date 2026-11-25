@@ -1,0 +1,1908 @@
+{
+  "format": "olpark-point-demand/1",
+  "use": "retrospective_research",
+  "timezone": "Asia/Seoul",
+  "feature_cutoff": "D-1 17:00 KST",
+  "candidates": [
+    "weekday_median",
+    "cat_calendar",
+    "cat_event",
+    "cat_weather",
+    "pooled_nb"
+  ],
+  "catboost_parameters": {
+    "iterations": 300,
+    "depth": 5,
+    "learning_rate": 0.06,
+    "loss_function": "Poisson",
+    "one_hot_max_size": 32,
+    "has_time": true,
+    "thread_count": 4,
+    "random_seed": 20261123,
+    "allow_writing_files": false,
+    "verbose": false
+  },
+  "modes": {
+    "rail": {
+      "chosen": "weekday_median",
+      "unit": "persons",
+      "resolution": "hour",
+      "trained_sites": [
+        "5:2556",
+        "8:2814",
+        "9:4135",
+        "9:4136"
+      ],
+      "tested_sites": [
+        "5:2556",
+        "8:2814",
+        "9:4135",
+        "9:4136"
+      ],
+      "forecast_from": "2025-11-01",
+      "evaluated_through": "2025-12-31",
+      "models": {
+        "weekday_median": {
+          "file": "weekday_median.json",
+          "numeric_features": [],
+          "interval": "interval.json",
+          "backtest_interval_coverage_pct": {
+            "all": 84.38069216757741,
+            "end_window": 84.60743801652893
+          }
+        },
+        "cat_calendar": {
+          "file": "cat_calendar.cbm",
+          "numeric_features": [
+            "hour",
+            "weekday",
+            "month",
+            "weekend",
+            "holiday",
+            "previous_day_off",
+            "next_day_off",
+            "before_break",
+            "after_break",
+            "previous_day_off_missing",
+            "next_day_off_missing",
+            "before_break_missing",
+            "after_break_missing"
+          ],
+          "interval": "interval_cat_calendar.json",
+          "backtest_interval_coverage_pct": {
+            "all": 82.80965391621129,
+            "end_window": 88.22314049586777
+          }
+        },
+        "cat_event": {
+          "file": "cat_event.cbm",
+          "numeric_features": [
+            "hour",
+            "weekday",
+            "month",
+            "weekend",
+            "holiday",
+            "previous_day_off",
+            "next_day_off",
+            "before_break",
+            "after_break",
+            "previous_day_off_missing",
+            "next_day_off_missing",
+            "before_break_missing",
+            "after_break_missing",
+            "sessions_today",
+            "unknown_runtime_today",
+            "starts_in_bin",
+            "ends_in_bin",
+            "ends_previous_hour",
+            "ends_two_hours_ago",
+            "dome_ends",
+            "arena_ends",
+            "olympic_hall_ends",
+            "woori_ends",
+            "other_venue_ends",
+            "concurrent_ends"
+          ],
+          "interval": "interval_cat_event.json",
+          "backtest_interval_coverage_pct": {
+            "all": 83.9936247723133,
+            "end_window": 90.18595041322314
+          }
+        },
+        "cat_weather": {
+          "file": "cat_weather.cbm",
+          "numeric_features": [
+            "hour",
+            "weekday",
+            "month",
+            "weekend",
+            "holiday",
+            "previous_day_off",
+            "next_day_off",
+            "before_break",
+            "after_break",
+            "previous_day_off_missing",
+            "next_day_off_missing",
+            "before_break_missing",
+            "after_break_missing",
+            "sessions_today",
+            "unknown_runtime_today",
+            "starts_in_bin",
+            "ends_in_bin",
+            "ends_previous_hour",
+            "ends_two_hours_ago",
+            "dome_ends",
+            "arena_ends",
+            "olympic_hall_ends",
+            "woori_ends",
+            "other_venue_ends",
+            "concurrent_ends",
+            "forecast_temp_c",
+            "forecast_precip_prob_pct",
+            "forecast_precip_mm",
+            "forecast_wet",
+            "forecast_wind_ms",
+            "forecast_humidity_pct",
+            "forecast_lead_hours",
+            "forecast_numeric_fraction",
+            "forecast_temp_c_missing",
+            "forecast_precip_prob_pct_missing",
+            "forecast_precip_mm_missing",
+            "forecast_wet_missing",
+            "forecast_wind_ms_missing",
+            "forecast_humidity_pct_missing",
+            "forecast_lead_hours_missing"
+          ],
+          "interval": "interval_cat_weather.json",
+          "backtest_interval_coverage_pct": {
+            "all": 83.33333333333334,
+            "end_window": 88.7396694214876
+          }
+        },
+        "pooled_nb": {
+          "file": "pooled_nb.json",
+          "numeric_features": [
+            "hour",
+            "weekday",
+            "month",
+            "weekend",
+            "holiday",
+            "previous_day_off",
+            "next_day_off",
+            "before_break",
+            "after_break",
+            "previous_day_off_missing",
+            "next_day_off_missing",
+            "before_break_missing",
+            "after_break_missing",
+            "sessions_today",
+            "unknown_runtime_today",
+            "starts_in_bin",
+            "ends_in_bin",
+            "ends_previous_hour",
+            "ends_two_hours_ago",
+            "dome_ends",
+            "arena_ends",
+            "olympic_hall_ends",
+            "woori_ends",
+            "other_venue_ends",
+            "concurrent_ends",
+            "forecast_temp_c",
+            "forecast_precip_prob_pct",
+            "forecast_precip_mm",
+            "forecast_wet",
+            "forecast_wind_ms",
+            "forecast_humidity_pct",
+            "forecast_lead_hours",
+            "forecast_numeric_fraction",
+            "forecast_temp_c_missing",
+            "forecast_precip_prob_pct_missing",
+            "forecast_precip_mm_missing",
+            "forecast_wet_missing",
+            "forecast_wind_ms_missing",
+            "forecast_humidity_pct_missing",
+            "forecast_lead_hours_missing"
+          ],
+          "diagnostics": {
+            "rows": 17424,
+            "site_count": 4,
+            "alpha": 0.265882373765845,
+            "dispersion_within_cell_df": 16920,
+            "raw_feature_count": 38,
+            "feature_count": 35,
+            "parameter_count": 1175,
+            "converged": true,
+            "iterations": 252,
+            "optimizer_message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+            "max_abs_scaled_gradient": 0.0047886774366820845
+          },
+          "interval": "interval_pooled_nb.json",
+          "backtest_interval_coverage_pct": {
+            "all": 72.24499089253187,
+            "end_window": 67.97520661157024
+          }
+        }
+      },
+      "interval": "interval.json"
+    },
+    "parking": {
+      "chosen": "cat_calendar",
+      "unit": "vehicles",
+      "resolution": "hour",
+      "trained_sites": [
+        "남2",
+        "동2",
+        "북2"
+      ],
+      "tested_sites": [
+        "남2",
+        "동2",
+        "북2"
+      ],
+      "forecast_from": "2025-11-01",
+      "evaluated_through": "2025-11-30",
+      "models": {
+        "weekday_median": {
+          "file": "weekday_median.json",
+          "numeric_features": [],
+          "interval": "interval_weekday_median.json",
+          "backtest_interval_coverage_pct": {
+            "all": 86.26692456479691,
+            "end_window": 57.22222222222222
+          }
+        },
+        "cat_calendar": {
+          "file": "cat_calendar.cbm",
+          "numeric_features": [
+            "hour",
+            "weekday",
+            "month",
+            "weekend",
+            "holiday",
+            "previous_day_off",
+            "next_day_off",
+            "before_break",
+            "after_break",
+            "previous_day_off_missing",
+            "next_day_off_missing",
+            "before_break_missing",
+            "after_break_missing"
+          ],
+          "interval": "interval.json",
+          "backtest_interval_coverage_pct": {
+            "all": 84.7840103159252,
+            "end_window": 57.22222222222222
+          }
+        },
+        "cat_event": {
+          "file": "cat_event.cbm",
+          "numeric_features": [
+            "hour",
+            "weekday",
+            "month",
+            "weekend",
+            "holiday",
+            "previous_day_off",
+            "next_day_off",
+            "before_break",
+            "after_break",
+            "previous_day_off_missing",
+            "next_day_off_missing",
+            "before_break_missing",
+            "after_break_missing",
+            "sessions_today",
+            "unknown_runtime_today",
+            "starts_in_bin",
+            "ends_in_bin",
+            "ends_previous_hour",
+            "ends_two_hours_ago",
+            "dome_ends",
+            "arena_ends",
+            "olympic_hall_ends",
+            "woori_ends",
+            "other_venue_ends",
+            "concurrent_ends"
+          ],
+          "interval": "interval_cat_event.json",
+          "backtest_interval_coverage_pct": {
+            "all": 86.97614442295294,
+            "end_window": 75.0
+          }
+        },
+        "cat_weather": {
+          "file": "cat_weather.cbm",
+          "numeric_features": [
+            "hour",
+            "weekday",
+            "month",
+            "weekend",
+            "holiday",
+            "previous_day_off",
+            "next_day_off",
+            "before_break",
+            "after_break",
+            "previous_day_off_missing",
+            "next_day_off_missing",
+            "before_break_missing",
+            "after_break_missing",
+            "sessions_today",
+            "unknown_runtime_today",
+            "starts_in_bin",
+            "ends_in_bin",
+            "ends_previous_hour",
+            "ends_two_hours_ago",
+            "dome_ends",
+            "arena_ends",
+            "olympic_hall_ends",
+            "woori_ends",
+            "other_venue_ends",
+            "concurrent_ends",
+            "forecast_temp_c",
+            "forecast_precip_prob_pct",
+            "forecast_precip_mm",
+            "forecast_wet",
+            "forecast_wind_ms",
+            "forecast_humidity_pct",
+            "forecast_lead_hours",
+            "forecast_numeric_fraction",
+            "forecast_temp_c_missing",
+            "forecast_precip_prob_pct_missing",
+            "forecast_precip_mm_missing",
+            "forecast_wet_missing",
+            "forecast_wind_ms_missing",
+            "forecast_humidity_pct_missing",
+            "forecast_lead_hours_missing"
+          ],
+          "interval": "interval_cat_weather.json",
+          "backtest_interval_coverage_pct": {
+            "all": 71.5022566086396,
+            "end_window": 61.66666666666667
+          }
+        },
+        "pooled_nb": {
+          "file": "pooled_nb.json",
+          "numeric_features": [
+            "hour",
+            "weekday",
+            "month",
+            "weekend",
+            "holiday",
+            "previous_day_off",
+            "next_day_off",
+            "before_break",
+            "after_break",
+            "previous_day_off_missing",
+            "next_day_off_missing",
+            "before_break_missing",
+            "after_break_missing",
+            "sessions_today",
+            "unknown_runtime_today",
+            "starts_in_bin",
+            "ends_in_bin",
+            "ends_previous_hour",
+            "ends_two_hours_ago",
+            "dome_ends",
+            "arena_ends",
+            "olympic_hall_ends",
+            "woori_ends",
+            "other_venue_ends",
+            "concurrent_ends",
+            "forecast_temp_c",
+            "forecast_precip_prob_pct",
+            "forecast_precip_mm",
+            "forecast_wet",
+            "forecast_wind_ms",
+            "forecast_humidity_pct",
+            "forecast_lead_hours",
+            "forecast_numeric_fraction",
+            "forecast_temp_c_missing",
+            "forecast_precip_prob_pct_missing",
+            "forecast_precip_mm_missing",
+            "forecast_wet_missing",
+            "forecast_wind_ms_missing",
+            "forecast_humidity_pct_missing",
+            "forecast_lead_hours_missing"
+          ],
+          "diagnostics": {
+            "rows": 12231,
+            "site_count": 3,
+            "alpha": 0.0854588322988342,
+            "dispersion_within_cell_df": 11856,
+            "raw_feature_count": 38,
+            "feature_count": 35,
+            "parameter_count": 940,
+            "converged": true,
+            "iterations": 405,
+            "optimizer_message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+            "max_abs_scaled_gradient": 0.00472451235447317
+          },
+          "interval": "interval_pooled_nb.json",
+          "backtest_interval_coverage_pct": {
+            "all": 86.71824629271437,
+            "end_window": 77.77777777777779
+          }
+        }
+      },
+      "interval": "interval.json"
+    },
+    "bus_day": {
+      "chosen": "cat_calendar",
+      "unit": "persons",
+      "resolution": "day",
+      "trained_sites": [
+        "24123",
+        "24127",
+        "24211",
+        "24221",
+        "24222",
+        "24231",
+        "24233",
+        "24239",
+        "24240",
+        "24241",
+        "24244",
+        "24245",
+        "24246",
+        "24396"
+      ],
+      "tested_sites": [
+        "24123",
+        "24127",
+        "24211",
+        "24221",
+        "24222",
+        "24231",
+        "24233",
+        "24239",
+        "24240",
+        "24241",
+        "24244",
+        "24245",
+        "24246",
+        "24396"
+      ],
+      "forecast_from": "2025-11-01",
+      "evaluated_through": "2025-12-31",
+      "models": {
+        "weekday_median": {
+          "file": "weekday_median.json",
+          "numeric_features": [],
+          "interval": "interval_weekday_median.json",
+          "backtest_interval_coverage_pct": {
+            "all": 88.2903981264637,
+            "end_window": 87.72893772893772
+          }
+        },
+        "cat_calendar": {
+          "file": "cat_calendar.cbm",
+          "numeric_features": [
+            "hour",
+            "weekday",
+            "month",
+            "weekend",
+            "holiday",
+            "previous_day_off",
+            "next_day_off",
+            "before_break",
+            "after_break",
+            "previous_day_off_missing",
+            "next_day_off_missing",
+            "before_break_missing",
+            "after_break_missing"
+          ],
+          "interval": "interval.json",
+          "backtest_interval_coverage_pct": {
+            "all": 83.13817330210773,
+            "end_window": 82.78388278388277
+          }
+        },
+        "cat_event": {
+          "file": "cat_event.cbm",
+          "numeric_features": [
+            "hour",
+            "weekday",
+            "month",
+            "weekend",
+            "holiday",
+            "previous_day_off",
+            "next_day_off",
+            "before_break",
+            "after_break",
+            "previous_day_off_missing",
+            "next_day_off_missing",
+            "before_break_missing",
+            "after_break_missing",
+            "sessions_today",
+            "unknown_runtime_today",
+            "starts_in_bin",
+            "ends_in_bin",
+            "ends_previous_hour",
+            "ends_two_hours_ago",
+            "dome_ends",
+            "arena_ends",
+            "olympic_hall_ends",
+            "woori_ends",
+            "other_venue_ends",
+            "concurrent_ends"
+          ],
+          "interval": "interval_cat_event.json",
+          "backtest_interval_coverage_pct": {
+            "all": 81.49882903981265,
+            "end_window": 79.85347985347985
+          }
+        },
+        "cat_weather": {
+          "file": "cat_weather.cbm",
+          "numeric_features": [
+            "hour",
+            "weekday",
+            "month",
+            "weekend",
+            "holiday",
+            "previous_day_off",
+            "next_day_off",
+            "before_break",
+            "after_break",
+            "previous_day_off_missing",
+            "next_day_off_missing",
+            "before_break_missing",
+            "after_break_missing",
+            "sessions_today",
+            "unknown_runtime_today",
+            "starts_in_bin",
+            "ends_in_bin",
+            "ends_previous_hour",
+            "ends_two_hours_ago",
+            "dome_ends",
+            "arena_ends",
+            "olympic_hall_ends",
+            "woori_ends",
+            "other_venue_ends",
+            "concurrent_ends",
+            "forecast_temp_c",
+            "forecast_precip_prob_pct",
+            "forecast_precip_mm",
+            "forecast_wet",
+            "forecast_wind_ms",
+            "forecast_humidity_pct",
+            "forecast_lead_hours",
+            "forecast_numeric_fraction",
+            "forecast_temp_c_missing",
+            "forecast_precip_prob_pct_missing",
+            "forecast_precip_mm_missing",
+            "forecast_wet_missing",
+            "forecast_wind_ms_missing",
+            "forecast_humidity_pct_missing",
+            "forecast_lead_hours_missing"
+          ],
+          "interval": "interval_cat_weather.json",
+          "backtest_interval_coverage_pct": {
+            "all": 59.71896955503513,
+            "end_window": 57.509157509157504
+          }
+        },
+        "pooled_nb": {
+          "file": "pooled_nb.json",
+          "numeric_features": [
+            "hour",
+            "weekday",
+            "month",
+            "weekend",
+            "holiday",
+            "previous_day_off",
+            "next_day_off",
+            "before_break",
+            "after_break",
+            "previous_day_off_missing",
+            "next_day_off_missing",
+            "before_break_missing",
+            "after_break_missing",
+            "sessions_today",
+            "unknown_runtime_today",
+            "starts_in_bin",
+            "ends_in_bin",
+            "ends_previous_hour",
+            "ends_two_hours_ago",
+            "dome_ends",
+            "arena_ends",
+            "olympic_hall_ends",
+            "woori_ends",
+            "other_venue_ends",
+            "concurrent_ends",
+            "forecast_temp_c",
+            "forecast_precip_prob_pct",
+            "forecast_precip_mm",
+            "forecast_wet",
+            "forecast_wind_ms",
+            "forecast_humidity_pct",
+            "forecast_lead_hours",
+            "forecast_numeric_fraction",
+            "forecast_temp_c_missing",
+            "forecast_precip_prob_pct_missing",
+            "forecast_precip_mm_missing",
+            "forecast_wet_missing",
+            "forecast_wind_ms_missing",
+            "forecast_humidity_pct_missing",
+            "forecast_lead_hours_missing"
+          ],
+          "diagnostics": {
+            "rows": 3346,
+            "site_count": 14,
+            "alpha": 0.022912249315941997,
+            "dispersion_within_cell_df": 3248,
+            "raw_feature_count": 38,
+            "feature_count": 33,
+            "parameter_count": 615,
+            "converged": true,
+            "iterations": 395,
+            "optimizer_message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+            "max_abs_scaled_gradient": 0.004491596691229467
+          },
+          "interval": "interval_pooled_nb.json",
+          "backtest_interval_coverage_pct": {
+            "all": 79.7423887587822,
+            "end_window": 81.13553113553114
+          }
+        }
+      },
+      "interval": "interval.json"
+    },
+    "bus_hour": {
+      "chosen": "cat_calendar",
+      "unit": "persons",
+      "resolution": "hour",
+      "trained_sites": [
+        "24123",
+        "24127",
+        "24211",
+        "24221",
+        "24222",
+        "24231",
+        "24233",
+        "24239",
+        "24240",
+        "24241",
+        "24244",
+        "24245",
+        "24246",
+        "24396"
+      ],
+      "tested_sites": [
+        "24123",
+        "24127",
+        "24221",
+        "24222",
+        "24231",
+        "24233",
+        "24239",
+        "24240",
+        "24241",
+        "24244",
+        "24245",
+        "24246",
+        "24396"
+      ],
+      "forecast_from": "2025-02-05",
+      "evaluated_through": "2025-02-11",
+      "models": {
+        "weekday_median": {
+          "file": "weekday_median.json",
+          "numeric_features": [],
+          "interval": "interval_weekday_median.json",
+          "backtest_interval_coverage_pct": {
+            "all": 94.26129426129425,
+            "end_window": 92.78846153846155
+          }
+        },
+        "cat_calendar": {
+          "file": "cat_calendar.cbm",
+          "numeric_features": [
+            "hour",
+            "weekday",
+            "month",
+            "weekend",
+            "holiday",
+            "previous_day_off",
+            "next_day_off",
+            "before_break",
+            "after_break",
+            "previous_day_off_missing",
+            "next_day_off_missing",
+            "before_break_missing",
+            "after_break_missing"
+          ],
+          "interval": "interval.json",
+          "backtest_interval_coverage_pct": {
+            "all": 86.63003663003663,
+            "end_window": 83.81410256410257
+          }
+        },
+        "cat_event": {
+          "file": "cat_event.cbm",
+          "numeric_features": [
+            "hour",
+            "weekday",
+            "month",
+            "weekend",
+            "holiday",
+            "previous_day_off",
+            "next_day_off",
+            "before_break",
+            "after_break",
+            "previous_day_off_missing",
+            "next_day_off_missing",
+            "before_break_missing",
+            "after_break_missing",
+            "sessions_today",
+            "unknown_runtime_today",
+            "starts_in_bin",
+            "ends_in_bin",
+            "ends_previous_hour",
+            "ends_two_hours_ago",
+            "dome_ends",
+            "arena_ends",
+            "olympic_hall_ends",
+            "woori_ends",
+            "other_venue_ends",
+            "concurrent_ends"
+          ],
+          "interval": "interval_cat_event.json",
+          "backtest_interval_coverage_pct": {
+            "all": 87.3015873015873,
+            "end_window": 85.57692307692307
+          }
+        },
+        "cat_weather": {
+          "file": "cat_weather.cbm",
+          "numeric_features": [
+            "hour",
+            "weekday",
+            "month",
+            "weekend",
+            "holiday",
+            "previous_day_off",
+            "next_day_off",
+            "before_break",
+            "after_break",
+            "previous_day_off_missing",
+            "next_day_off_missing",
+            "before_break_missing",
+            "after_break_missing",
+            "sessions_today",
+            "unknown_runtime_today",
+            "starts_in_bin",
+            "ends_in_bin",
+            "ends_previous_hour",
+            "ends_two_hours_ago",
+            "dome_ends",
+            "arena_ends",
+            "olympic_hall_ends",
+            "woori_ends",
+            "other_venue_ends",
+            "concurrent_ends",
+            "forecast_temp_c",
+            "forecast_precip_prob_pct",
+            "forecast_precip_mm",
+            "forecast_wet",
+            "forecast_wind_ms",
+            "forecast_humidity_pct",
+            "forecast_lead_hours",
+            "forecast_numeric_fraction",
+            "forecast_temp_c_missing",
+            "forecast_precip_prob_pct_missing",
+            "forecast_precip_mm_missing",
+            "forecast_wet_missing",
+            "forecast_wind_ms_missing",
+            "forecast_humidity_pct_missing",
+            "forecast_lead_hours_missing"
+          ],
+          "interval": "interval_cat_weather.json",
+          "backtest_interval_coverage_pct": {
+            "all": 88.4004884004884,
+            "end_window": 85.57692307692307
+          }
+        },
+        "pooled_nb": {
+          "file": "pooled_nb.json",
+          "numeric_features": [
+            "hour",
+            "weekday",
+            "month",
+            "weekend",
+            "holiday",
+            "previous_day_off",
+            "next_day_off",
+            "before_break",
+            "after_break",
+            "previous_day_off_missing",
+            "next_day_off_missing",
+            "before_break_missing",
+            "after_break_missing",
+            "sessions_today",
+            "unknown_runtime_today",
+            "starts_in_bin",
+            "ends_in_bin",
+            "ends_previous_hour",
+            "ends_two_hours_ago",
+            "dome_ends",
+            "arena_ends",
+            "olympic_hall_ends",
+            "woori_ends",
+            "other_venue_ends",
+            "concurrent_ends",
+            "forecast_temp_c",
+            "forecast_precip_prob_pct",
+            "forecast_precip_mm",
+            "forecast_wet",
+            "forecast_wind_ms",
+            "forecast_humidity_pct",
+            "forecast_lead_hours",
+            "forecast_numeric_fraction",
+            "forecast_temp_c_missing",
+            "forecast_precip_prob_pct_missing",
+            "forecast_precip_mm_missing",
+            "forecast_wet_missing",
+            "forecast_wind_ms_missing",
+            "forecast_humidity_pct_missing",
+            "forecast_lead_hours_missing"
+          ],
+          "diagnostics": {
+            "rows": 6804,
+            "site_count": 14,
+            "alpha": 0.0786823033717071,
+            "dispersion_within_cell_df": 5040,
+            "raw_feature_count": 38,
+            "feature_count": 34,
+            "parameter_count": 3510,
+            "converged": true,
+            "iterations": 352,
+            "optimizer_message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+            "max_abs_scaled_gradient": 0.004072750610799705
+          },
+          "interval": "interval_pooled_nb.json",
+          "backtest_interval_coverage_pct": {
+            "all": 83.57753357753359,
+            "end_window": 77.24358974358975
+          }
+        }
+      },
+      "interval": "interval.json"
+    }
+  },
+  "observations": {
+    "timezone": "Asia/Seoul",
+    "hourly_hours_inclusive": [
+      6,
+      23
+    ],
+    "daily_hour": -1,
+    "grain": [
+      "mode",
+      "site",
+      "date",
+      "hour"
+    ],
+    "bus_stop_crosswalk": {
+      "24123": {
+        "seoul_stop_id": "123000034",
+        "stcis_stop_id": "8002350",
+        "name": "잠실파크리오아파트상가.올림픽회관"
+      },
+      "24127": {
+        "seoul_stop_id": "123000038",
+        "stcis_stop_id": "0070509",
+        "name": "몽촌토성역"
+      },
+      "24211": {
+        "seoul_stop_id": "123000122",
+        "stcis_stop_id": "0013900",
+        "name": "한성백제역4번출구"
+      },
+      "24221": {
+        "seoul_stop_id": "123000132",
+        "stcis_stop_id": "8000664",
+        "name": "올림픽공원남2문"
+      },
+      "24222": {
+        "seoul_stop_id": "123000133",
+        "stcis_stop_id": "0012023",
+        "name": "올림픽공원장미광장"
+      },
+      "24231": {
+        "seoul_stop_id": "123000142",
+        "stcis_stop_id": "0075736",
+        "name": "올림픽회관"
+      },
+      "24233": {
+        "seoul_stop_id": "123000584",
+        "stcis_stop_id": "8501780",
+        "name": "한성백제박물관"
+      },
+      "24239": {
+        "seoul_stop_id": "123000149",
+        "stcis_stop_id": "0077170",
+        "name": "올림픽공원장미광장"
+      },
+      "24240": {
+        "seoul_stop_id": "123000150",
+        "stcis_stop_id": "8000663",
+        "name": "올림픽공원남2문"
+      },
+      "24241": {
+        "seoul_stop_id": "123000151",
+        "stcis_stop_id": "0011890",
+        "name": "몽촌토성역.한성백제역"
+      },
+      "24244": {
+        "seoul_stop_id": "123000154",
+        "stcis_stop_id": "0012139",
+        "name": "올림픽공원역"
+      },
+      "24245": {
+        "seoul_stop_id": "123000155",
+        "stcis_stop_id": "0012127",
+        "name": "올림픽공원역"
+      },
+      "24246": {
+        "seoul_stop_id": "123000156",
+        "stcis_stop_id": "8002225",
+        "name": "올림픽공원테니스장"
+      },
+      "24396": {
+        "seoul_stop_id": "123000305",
+        "stcis_stop_id": "9005545",
+        "name": "몽촌토성역.한성백제역"
+      }
+    },
+    "bus_stop_selection": "2024-12-10 게시 서울 정류소 위치 목록과 STCIS 정류소 목록에서 올림픽공원·인접 역 주변의 방향별 ARS 14곳이 일치한다. T-DATA 노선별 시간 자료는 합산 대상에서 제외했다.",
+    "modes": {
+      "rail": {
+        "file": "park_station_boardings_2025.csv",
+        "unit": "persons",
+        "target": "승차 / 순승차",
+        "source_rows": 32120,
+        "missing_counts": 0,
+        "site_labels": {
+          "5:2556": "올림픽공원역 5호선",
+          "8:2814": "몽촌토성역 8호선",
+          "9:4135": "한성백제역 9호선",
+          "9:4136": "올림픽공원역 9호선"
+        },
+        "coverage_limit": "수송일자의 06~23시 단일 시간대. 호선별 승차와 순승차이며 관객 여부는 구분되지 않는다.",
+        "rows": 26280,
+        "days": 365,
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "zero_rows": 0,
+        "target_sum": 9042938,
+        "sites": [
+          "5:2556",
+          "8:2814",
+          "9:4135",
+          "9:4136"
+        ],
+        "site_coverage": {
+          "5:2556": {
+            "rows": 6570,
+            "days": 365,
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "8:2814": {
+            "rows": 6570,
+            "days": 365,
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "9:4135": {
+            "rows": 6570,
+            "days": 365,
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "9:4136": {
+            "rows": 6570,
+            "days": 365,
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          }
+        }
+      },
+      "parking": {
+        "file": "parking_gate_hourly_2025.parquet",
+        "unit": "vehicles",
+        "target": "출입문별 시간당 출차 대수",
+        "source_rows": 96881,
+        "positive_gate_rows_before_balancing": 17447,
+        "missing_counts": 0,
+        "explicit_zeros_excluded": 0,
+        "candidate_hours_after_date_filter": 5940,
+        "complete_positive_gate_hours": 5667,
+        "absent_or_incomplete_gate_hours": 273,
+        "excluded_date_ranges_inclusive": [
+          [
+            "2025-07-31",
+            "2025-08-03"
+          ],
+          [
+            "2025-12-01",
+            "2025-12-31"
+          ]
+        ],
+        "site_labels": {
+          "남2": "남2문",
+          "동2": "동2문",
+          "북2": "북2문"
+        },
+        "coverage_limit": "월별 원본에서 세 문 모두 양의 출차가 있는 시간만 관측한다. 저수요일과 실제 0에 대한 외삽에는 선택 편향이 있다. 7/31·8/2 입차 누락과 이튿날 영향, 12월 입차 누락을 제외했다.",
+        "rows": 17001,
+        "days": 330,
+        "start": "2025-01-01",
+        "end": "2025-11-30",
+        "zero_rows": 0,
+        "target_sum": 2457696,
+        "sites": [
+          "남2",
+          "동2",
+          "북2"
+        ],
+        "site_coverage": {
+          "남2": {
+            "rows": 5667,
+            "days": 330,
+            "start": "2025-01-01",
+            "end": "2025-11-30"
+          },
+          "동2": {
+            "rows": 5667,
+            "days": 330,
+            "start": "2025-01-01",
+            "end": "2025-11-30"
+          },
+          "북2": {
+            "rows": 5667,
+            "days": 330,
+            "start": "2025-01-01",
+            "end": "2025-11-30"
+          }
+        }
+      },
+      "bus_day": {
+        "file": "bus_park_daily_totals_2025.parquet",
+        "unit": "persons",
+        "target": "정류장 수송일별 공표 노선 승차 합계",
+        "source_rows": 263563,
+        "selected_route_rows": 23183,
+        "missing_route_counts": 0,
+        "missing_route_key_rows": 0,
+        "excluded_stop_days_with_incomplete_rows": 0,
+        "stop_days_with_label_available_on": 5110,
+        "registration_lag_days_range": [
+          3,
+          3
+        ],
+        "label_availability": "각 노선 등록일 중 가장 늦은 날짜의 다음날 00:00 KST로 보수적으로 잡는다. 한 행이라도 등록일이 없으면 가용일은 미확인이다.",
+        "observed_route_profiles_by_site": {
+          "24123": [
+            {
+              "route_variants": [
+                "3318 / 3318번(강동차고지~미사강변도시~마천동)",
+                "3319 / 3319(장지공영차고지~잠실역)",
+                "340 / 340번(강동차고지~무지개아파트)",
+                "341 / 341번(강동공영차고지~우면동)",
+                "3411 / 3411번(강동공영차고지~종합운동장사거리)",
+                "342 / 342번(강동차고지~압구정로데오역)",
+                "4318 / 4318번(남태령역~천호역)",
+                "N31 / N31강동 (강동공영차고지~국민대)",
+                "N31 / N31정릉 (국민대~강동공영차고지)"
+              ],
+              "observed_days": 7,
+              "first_date": "2025-01-01",
+              "last_date": "2025-01-07"
+            },
+            {
+              "route_variants": [
+                "3318 / 3318번(강동차고지~미사강변도시~마천동)",
+                "3319 / 3319(장지공영차고지~잠실역)",
+                "340 / 340번(강동차고지~무지개아파트)",
+                "341 / 341번(강동공영차고지~우면동)",
+                "3411 / 3411번(강동공영차고지~한티역)",
+                "342 / 342번(강동차고지~압구정로데오역)",
+                "4318 / 4318번(남태령역~천호역)"
+              ],
+              "observed_days": 6,
+              "first_date": "2025-02-02",
+              "last_date": "2025-12-28"
+            },
+            {
+              "route_variants": [
+                "3318 / 3318번(강동차고지~미사강변도시~마천동)",
+                "3319 / 3319(장지공영차고지~잠실역)",
+                "340 / 340번(강동차고지~무지개아파트)",
+                "341 / 341번(강동공영차고지~우면동)",
+                "3411 / 3411번(강동공영차고지~한티역)",
+                "342 / 342번(강동차고지~압구정로데오역)",
+                "4318 / 4318번(남태령역~천호역)",
+                "N31 / N31강동 (강동공영차고지~국민대)"
+              ],
+              "observed_days": 49,
+              "first_date": "2025-01-12",
+              "last_date": "2025-12-27"
+            },
+            {
+              "route_variants": [
+                "3318 / 3318번(강동차고지~미사강변도시~마천동)",
+                "3319 / 3319(장지공영차고지~잠실역)",
+                "340 / 340번(강동차고지~무지개아파트)",
+                "341 / 341번(강동공영차고지~우면동)",
+                "3411 / 3411번(강동공영차고지~한티역)",
+                "342 / 342번(강동차고지~압구정로데오역)",
+                "4318 / 4318번(남태령역~천호역)",
+                "N31 / N31강동 (강동공영차고지~국민대)",
+                "N31 / N31정릉 (국민대~강동공영차고지)"
+              ],
+              "observed_days": 291,
+              "first_date": "2025-01-08",
+              "last_date": "2025-12-31"
+            },
+            {
+              "route_variants": [
+                "3318 / 3318번(강동차고지~미사강변도시~마천동)",
+                "3319 / 3319(장지공영차고지~잠실역)",
+                "340 / 340번(강동차고지~무지개아파트)",
+                "341 / 341번(강동공영차고지~우면동)",
+                "3411 / 3411번(강동공영차고지~한티역)",
+                "342 / 342번(강동차고지~압구정로데오역)",
+                "4318 / 4318번(남태령역~천호역)",
+                "N31 / N31정릉 (국민대~강동공영차고지)"
+              ],
+              "observed_days": 12,
+              "first_date": "2025-01-09",
+              "last_date": "2025-11-10"
+            }
+          ],
+          "24127": [
+            {
+              "route_variants": [
+                "3319 / 3319(장지공영차고지~잠실역)",
+                "341 / 341번(강동공영차고지~우면동)",
+                "3411 / 3411번(강동공영차고지~종합운동장사거리)",
+                "N31 / N31강동 (강동공영차고지~국민대)",
+                "N31 / N31정릉 (국민대~강동공영차고지)"
+              ],
+              "observed_days": 7,
+              "first_date": "2025-01-01",
+              "last_date": "2025-01-07"
+            },
+            {
+              "route_variants": [
+                "3319 / 3319(장지공영차고지~잠실역)",
+                "341 / 341번(강동공영차고지~우면동)",
+                "3411 / 3411번(강동공영차고지~한티역)",
+                "N31 / N31강동 (강동공영차고지~국민대)"
+              ],
+              "observed_days": 2,
+              "first_date": "2025-03-03",
+              "last_date": "2025-04-13"
+            },
+            {
+              "route_variants": [
+                "3319 / 3319(장지공영차고지~잠실역)",
+                "341 / 341번(강동공영차고지~우면동)",
+                "3411 / 3411번(강동공영차고지~한티역)",
+                "N31 / N31강동 (강동공영차고지~국민대)",
+                "N31 / N31정릉 (국민대~강동공영차고지)"
+              ],
+              "observed_days": 356,
+              "first_date": "2025-01-08",
+              "last_date": "2025-12-31"
+            }
+          ],
+          "24211": [
+            {
+              "route_variants": [
+                "340 / 340번(강동차고지~무지개아파트)"
+              ],
+              "observed_days": 365,
+              "first_date": "2025-01-01",
+              "last_date": "2025-12-31"
+            }
+          ],
+          "24221": [
+            {
+              "route_variants": [
+                "3216 / 3216번(오금동~경희의료원)",
+                "3323 / 3323번(강동공영차고지~잠실새내역)",
+                "3412 / 3412번(강동공영차고지~강남역)",
+                "3413 / 3413번(강일동공영차고지~수서경찰서)",
+                "3414 / 3414번(오금동~개포동)"
+              ],
+              "observed_days": 209,
+              "first_date": "2025-01-01",
+              "last_date": "2025-07-28"
+            },
+            {
+              "route_variants": [
+                "3216 / 3216번(오금동~경희의료원)",
+                "3323 / 3323번(강동공영차고지~한강버스잠실선착장)",
+                "3412 / 3412번(강동공영차고지~강남역)",
+                "3413 / 3413번(강일동공영차고지~수서경찰서)",
+                "3414 / 3414번(오금동~개포동)"
+              ],
+              "observed_days": 156,
+              "first_date": "2025-07-29",
+              "last_date": "2025-12-31"
+            }
+          ],
+          "24222": [
+            {
+              "route_variants": [
+                "3323 / 3323번(강동공영차고지~잠실새내역)",
+                "3412 / 3412번(강동공영차고지~강남역)",
+                "3413 / 3413번(강일동공영차고지~수서경찰서)"
+              ],
+              "observed_days": 209,
+              "first_date": "2025-01-01",
+              "last_date": "2025-07-28"
+            },
+            {
+              "route_variants": [
+                "3323 / 3323번(강동공영차고지~한강버스잠실선착장)",
+                "3412 / 3412번(강동공영차고지~강남역)",
+                "3413 / 3413번(강일동공영차고지~수서경찰서)"
+              ],
+              "observed_days": 156,
+              "first_date": "2025-07-29",
+              "last_date": "2025-12-31"
+            }
+          ],
+          "24231": [
+            {
+              "route_variants": [
+                "3318 / 3318번(강동차고지~미사강변도시~마천동)",
+                "3319 / 3319(장지공영차고지~잠실역)",
+                "340 / 340번(강동차고지~무지개아파트)",
+                "341 / 341번(강동공영차고지~우면동)",
+                "3411 / 3411번(강동공영차고지~종합운동장사거리)",
+                "342 / 342번(강동차고지~압구정로데오역)",
+                "4318 / 4318번(남태령역~천호역)",
+                "N31 / N31강동 (강동공영차고지~국민대)",
+                "N31 / N31정릉 (국민대~강동공영차고지)"
+              ],
+              "observed_days": 6,
+              "first_date": "2025-01-01",
+              "last_date": "2025-01-07"
+            },
+            {
+              "route_variants": [
+                "3318 / 3318번(강동차고지~미사강변도시~마천동)",
+                "3319 / 3319(장지공영차고지~잠실역)",
+                "340 / 340번(강동차고지~무지개아파트)",
+                "341 / 341번(강동공영차고지~우면동)",
+                "3411 / 3411번(강동공영차고지~종합운동장사거리)",
+                "342 / 342번(강동차고지~압구정로데오역)",
+                "4318 / 4318번(남태령역~천호역)",
+                "N31 / N31정릉 (국민대~강동공영차고지)"
+              ],
+              "observed_days": 1,
+              "first_date": "2025-01-02",
+              "last_date": "2025-01-02"
+            },
+            {
+              "route_variants": [
+                "3318 / 3318번(강동차고지~미사강변도시~마천동)",
+                "3319 / 3319(장지공영차고지~잠실역)",
+                "340 / 340번(강동차고지~무지개아파트)",
+                "341 / 341번(강동공영차고지~우면동)",
+                "3411 / 3411번(강동공영차고지~한티역)",
+                "342 / 342번(강동차고지~압구정로데오역)",
+                "4318 / 4318번(남태령역~천호역)"
+              ],
+              "observed_days": 7,
+              "first_date": "2025-01-13",
+              "last_date": "2025-11-19"
+            },
+            {
+              "route_variants": [
+                "3318 / 3318번(강동차고지~미사강변도시~마천동)",
+                "3319 / 3319(장지공영차고지~잠실역)",
+                "340 / 340번(강동차고지~무지개아파트)",
+                "341 / 341번(강동공영차고지~우면동)",
+                "3411 / 3411번(강동공영차고지~한티역)",
+                "342 / 342번(강동차고지~압구정로데오역)",
+                "4318 / 4318번(남태령역~천호역)",
+                "N31 / N31강동 (강동공영차고지~국민대)"
+              ],
+              "observed_days": 17,
+              "first_date": "2025-01-08",
+              "last_date": "2025-12-25"
+            },
+            {
+              "route_variants": [
+                "3318 / 3318번(강동차고지~미사강변도시~마천동)",
+                "3319 / 3319(장지공영차고지~잠실역)",
+                "340 / 340번(강동차고지~무지개아파트)",
+                "341 / 341번(강동공영차고지~우면동)",
+                "3411 / 3411번(강동공영차고지~한티역)",
+                "342 / 342번(강동차고지~압구정로데오역)",
+                "4318 / 4318번(남태령역~천호역)",
+                "N31 / N31강동 (강동공영차고지~국민대)",
+                "N31 / N31정릉 (국민대~강동공영차고지)"
+              ],
+              "observed_days": 264,
+              "first_date": "2025-01-09",
+              "last_date": "2025-12-31"
+            },
+            {
+              "route_variants": [
+                "3318 / 3318번(강동차고지~미사강변도시~마천동)",
+                "3319 / 3319(장지공영차고지~잠실역)",
+                "340 / 340번(강동차고지~무지개아파트)",
+                "341 / 341번(강동공영차고지~우면동)",
+                "3411 / 3411번(강동공영차고지~한티역)",
+                "342 / 342번(강동차고지~압구정로데오역)",
+                "4318 / 4318번(남태령역~천호역)",
+                "N31 / N31정릉 (국민대~강동공영차고지)"
+              ],
+              "observed_days": 70,
+              "first_date": "2025-01-10",
+              "last_date": "2025-12-28"
+            }
+          ],
+          "24233": [
+            {
+              "route_variants": [
+                "3323 / 3323번(강동공영차고지~잠실새내역)",
+                "3412 / 3412번(강동공영차고지~강남역)",
+                "3413 / 3413번(강일동공영차고지~수서경찰서)"
+              ],
+              "observed_days": 209,
+              "first_date": "2025-01-01",
+              "last_date": "2025-07-28"
+            },
+            {
+              "route_variants": [
+                "3323 / 3323번(강동공영차고지~한강버스잠실선착장)",
+                "3412 / 3412번(강동공영차고지~강남역)",
+                "3413 / 3413번(강일동공영차고지~수서경찰서)"
+              ],
+              "observed_days": 156,
+              "first_date": "2025-07-29",
+              "last_date": "2025-12-31"
+            }
+          ],
+          "24239": [
+            {
+              "route_variants": [
+                "3323 / 3323번(강동공영차고지~잠실새내역)",
+                "3412 / 3412번(강동공영차고지~강남역)",
+                "3413 / 3413번(강일동공영차고지~수서경찰서)"
+              ],
+              "observed_days": 209,
+              "first_date": "2025-01-01",
+              "last_date": "2025-07-28"
+            },
+            {
+              "route_variants": [
+                "3323 / 3323번(강동공영차고지~한강버스잠실선착장)",
+                "3412 / 3412번(강동공영차고지~강남역)",
+                "3413 / 3413번(강일동공영차고지~수서경찰서)"
+              ],
+              "observed_days": 156,
+              "first_date": "2025-07-29",
+              "last_date": "2025-12-31"
+            }
+          ],
+          "24240": [
+            {
+              "route_variants": [
+                "3323 / 3323번(강동공영차고지~잠실새내역)",
+                "3412 / 3412번(강동공영차고지~강남역)",
+                "3413 / 3413번(강일동공영차고지~수서경찰서)"
+              ],
+              "observed_days": 209,
+              "first_date": "2025-01-01",
+              "last_date": "2025-07-28"
+            },
+            {
+              "route_variants": [
+                "3323 / 3323번(강동공영차고지~한강버스잠실선착장)",
+                "3412 / 3412번(강동공영차고지~강남역)",
+                "3413 / 3413번(강일동공영차고지~수서경찰서)"
+              ],
+              "observed_days": 156,
+              "first_date": "2025-07-29",
+              "last_date": "2025-12-31"
+            }
+          ],
+          "24241": [
+            {
+              "route_variants": [
+                "3323 / 3323번(강동공영차고지~잠실새내역)",
+                "340 / 340번(강동차고지~무지개아파트)",
+                "3412 / 3412번(강동공영차고지~강남역)",
+                "3413 / 3413번(강일동공영차고지~수서경찰서)"
+              ],
+              "observed_days": 209,
+              "first_date": "2025-01-01",
+              "last_date": "2025-07-28"
+            },
+            {
+              "route_variants": [
+                "3323 / 3323번(강동공영차고지~한강버스잠실선착장)",
+                "340 / 340번(강동차고지~무지개아파트)",
+                "3412 / 3412번(강동공영차고지~강남역)",
+                "3413 / 3413번(강일동공영차고지~수서경찰서)"
+              ],
+              "observed_days": 156,
+              "first_date": "2025-07-29",
+              "last_date": "2025-12-31"
+            }
+          ],
+          "24244": [
+            {
+              "route_variants": [
+                "3214 / 3214번(마천동~강변역)",
+                "3220 / 3220번(오금동~청량리)",
+                "3319 / 3319(장지공영차고지~잠실역)",
+                "3323 / 3323번(강동공영차고지~잠실새내역)",
+                "3412 / 3412번(강동공영차고지~강남역)",
+                "3413 / 3413번(강일동공영차고지~수서경찰서)"
+              ],
+              "observed_days": 209,
+              "first_date": "2025-01-01",
+              "last_date": "2025-07-28"
+            },
+            {
+              "route_variants": [
+                "3214 / 3214번(마천동~강변역)",
+                "3220 / 3220번(오금동~청량리)",
+                "3319 / 3319(장지공영차고지~잠실역)",
+                "3323 / 3323번(강동공영차고지~한강버스잠실선착장)",
+                "3412 / 3412번(강동공영차고지~강남역)",
+                "3413 / 3413번(강일동공영차고지~수서경찰서)"
+              ],
+              "observed_days": 156,
+              "first_date": "2025-07-29",
+              "last_date": "2025-12-31"
+            }
+          ],
+          "24245": [
+            {
+              "route_variants": [
+                "3214 / 3214번(마천동~강변역)",
+                "3220 / 3220번(오금동~청량리)",
+                "3319 / 3319(장지공영차고지~잠실역)",
+                "3323 / 3323번(강동공영차고지~잠실새내역)",
+                "3412 / 3412번(강동공영차고지~강남역)",
+                "3413 / 3413번(강일동공영차고지~수서경찰서)"
+              ],
+              "observed_days": 209,
+              "first_date": "2025-01-01",
+              "last_date": "2025-07-28"
+            },
+            {
+              "route_variants": [
+                "3214 / 3214번(마천동~강변역)",
+                "3220 / 3220번(오금동~청량리)",
+                "3319 / 3319(장지공영차고지~잠실역)",
+                "3323 / 3323번(강동공영차고지~한강버스잠실선착장)",
+                "3412 / 3412번(강동공영차고지~강남역)",
+                "3413 / 3413번(강일동공영차고지~수서경찰서)"
+              ],
+              "observed_days": 156,
+              "first_date": "2025-07-29",
+              "last_date": "2025-12-31"
+            }
+          ],
+          "24246": [
+            {
+              "route_variants": [
+                "3220 / 3220번(오금동~청량리)",
+                "3319 / 3319(장지공영차고지~잠실역)"
+              ],
+              "observed_days": 365,
+              "first_date": "2025-01-01",
+              "last_date": "2025-12-31"
+            }
+          ],
+          "24396": [
+            {
+              "route_variants": [
+                "3323 / 3323번(강동공영차고지~잠실새내역)",
+                "333 / 333번(송파차고지~올림픽공원)",
+                "340 / 340번(강동차고지~무지개아파트)",
+                "3412 / 3412번(강동공영차고지~강남역)",
+                "3413 / 3413번(강일동공영차고지~수서경찰서)"
+              ],
+              "observed_days": 209,
+              "first_date": "2025-01-01",
+              "last_date": "2025-07-28"
+            },
+            {
+              "route_variants": [
+                "3323 / 3323번(강동공영차고지~한강버스잠실선착장)",
+                "333 / 333번(송파차고지~올림픽공원)",
+                "340 / 340번(강동차고지~무지개아파트)",
+                "3412 / 3412번(강동공영차고지~강남역)",
+                "3413 / 3413번(강일동공영차고지~수서경찰서)"
+              ],
+              "observed_days": 156,
+              "first_date": "2025-07-29",
+              "last_date": "2025-12-31"
+            }
+          ]
+        },
+        "coverage_limit": "같은 정류장·수송일에 공표된 노선과 운행 변형의 승차를 합산한다. 개별 행이 누락된 노선은 운행 변경·무거래·수집 누락을 구별할 수 없다. 기록된 노선의 승차가 비어 있으면 그 정류장일을 제외한다.",
+        "rows": 5110,
+        "days": 365,
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "zero_rows": 0,
+        "target_sum": 2560448,
+        "sites": [
+          "24123",
+          "24127",
+          "24211",
+          "24221",
+          "24222",
+          "24231",
+          "24233",
+          "24239",
+          "24240",
+          "24241",
+          "24244",
+          "24245",
+          "24246",
+          "24396"
+        ],
+        "site_coverage": {
+          "24123": {
+            "rows": 365,
+            "days": 365,
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "24127": {
+            "rows": 365,
+            "days": 365,
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "24211": {
+            "rows": 365,
+            "days": 365,
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "24221": {
+            "rows": 365,
+            "days": 365,
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "24222": {
+            "rows": 365,
+            "days": 365,
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "24231": {
+            "rows": 365,
+            "days": 365,
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "24233": {
+            "rows": 365,
+            "days": 365,
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "24239": {
+            "rows": 365,
+            "days": 365,
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "24240": {
+            "rows": 365,
+            "days": 365,
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "24241": {
+            "rows": 365,
+            "days": 365,
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "24244": {
+            "rows": 365,
+            "days": 365,
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "24245": {
+            "rows": 365,
+            "days": 365,
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "24246": {
+            "rows": 365,
+            "days": 365,
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "24396": {
+            "rows": 365,
+            "days": 365,
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          }
+        }
+      },
+      "bus_hour": {
+        "file": "bus_park_stcis_stop_hours_2025.parquet",
+        "unit": "persons",
+        "target": "STCIS 정류장·시간별 전체 노선 승차 인원",
+        "source_rows": 13776,
+        "missing_counts": 0,
+        "coverage_limit": "STCIS가 제공한 06~23시 원시 구간과 명시적 0을 사용한다. 미수집 구간은 비어 있다. 개별 노선의 시간별 이용량은 별도다.",
+        "rows": 10332,
+        "days": 42,
+        "start": "2025-01-01",
+        "end": "2025-02-11",
+        "zero_rows": 347,
+        "target_sum": 246230,
+        "sites": [
+          "24123",
+          "24127",
+          "24211",
+          "24221",
+          "24222",
+          "24231",
+          "24233",
+          "24239",
+          "24240",
+          "24241",
+          "24244",
+          "24245",
+          "24246",
+          "24396"
+        ],
+        "site_coverage": {
+          "24123": {
+            "rows": 756,
+            "days": 42,
+            "start": "2025-01-01",
+            "end": "2025-02-11"
+          },
+          "24127": {
+            "rows": 756,
+            "days": 42,
+            "start": "2025-01-01",
+            "end": "2025-02-11"
+          },
+          "24211": {
+            "rows": 504,
+            "days": 28,
+            "start": "2025-01-01",
+            "end": "2025-01-28"
+          },
+          "24221": {
+            "rows": 756,
+            "days": 42,
+            "start": "2025-01-01",
+            "end": "2025-02-11"
+          },
+          "24222": {
+            "rows": 756,
+            "days": 42,
+            "start": "2025-01-01",
+            "end": "2025-02-11"
+          },
+          "24231": {
+            "rows": 756,
+            "days": 42,
+            "start": "2025-01-01",
+            "end": "2025-02-11"
+          },
+          "24233": {
+            "rows": 756,
+            "days": 42,
+            "start": "2025-01-01",
+            "end": "2025-02-11"
+          },
+          "24239": {
+            "rows": 756,
+            "days": 42,
+            "start": "2025-01-01",
+            "end": "2025-02-11"
+          },
+          "24240": {
+            "rows": 756,
+            "days": 42,
+            "start": "2025-01-01",
+            "end": "2025-02-11"
+          },
+          "24241": {
+            "rows": 756,
+            "days": 42,
+            "start": "2025-01-01",
+            "end": "2025-02-11"
+          },
+          "24244": {
+            "rows": 756,
+            "days": 42,
+            "start": "2025-01-01",
+            "end": "2025-02-11"
+          },
+          "24245": {
+            "rows": 756,
+            "days": 42,
+            "start": "2025-01-01",
+            "end": "2025-02-11"
+          },
+          "24246": {
+            "rows": 756,
+            "days": 42,
+            "start": "2025-01-01",
+            "end": "2025-02-11"
+          },
+          "24396": {
+            "rows": 756,
+            "days": 42,
+            "start": "2025-01-01",
+            "end": "2025-02-11"
+          }
+        }
+      }
+    }
+  },
+  "runtime": {
+    "python": "3.12.13",
+    "packages": {
+      "catboost": "1.2.10",
+      "numpy": "2.5.5",
+      "pandas": "3.1.1",
+      "pyarrow": "26.0.1",
+      "scipy": "1.18.1",
+      "tzdata": "2026.6"
+    }
+  },
+  "source_sha256": {
+    "features.py": "8bcdeb576f5f794e5a669e84517a2da7a516a018f5f471c5324916c93b5cbec1",
+    "metrics.py": "4b76f19f9c5e0f68db34e924640c16ff3a93ec685146f8c595a067645877e901",
+    "models.py": "8d1336bd80a4d6e1f245f8033f032a17050222a4cf2f2147fd55a74b457e0fa9",
+    "negbin.py": "4fe35595f7cba49d39c33d8f36d7ad748dadfdd1c81bfc7f7ca60643538676c3",
+    "observations.py": "a3636b929848eb95c7b597ce3d76a0ef0cf08e2e2878c7c5281451a6425730d0",
+    "protocol.py": "a38894c2db69a828c20e43a0a401f3a3578649d227338e0a56509d63384382d4",
+    "train.py": "3e65502a4440d4d9c4470128d98395344c4883e083ac20b0b1e4877ef427346e",
+    "predict.py": "f70f0e5373e36dec324423a786f092d9c3b64fcc8bce3fc367078e510b0c2374"
+  },
+  "inputs": {
+    "prepared/bus_park_daily_totals_2025.parquet": {
+      "sha256": "1394eee40caa0773163fe6c101b0f5bec23461f5fa01a0d47410053590f27574",
+      "bytes": 1304100
+    },
+    "prepared/bus_park_stcis_stop_hours_2025.parquet": {
+      "sha256": "b2163d0966f122a32c82d7c638f36a25e846eb0375f8c8cc3eeba76c90aa740b",
+      "bytes": 22255
+    },
+    "prepared/calendar_2025.csv": {
+      "sha256": "2d811161c1096d72084f56d48e6c57106f07c6034abf891d964617457eba935b",
+      "bytes": 29029
+    },
+    "prepared/event_sessions_2025.csv": {
+      "sha256": "98924f5bc234ac9cc94cd5f7a21af4c7dfa2acafff535f20e85f372951dea723",
+      "bytes": 183106
+    },
+    "prepared/park_forecast_all_issues_2025.parquet": {
+      "sha256": "0f1926155ad4e5ada6dd6aa566bd05c3201541af5e3a9656ce2c3b49fed3c00b",
+      "bytes": 3430479
+    },
+    "prepared/park_station_boardings_2025.csv": {
+      "sha256": "cb72a74110c017e39a61b3373e644c763ce73856283b2bcdc1a110516e0c2769",
+      "bytes": 2401580
+    },
+    "prepared/parking_gate_hourly_2025.parquet": {
+      "sha256": "c21ff1ed80407c4a045e370a708a4cb6b7d59d684703381d9b14d9dfbccad8f6",
+      "bytes": 200327
+    },
+    "raw/D01/calendar_202501.json": {
+      "sha256": "2b8a298e3fee9e34d5552ed6d13f9df53321818716732152ef13e1f28d416e97",
+      "bytes": 8555
+    },
+    "raw/D01/calendar_202502.json": {
+      "sha256": "93f07a03c7275e5f1530aa2ce225ae2840d0650cba48b6832bfe56767f7c1329",
+      "bytes": 8273
+    },
+    "raw/D01/calendar_202503.json": {
+      "sha256": "b2566ce409a2629b40c318da67a2f056ad29872c7e505e83b80303452d9b00dc",
+      "bytes": 9140
+    },
+    "raw/D01/calendar_202504.json": {
+      "sha256": "e73f076061b8492823ddf040f2c0e03b0bc7946afa59904df63d09c7c2437d35",
+      "bytes": 5912
+    },
+    "raw/D01/calendar_202505.json": {
+      "sha256": "b4ac80a4cc6b1c9160777272b654642ed648628ea6f8fcc6e937bbbcc9ea8a9f",
+      "bytes": 8756
+    },
+    "raw/D01/calendar_202506.json": {
+      "sha256": "7432c2ea26d997c6f4bc8db5249859e7cd09093f67ad60f152bb9df1702e142b",
+      "bytes": 8764
+    },
+    "raw/D01/calendar_202507.json": {
+      "sha256": "f0b738dd1dc2b26c3b61cdf4e37f58a74f826744e93642f2510ac55025c765ee",
+      "bytes": 6778
+    },
+    "raw/D01/calendar_202508.json": {
+      "sha256": "982238bb22fcad49ffc2b4a17a519bc50e540bdf876ce2b423a46cb9ac68c2e8",
+      "bytes": 9452
+    },
+    "raw/D01/calendar_202509.json": {
+      "sha256": "8f4c1cd781f25a0ca05c8d47b8f7a9854f0fabc54c578237c1c3e248cc0d3356",
+      "bytes": 5244
+    },
+    "raw/D01/calendar_202510.json": {
+      "sha256": "ad695b2b57de2d29c8e4a0b883bc1704fe552c06643268c57ed103c70ab8efb0",
+      "bytes": 8343
+    },
+    "raw/D01/calendar_202511.json": {
+      "sha256": "1a360176df8af42424b530b99379d5bc6786d4999b491f2864ee3e362f6c5f56",
+      "bytes": 9779
+    },
+    "raw/D01/calendar_202512.json": {
+      "sha256": "021f8e41274ea4027a4f42adcd8cb07d5ba8ebd05408b792b5830939fb967bf6",
+      "bytes": 9558
+    }
+  },
+  "files_sha256": {
+    "MODEL_CARD.md": "d8e1c36dd6c38006e259fc9d4c7b5d4fa0827f9a0bd8f3af7cc13ae716f41083",
+    "bus_day/cat_calendar.cbm": "61e72a747e9e14cef3d06f2ec628b0f78e1b4a06f9592015f1bec1abd7ca7a0c",
+    "bus_day/cat_event.cbm": "22bf85b8e20075aa08d2fbdb02965bbf45cdb30a7407976998bdc819cbb014f4",
+    "bus_day/cat_weather.cbm": "389db40381cb31f1b7d0062945a55d12188a88e58ada63edf3697eb60c0a444d",
+    "bus_day/interval.json": "d7a1c24806be418dbf8bac2b4d5df0fba91dabb5a12e09986c07031a05c1bcdc",
+    "bus_day/interval_cat_event.json": "d27310bd907bfeeeef9b09bf10ecb80f0b7d2f4c3ab135a1e7b42361a52698a0",
+    "bus_day/interval_cat_weather.json": "9ade1b41c019451f7e2f953a296609a425c97ff129c69910108f2f61dc5d8bb1",
+    "bus_day/interval_pooled_nb.json": "5c74093c6c3fc8007d883cdebe55fbf9101386c2c8412ea0c9878e71fb7d80af",
+    "bus_day/interval_weekday_median.json": "0ae58b39f51c743417870e62c6bacdc926b5f2ea2f9d0cd5312b17070d387513",
+    "bus_day/pooled_nb.json": "9f6e9f80a81059d595ce31499f6318babd8892eb5999d24d2ce92ec69871dcba",
+    "bus_day/weekday_median.json": "db18ee0c02a722349a1b4fbde0c171bf0aad1972b4fee809f8ff4134261d1f09",
+    "bus_hour/cat_calendar.cbm": "31dac4681baf1c48391ccc8d7dd9ea772242dbddd7d6b9f6e71709c6af0471cd",
+    "bus_hour/cat_event.cbm": "b68c796596dde0bf32887e40ca7d021563e75b81e09211c9a891571fd627eea1",
+    "bus_hour/cat_weather.cbm": "803897b682bc23e87eb06c2c6505a5991a3f4611e97ccc405c357e1f0f58867f",
+    "bus_hour/interval.json": "d371d48c52a14cd63f4c1c6f4011b95c078b24d2fe660abb3dfe2ac313ca5a34",
+    "bus_hour/interval_cat_event.json": "96e85c9b6949175b951b1c35f35e59f49b6156524587d4e378a1bed17d6b264a",
+    "bus_hour/interval_cat_weather.json": "aa12d5b63ccd97f1431032b5bf6b3be0657ad476222cfa5db0caa1c993185d76",
+    "bus_hour/interval_pooled_nb.json": "68cb2b1e55d9b7c4b8d7cdc4a0ddcfdf820fcbc7b9566b12af70b3403da9648a",
+    "bus_hour/interval_weekday_median.json": "b78e89dbcd2bf37cedcafbaebbaf167345253038fb6d059e2bd4a5ba4b584eb2",
+    "bus_hour/pooled_nb.json": "0a38363cd70a0b5dffd04b39efe5bf1f2b94b171fdb6616667647639f3b0287c",
+    "bus_hour/weekday_median.json": "3f5eb5c70f3b05a9c5eb7d5e95677af7a1c788c0750df77eb72220fc8c4c0332",
+    "parking/cat_calendar.cbm": "c9988525adc9427312000a2ac53b60d6c1f0e44938305edde180205359adccfa",
+    "parking/cat_event.cbm": "fa02f7a9852131ef91d9d0e65cf10599caf3a3a7cb955397b4ebab5495509b7c",
+    "parking/cat_weather.cbm": "8d165cbc81438c28354b1d0fc8d85cd23265e1fac975a4bccb1df2d58443f9d2",
+    "parking/interval.json": "59373ca8a7a0c7bda04893835538b0f02e01b7a10edda22b7c2448e5b9bf0251",
+    "parking/interval_cat_event.json": "b1e5471a9bfdef05735b86cf6dd1b628a805648e9556faf259b7d13407c5a867",
+    "parking/interval_cat_weather.json": "82ea70e5eab45cb4b52b4ddf997be3f28928eff5c3e8aee39e35df2bc92767d6",
+    "parking/interval_pooled_nb.json": "7bf427a43af17ff7304c92893b216ea97fe2632416874dd0e15c7b3676976a44",
+    "parking/interval_weekday_median.json": "31ffc8281956d4b52fa2a059c67be2f6151ef0ea1368cf273d77c903ed498eb6",
+    "parking/pooled_nb.json": "0a197eb2471b8c91d88a46f24e64058cadf7e3c84f09e75db12d32eeef48158e",
+    "parking/weekday_median.json": "88d794927255f797eb3a4b9b7a6d9c3dc85f7bd4095d1d8904d9b9a2bf16a5e5",
+    "predictions.parquet": "2613c0279437b35b158c7fea1fe8f6c27d6b6d057fe07c98bd1951befefd8a2d",
+    "rail/cat_calendar.cbm": "096c0ade13c18b9f8ec9bf164c36c116c932f78501ae72be427bfbd9175417e8",
+    "rail/cat_event.cbm": "0f51f644dae21329f0be27fc42cb96bf86d8f82b6947beb5ece1350c8985a2da",
+    "rail/cat_weather.cbm": "75397b32aa42e8083e7839f6235144a7480462724cb77a5dad64c5ad1b32e12f",
+    "rail/interval.json": "cd5f3c7260651b164148dce55b295c221d851678ff7a49fc21553de733fdaef4",
+    "rail/interval_cat_calendar.json": "a9a0c53c2d9133903b66e1420155c553b6333b7ca6d3766ee9c263f2cf63101e",
+    "rail/interval_cat_event.json": "3f2f07bbaeadb003d511e147c9a81dc02734ddc4d20cc2fffa18cbb9e6248709",
+    "rail/interval_cat_weather.json": "4ff802a6dcb8b087ef519518c84b3bd6217e906d54336b3ae981a7c35f6087d8",
+    "rail/interval_pooled_nb.json": "515c70ffe7d01c4061fcdb77c2180fe340acd569c6bb1a6c5cf83a561ce02b68",
+    "rail/pooled_nb.json": "6ff13a7011e9002b0803456724dab174368fb3c04502162f453f9b3627fa47df",
+    "rail/weekday_median.json": "5805b232adb56f1eedb303703c980c475043fb03c3e772a48d388329b8584274",
+    "validation.json": "90954ddc2b71715f5c6c8fef52a3d6a8ba218982d9a0a9bb825891ad284b556b"
+  }
+}
