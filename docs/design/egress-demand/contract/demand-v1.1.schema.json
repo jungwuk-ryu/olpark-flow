@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:olpark-flow:egress-demand:1.1",
+  "title": "공연별 퇴장 수요와 보행망 연구용 교환 형식 1.1",
+  "description": "as_of는 공연 전 예측 기준, issued_at은 이 결과를 작성한 시각이다. retrospective_scenario는 당시 발표되지 않은 원자료와 현재 지도를 사용한 재구성이다. shadow는 운영 전 비교용이다. 목적지에 못 연결한 사람도 합계에 포함한다.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version","usage","run_id","supersedes_run_id","as_of","issued_at","timezone","versions","scenario","horizon","events","totals","vehicle_gate_forecasts","evidence","availability"],
+  "properties": {
+    "contract_version": {"const": "olpark-demand/1.1"},
+    "usage": {"enum": ["retrospective_scenario","shadow"]},
+    "run_id": {"$ref": "#/$defs/id"},
+    "supersedes_run_id": {"$ref": "urn:olpark-flow:egress-demand:1.0#/properties/supersedes_run_id"},
+    "as_of": {"$ref": "#/$defs/kst"},
+    "issued_at": {"$ref": "#/$defs/kst"},
+    "timezone": {"const": "Asia/Seoul"},
+    "versions": {"$ref": "urn:olpark-flow:egress-demand:1.0#/properties/versions"},
+    "scenario": {
+      "type": "object", "additionalProperties": false,
+      "required": ["scenario_id","kind","seed","draw_set_id","draw_index","evidence_ids"],
+      "properties": {
+        "scenario_id": {"$ref": "#/$defs/id"}, "kind": {"const": "estimated_scenario"},
+        "seed": {"const": 0}, "draw_set_id": {"type": "null"}, "draw_index": {"type": "null"},
+        "evidence_ids": {"$ref": "#/$defs/refs"}
+      }
+    },
+    "horizon": {"$ref": "urn:olpark-flow:egress-demand:1.0#/properties/horizon"},
+    "events": {"type": "array","minItems": 1,"items": {"$ref": "#/$defs/event"}},
+    "totals": {"$ref": "urn:olpark-flow:egress-demand:1.0#/$defs/ledger"},
+    "vehicle_gate_forecasts": {"$ref": "urn:olpark-flow:egress-demand:1.0#/properties/vehicle_gate_forecasts"},
+    "evidence": {"$ref": "urn:olpark-flow:egress-demand:1.0#/properties/evidence"},
+    "availability": {
+      "type": "object", "additionalProperties": false,
+      "required": ["basis","closures","evidence_ids"],
+      "properties": {
+        "basis": {"enum": ["assumed_open","operator_confirmed"]},
+        "evidence_ids": {"$ref": "#/$defs/refs"},
+        "closures": {"type": "array","items": {
+          "type": "object","additionalProperties": false,"required": ["element_id","start","end","evidence_ids"],
+          "properties": {"element_id": {"$ref": "#/$defs/id"},"start": {"$ref": "#/$defs/kst"},"end": {"$ref": "#/$defs/kst"},"evidence_ids": {"$ref": "#/$defs/refs"}}
+        }}
+      }
+    }
+  },
+  "$defs": {
+    "id": {"$ref": "urn:olpark-flow:egress-demand:1.0#/$defs/id"},
+    "kst": {"$ref": "urn:olpark-flow:egress-demand:1.0#/$defs/kst"},
+    "refs": {"$ref": "urn:olpark-flow:egress-demand:1.0#/$defs/refs"},
+    "proportion": {"type":"number","minimum":0,"maximum":1},
+    "shares": {
+      "type":"object","additionalProperties":false,"required":["rail","bus","car","walk","other"],
+      "properties": {"rail":{"$ref":"#/$defs/proportion"},"bus":{"$ref":"#/$defs/proportion"},"car":{"$ref":"#/$defs/proportion"},"walk":{"$ref":"#/$defs/proportion"},"other":{"$ref":"#/$defs/proportion"}}
+    },
+    "mix": {
+      "type":"object","required":["shares","direction"],"properties":{
+        "shares":{"$ref":"#/$defs/shares"},"direction":{"enum":["arrival","first_return_mode"]}
+      }
+    },
+    "event": {
+      "type":"object","additionalProperties":false,
+      "required":["event_id","event_revision","venue_id","status","expected_end_at","ledger","od","unrouted","evidence_ids","estimate"],
+      "properties":{
+        "event_id":{"$ref":"#/$defs/id"},"event_revision":{"$ref":"#/$defs/id"},"venue_id":{"$ref":"#/$defs/id"},
+        "status":{"$ref":"urn:olpark-flow:egress-demand:1.0#/$defs/event/properties/status"},
+        "expected_end_at":{"$ref":"#/$defs/kst"},"ledger":{"$ref":"urn:olpark-flow:egress-demand:1.0#/$defs/ledger"},
+        "od":{"$ref":"urn:olpark-flow:egress-demand:1.0#/$defs/event/properties/od"},
+        "unrouted":{"$ref":"urn:olpark-flow:egress-demand:1.0#/$defs/event/properties/unrouted"},
+        "evidence_ids":{"$ref":"#/$defs/refs"},
+        "estimate":{
+          "type":"object","additionalProperties":false,
+          "required":["title","scheduled_start_at","attendance","timing","arrival_mode_mix","mode_mix","allocation"],
+          "properties":{
+            "title":{"type":"string","minLength":1},"scheduled_start_at":{"$ref":"#/$defs/kst"},
+            "attendance":{"type":"object","required":["persons","basis"],"properties":{"persons":{"$ref":"urn:olpark-flow:egress-demand:1.0#/$defs/count"},"basis":{"type":"string"}}},
+            "timing":{"type":"object"},"arrival_mode_mix":{"allOf":[{"$ref":"#/$defs/mix"},{"properties":{"direction":{"const":"arrival"}}}]},
+            "mode_mix":{"allOf":[{"$ref":"#/$defs/mix"},{"properties":{"direction":{"const":"first_return_mode"}}}]},
+            "allocation":{"type":"object"}
+          }
+        }
+      }
+    }
+  }
+}
