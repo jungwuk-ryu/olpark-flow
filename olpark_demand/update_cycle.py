@@ -17,6 +17,11 @@ cycle uses them twice, in this order:
 The specification itself is never changed here. Whether a refit helped is what the next
 cycle's score shows.
 
+Candidate rules (``response_candidates``) ride along: where candidates are fitted beside
+the bundle, step 2 fixes their forecasts in the same folder, step 4 scores them on the same
+rows against the rule in use, and step 5 refits them beside the new bundle. They never
+become the bundle the packet builder reads.
+
     python -m olpark_demand.update_cycle plan                       # what a run would fetch
     python -m olpark_demand.update_cycle run                        # the cycle
     python -m olpark_demand.update_cycle run --quiet-days-per-week 2   # also dates without a large session
@@ -39,7 +44,8 @@ from zoneinfo import ZoneInfo
 import numpy as np
 import pandas as pd
 
-from . import collect_calendar, collect_card_tags, collect_kopis, nowcast, response_data, response_report, response_train, station_curve
+from . import (collect_calendar, collect_card_tags, collect_kopis, nowcast, response_candidates, response_data, response_report,
+               response_train, station_curve)
 from .attendance import AttendanceModel
 from .response import ResponseModel
 from .response_backtest import attach_act_history, flag_rows, paired_day_bootstrap, summarise, weekday_median
@@ -179,6 +185,10 @@ def lock(root: Path, bundle: Path, dates: pd.DataFrame, folder: Path, *, replay:
         "metrics": ["egress-window total WAPE and bias per site-day", "peak-hour shortfall and hit", "egress-window hourly MAE with its paired date-bootstrap interval against the baseline",
                     "coverage of the bundle's 80% bands", "the same after the day-of update where the bundle has one"],
     }
+    # Candidate rules fitted beside this bundle are fixed at the same moment, in the same folder.
+    candidates = response_candidates.lock(root, bundle, dates.date.tolist(), folder)
+    if candidates:
+        plan["candidates"] = candidates
     _dump(folder / "plan.json", plan)
     return plan
 
@@ -264,6 +274,9 @@ def score(root: Path, bundle: Path, folder: Path) -> dict:
             evenings.to_csv(folder / "day_of_evenings.csv", index=False)
             scored["day_of"] = updated.assign(candidate="day_of")
     pd.concat(scored.values(), ignore_index=True).to_parquet(folder / "scored_rows.parquet", index=False)
+    candidates = response_candidates.score(root, folder, rows)
+    if candidates:
+        result["candidates"] = candidates
     _dump(folder / "score.json", result)
     return result
 
@@ -425,6 +438,9 @@ def run(root: Path, *, bundle_name: str | None = None, until: str | None = None,
     if not skip_refit:
         new_bundle = refit(root, protocol.get("version", "v1"), name, workers)
         result["refit"] = {"bundle": new_bundle.name, "changed": what_changed(bundle, new_bundle)}
+        if response_candidates.fitted(root, bundle):
+            # The candidates take the new dates too, so the next cycle compares rules on equal information.
+            result["refit"]["candidates"] = sorted(response_candidates.fit_all(root, new_bundle))
     _dump(folder / "score.json", result)
     append_track_record(root, track_row(folder.name, plan, result, new_bundle.name if new_bundle else None))
     if new_bundle and protocol.get("version") == "v3":
