@@ -4,6 +4,21 @@
 
 원본과 가공 파일은 저장소에 올리지 않는다. 출처마다 이용조건이 다르고 용량이 크기 때문이다. 저장소에는 이 문서와 [수집 명세](manifest.json)만 있고, 아래 표의 파일 링크는 자료를 받은 작업 폴더에서 열린다.
 
+## 예측 서버 실행 자료
+
+새 체크아웃에서 `python -m olpark_demand.server`로 실제 공연을 예측할 때 사용할 파일 목록입니다. 현재 판본은 `rail-2026-11-v3`입니다. 아래 경로는 저장소 루트 기준이며, 파일은 Git에서 제외되어 있습니다. 데이터 담당자에게 같은 판본의 파일을 받아 배치하면 재학습이나 원자료 수집 없이 실행할 수 있습니다.
+
+| 배치할 디렉터리 | 용도 | 받을 파일 |
+|---|---|---|
+| `ml/data/prepared/` | 공연 일정·발권·휴일 | `event_sessions_2025.csv`, `event_schedule_review.csv`, `olympicpark_events_2025.csv`, `kopis_park_performances_2025.csv`, `calendar_2025.csv` |
+| `ml/data/prepared/` | 교통수단별 수요와 목적지 배분 | `rail_station_intervals_2025.parquet`, `parking_gate_hourly_2025.parquet`, `bus_park_stcis_stop_hours_2025.parquet`, `bus_stop_locations.parquet`, `bus_park_monthly_hourly_totals_2025.parquet` |
+| `ml/data/prepared/response/` | 과거 회차·시간별 승차·관객 유형 | `sessions.parquet`, `rail_hourly.parquet`, `calendar.csv`, `audience_types.csv` |
+| `ml/artifacts/egress-response/rail-2026-11-v3/` | 모델이 읽는 발권·출연자 이력 | `attendance_history.csv`, `act_history.csv` |
+
+마지막 두 파일에는 출연자와 회차별 발권 정보가 있습니다. 권한 있는 팀 경로로 전달하세요. 모델 버전이 바뀌면 새 판본에 대응하는 이력 파일을 사용합니다.
+
+이 16개 파일(현재 합계 약 10.7 MB)과 저장소에 포함된 모델 파일로 공식 달력을 조회하고 예측을 생성할 수 있습니다. ‘신뢰도’의 과거 승차 검증 지표와 공연일 백분위까지 표시하려면 같은 모델 폴더에 `development_forecasts.parquet`를 추가하세요. 서버 실행 명령과 상태 확인 방법은 [루트 README](../../README.md#실제-공연-예측)에 있습니다.
+
 ## 바로 사용할 파일
 
 | 파일 | 내용과 단위 |
@@ -90,4 +105,32 @@
 
 ## 인증키
 
-인증키는 저장소와 데이터 폴더에 두지 않는다. KOPIS 수집기([collect_kopis.py](../olpark_demand/collect_kopis.py))는 환경변수 `KOPIS_API_KEY`에서 키를 읽는다. 교통카드 태그와 공원 일정은 인증키 없이 받는다.
+**예측 서버 실행에는 API 키가 필요 없습니다.** 서버는 올림픽공원 공개 달력에서 공연 일정을 받고 로컬 모델과 이력 파일로 예측합니다. 교통카드 태그 수집기와 공원 달력 수집기도 키 없이 동작합니다.
+
+**KOPIS 발권 통계를 새로 받을 때**는 공연예술통합전산망에서 Open API 서비스키를 발급받아 `KOPIS_API_KEY`로 설정하세요. Python 수집기는 실행한 프로세스의 환경변수를 읽습니다. 프런트엔드 프로젝트의 `.env.local`은 수집기에 로드되지 않습니다. [KOPIS 공식 사이트](https://kopis.or.kr/) · [KOPIS Open API 개발 가이드](https://kopis.or.kr/upload/openApi/공연예술통합전산망OpenAPI개발가이드.pdf)
+
+다음 예시는 `ml/`에서 프로젝트의 Python 가상환경을 활성화한 상태를 기준으로 합니다. 현재 터미널에서 키를 입력하면 같은 터미널에서 시작하는 수집기에 전달됩니다.
+
+**Windows PowerShell**
+
+```powershell
+$env:KOPIS_API_KEY = [System.Net.NetworkCredential]::new('', (Read-Host 'KOPIS API 키' -AsSecureString)).Password
+```
+
+**Linux·macOS (Bash 또는 zsh)**
+
+```sh
+printf 'KOPIS API 키 입력 후 Enter: '
+IFS= read -rs KOPIS_API_KEY
+printf '\n'
+export KOPIS_API_KEY
+```
+
+두 환경 모두 아래 명령으로 키의 등록 여부를 확인할 수 있습니다. 값 자체는 출력하지 않습니다. 수집 예시는 2026년 11월 1일 하루 분량입니다.
+
+```sh
+python -c "import os; print('설정됨' if os.getenv('KOPIS_API_KEY') else '미설정')"
+python -m olpark_demand.collect_kopis --start 2026-11-01 --end 2026-11-01
+```
+
+macOS에서는 환경변수가 비어 있으면 수집기가 로그인 키체인의 `kr.olpark-flow.KOPIS_API_KEY` 항목도 조회합니다. Windows와 Linux에서는 위 환경변수를 사용하세요.

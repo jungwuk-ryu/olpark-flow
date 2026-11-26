@@ -21,7 +21,7 @@ interface CardHeaderProps {
 
 export function CardHeader({ title, description, actions, className, id }: CardHeaderProps) {
   return (
-    <header className={['flex items-start justify-between gap-4', className ?? ''].join(' ')}>
+    <header className={['flex justify-between gap-4', description ? 'items-start' : 'items-center', className ?? ''].join(' ')}>
       <div className="min-w-0">
         <h2 id={id} className="text-[18px] leading-[26px] font-bold text-ink">
           {title}

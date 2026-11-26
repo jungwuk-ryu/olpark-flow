@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { simulate } from './simulate';
 import { edge, forkNetwork, node, tenMinutesFlat, testAssumptions } from './testing/fixtures';
-import type { SimulationInput } from './types';
+import type { Parking, SimulationInput } from './types';
 
 function caseOne(extra: Partial<SimulationInput> = {}): SimulationInput {
   const { network, routes } = forkNetwork();
@@ -175,5 +175,62 @@ describe('우회 보행', () => {
     // 0분에 나와 700m ÷ 70m/분 = 10분 걸어 10분째에 도착
     expect(r.ledger.arrived[9]!).toBe(0);
     expect(r.ledger.arrived[10]!).toBeCloseTo(100, 6);
+  });
+});
+
+describe('귀가 수단: 역 방면 길에는 지하철을 타러 가는 사람만 걷는다', () => {
+  const parking: Parking = {
+    schemaVersion: 1,
+    lots: [{ id: 'P1', name: 'P1', capacity: 5000, exitIds: ['G'], source: '가정' }],
+    exits: [{ id: 'G', name: 'G', throughputPerMin: 1000, crossingNodeIds: [], source: '가정' }],
+  };
+
+  it('지하철 이용 비율 50%면 길에는 절반만 나오고, 나머지는 인원 장부의 other로 남는다', () => {
+    const r = simulate(caseOne({ stationShare: 0.5 }));
+    // A 150명/분, B 50명/분으로 두 병목(분당 200명) 모두 줄이 없다
+    expect(r.totals.maxQueue).toBe(0);
+    expect(r.departures.reduce((x, y) => x + y, 0)).toBeCloseTo(2000, 6);
+    expect(r.totals.directionPeople.A).toBeCloseTo(1500, 6);
+    expect(r.totals.modePeople).toEqual({ station: 2000, vehicle: 0, other: 2000 });
+  });
+
+  it('관객 4,000명 중 50%가 역으로 가는 것은 2,000명 전원이 역으로 가는 것과 같은 흐름이다', () => {
+    const part = simulate(caseOne({ attendance: 12000, stationShare: 0.5 }));
+    const whole = simulate(caseOne({ attendance: 6000 }));
+    expect(part.edges['e-ja']!.queue).toEqual(whole.edges['e-ja']!.queue);
+    expect(part.queueTotal).toEqual(whole.queueTotal);
+    expect(part.totals.clearMinute).toBe(whole.totals.clearMinute);
+  });
+
+  it('지하철 이용 비율이 없으면 차량을 뺀 전원이 역으로 간다', () => {
+    const r = simulate(caseOne({ vehicle: { parking, ratio: 0.25 } }));
+    expect(r.totals.modePeople.station).toBeCloseTo(3000, 6);
+    expect(r.totals.modePeople.vehicle).toBeCloseTo(1000, 6);
+    expect(r.totals.modePeople.other).toBeCloseTo(0, 6);
+  });
+
+  it('지하철·차량·그 밖 인원의 합은 관객 수다', () => {
+    const r = simulate(caseOne({ stationShare: 0.42, vehicle: { parking, ratio: 0.19 } }));
+    const m = r.totals.modePeople;
+    expect(m.station).toBeCloseTo(1680, 6);
+    expect(m.vehicle).toBeCloseTo(760, 6);
+    expect(m.other).toBeCloseTo(1560, 6);
+    expect(m.station + m.vehicle + m.other).toBeCloseTo(4000, 6);
+    // 차량 대수는 지하철 이용 비율과 무관하다
+    expect(r.vehicle!.vehicles).toBeCloseTo(760 / testAssumptions.vehicleOccupancy, 6);
+  });
+
+  it('지하철 이용 비율과 차량 비율의 합이 1을 넘으면 경고하고 지하철 쪽을 줄인다', () => {
+    const r = simulate(caseOne({ stationShare: 0.9, vehicle: { parking, ratio: 0.25 } }));
+    expect(r.totals.modePeople.station).toBeCloseTo(3000, 6);
+    expect(r.totals.modePeople.other).toBeCloseTo(0, 6);
+    expect(r.warnings.some((w) => w.includes('지하철 이용 비율'))).toBe(true);
+  });
+
+  it('1인당 추가 시간은 계산에 넣은 사람 수로 나눈다', () => {
+    // 역으로 가는 4,000명이 가상 사례 1과 같은 줄을 만든다: 대기 7,500사람·분
+    const r = simulate(caseOne({ attendance: 8000, stationShare: 0.5 }));
+    expect(r.totals.queueMinutesTotal).toBeCloseTo(7500, 6);
+    expect(r.totals.perPersonExtraMinutes).toBeCloseTo(7500 / 4000, 9);
   });
 });

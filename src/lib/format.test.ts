@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { changeRatio, formatChange, formatDateKo, formatEventEnd, formatNumber, formatPercent } from './format';
+import { changeRatio, daysAhead, formatChange, formatClock, formatClockRange, formatDateKo, formatDay, formatEventEnd, formatMonths, formatNumber, formatPercent, koreanDate } from './format';
 
 describe('formatNumber', () => {
   it('천 단위 쉼표를 붙인다', () => {
@@ -44,5 +44,44 @@ describe('formatChange', () => {
 describe('formatDateKo', () => {
   it('요일을 붙인다', () => {
     expect(formatDateKo(new Date(2026, 10, 21))).toBe('2026.11.21 (토)');
+  });
+});
+
+describe('formatClock', () => {
+  it('보는 사람의 시간대와 무관하게 한국 시간으로 적는다', () => {
+    expect(formatClock('2026-11-27T21:08:00+09:00')).toBe('21:08');
+    expect(formatClock('2026-11-27T12:08:00Z')).toBe('21:08');
+    expect(formatClock(new Date('2026-11-27T00:05:00+09:00'))).toBe('00:05');
+  });
+  it('읽을 수 없는 시각은 대시로 표시한다', () => {
+    expect(formatClock('모름')).toBe('–');
+  });
+  it('범위는 물결표로 잇고, 같은 분이면 하나만 적는다', () => {
+    expect(formatClockRange('2026-11-27T20:45:00+09:00', '2026-11-27T21:31:00+09:00')).toBe('20:45~21:31');
+    expect(formatClockRange('2026-11-27T21:08:00+09:00', '2026-11-27T21:08:30+09:00')).toBe('21:08');
+  });
+});
+
+describe('날짜', () => {
+  it('날짜를 요일과 함께 적는다', () => {
+    expect(formatDay('2026-11-27')).toBe('11.27 (금)');
+    expect(formatDay('2026-11-27T19:00:00+09:00')).toBe('11.27 (금)');
+    // 한국 시간으로는 이미 다음 날인 시각
+    expect(formatDay('2026-11-27T15:30:00Z')).toBe('11.28 (토)');
+    expect(formatDay('모름')).toBe('–');
+  });
+  it('ISO 시각의 한국 날짜를 낸다', () => {
+    expect(koreanDate('2026-11-27T23:59:00+09:00')).toBe('2026-11-27');
+    expect(koreanDate('2026-11-27T15:00:00Z')).toBe('2026-11-28');
+  });
+  it('기간은 달까지만 적는다', () => {
+    expect(formatMonths('2025-04-05', '2026-11-15')).toBe('2025.04~2026.11');
+    expect(formatMonths('2026-11-01', '2026-11-15')).toBe('2026.11');
+  });
+  it('며칠 뒤인지 말로 옮긴다', () => {
+    expect(daysAhead('2026-11-26', '2026-11-26')).toBe('오늘');
+    expect(daysAhead('2026-11-27', '2026-11-26')).toBe('내일');
+    expect(daysAhead('2026-12-04', '2026-11-26')).toBe('D-8');
+    expect(daysAhead('2026-11-25', '2026-11-26')).toBe('지남');
   });
 });

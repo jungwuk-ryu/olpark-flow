@@ -27,3 +27,4 @@ geo/osm/out/
 /ml/artifacts/egress-response/*/*_forecasts.parquet
 /ml/artifacts/egress-response/cycles/*/*.parquet
 /ml/experiments/response_model/**/*.parquet
+geo/osm/osm-walkways.json

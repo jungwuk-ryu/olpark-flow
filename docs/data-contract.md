@@ -19,7 +19,7 @@ OLPARK FLOW는 세 부분이 따로 만들어져 하나로 합쳐집니다. 이 
 ```
 
 - 파일은 모두 `src/data/`에 둡니다. 지금은 목업이고, 진짜 데이터가 나오면 **같은 이름·같은 모양으로 덮어쓰기만** 하면 됩니다.
-- 나중에 Python·Spring Boot API로 바꿀 때도 API 응답은 이 문서의 모양 그대로 돌려줍니다 (예: `GET /api/predictions/{eventId}` → 아래 `prediction` 한 건).
+- 공연 목록과 예측은 서버가 돌려줍니다 (9절). 응답은 이 문서의 모양 그대로입니다 (예: `GET /api/predictions/{eventId}` → 아래 `prediction` 한 건). 서버에 닿지 않으면 화면은 `src/data/`의 목업을 쓰고 그 사실을 화면에 적습니다.
 
 ---
 
@@ -34,7 +34,7 @@ OLPARK FLOW는 세 부분이 따로 만들어져 하나로 합쳐집니다. 이 
 | 비율 | 0~1 소수 (퍼센트 아님). 나눠 가지는 비율은 합이 1 | `0.18` = 18% |
 | ID | 영문 소문자와 하이픈, 파일 안에서 중복 금지 | `"kspo-dome"`, `"n-junction-center"` |
 | 좌표 | WGS84 경위도, **[경도, 위도]** 순서 (지도 서비스와 무관) | `[127.1272, 37.5199]` |
-| 이름 | 실제 아티스트명 금지. 공연명은 "공연 A/B/C…" | |
+| 이름 | 서버의 예정 공연 목록은 올림픽공원 공식 달력의 공연명을 쓴다. 시연용 데이터와 과거 유사 공연은 가명을 쓴다. | `"공연 A"` (시연용) |
 | 출처 | 값마다 어디서 왔는지 `source` 필드로 표시 (아래 표) | |
 
 ### 값 출처(`source`) 네 가지
@@ -69,13 +69,13 @@ OLPARK FLOW는 세 부분이 따로 만들어져 하나로 합쳐집니다. 이 
 ```
 
 - `venueId`는 다음 넷 중 하나: `kspo-dome`, `ticketlink-live-arena`, `olympic-hall`, `woori-art-hall`
-- `endAt`은 **예정 종료 시각**입니다. 계산은 이 시각을 0분으로 놓고 0~60분을 봅니다.
+- `endAt`은 **예상 종료 시각**입니다. 계산은 이 시각을 0분으로 놓고 0~60분을 봅니다. 전날에는 확정되지 않는 값이라 범위는 `prediction.json`의 `endTime`에 둡니다.
 
 ---
 
 ## 2. 팀원 A → `prediction.json` (AI 예측 결과)
 
-공연 하나당 한 건. 엔진은 이 값을 **입력값**으로 씁니다.
+공연 하나당 한 건. 엔진은 이 값을 **입력값**으로 씁니다. `generatedAt`은 예측 산출 시각이며, 선택 필드 `model.fittedAt`은 배포된 모델의 학습 완료 시각(시간대를 포함한 ISO 8601)입니다.
 
 ```json
 {
@@ -111,6 +111,16 @@ OLPARK FLOW는 세 부분이 따로 만들어져 하나로 합쳐집니다. 이 
 
       "vehicle": { "ratio": 0.18, "low": 0.14, "high": 0.22 },
 
+      "rail": { "ratio": 0.42, "people": 3301, "peopleLow": 2641, "peopleHigh": 5007, "interval": "p10-p90" },
+
+      "endTime": {
+        "expectedAt": "2026-11-21T21:40:00+09:00",
+        "lowAt": "2026-11-21T21:17:00+09:00",
+        "highAt": "2026-11-21T22:03:00+09:00",
+        "sdMinutes": 18,
+        "interval": "p10-p90"
+      },
+
       "similarEvents": [
         { "name": "공연 B", "date": "2026-10-18", "genre": "아이돌", "attendance": 8120, "vehicleRatio": 0.17 }
       ]
@@ -129,9 +139,16 @@ OLPARK FLOW는 세 부분이 따로 만들어져 하나로 합쳐집니다. 이 
 | `egressCurve.peakMinute` | 가장 많이 나오는 시각 (종료 후 몇 분) | `0 < peakMinute < totalMinutes` |
 | `directionShare` | 지금 운영대로 둘 때 방면별 귀가 비율 | A=올림픽공원역, B=한성백제역, C=몽촌토성역. 합 = 1 |
 | `vehicle.ratio` | 차량으로 귀가하는 관객 비율 | `low ≤ ratio ≤ high` |
+| `rail.ratio` | (선택) 관객 중 지하철을 타러 세 역으로 걸어가는 비율 | 0~1, `rail.ratio + vehicle.ratio ≤ 1`. 엔진은 이 사람들만 역 방면 길에 넣음. 버스·도보 귀가·픽업 관객은 길 계산에서 빠짐 |
+| `rail.people` · `peopleLow` · `peopleHigh` | (선택) 지하철 이용 인원과 그 범위 (명) | `peopleLow ≤ people ≤ peopleHigh`, `people` = `attendance.value × rail.ratio`. 엔진은 이 범위로 한 번씩 더 계산해 "범위"를 만듦 |
+| `endTime.expectedAt` | (선택) 예상 종료 시각 | `events.json`의 `endAt`과 같은 값 |
+| `endTime.lowAt` · `highAt` | (선택) 종료 시각의 범위 | `lowAt ≤ expectedAt ≤ highAt`. 화면은 시각으로 적는 값(정점, 해소)을 이 범위만큼 넓혀 보여 줌 |
+| `endTime.sdMinutes` | (선택) 종료 시각 예측 오차의 표준편차 (분) | 0 이상 |
 | `similarEvents` | "근거 보기"에 보여줄 비슷한 과거 공연 | **정확히 5건**, 가까운 순 |
 
 > 예측이 안 되는 값은 지우지 말고 `null`로 두세요. 화면은 `null`이면 "예측 없음"을 띄우고 운영자 입력을 받습니다.
+>
+> `rail`과 `endTime`은 없어도 됩니다. `rail`이 없거나 `null`이면 차량을 뺀 전원이 지하철 방면으로 간다고 계산하고, `endTime`이 없거나 `null`이면 `endAt`을 확정 시각처럼 씁니다.
 
 ---
 
@@ -266,9 +283,18 @@ OLPARK FLOW는 세 부분이 따로 만들어져 하나로 합쳐집니다. 이 
 - 출구가 여러 개면 `paths`에 출구마다 한 줄씩 넣습니다.
 - 여러 방면이 같은 길 토막을 같이 쓰는 것은 괜찮습니다. 엔진이 합쳐서 계산합니다.
 
----
+### 5-1. `walkways.json` (공원 전체 보행로, 보행 시뮬레이션용)
 
-## 6. 팀원 B → `parking.json` (주차장과 차량 출구)
+`ml/olpark_demand/walkways.py`가 OpenStreetMap 추출본(`geo/osm/overpass-walkways.txt`)과 `network.json`·`routes.json`·`egress-access.json`으로 만든다. 데이터 © OpenStreetMap contributors, ODbL 1.0.
+
+| 값 | 뜻 |
+|---|---|
+| `nodes[]` | `{ id, lngLat }`. 길이 만나는 점, 역 출입구, `network.json`의 점이 있는 자리 |
+| `edges[]` | `{ id, a, b, lengthM, widthM, widthSource, kind, cost, path?, baseEdgeId? }`. `widthSource`는 `판독`(`network.json` 토막의 항공사진 판독 폭), `OSM`(폭 태그), `가정`(길 종류별 기본값 `widthDefaultsM`). `cost`는 길 고르기에서 거리에 곱하는 값 |
+| `exits[]` | 공연장 출구. KSPO DOME은 `network.json`의 세 출구, 다른 공연장은 건물에서 가장 가까운 보행로 한 점(`assumed: true`) |
+| `destinations[]` | 역 3곳(출입구마다 점 하나)과 버스 정류장. 주차장은 보행 출입구 좌표가 없어 넣지 않는다 |
+
+
 
 ```json
 {
@@ -355,7 +381,39 @@ OLPARK FLOW는 세 부분이 따로 만들어져 하나로 합쳐집니다. 이 
 1. 파일은 Git 저장소의 `src/data/`에 올리고, 바꿀 때마다 PR로 올립니다.
 2. 모양(필드 이름·종류)을 바꿔야 하면 **먼저 이 문서를 고치고** `schemaVersion`을 올린 뒤 팀에 알립니다.
 3. 진짜 데이터가 아직 없으면 목업으로 먼저 개발하고, 나오면 같은 파일을 덮어씁니다.
-4. PR을 올리기 전에 `pnpm validate:data`를 돌리세요. `src/data`의 파일이 이 문서 규칙을 지키는지, 그 파일로 계산 엔진이 끝까지 돌아가는지 검사하고 틀린 곳을 문장으로 알려 줍니다. 지금 들어 있는 파일이 형식 예시입니다.
+4. 공연 목록과 예측은 서버(`ml/`에서 `python -m olpark_demand.server`)가 돌려줍니다. 서버는 올림픽공원 공식 달력 API를 호출해 앞으로 3주의 공연을 받고 수요 모델로 예측을 만듭니다. 길·주차·가정값 파일은 화면에 그대로 묶여 있습니다.
+
+   | 주소 | 응답 |
+   |---|---|
+   | `GET /api/bundle` | `{ "events": events.json 모양, "predictions": prediction.json 모양, "evenings": 날짜별 역 승차, "evidence": 과거 적중 기록, "source": 수집 상태 }`. 화면이 쓰는 주소 |
+   | `GET /api/events` | `events.json` 모양 |
+   | `GET /api/predictions` | `prediction.json` 모양 |
+   | `GET /api/predictions/{eventId}` | `prediction` 한 건 |
+   | `GET /api/evenings` | `{ "evenings", "evidence" }` |
+   | `GET /api/status` | 수집 상태만 |
+   | `GET /api/audience/{programmeId}` | 공식 공연 ID의 관객층 분류 상태 |
+   | `POST /api/audience/{programmeId}` | JSON의 `action`은 `resolve`(조회 또는 비동기 추측 시작), `manual`(수동 선택), `retry`(실패한 추측 재시도). 수동 선택과 재시도에는 관리자 Bearer 키가 필요합니다. |
+
+   서버 공연 목록의 `programmeId`는 달력의 `evtSeq` 문자열입니다. 여러 회차가 이 값을 공유합니다. 관객층 응답은 `status`, `label`, `model`, `applied`를 담습니다. `status`는 `idle`, `pending`, `catalog`, `ai`, `manual`, `failed`, `unconfigured` 중 하나입니다. 선택한 값이 현재 수요 예측에 반영되면 `applied`가 참입니다. 수동 선택 시 `label`에 `idol`, `general`, `senior`, `foreign`, `family`, `musical`, `festival` 중 하나를 보냅니다.
+
+   `source`에는 달력을 받은 시각(`fetchedAt`), 달력 출처(`calendar`: `api`는 방금 받은 것, `stored`는 API가 답하지 않아 저장해 둔 달력을 쓴 것), 공연 수, 빠진 공연과 이유가 들어 있습니다. `src/data/events.json`·`prediction.json` 목업은 공연장별 퇴장 곡선 가정과 엔진 테스트의 기준이라 그대로 둡니다.
+   서버는 운영자 화면이 쓰는 값을 더 줍니다. 목업 파일에는 없어도 됩니다.
+
+   | 값 | 뜻 |
+   |---|---|
+   | `prediction.brief.audienceType` · `labelled` | 수요 예측에 반영한 관객층과, 해당 공연에 저장된 분류가 있는지 |
+   | `prediction.brief.modes` | 첫 귀가 수단별 인원(`rail` `bus` `car` `walk` `other`, 명)과 차량 대수(`vehicles`). 합 = `attendance.value` |
+   | `prediction.brief.stationLines` | 지하철 이용 인원을 역·호선별로 나눈 값 |
+   | `prediction.brief.arrival` | 지하철 이용객이 개찰구를 지나는 시간 분포. `bins` = `[예상 종료 후 분, 비율]`. `single_show`는 한 저녁의 곡선(종료 시각과 함께 움직임), `average`는 게시된 시작 시각 기준 평균 곡선 |
+   | `prediction.brief.stationHours` | 이 공연이 올림픽공원역 시간대별 승차에 더하는 인원 (시 → 명) |
+   | `similarEvents[].stationForecast` · `stationObserved` | 그 공연 날 올림픽공원역 퇴장 시간대 승차의 전날 예측과 실제 (모든 승객, 그날 모든 공연) |
+   | `evenings[]` | 날짜별 올림픽공원역(5·9호선 합) 시간대별 승차. `hours[]`의 `expected`는 평소 승객과 그날 모든 공연을 더한 예측, `low`·`high`는 80% 범위, `usual`은 지난 1년간 큰 공연이 없던 같은 요일 유형의 중앙값(그런 날이 5일 미만이면 `null`), `window`는 퇴장 시간대 여부. `window`는 퇴장 시간대 합계와 범위, `rank`는 지난 1년 공연일의 실제 승차 가운데 자리(백분위) |
+   | `evidence.track` | 전날 예측을 실제와 맞춰 본 기록: 공연일 수, 총량 오차(`wapePct`), 편향(`biasPct`), 80% 범위가 실제를 담은 비율 |
+   | `prediction.brief.walks` | 보행 시뮬레이션에 올릴 사람. `places[]` = `{ mode: rail·bus·car, destinationId, people }` (역은 `n-dest-a/b/c`, 정류장은 `bus-…`, 주차장은 `park-lot-p…`), `unplaced` = 갈 곳을 정하지 못한 수단별 인원(`bus` `car` `walk` `other`) |
+   | `evidence.endTime` · `evidence.gates` | 기록된 검증 두 건: 실제 종료 시각을 알 때의 시간대 적중, 역 개찰구의 실제 통과 인원과 보행망 가정 |
+   | `evidence.gates.capacityPer5Min` | 올림픽공원역 개찰구가 실제로 통과시킨 5분 인원. 보행 시뮬레이션은 이 값 ÷ 5를 역이 1분에 받는 인원으로 쓴다 (관측) |
+
+5. PR을 올리기 전에 `pnpm validate:data`를 돌리세요. `src/data`의 파일이 이 문서 규칙을 지키는지, 그 파일로 계산 엔진이 끝까지 돌아가는지 검사하고 틀린 곳을 문장으로 알려 줍니다. 지금 들어 있는 파일이 형식 예시입니다.
 
 ## 10. 담당과 확인할 것
 

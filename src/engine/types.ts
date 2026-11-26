@@ -126,6 +126,12 @@ export interface SimulationInput {
   routes: Routes;
   assumptions: Assumptions;
   attendance: number;
+  /**
+   * 관객 중 지하철을 타러 세 역으로 걸어가는 비율 (0~1). 역 방면 길에는 이 사람들만 넣는다.
+   * 버스·도보 귀가·픽업 관객은 길 계산에 넣지 않는다 (인원 장부의 other).
+   * 없으면 차량을 뺀 전원이 역으로 간다.
+   */
+  stationShare?: number;
   egress: EgressCurveInput;
   /** 안내가 없을 때의 방면 비율 (합 = 1) */
   directionShare: Partial<Record<Direction, number>>;
@@ -193,7 +199,7 @@ export interface Totals {
   vehicleQueuePersonMinutes: number;
   /** 대기 + 추가 보행 + 차량 대기 (사람·분) */
   burdenPersonMinutes: number;
-  /** 1인당 추가 시간 (분) */
+  /** 계산에 넣은 사람(역으로 걷는 사람 + 차량 탑승자) 1인당 추가 시간 (분) */
   perPersonExtraMinutes: number;
   /** 모든 보행 대기가 풀린 시각 (종료 후 분). 계산 범위 안에 안 풀리면 null */
   clearMinute: number | null;
@@ -201,6 +207,11 @@ export interface Totals {
   directionShareActual: Record<Direction, number>;
   /** 방면별 배정 인원 */
   directionPeople: Record<Direction, number>;
+  /**
+   * 귀가 수단별 인원. station = 지하철을 타러 역으로 걷는 사람, vehicle = 차량 탑승 인원,
+   * other = 버스·도보 귀가·픽업 등 길 계산에 넣지 않은 사람. 세 값의 합 = 관객 수
+   */
+  modePeople: { station: number; vehicle: number; other: number };
 }
 
 export interface SimulationResult {

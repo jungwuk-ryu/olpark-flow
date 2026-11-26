@@ -39,3 +39,7 @@ pnpm validate:data
 | 줄 설 공간 | 폭 × 길이(10~40m) |
 | 역 출입구 | 역마다 20m · 폭 3m 계단 토막을 끝에 붙임 |
 | 교차점 | A 방면 경로에서 OSM "공원 주차장"에 가장 가까운 점을 후보로 지정 |
+
+## 공원 전체 보행로 (보행 시뮬레이션)
+
+화면의 지도는 위 뼈대(세 경로)가 아니라 공원의 모든 보행로로 계산한다. 그 그래프 `src/data/walkways.json`은 `overpass-walkways.txt`로 받은 추출본(`osm-walkways.json`, 저장소에 넣지 않음)에서 `ml/olpark_demand/walkways.py`가 만든다. 순서와 폭을 정하는 방법은 `ml/olpark_demand/README.md`의 "보행로 그래프"에 있다. Overpass API는 사용자 에이전트 머리글이 없는 요청을 거절할 수 있어 `-H "User-Agent: osm-walk-extract/1.0"`을 붙인다.

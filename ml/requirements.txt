@@ -5,3 +5,6 @@ pyarrow==26.0.1
 scipy==1.18.1
 tzdata==2026.6
 jsonschema==4.26.0
+httpx==0.28.1
+filelock==4.3.0
+pillow==13.0.0

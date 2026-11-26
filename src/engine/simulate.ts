@@ -18,6 +18,8 @@ import {
  * 시간 규칙: 배열의 t번째 값은 "종료 후 t분 ~ t+1분" 동안의 흐름이고, 대기 인원은 그 1분이 끝난 시점의 값이다.
  *
  * 모델
+ * - 역 방면 길을 걷는 사람은 지하철을 타러 가는 관객뿐이다 (input.stationShare). 차량 이용자는 주차장 출구 대기로,
+ *   버스·도보 귀가·픽업 관객은 길 계산 밖으로 나간다.
  * - 사람 무리(commodity) = 출구 × 방면. 각 무리는 routes.json의 길 토막 순서대로 이동한다.
  * - 길 토막마다 입구에 줄이 있다. 통과(t) = min(대기 + 도착, 용량), 대기(t) = 대기(t−1) + 도착(t) − 통과(t).
  * - 여러 무리가 같은 길을 쓰면 용량을 (대기 + 도착) 비율대로 나눈다.
@@ -106,17 +108,28 @@ export function simulate(input: SimulationInput): SimulationResult {
     }
   }
 
-  // ---------- 차량 (차로 가는 관객은 지하철 방면 보행에서 뺀다) ----------
+  // ---------- 귀가 수단: 역으로 걷는 사람 · 차량 · 그 밖(버스·도보 귀가·픽업) ----------
+  // 역 방면 길에는 지하철을 타러 가는 사람만 넣는다. 지하철 이용 비율이 없으면 차량을 뺀 전원이 역으로 간다.
   const fractions = egressFractions(input.egress, H);
   const veh = input.vehicle;
-  let pedestrianAttendance = input.attendance;
+  const vehicleRatio = veh ? clamp01(veh.ratio) : 0;
+  let stationShare = 1 - vehicleRatio;
+  if (input.stationShare !== undefined) {
+    stationShare = clamp01(input.stationShare);
+    if (stationShare + vehicleRatio > 1 + 1e-9) {
+      stationShare = 1 - vehicleRatio;
+      warnings.push(
+        `지하철 이용 비율과 차량 비율의 합이 100%를 넘어 지하철 이용 비율을 ${Math.round(stationShare * 100)}%로 계산했습니다`,
+      );
+    }
+  }
+  const pedestrianAttendance = input.attendance * stationShare;
   let vehicleQueues: VehicleQueues | null = null;
   let vehicles = 0;
   let occupancy = a.vehicleOccupancy;
   if (veh) {
     occupancy = veh.occupancy ?? a.vehicleOccupancy;
-    const ratio = clamp01(veh.ratio);
-    pedestrianAttendance = input.attendance * (1 - ratio);
+    const ratio = vehicleRatio;
     vehicles = (input.attendance * ratio) / occupancy;
     const lotCapacity = veh.parking.lots.reduce((s, l) => s + l.capacity, 0);
     if (vehicles > lotCapacity) {
@@ -361,6 +374,14 @@ export function simulate(input: SimulationInput): SimulationResult {
   const vehicleDone = vehicleQueues?.finish() ?? null;
   const vehicleQueuePersonMinutes = vehicleDone ? vehicleDone.queueVehicleMinutes * occupancy : 0;
   const burden = queueMinutesTotal + detourMinutesTotal + vehicleQueuePersonMinutes;
+  const vehiclePeople = input.attendance * vehicleRatio;
+  const modePeople = {
+    station: pedestrianAttendance,
+    vehicle: vehiclePeople,
+    other: Math.max(0, input.attendance - pedestrianAttendance - vehiclePeople),
+  };
+  // 부담은 길과 차량 출구에서 생기므로, 계산에 넣은 사람 수로 나눈다
+  const modelled = modePeople.station + modePeople.vehicle;
 
   return {
     minutes: H,
@@ -378,10 +399,11 @@ export function simulate(input: SimulationInput): SimulationResult {
       detourMinutesTotal,
       vehicleQueuePersonMinutes,
       burdenPersonMinutes: burden,
-      perPersonExtraMinutes: input.attendance > 0 ? burden / input.attendance : 0,
+      perPersonExtraMinutes: modelled > 0 ? burden / modelled : 0,
       clearMinute,
       directionShareActual,
       directionPeople,
+      modePeople,
     },
     unavailableDirections,
     warnings,

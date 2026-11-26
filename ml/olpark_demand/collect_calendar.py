@@ -7,7 +7,7 @@ day, so that the session table can always be rebuilt from what had been posted.
 ``response_data.sessions`` reads every such file and keeps the earliest stored version
 of each notice.
 
-No credentials are involved. Only the fields the session table uses are kept.
+No credentials are involved. The retained fields describe the schedule and the public evidence for audience classification.
 
     python -m olpark_demand.collect_calendar --first 2026-11 --last 2027-01
 """
@@ -25,7 +25,8 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 API = "https://www.ksponco.or.kr/olympicpark/eventInfo/eventInfoListAjax.es"
-FIELDS = ("evtSeq", "title", "plc", "beginDt", "endDt", "tm", "ndTm", "regDate", "tktPrc", "seeAge")
+REQUIRED_FIELDS = ("evtSeq", "title", "plc", "beginDt", "endDt", "tm", "ndTm", "regDate", "tktPrc", "seeAge")
+FIELDS = (*REQUIRED_FIELDS, "content", "spns", "muf", "fileNm")
 KST = ZoneInfo("Asia/Seoul")
 
 
@@ -47,9 +48,9 @@ def fetch_month(month: str) -> list[dict]:
     seen = {}
     for part in answer:
         for item in part:
-            if not all(name in item for name in FIELDS):
+            if not all(name in item for name in REQUIRED_FIELDS):
                 raise ValueError("A calendar entry lacks an expected field")
-            seen.setdefault(int(item["evtSeq"]), {name: item[name] for name in FIELDS})
+            seen.setdefault(int(item["evtSeq"]), {name: item.get(name) for name in FIELDS})
     return [seen[key] for key in sorted(seen)]
 
 
