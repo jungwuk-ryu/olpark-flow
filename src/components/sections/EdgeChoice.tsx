@@ -78,7 +78,7 @@ export function EdgeChoice({
               </span>
             ) : (
               <span className="text-ink">
-                유입 {formatNumber(t >= 0 ? series.arrivals[t]! : 0)}명/분 · 대기 {formatNumber(t >= 0 ? series.queue[t]! : 0)}명
+                통행량 {formatNumber(t >= 0 ? series.flow[t]! : 0)}명/분 · 대기 {formatNumber(t >= 0 ? series.queue[t]! : 0)}명
               </span>
             ))}
         </span>

@@ -41,7 +41,7 @@ Name "OLPARK FLOW", subtitle "운영 판단 플랫폼". Binding visual reference
 ## Evidence on Hand
 
 - `reference.png`: screen reference.
-- Events and forecasts come from the server; the bundled JSON in `src/data/` is mock. Performances are named "공연 A/B/C"; no real artist names, logos, or photos. Network geometry is labeled "시연용 가정값".
+- The server lists upcoming performances by their official Olympic Park calendar titles. Bundled demo data and historical comparisons use aliases such as "공연 A/B/C". Artist branding is text-only. Network geometry is labeled "시연용 가정값".
 - Data sources to credit: KSPODO performance info, vehicle entry/exit link, real-time parking, parking congestion; Seoul real-time population and pedestrian network; Seoul Metro boardings.
 
 ## Product Principles

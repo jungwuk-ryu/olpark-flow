@@ -8,6 +8,7 @@ import { formatNumber } from '../../lib/format';
 import type { LngLat, Status, WalkControls, WalkGraph, WalkResult } from '../../engine';
 import { controlAt, edgeGeometry, KIND_NAME, type ControlKind } from '../../model/walkplan';
 import { BASEMAP_STYLE_URL, blankStyle, fetchBasemap, MAP_LOCALE, withOverlay } from './basemap';
+import { edgeFlows, FLOW_RAMP, scaleFor, scalePosition } from './flowScale';
 import { MapMarker } from './MapMarker';
 
 // 번들러는 MapLibre가 스스로 찾는 워커 파일 경로를 알 수 없어 주소를 직접 알려 준다
@@ -18,8 +19,9 @@ const STATUS_HEX: Record<Status, string> = { 여유: '#3e8e6e', 보통: '#d9b44a
 const ROUTE_HEX = { A: '#2f6e60', B: '#c9a26b', C: '#8ea2c0' } as const;
 const INK = '#1f2a27';
 
+const STATUS_RANK: Record<Status, number> = { 여유: 0, 보통: 1, 병목: 2, 위험: 3 };
+
 const ALL = 'olp-walk-all';
-const LOAD = 'olp-walk-load';
 const MARKS = 'olp-walk-marks';
 const PICK = 'olp-walk-pick';
 const HIT = 'olp-walk-hit';
@@ -29,7 +31,7 @@ const FIT = { padding: { top: 90, bottom: 70, left: 80, right: 120 }, animate: f
 
 interface Collection {
   type: 'FeatureCollection';
-  features: { type: 'Feature'; geometry: { type: 'LineString'; coordinates: LngLat[] }; properties: Record<string, string | number | boolean> }[];
+  features: { type: 'Feature'; id?: number; geometry: { type: 'LineString'; coordinates: LngLat[] }; properties: Record<string, string | number | boolean> }[];
 }
 const collection = (features: Collection['features'] = []): Collection => ({ type: 'FeatureCollection', features });
 const lineFeature = (coordinates: LngLat[], properties: Record<string, string | number | boolean>): Collection['features'][number] => ({
@@ -38,29 +40,20 @@ const lineFeature = (coordinates: LngLat[], properties: Record<string, string | 
   properties,
 });
 
-/** 공원의 모든 보행로 (바뀌지 않는다) */
+/**
+ * 공원의 모든 보행로 (바뀌지 않는다). 길마다 그래프에서의 순번을 번호로 준다.
+ * 통행량 색과 혼잡 테두리는 이 번호에 값을 매겨 칠한다 (feature-state): on = 칠할지, v = 색 눈금 위치(0~1), s = 혼잡도 순위
+ */
 function allData(graph: WalkGraph): Collection {
   const geometry = edgeGeometry(graph);
-  return collection(graph.edges.map((e) => lineFeature(geometry.line.get(e.id)!, { id: e.id, minor: e.kind === 'aisle' || e.kind === 'road' })));
+  return collection(graph.edges.map((e, i) => ({ ...lineFeature(geometry.line.get(e.id)!, { id: e.id, minor: e.kind === 'aisle' || e.kind === 'road' }), id: i })));
 }
 
-/** 사람이 지나는 길: 색은 붐비는 정도, 굵기는 사람 수. minute이 null이면 저녁 전체, 숫자면 그 분 */
-export function loadData(graph: WalkGraph, result: WalkResult, minute: number | null): Collection {
-  const geometry = edgeGeometry(graph);
-  const rows: { id: string; status: Status; amount: number }[] = [];
-  for (const s of Object.values(result.edges)) {
-    if (minute === null) {
-      if (s.people >= 0.5) rows.push({ id: s.edgeId, status: s.worst, amount: s.people });
-      continue;
-    }
-    const t = Math.min(result.minutes, minute) - 1;
-    if (t < 0) continue;
-    const amount = s.arrivals[t]! + s.occupancy[t]! + s.queue[t]!;
-    if (amount >= 0.5) rows.push({ id: s.edgeId, status: s.status[t]!, amount });
-  }
-  const top = Math.max(1, ...rows.map((r) => r.amount));
-  return collection(rows.map((r) => lineFeature(geometry.line.get(r.id)!, { id: r.id, color: STATUS_HEX[r.status], width: 2.5 + 7.5 * Math.sqrt(r.amount / top) })));
-}
+/** 지도에 칠해 둔 값: 길 번호 → 통행량과 혼잡도 순위 */
+type Painted = Map<number, { value: number; rank: number }>;
+
+/** 재생 중 1분에서 다음 1분으로 넘어갈 때 색을 잇는 시간 (ms). 재생은 0.35초에 1분이다 */
+const BLEND_MS = 300;
 
 function marksData(graph: WalkGraph, controls: WalkControls): Collection {
   const geometry = edgeGeometry(graph);
@@ -79,6 +72,11 @@ function pickData(graph: WalkGraph, hovered: string | null, selected: string | n
 }
 
 const ROUND = { 'line-cap': 'round', 'line-join': 'round' } as const;
+/** 통행량 선의 굵기: 모든 길이 같고 지도 배율에만 따른다. extra는 선 바깥으로 두르는 테두리 */
+const flowWidth = (extra = 0) => ['interpolate', ['linear'], ['zoom'], 13, 3 + extra, 15, 4.5 + extra, 17, 6 + extra, 19, 8 + extra] as unknown as number;
+const FLOW_ON = ['case', ['boolean', ['feature-state', 'on'], false], 1, 0] as unknown as number;
+const FLOW_RANK = ['coalesce', ['feature-state', 's'], 0];
+const FLOW_COLOR = ['interpolate', ['linear'], ['coalesce', ['feature-state', 'v'], 0], ...FLOW_RAMP.flatMap((c, i) => [i / (FLOW_RAMP.length - 1), c])] as unknown as string;
 
 /** 글자 층이 없어 글꼴 파일 없이도 그려진다 */
 const LAYERS: LayerSpecification[] = [
@@ -89,8 +87,21 @@ const LAYERS: LayerSpecification[] = [
     layout: ROUND,
     paint: { 'line-color': '#9aa5a0', 'line-width': ['case', ['get', 'minor'], 1, 2], 'line-opacity': ['case', ['get', 'minor'], 0.45, 0.8] },
   },
-  { id: 'olp-walk-load-casing', type: 'line', source: LOAD, layout: ROUND, paint: { 'line-color': '#ffffff', 'line-width': ['+', ['get', 'width'], 3], 'line-opacity': 0.95 } },
-  { id: 'olp-walk-load', type: 'line', source: LOAD, layout: ROUND, paint: { 'line-color': ['get', 'color'], 'line-width': ['get', 'width'] } },
+  // 혼잡 테두리: 보통·병목·위험인 길만 통행량 선 바깥에 혼잡도 색을 두른다
+  {
+    id: 'olp-walk-flow-status',
+    type: 'line',
+    source: ALL,
+    layout: ROUND,
+    paint: {
+      'line-color': ['match', FLOW_RANK, 1, STATUS_HEX.보통, 2, STATUS_HEX.병목, 3, STATUS_HEX.위험, '#ffffff'] as unknown as string,
+      'line-width': flowWidth(9),
+      'line-opacity': ['case', ['>', FLOW_RANK, 0], 1, 0] as unknown as number,
+    },
+  },
+  { id: 'olp-walk-flow-casing', type: 'line', source: ALL, layout: ROUND, paint: { 'line-color': '#ffffff', 'line-width': flowWidth(2.5), 'line-opacity': FLOW_ON } },
+  // 통행량: 굵기는 같고 색으로만 나타낸다
+  { id: 'olp-walk-flow', type: 'line', source: ALL, layout: ROUND, paint: { 'line-color': FLOW_COLOR, 'line-width': flowWidth(), 'line-opacity': FLOW_ON } },
   // 놓은 것: 막은 길은 짧은 점선, 장애물을 놓은 길은 긴 점선, 안전요원을 세운 길은 실선
   { id: 'olp-walk-mark-block', type: 'line', source: MARKS, filter: ['==', ['get', 'kind'], 'block'], paint: { 'line-color': INK, 'line-width': 5, 'line-dasharray': [0.6, 0.9] } },
   { id: 'olp-walk-mark-narrow', type: 'line', source: MARKS, filter: ['==', ['get', 'kind'], 'narrow'], paint: { 'line-color': '#e07b39', 'line-width': 5, 'line-dasharray': [1.4, 0.8] } },
@@ -105,7 +116,7 @@ export type BasemapState = 'loading' | 'ok' | 'failed' | 'off';
 interface WalkMapProps {
   graph: WalkGraph;
   result: WalkResult;
-  /** null = 저녁 전체에서 가장 붐빈 정도, 숫자 = 종료 후 그 분 */
+  /** null = 전체 시간대(누적 통행량), 숫자 = 종료 후 그 분(그 1분의 통행량) */
   minute: number | null;
   controls: WalkControls;
   selected: string | null;
@@ -157,6 +168,14 @@ export default function WalkMap(props: WalkMapProps) {
   const { graph, result, minute, controls, selected, pickAt, popup, focus, venueName, venueExitIds, onSelect } = props;
   const container = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<MapLibre | null>(null);
+  // 배경 지도를 얹느라 스타일을 새로 넣으면 칠해 둔 값이 지워진다. 스타일이 준비될 때마다 다시 칠한다
+  const styleReady = useRef(false);
+  const [styleTurn, setStyleTurn] = useState(0);
+  const painted = useRef<Painted>(new Map());
+  const drawn = useRef<{ result: WalkResult; minute: number | null } | null>(null);
+  const edgeIndex = useMemo(() => new Map(graph.edges.map((e, i) => [e.id, i])), [graph]);
+  const flows = useMemo(() => edgeFlows(result, minute), [result, minute]);
+  const scale = scaleFor(minute);
   const [hovered, setHovered] = useState<{ id: string; x: number; y: number } | null>(null);
   const geometry = useMemo(() => edgeGeometry(graph), [graph]);
   const edgeById = useMemo(() => new Map(graph.edges.map((e) => [e.id, e])), [graph]);
@@ -186,7 +205,6 @@ export default function WalkMap(props: WalkMapProps) {
     const overlay = (): Pick<StyleSpecification, 'sources' | 'layers'> => ({
       sources: {
         [ALL]: { type: 'geojson', data: allData(graph) },
-        [LOAD]: { type: 'geojson', data: loadData(graph, latest.current.result, latest.current.minute) },
         [MARKS]: { type: 'geojson', data: marksData(graph, latest.current.controls) },
         [PICK]: { type: 'geojson', data: pickData(graph, latest.current.hovered, latest.current.selected) },
       },
@@ -247,8 +265,15 @@ export default function WalkMap(props: WalkMapProps) {
       latest.current.onSelect((hit?.properties?.id as string | undefined) ?? null, [e.lngLat.lng, e.lngLat.lat]);
     });
 
+    created.on('style.load', () => {
+      if (!alive) return;
+      styleReady.current = true;
+      painted.current = new Map();
+      setStyleTurn((n) => n + 1);
+    });
     created.once('load', () => {
       if (!alive) return;
+      styleReady.current = true;
       setMap(created);
       latest.current.props.onBasemap?.('loading');
       void fetchBasemap().then((base) => {
@@ -258,22 +283,71 @@ export default function WalkMap(props: WalkMapProps) {
           return;
         }
         // 그 사이에 바뀐 내용까지 담아 배경 위에 다시 얹는다
+        styleReady.current = false;
         created.setStyle(withOverlay(base, overlay()), { diff: false });
         latest.current.props.onBasemap?.('ok');
       });
     });
     return () => {
       alive = false;
+      styleReady.current = false;
+      painted.current = new Map();
+      drawn.current = null;
       setMap(null);
       created.remove();
     };
   }, [graph]);
 
   const source = (id: string) => map?.getSource(id) as GeoJSONSource | undefined;
+
+  // 통행량 색과 혼잡 테두리를 칠한다. 재생 중 1분씩 넘어갈 때만 앞 값에서 새 값으로 곧게 이어 가고,
+  // 멈춰 있을 때의 색은 언제나 그 분에 계산한 값 그대로다
   useEffect(() => {
-    source(LOAD)?.setData(loadData(graph, result, minute));
+    if (!map || !styleReady.current) return;
+    const stops = scale.stops;
+    const target: Painted = new Map();
+    for (const [id, x] of flows) target.set(edgeIndex.get(id)!, { value: x.value, rank: STATUS_RANK[x.status] });
+    const paint = (next: Painted) => {
+      if (!styleReady.current) return;
+      for (const [i, x] of next) map.setFeatureState({ source: ALL, id: i }, { on: true, v: scalePosition(x.value, stops), s: x.rank });
+      for (const i of painted.current.keys()) if (!next.has(i)) map.setFeatureState({ source: ALL, id: i }, { on: false, v: 0, s: 0 });
+      painted.current = next;
+    };
+    const before = drawn.current;
+    drawn.current = { result, minute };
+    const still = typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const next = !!before && before.result === result && before.minute !== null && minute !== null && minute - before.minute === 1;
+    if (!next || still || !painted.current.size) {
+      paint(target);
+      return;
+    }
+    const from = painted.current;
+    const started = performance.now();
+    let frame = 0;
+    const step = () => {
+      const k = (performance.now() - started) / BLEND_MS;
+      if (k >= 1) {
+        paint(target);
+        return;
+      }
+      const mixed: Painted = new Map();
+      for (const [i, x] of target) {
+        const was = from.get(i)?.value ?? 0;
+        mixed.set(i, { value: was + (x.value - was) * k, rank: x.rank });
+      }
+      for (const [i, x] of from) if (!target.has(i)) mixed.set(i, { value: x.value * (1 - k), rank: 0 });
+      paint(mixed);
+      frame = requestAnimationFrame(step);
+    };
+    frame = requestAnimationFrame(step);
+    // 화면이 가려져 프레임이 돌지 않아도 끝 값은 반드시 칠한다
+    const settle = window.setTimeout(() => paint(target), BLEND_MS + 80);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.clearTimeout(settle);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [map, graph, result, minute]);
+  }, [map, styleTurn, edgeIndex, flows, scale]);
   useEffect(() => {
     source(MARKS)?.setData(marksData(graph, controls));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -419,7 +493,7 @@ export default function WalkMap(props: WalkMapProps) {
                 </span>
               ) : (
                 <span className="text-ink">
-                  유입 {formatNumber(t >= 0 ? series.arrivals[t]! : 0)}명/분 (용량 {formatNumber(series.capacityPerMin)}명/분) · 대기 {formatNumber(t >= 0 ? series.queue[t]! : 0)}명
+                  통행량 {formatNumber(t >= 0 ? series.flow[t]! : 0)}명/분 (용량 {formatNumber(series.capacityPerMin)}명/분) · 대기 {formatNumber(t >= 0 ? series.queue[t]! : 0)}명
                 </span>
               )}
               <span className="font-medium text-accent">{there ? '구간 선택 시 조치 수정' : '구간 선택 시 통제·배치 설정'}</span>

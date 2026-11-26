@@ -8,17 +8,7 @@ import { formatClock, formatClockRange, formatDay, formatNumber, koreanDate } fr
 import { busiestHours, eveningHours, hoursText, staffingWindow, stationRiders, stationTimes } from '../../model/brief';
 import { endWindowText } from '../../model/scenario';
 import { selectEvent, selectPrediction, useEndTime, useScenario } from '../../store/scenario';
-import type { EventBrief } from '../../data/contract';
-
-const AUDIENCE: Record<string, string> = {
-  idol: '아이돌 팬층',
-  general: '일반 관객',
-  senior: '중장년 관객',
-  foreign: '해외 아티스트 관객',
-  family: '가족 관객',
-  musical: '뮤지컬·클래식 관객',
-  festival: '페스티벌 관객',
-};
+import { AUDIENCES, type AudienceType, type EventBrief } from '../../data/contract';
 
 const HALF_DAY_MS = 12 * 3_600_000;
 
@@ -157,7 +147,7 @@ export function EventBriefCard() {
           </h2>
           <p className="text-[13px] leading-5 text-ink-2">
             {formatDay(event.startAt)} {formatClock(event.startAt)} 시작
-            {brief ? ` · 관객 유형 · ${AUDIENCE[brief.audienceType] ?? brief.audienceType}${brief.labelled ? '' : ' (미분류 · 일반 관객 기준)'}` : ''}
+            {brief ? ` · 관객 유형 · ${AUDIENCES[brief.audienceType as AudienceType] ?? brief.audienceType}${brief.labelled ? '' : ' (미분류 · 일반 관객 기준)'}` : ''}
           </p>
         </div>
 

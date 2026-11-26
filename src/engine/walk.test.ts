@@ -58,6 +58,7 @@ const input = (trips: WalkTrip[], extra: Partial<WalkInput> = {}): WalkInput => 
   ...extra,
 });
 
+const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
 const balanced = (r: ReturnType<typeof simulateWalk>) =>
   r.ledger.departed.every((d, t) => Math.abs(d - (r.ledger.arrived[t]! + r.ledger.inTransit[t]! + r.ledger.queued[t]!)) < 1e-6);
 
@@ -227,6 +228,36 @@ describe('보행 흐름', () => {
     expect(r.ledger.arrived[11]).toBeCloseTo(100, 6);
     expect(r.routes[0]!.walkMinutes).toBeCloseTo(11, 9);
     expect(r.totals.meanWalkMinutes).toBeCloseTo(11, 9);
+  });
+
+  it('통행량은 그 1분에 길 위를 지나던 사람이고, 저녁 전체를 더하면 지나간 사람 수다', () => {
+    const r = simulateWalk(input([trip(4000)]));
+    // a(1분 거리)에는 10분 동안 분당 400명이 들어선다. 병목 b는 분당 200명씩 20분 동안 받는다
+    expect(r.edges.a!.flow.slice(0, 10).every((v) => Math.abs(v - 400) < 1e-6)).toBe(true);
+    expect(r.edges.a!.flow[10]).toBe(0);
+    expect(r.edges.b!.flow[0]).toBe(0);
+    expect(r.edges.b!.flow.slice(1, 21).every((v) => Math.abs(v - 200) < 1e-6)).toBe(true);
+    expect(r.edges.b!.flow[21]).toBe(0);
+    // 1분 안에 지나는 토막에서는 들어선 사람과 같다
+    for (const e of Object.values(r.edges)) {
+      e.flow.forEach((v, t) => expect(v).toBeCloseTo(e.passed[t]!, 6));
+      expect(sum(e.flow)).toBeCloseTo(e.people, 6);
+    }
+  });
+
+  it('긴 길은 들어오는 사람이 끊겨도 마지막 사람이 다 걸을 때까지 통행량이 남는다', () => {
+    // 100명이 한꺼번에 나와 a(1분)를 지나 e(700m, 10분)로 간다
+    const r = simulateWalk(input([trip(100, 'station-2')], { egress: { kind: 'custom', fractions: [1] } }));
+    const e = r.edges.e!;
+    expect(e.passed[1]).toBeCloseTo(100, 6);
+    expect(sum(e.passed)).toBeCloseTo(100, 6);
+    // 들어선 100명을 걷는 10분에 고르게 나눠 센다: 분당 10명씩 10분
+    expect(e.flow[0]).toBe(0);
+    expect(e.flow.slice(1, 11).every((v) => Math.abs(v - 10) < 1e-6)).toBe(true);
+    expect(e.flow[11]).toBe(0);
+    expect(sum(e.flow)).toBeCloseTo(e.people, 6);
+    // 그동안 길 위에는 100명이 걷고 있다
+    expect(e.occupancy[5]).toBeCloseTo(100, 6);
   });
 
   it('짧은 토막이 이어져도 걷는 시간이 사라지지 않는다', () => {
@@ -416,5 +447,14 @@ describe('올림픽공원 보행로 (src/data/walkways.json)', () => {
     expect(r.totals.meanWalkMinutes).toBeGreaterThan(6);
     expect(r.totals.meanWalkMinutes).toBeLessThan(25);
     expect(took).toBeLessThan(1500);
+    // 길마다 분별 통행량을 더하면 지나간 사람 수이고, 어느 1분도 그 길의 통과 용량을 넘지 않는다
+    for (const e of Object.values(r.edges)) {
+      expect(sum(e.flow)).toBeCloseTo(e.people, 6);
+      expect(Math.max(...e.flow)).toBeLessThanOrEqual(e.capacityPerMin + 1e-6);
+    }
+    // 출구에서 나온 사람은 모두 출구에 닿은 길을 지난다
+    const first = new Set(dome.map((x) => x.nodeId));
+    const out = graph.edges.filter((e) => first.has(e.a) || first.has(e.b)).reduce((s, e) => s + (r.edges[e.id]?.people ?? 0), 0);
+    expect(out).toBeGreaterThanOrEqual(4211 - 1e-6);
   });
 });

@@ -22,6 +22,7 @@ computer to open it to that network.
 from __future__ import annotations
 
 import argparse
+import hmac
 from datetime import datetime
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -34,6 +35,8 @@ import traceback
 from urllib.parse import unquote, urlsplit
 
 from . import collect_calendar, dashboard
+from .audience import Audience
+from .audience_ai import TYPES
 from .paths import repo_of
 from .response_packet import BUNDLE_ROOT
 
@@ -58,9 +61,16 @@ class Forecasts:
 
     def __init__(self, root: Path = ROOT, days: int = dashboard.DEFAULT_DAYS, *, fetch=collect_calendar.fetch_month,
                  clock=lambda: datetime.now(KST), make_builder=dashboard.Builder, stored=dashboard.stored_sessions,
-                 newest=newest_bundle):
+                 newest=newest_bundle, audience=None):
         self.root, self.days = Path(root), days
         self.fetch, self.clock, self.make_builder, self.stored, self.newest = fetch, clock, make_builder, stored, newest
+        self.audience = audience
+        self.rebuild = threading.Event()
+        self.cached_calendar = None
+        self.programmes = {}
+        if audience:
+            audience.changed = self.rebuild.set
+            self.admin_token = audience.admin_token()
         self.builder = None
         self.snapshot = None
         self.failure = None
@@ -77,10 +87,17 @@ class Forecasts:
             kept = datetime.fromtimestamp(prepared.stat().st_mtime, KST) if prepared.is_file() else None
             return table, "stored", kept, "공원 달력 API가 답하지 않아 저장해 둔 달력으로 만들었습니다."
 
-    def refresh(self) -> dict:
+    def refresh(self, *, cached=False) -> dict:
         now = self.clock()
         first = now.strftime("%Y-%m-%d")
-        sessions, calendar, fetched, note = self.sessions(now, first)
+        if not cached or self.cached_calendar is None:
+            self.cached_calendar = self.sessions(now, first)
+        sessions, calendar, fetched, note = self.cached_calendar
+        if self.audience:
+            sessions = sessions.copy()
+            saved = sessions.event_id.astype(str).map(self.audience.labels())
+            sessions["labelled"] = saved.notna()
+            sessions["audience_type"] = saved.fillna(sessions.audience_type)
         if self.builder is None or self.builder.bundle != self.newest(self.root):
             self.builder = self.make_builder(self.root)     # a newer bundle was published
         built = self.builder.build(sessions, now, first, self.days)
@@ -88,13 +105,25 @@ class Forecasts:
                   "fetchedAt": fetched.replace(microsecond=0).isoformat() if fetched else None,
                   "days": self.days, "leftOut": len(built["leftOut"]), "leftOutEvents": built["leftOut"],
                   "unlabelled": built["unlabelled"], "note": note}
+        if self.audience:
+            listed = {e["programmeId"]: e for e in built["events"]["events"]}
+            facts = sessions.attrs.get("audience_facts", {})
+            programmes = {}
+            for row in sessions.drop_duplicates("event_id").itertuples():
+                key = str(row.event_id)
+                if key in listed:
+                    facts_for_show = dict(facts.get(key, {"title": listed[key]["name"], "venue": listed[key]["venueName"]}))
+                    if isinstance(row.act, str) and row.act != key:
+                        facts_for_show["artist"] = row.act
+                    programmes[key] = (facts_for_show, row.audience_type if row.labelled else None)
+            self.programmes = programmes
         self.snapshot = {"events": built["events"], "predictions": built["predictions"],
                          "evenings": built.get("evenings", []), "evidence": built.get("evidence"), "source": source}
         return self.snapshot
 
-    def refresh_safely(self) -> None:
+    def refresh_safely(self, *, cached=False) -> None:
         try:
-            self.refresh()
+            self.refresh(cached=cached)
             self.failure = None
         except Exception as issue:
             traceback.print_exc()
@@ -104,9 +133,14 @@ class Forecasts:
             self.ready.set()
 
     def keep_fresh(self, minutes: float) -> None:
+        next_fetch = 0.0
         while True:
-            self.refresh_safely()
-            time.sleep(max(60.0, minutes * 60))
+            self.rebuild.clear()
+            cached = time.monotonic() < next_fetch
+            self.refresh_safely(cached=cached)
+            if not cached:
+                next_fetch = time.monotonic() + max(60.0, minutes * 60)
+            self.rebuild.wait(max(0.0, next_fetch - time.monotonic()))
 
     def status(self) -> dict:
         snapshot = self.snapshot
@@ -130,6 +164,51 @@ class Handler(SimpleHTTPRequestHandler):
         else:
             super().do_GET()
 
+    def do_POST(self):
+        path = unquote(urlsplit(self.path).path)
+        if not path.startswith("/api/audience/"):
+            return self.answer(404, {"error": "없는 주소입니다."})
+        if self.headers.get_content_type() != "application/json":
+            return self.answer(415, {"error": "JSON 요청이 필요합니다."})
+        try:
+            length = int(self.headers.get("Content-Length", 0))
+            if not 0 < length <= 1024:
+                raise ValueError()
+            body = json.loads(self.rfile.read(length))
+            if not isinstance(body, dict):
+                raise ValueError()
+        except (ValueError, UnicodeError):
+            return self.answer(400, {"error": "요청을 읽을 수 없습니다."})
+        self.audience(path, body)
+
+    def audience(self, path, body=None):
+        state = self.forecasts
+        programme = path.removeprefix("/api/audience/")
+        record = state.programmes.get(programme)
+        if not state.audience or not record:
+            return self.answer(404, {"error": "현재 공연 목록에서 찾을 수 없습니다."})
+        facts, applied = record
+        action = body.get("action") if body is not None else None
+        if action in ("manual", "retry"):
+            supplied = self.headers.get("Authorization", "").encode()
+            if not hmac.compare_digest(supplied, ("Bearer " + state.admin_token).encode()):
+                return self.answer(403, {"error": "관리자 키를 확인하세요."})
+        if action == "manual":
+            label = body.get("label")
+            if not isinstance(label, str) or label not in TYPES:
+                return self.answer(400, {"error": "관객층 일곱 가지 중 하나를 선택하세요."})
+            result = state.audience.manual(programme, facts, label)
+        elif action in ("resolve", "retry"):
+            result = state.audience.resolve(programme, facts, retry=action == "retry")
+        elif body is None:
+            result = state.audience.state(programme)
+        else:
+            return self.answer(400, {"error": "알 수 없는 동작입니다."})
+        result["applied"] = result["label"] == applied
+        if result["label"] and not result["applied"]:
+            state.rebuild.set()
+        self.answer(200, result)
+
     def api(self, path: str) -> None:
         forecasts = self.forecasts
         if path == "/api/status":
@@ -138,6 +217,8 @@ class Handler(SimpleHTTPRequestHandler):
         snapshot = forecasts.snapshot
         if snapshot is None:
             return self.answer(503, {"error": "예측을 아직 만들지 못했습니다.", "lastFailure": forecasts.failure})
+        if path.startswith("/api/audience/"):
+            return self.audience(path)
         if path == "/api/bundle":
             return self.answer(200, snapshot)
         if path == "/api/events":
@@ -196,7 +277,7 @@ def main():
     args = parser.parse_args()
     if not (args.directory / "index.html").is_file():
         print(f"{args.directory} has no build; only /api is served. Build the dashboard first (pnpm build).", file=sys.stderr, flush=True)
-    forecasts = Forecasts(args.root, args.days)
+    forecasts = Forecasts(args.root, args.days, audience=Audience.from_root(args.root))
     threading.Thread(target=forecasts.keep_fresh, args=(args.refresh_minutes,), daemon=True).start()
     servers = serve(forecasts, args.directory, ["127.0.0.1", *args.bind], args.port)
     print("\n".join(f"http://{server.server_address[0]}:{args.port}" for server in servers), flush=True)

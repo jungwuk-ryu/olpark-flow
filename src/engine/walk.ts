@@ -131,7 +131,14 @@ export interface WalkEdgeSeries {
   capacityPerMin: number;
   /** 분마다 이 길 입구에 닿은 사람 */
   arrivals: number[];
+  /** 분마다 이 길에 실제로 들어선 사람 */
   passed: number[];
+  /**
+   * 분마다 이 길 위를 지나던 사람 (명/분). 지도의 통행량 색이 이 값이다.
+   * 걷는 데 여러 분이 걸리는 긴 토막은 들어선 사람을 걷는 분 수에 고르게 나눠 센다. 그래서 들어오는 사람이 끊겨도
+   * 마지막 사람이 다 걸을 때까지 0이 되지 않는다. 짧은 토막에서는 passed와 같고, 저녁 전체를 더하면 people과 같다
+   */
+  flow: number[];
   /** 그 분이 끝났을 때 이 길에 들어가려고 기다리는 사람 */
   queue: number[];
   /** 그 분이 끝났을 때 이 길 위에 있는 사람 (걷는 사람과 다음 길을 기다리는 사람) */
@@ -599,8 +606,11 @@ export function simulateWalk(input: WalkInput): WalkResult {
   const transit = [new Float64Array(R), new Float64Array(R)];
   const passing = [new Float64Array(R), new Float64Array(R)];
   const walkersOn = (dir: 0 | 1, r: number) => transit[dir]![r]! + passing[dir]![r]! * crossing[r]!;
+  // r 위를 걷는 중인 사람의 1분당 흐름: 들어선 사람 ÷ 걷는 분 수(delay)를 걷는 동안 더해 둔다
+  const moving = new Float64Array(R);
   const arrivals = Array.from({ length: R }, () => new Float64Array(H));
   const passed = Array.from({ length: R }, () => new Float64Array(H));
+  const flow = Array.from({ length: R }, () => new Float64Array(H));
   const queue = Array.from({ length: R }, () => new Float64Array(H));
   const occupancy = Array.from({ length: R }, () => new Float64Array(H));
   const left = new Float64Array(R);
@@ -642,6 +652,7 @@ export function simulateWalk(input: WalkInput): WalkResult {
         // 앞 토막을 다 걸었다
         const walked = group.steps[k - 1]!;
         transit[walked.dir]![walked.r]! -= (v * crossing[walked.r]!) / walked.delay;
+        moving[walked.r]! -= v / walked.delay;
         enter(g, k, v, t);
       }
     });
@@ -669,7 +680,10 @@ export function simulateWalk(input: WalkInput): WalkResult {
           waiting[g]![k] = here - go > EPS ? here - go : 0;
           standing[step.dir]![r]! -= go;
           if (step.delay === 0) passing[step.dir]![r]! += go;
-          else transit[step.dir]![r]! += (go * crossing[r]!) / step.delay;
+          else {
+            transit[step.dir]![r]! += (go * crossing[r]!) / step.delay;
+            moving[r]! += go / step.delay;
+          }
           const before = steps[k - 1];
           if (before) waitOn[before.dir]![before.r]! -= go;
           left[r]! -= go;
@@ -696,6 +710,9 @@ export function simulateWalk(input: WalkInput): WalkResult {
       standingNow += queue[r]![t]!;
       const o = Math.max(0, waitOn[0]![r]! + waitOn[1]![r]! + walkersOn(0, r) + walkersOn(1, r));
       occupancy[r]![t] = o > 1e-6 ? o : 0;
+      const f = passing[0]![r]! + passing[1]![r]! + moving[r]!;
+      // 저녁 전체를 더한 값이 지나간 사람 수와 맞도록 아주 작은 값도 남긴다 (계산 오차만 버린다)
+      flow[r]![t] = f > EPS ? f : 0;
     }
     passing[0]!.fill(0);
     passing[1]!.fill(0);
@@ -735,6 +752,7 @@ export function simulateWalk(input: WalkInput): WalkResult {
       capacityPerMin: res.cap,
       arrivals: Array.from(arrivals[r]!),
       passed: Array.from(passed[r]!),
+      flow: Array.from(flow[r]!),
       queue: q,
       occupancy: occ,
       saturation,

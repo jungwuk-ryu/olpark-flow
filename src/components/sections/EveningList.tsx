@@ -26,7 +26,7 @@ function byDate(data: DataBundle): DayRow[] {
     }));
 }
 
-/** 그날 공연 하나. 누르면 지도와 브리핑이 이 공연으로 바뀐다. 역 승차 예측이 없는 작은 공연은 한 줄로 줄인다 */
+/** 그날 공연 하나. 누르면 지도와 브리핑이 이 공연으로 바뀐다 */
 function Session({ event, prediction, selected, onSelect }: { event: EventItem; prediction: Prediction | undefined; selected: boolean; onSelect: () => void }) {
   const riders = prediction?.rail?.people;
   const tone = selected ? 'border-accent bg-accent-tint' : 'border-line bg-card hover:border-accent-hover';
@@ -36,12 +36,12 @@ function Session({ event, prediction, selected, onSelect }: { event: EventItem; 
         type="button"
         aria-pressed={selected}
         onClick={onSelect}
-        className={`flex h-[30px] items-center gap-1.5 self-center rounded-lg border px-2.5 text-[12px] transition-colors ${tone}`}
+        className={`flex min-h-[30px] min-w-0 items-center gap-1.5 self-center rounded-lg border px-2.5 py-1 text-left text-[12px] transition-colors ${tone}`}
       >
-        <span className={`font-medium ${selected ? 'text-accent' : 'text-ink'}`}>
-          {event.venueName} {formatClock(event.startAt)}
+        <span className={`min-w-0 break-words font-medium ${selected ? 'text-accent' : 'text-ink'}`}>
+          {event.venueName} {formatClock(event.startAt)} <span className="font-normal text-ink-2">· {event.name}</span>
         </span>
-        {prediction?.attendance && <span className="text-ink-2">{formatNumber(prediction.attendance.value)}명</span>}
+        {prediction?.attendance && <span className="shrink-0 text-ink-2">{formatNumber(prediction.attendance.value)}명</span>}
       </button>
     );
   return (
@@ -49,9 +49,9 @@ function Session({ event, prediction, selected, onSelect }: { event: EventItem; 
       type="button"
       aria-pressed={selected}
       onClick={onSelect}
-      className={`flex min-h-[46px] flex-col items-start justify-center rounded-lg border px-3 py-1.5 text-left transition-colors ${tone}`}
+      className={`flex min-h-[46px] min-w-0 flex-col items-start justify-center rounded-lg border px-3 py-1.5 text-left transition-colors ${tone}`}
     >
-      <span className={`text-[13px] leading-[18px] font-bold ${selected ? 'text-accent' : 'text-ink'}`}>
+      <span className={`max-w-full break-words text-[13px] leading-[18px] font-bold ${selected ? 'text-accent' : 'text-ink'}`}>
         {event.venueName} {formatClock(event.startAt)} <span className="font-normal text-ink-2">· {event.name}</span>
       </span>
       <span className="text-[12px] leading-[17px] text-ink-2">

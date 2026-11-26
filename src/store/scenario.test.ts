@@ -32,6 +32,21 @@ describe('시나리오 상태', () => {
     expect(after.result!.params.compliance).toBe(0.3);
   });
 
+  it('관객층 재계산 결과를 받아도 고른 공연과 운영자가 조정한 조건을 유지한다', async () => {
+    const store = useScenario.getState();
+    store.init(bundle);
+    await vi.runAllTimersAsync();
+    store.setParam('compliance', 0.32);
+    const updated = structuredClone(bundle);
+    const selected = useScenario.getState().eventId;
+    const prediction = updated.predictions.predictions.find((p) => p.eventId === selected)!;
+    prediction.attendance!.value = 7800;
+    store.updateForecasts(updated);
+    await vi.runAllTimersAsync();
+    expect(useScenario.getState().eventId).toBe(selected);
+    expect(useScenario.getState().params).toMatchObject({ attendance: 7800, compliance: 0.32 });
+  });
+
   it('게시된 공연이 없으면 계산하지 않고 그 사실을 알린다', () => {
     useScenario.getState().init({ ...bundle, events: { schemaVersion: 1, events: [] }, predictions: { ...bundle.predictions, predictions: [] } });
     const s = useScenario.getState();

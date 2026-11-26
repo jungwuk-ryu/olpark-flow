@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { Area, CartesianGrid, ComposedChart, Line, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { AudienceTags } from './AudienceTags';
 import { Card, CardHeader } from '../ui/Card';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
@@ -13,6 +14,7 @@ import { busiestEdges, edgeGeometry, hasControls, KIND_NAME, nearestPlace, place
 import { selectEvent, selectPrediction, useEndTime, useScenario } from '../../store/scenario';
 import { useWalk } from '../../store/walk';
 import type { BasemapState } from '../map/WalkMap';
+import { RAMP_CSS } from '../map/flowScale';
 import { CONTROL_ICON, CONTROL_NAME, EdgeChoice } from './EdgeChoice';
 import { EventPicker } from './EventPicker';
 
@@ -24,6 +26,12 @@ const LAST_MINUTE = 90;
 const MINUTE_MS = 60_000;
 
 const STEPS = ['공연 선택', '보행로 선택', '통제·배치 조건별 결과 비교'];
+/** 지도에서 혼잡한 길에 두르는 테두리 색 */
+const HALO = [
+  { status: '보통', tone: 'bg-normal' },
+  { status: '병목', tone: 'bg-bottleneck' },
+  { status: '위험', tone: 'bg-danger' },
+] as const;
 const MODE_NAME: Record<WalkMode | OffMapMode, string> = { rail: '지하철', bus: '버스', car: '차량', walk: '도보 귀가', other: '픽업 등' };
 
 /** 종료 후 minute분의 시각. 종료 시각에 범위가 있으면 괄호로 함께 적는다 */
@@ -151,7 +159,7 @@ export function SimulationSection() {
       {/* 공연 */}
       <Card className="flex flex-wrap items-center justify-between gap-4 px-6 py-4">
         <div className="flex min-w-0 flex-col gap-0.5">
-          <span className="truncate text-[20px] leading-7 font-bold text-ink">{event ? `${event.venueName} · ${event.name}` : '공연을 선택하세요'}</span>
+          <span className="break-words text-[20px] leading-7 font-bold text-ink">{event ? `${event.venueName} · ${event.name}` : '공연을 선택하세요'}</span>
           {event && end && (
             <span className="flex flex-wrap items-center gap-x-2 text-[13px] leading-5 text-ink-2">
               {formatDay(event.startAt)} {formatClock(event.startAt)} 시작 · {end.entered ? '종료' : '종료 예상'} {formatClock(end.expectedAt)}
@@ -164,6 +172,8 @@ export function SimulationSection() {
           공연 선택
         </Button>
       </Card>
+      {event && <AudienceTags key={event.programmeId ?? event.id} programme={event.programmeId}
+        initial={prediction?.brief?.labelled ? prediction.brief.audienceType : null} />}
       <EventPicker open={picking} onClose={() => setPicking(false)} />
 
       <div className="grid grid-cols-[minmax(0,1fr)_360px] items-start gap-5">
@@ -216,23 +226,26 @@ export function SimulationSection() {
               </span>
             )}
             {run && basemap === 'failed' && (
-              <span className="pointer-events-none absolute bottom-4 left-4 rounded-lg border border-line bg-card/95 px-2.5 py-1 text-[12px] text-ink-2">배경 지도 로드 실패 · 보행로만 표시</span>
+              <span className="pointer-events-none absolute top-14 left-4 rounded-lg border border-line bg-card/95 px-2.5 py-1 text-[12px] text-ink-2">배경 지도 로드 실패 · 보행로만 표시</span>
             )}
           </div>
 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-line px-5 py-3 text-[12px] text-ink-2">
             <span className="flex items-center gap-1.5">
-              <span className="h-[3px] w-5 rounded-full bg-[#9aa5a0]" aria-hidden="true" />
-              통행량 없음
+              <span className="h-[5px] w-5 rounded-full" style={{ background: RAMP_CSS }} aria-hidden="true" />
+              통행량
             </span>
-            <span className="flex items-center gap-1.5">
-              혼잡도
-              <StatusLabel status="여유" />
-              <StatusLabel status="보통" />
-              <StatusLabel status="병목" />
-              <StatusLabel status="위험" />
+            <span className="flex items-center gap-2.5">
+              혼잡 구간 테두리
+              {HALO.map((h) => (
+                <span key={h.status} className="flex items-center gap-1">
+                  <span className={`flex h-[11px] w-6 items-center rounded-full px-[3px] ${h.tone}`} aria-hidden="true">
+                    <span className="h-[5px] w-full rounded-full bg-[#278452] shadow-[0_0_0_1px_#fff]" />
+                  </span>
+                  {h.status}
+                </span>
+              ))}
             </span>
-            <span>선 두께는 통행량에 비례</span>
             <span className="ml-auto flex items-center gap-3">
               {(['block', 'narrow', 'staff'] as const).map((k) => (
                 <span key={k} className="flex items-center gap-1">

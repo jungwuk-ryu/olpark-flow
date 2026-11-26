@@ -7,11 +7,12 @@ import tempfile
 import threading
 import unittest
 from urllib.error import HTTPError
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 
 import pandas as pd
 
 from olpark_demand import dashboard, server
+from olpark_demand.audience import Audience
 
 ROOT = Path(__file__).resolve().parents[1]
 LOCAL_DATA = (ROOT / "data/prepared/response/sessions.parquet").is_file()
@@ -144,6 +145,37 @@ class HttpTests(unittest.TestCase):
         self.assertEqual(bundle["events"], self.json("/api/events"))
         self.assertEqual(bundle["predictions"], self.json("/api/predictions"))
 
+    def test_audience_route_rejects_unauthorized_edits_and_only_accepts_known_shows(self):
+        with tempfile.TemporaryDirectory() as temp:
+            store = Audience(Path(temp))
+            self.addCleanup(store.pool.shutdown)
+            original = self.state.audience, self.state.programmes
+            self.addCleanup(setattr, self.state, "audience", original[0])
+            self.addCleanup(setattr, self.state, "programmes", original[1])
+            self.state.audience = store
+            self.state.programmes = {"7": ({"title": "시험 공연"}, None)}
+            self.state.admin_token = "local-test"
+            def post(body, token="", key="7"):
+                headers = {"Authorization": "Bearer " + token, "Content-Type": "application/json"}
+                with urlopen(Request(self.base + "/api/audience/" + key, headers=headers,
+                                     data=json.dumps(body).encode()), timeout=5) as resp:
+                    return json.load(resp)
+            body = {"action": "manual", "label": "idol"}
+            for payload in (body, {"action": "retry"}):
+                with self.assertRaises(HTTPError) as denied:
+                    post(payload)
+                self.assertEqual(denied.exception.code, 403)
+            with self.assertRaises(HTTPError) as bad:
+                post({**body, "label": "other"}, "local-test")
+            self.assertEqual(bad.exception.code, 400)
+            with self.assertRaises(HTTPError) as missing:
+                post(body, "local-test", "8")
+            self.assertEqual(missing.exception.code, 404)
+            result = post(body, "local-test")
+            self.assertFalse(result["applied"])
+            self.assertEqual(result["status"], "manual")
+            self.assertEqual(post({"action": "resolve"})["label"], "idol")
+
     def test_one_prediction_by_event_id(self):
         self.assertEqual(self.json("/api/predictions/kspo-1"), {"eventId": "kspo-1"})
         with self.assertRaises(HTTPError) as missing:
@@ -209,7 +241,8 @@ class LocalForecastTests(unittest.TestCase):
         self.assertEqual(snapshot["source"]["calendar"], "api")
         self.assertEqual(snapshot["predictions"]["model"]["version"], server.newest_bundle(ROOT))
         self.assertEqual(snapshot["source"]["unlabelled"], [f"kspo-{day:%Y%m%d}-1800"])
-        self.assertNotIn("시험 공연", json.dumps(snapshot, ensure_ascii=False))
+        self.assertEqual(snapshot["events"]["events"][0]["name"], posted[0]["title"])
+        self.assertNotIn(posted[0]["title"], json.dumps(snapshot["predictions"], ensure_ascii=False))
 
 
 if __name__ == "__main__":

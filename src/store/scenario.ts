@@ -22,6 +22,7 @@ interface ScenarioState {
   endEntered: Record<string, string>;
 
   init: (data: DataBundle) => void;
+  updateForecasts: (data: DataBundle) => void;
   selectEvent: (id: string) => void;
   setParam: <K extends keyof ScenarioParams>(key: K, value: ScenarioParams[K]) => void;
   recompute: () => void;
@@ -77,6 +78,21 @@ export const useScenario = create<ScenarioState>((set, get) => {
       if (first) get().selectEvent(first.id);
       // 게시된 공연이 하나도 없으면 계산할 것이 없다
       else set({ eventId: null, params: null, result: null, status: 'no-events' });
+    },
+
+    updateForecasts: (data) => {
+      const s = get();
+      const old = selectPrediction(s);
+      const next = data.predictions.predictions.find((p) => p.eventId === s.eventId);
+      if (!old || !next || !s.params) return get().init(data);
+      const before = defaultParams(old);
+      const after = defaultParams(next);
+      const params = { ...s.params };
+      for (const key of ['attendance', 'stationShare', 'vehicleRatio', 'egressTotalMinutes'] as const) {
+        if (params[key] === before[key]) params[key] = after[key];
+      }
+      set({ data, params });
+      run();
     },
 
     selectEvent: (id) => {

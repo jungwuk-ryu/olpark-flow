@@ -2,7 +2,7 @@
 in the shape of docs/data-contract.md (``events.json`` and ``prediction.json``).
 
 Every event is a session posted on the park calendar at one of the four venues the contract
-names. Names are replaced by "공연 A", "공연 B", ...: a result carries no artist name.
+names. The event list displays the posted title and historical comparisons use aliases.
 The sessions come either from calendar answers fetched just now (``live_sessions``, used by
 ``olpark_demand.server``) or from the stored session table (``stored_sessions``).
 
@@ -26,6 +26,7 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 
 from . import briefing, collect_calendar, response_data
+from .audience_ai import listing
 from .egress import EgressEstimator, MissingEventInput, packet_validator
 from .paths import repo_of
 from .response_features import LARGE_GROUPS
@@ -115,8 +116,9 @@ def sessions_from_facts(facts: list[dict], root: Path = ROOT) -> pd.DataFrame:
     rows = []
     for fact in facts:
         programme = int(fact["evtSeq"])
+        title = fact["title"] if isinstance(fact["title"], str) else ""
         text = response_data.SCHEDULE_OVERRIDES.get(programme, fact["tm"])
-        made, _ = response_data._programme_sessions(programme, fact["title"], fact["plc"], fact["beginDt"], fact["endDt"],
+        made, _ = response_data._programme_sessions(programme, title, fact["plc"], fact["beginDt"], fact["endDt"],
                                                     text, fact["ndTm"], fact["regDate"], holidays)
         rows.extend(made)
     columns = ["session_id", "event_id", "title", "venue", "venue_group", "start", "runtime_announced", "registered_at",
@@ -128,6 +130,7 @@ def sessions_from_facts(facts: list[dict], root: Path = ROOT) -> pd.DataFrame:
     table["act"] = table.event_id.map(labels.act).fillna(table.event_id.astype(str))
     table.loc[table.venue_group.eq("festival"), "audience_type"] = "festival"
     table["date"] = pd.to_datetime(table.start).dt.strftime("%Y-%m-%d")
+    table.attrs["audience_facts"] = {str(f["evtSeq"]): listing(f) for f in facts}
     return table
 
 
@@ -365,17 +368,17 @@ class Builder:
         as_of = now.replace(microsecond=0).isoformat()
         first = first or now.strftime("%Y-%m-%d")
         listed = upcoming(sessions, first, days)
-        names = {str(programme): "공연 " + letters(i) for i, programme in enumerate(dict.fromkeys(listed.event_id))}
-        similar = Similar(self.estimator, self.history_sessions, as_of, names, self.history)
+        aliases = {str(programme): "공연 " + letters(i) for i, programme in enumerate(dict.fromkeys(listed.event_id))}
+        similar = Similar(self.estimator, self.history_sessions, as_of, aliases, self.history)
         similar.cars = self.past_cars
         events, predictions, left_out, unlabelled = [], [], [], []
         responses, forecast_rows = {}, []
         for row in listed.itertuples():
             if now >= pd.Timestamp(row.start).tz_localize(KST):
                 continue                         # the forecast is made before the session starts
-            identifier, name = event_id(row), names[str(row.event_id)]
+            identifier, alias = event_id(row), aliases[str(row.event_id)]
             try:
-                packet = self.estimator.build(request(row, name, as_of), issued_at=as_of)
+                packet = self.estimator.build(request(row, alias, as_of), issued_at=as_of)
                 self.validator.validate(json.loads(json.dumps(packet)))
                 packet_event = packet["events"][0]
                 forecast = prediction(self.root, row, packet_event, self.ceiling.get(row.venue_group, float("inf")))
@@ -386,7 +389,8 @@ class Builder:
                 left_out.append({"eventId": identifier, "reason": str(issue).replace(row.session_id, identifier)})
                 continue
             venue_id, venue_name, _ = VENUES[row.venue_group]
-            events.append({"id": identifier, "name": name, "venueId": venue_id, "venueName": venue_name,
+            title = row.title.strip() if isinstance(row.title, str) else ""
+            events.append({"id": identifier, "programmeId": str(row.event_id), "name": title or alias, "venueId": venue_id, "venueName": venue_name,
                            "startAt": stamp(row.start), "endAt": stamp(packet_event["expected_end_at"]),
                            "seatCapacity": int(response_data.CAPACITY[row.venue_group])})
             predictions.append(forecast)

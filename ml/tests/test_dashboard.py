@@ -216,7 +216,10 @@ class BuildTests(unittest.TestCase):
             if window is not None:
                 self.assertEqual(window["expected"], sum(h["expected"] for h in evening["hours"] if h["window"]))
                 self.assertTrue(window["low"] <= window["expected"] <= window["high"])
-                self.assertTrue(0 <= evening["rank"]["percentile"] <= 100)
+                if self.built["evidence"]["track"] is None:
+                    self.assertIsNone(evening["rank"])
+                else:
+                    self.assertTrue(0 <= evening["rank"]["percentile"] <= 100)
 
     def test_evidence_reports_how_earlier_forecasts_fared(self):
         track = self.built["evidence"]["track"]
@@ -234,17 +237,28 @@ class BuildTests(unittest.TestCase):
             self.skipTest("no KSPO DOME session is posted in the next ten days")
         self.assertTrue(all(p["endTime"] is not None and p["rail"] is not None for p in dome))
 
-    def test_no_act_or_programme_name_is_written(self):
+    def test_official_titles_are_displayed_on_the_event_list(self):
+        listed = dashboard.upcoming(self.sessions, self.now.date().isoformat(), 10)
+        titles = {dashboard.event_id(row): row.title for row in listed.itertuples()}
+        for event in self.events:
+            title = titles[event["id"]]
+            if isinstance(title, str) and title.strip():
+                self.assertEqual(event["name"], title.strip())
+            else:
+                self.assertRegex(event["name"], r"^공연 [A-Z]+$")
+
+    def test_comparison_and_forecast_data_uses_aliases(self):
         acts = {str(a).strip() for a in self.sessions.act.dropna() if len(str(a).strip()) >= 2}
         titles = {str(t).strip() for t in self.sessions.title.dropna() if len(str(t).strip()) >= 6}
         latin = [a for a in acts if re.fullmatch(r"[\x20-\x7e]+", a)]
         pattern = re.compile("|".join([rf"(?<![A-Za-z0-9]){re.escape(a)}(?![A-Za-z0-9])" for a in latin]
                                       + [re.escape(a) for a in acts if a not in latin]))
-        text = json.dumps(self.built, ensure_ascii=False)
+        text = json.dumps({key: value for key, value in self.built.items() if key != "events"}, ensure_ascii=False)
         self.assertEqual(pattern.findall(text), [])
         self.assertEqual([t for t in titles if t in text], [])
-        for event in self.events:
-            self.assertRegex(event["name"], r"^공연 [A-Z]+$")
+        for forecast in self.forecast["predictions"]:
+            for past in forecast["similarEvents"]:
+                self.assertRegex(past["name"], r"^공연 [A-Z]+$")
 
     def test_a_programme_posted_today_is_forecast_and_marked_unlabelled(self):
         day = self.now.date() + timedelta(days=6)
@@ -254,7 +268,7 @@ class BuildTests(unittest.TestCase):
         self.assertEqual(built["unlabelled"], [f"kspo-{day:%Y%m%d}-1800"])
         self.assertEqual(built["leftOut"], [])
         only = built["predictions"]["predictions"][0]
-        self.assertEqual(built["events"]["events"][0]["name"], "공연 A")
+        self.assertEqual(built["events"]["events"][0]["name"], "시험 공연")
         self.assertIsNotNone(only["rail"])
         self.assertIsNotNone(only["endTime"])
 

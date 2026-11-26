@@ -1,5 +1,5 @@
 import { bundle } from '../data';
-import type { DataBundle, DataSource, Evening, Events, Evidence, Predictions } from '../data/contract';
+import type { AudienceDecision, AudienceType, DataBundle, DataSource, Evening, Events, Evidence, Predictions } from '../data/contract';
 
 /**
  * 데이터 접근은 이 파일로만 한다.
@@ -60,13 +60,29 @@ export function mockBundle(): DataBundle {
 /** 화면 첫 로딩에 필요한 데이터 전부 */
 export async function loadDataBundle(fetcher: typeof fetch = fetch): Promise<DataBundle> {
   try {
-    const res = await fetcher(`${API_BASE}/bundle`, { headers: { Accept: 'application/json' } });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const answer: unknown = await res.json();
-    if (!isServerBundle(answer)) throw new Error('응답 모양이 다름');
-    return fromServer(answer);
+    return await fetchServerBundle(fetcher);
   } catch (e) {
     console.warn('[olpark] 서버에서 공연과 예측을 받지 못했습니다:', e instanceof Error ? e.message : String(e));
     return mockBundle();
   }
+}
+
+export async function fetchServerBundle(fetcher: typeof fetch = fetch, signal?: AbortSignal): Promise<DataBundle> {
+  const res = await fetcher(`${API_BASE}/bundle`, { headers: { Accept: 'application/json' }, signal });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const answer: unknown = await res.json();
+  if (!isServerBundle(answer)) throw new Error('응답 모양이 다름');
+  return fromServer(answer);
+}
+
+export async function audienceDecision(programme: string, action: 'resolve' | 'manual' | 'retry', options: {
+  signal?: AbortSignal; label?: AudienceType; token?: string;
+} = {}): Promise<AudienceDecision> {
+  const response = await fetch(`${API_BASE}/audience/${encodeURIComponent(programme)}`, {
+    method: 'POST', signal: options.signal,
+    headers: { 'Content-Type': 'application/json', ...(options.token ? { Authorization: 'Bearer ' + options.token } : {}) },
+    body: JSON.stringify({ action, label: options.label }),
+  });
+  if (!response.ok) throw new Error(response.status === 403 ? '관리자 키를 확인하세요.' : '관객층 정보를 불러오지 못했습니다.');
+  return response.json();
 }

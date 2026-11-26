@@ -8,6 +8,7 @@ export type VenueId = 'kspo-dome' | 'ticketlink-live-arena' | 'olympic-hall' | '
 
 export interface EventItem {
   id: string;
+  programmeId?: string;
   name: string;
   venueId: VenueId;
   venueName: string;
@@ -20,6 +21,23 @@ export interface Events {
   events: EventItem[];
 }
 
+export const AUDIENCES = {
+  idol: '아이돌 팬층',
+  general: '일반 관객',
+  senior: '중장년 관객',
+  foreign: '해외 아티스트 관객',
+  family: '가족 관객',
+  musical: '뮤지컬·클래식 관객',
+  festival: '페스티벌 관객',
+} as const;
+export type AudienceType = keyof typeof AUDIENCES;
+export interface AudienceDecision {
+  status: 'idle' | 'pending' | 'ai' | 'manual' | 'catalog' | 'failed' | 'unconfigured';
+  label: AudienceType | null;
+  model: string | null;
+  applied: boolean;
+}
+
 export const GENRES = ['아이돌', '밴드/록', '발라드/솔로', '트로트', '힙합', '클래식/뮤지컬', '기타'] as const;
 export type Genre = (typeof GENRES)[number];
 export type Confidence = '높음' | '보통' | '낮음';
@@ -30,7 +48,7 @@ export type RideMode = 'rail' | 'bus' | 'car' | 'walk' | 'other';
 export interface EventBrief {
   /** 예측이 가정한 관객층 (idol, general, senior, …) */
   audienceType: string;
-  /** 관객층 표에 있던 프로그램인지. false면 일반 관객으로 계산한 것 */
+  /** 기존 분류, AI 추측 또는 관리자 선택이 수요 예측에 반영되었는지 */
   labelled: boolean;
   /** 첫 귀가 수단별 인원 (명)과 차량 대수 */
   modes: (Record<RideMode, number> & { vehicles: number; carOccupancy: number }) | null;

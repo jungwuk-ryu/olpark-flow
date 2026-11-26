@@ -34,7 +34,7 @@ OLPARK FLOW는 세 부분이 따로 만들어져 하나로 합쳐집니다. 이 
 | 비율 | 0~1 소수 (퍼센트 아님). 나눠 가지는 비율은 합이 1 | `0.18` = 18% |
 | ID | 영문 소문자와 하이픈, 파일 안에서 중복 금지 | `"kspo-dome"`, `"n-junction-center"` |
 | 좌표 | WGS84 경위도, **[경도, 위도]** 순서 (지도 서비스와 무관) | `[127.1272, 37.5199]` |
-| 이름 | 실제 아티스트명 금지. 공연명은 "공연 A/B/C…" | |
+| 이름 | 서버의 예정 공연 목록은 올림픽공원 공식 달력의 공연명을 쓴다. 시연용 데이터와 과거 유사 공연은 가명을 쓴다. | `"공연 A"` (시연용) |
 | 출처 | 값마다 어디서 왔는지 `source` 필드로 표시 (아래 표) | |
 
 ### 값 출처(`source`) 네 가지
@@ -391,13 +391,17 @@ OLPARK FLOW는 세 부분이 따로 만들어져 하나로 합쳐집니다. 이 
    | `GET /api/predictions/{eventId}` | `prediction` 한 건 |
    | `GET /api/evenings` | `{ "evenings", "evidence" }` |
    | `GET /api/status` | 수집 상태만 |
+   | `GET /api/audience/{programmeId}` | 공식 공연 ID의 관객층 분류 상태 |
+   | `POST /api/audience/{programmeId}` | JSON의 `action`은 `resolve`(조회 또는 비동기 추측 시작), `manual`(수동 선택), `retry`(실패한 추측 재시도). 수동 선택과 재시도에는 관리자 Bearer 키가 필요합니다. |
+
+   서버 공연 목록의 `programmeId`는 달력의 `evtSeq` 문자열입니다. 여러 회차가 이 값을 공유합니다. 관객층 응답은 `status`, `label`, `model`, `applied`를 담습니다. `status`는 `idle`, `pending`, `catalog`, `ai`, `manual`, `failed`, `unconfigured` 중 하나입니다. 선택한 값이 현재 수요 예측에 반영되면 `applied`가 참입니다. 수동 선택 시 `label`에 `idol`, `general`, `senior`, `foreign`, `family`, `musical`, `festival` 중 하나를 보냅니다.
 
    `source`에는 달력을 받은 시각(`fetchedAt`), 달력 출처(`calendar`: `api`는 방금 받은 것, `stored`는 API가 답하지 않아 저장해 둔 달력을 쓴 것), 공연 수, 빠진 공연과 이유가 들어 있습니다. `src/data/events.json`·`prediction.json` 목업은 공연장별 퇴장 곡선 가정과 엔진 테스트의 기준이라 그대로 둡니다.
    서버는 운영자 화면이 쓰는 값을 더 줍니다. 목업 파일에는 없어도 됩니다.
 
    | 값 | 뜻 |
    |---|---|
-   | `prediction.brief.audienceType` · `labelled` | 예측이 가정한 관객층과, 관객층 표에 있던 프로그램인지 |
+   | `prediction.brief.audienceType` · `labelled` | 수요 예측에 반영한 관객층과, 해당 공연에 저장된 분류가 있는지 |
    | `prediction.brief.modes` | 첫 귀가 수단별 인원(`rail` `bus` `car` `walk` `other`, 명)과 차량 대수(`vehicles`). 합 = `attendance.value` |
    | `prediction.brief.stationLines` | 지하철 이용 인원을 역·호선별로 나눈 값 |
    | `prediction.brief.arrival` | 지하철 이용객이 개찰구를 지나는 시간 분포. `bins` = `[예상 종료 후 분, 비율]`. `single_show`는 한 저녁의 곡선(종료 시각과 함께 움직임), `average`는 게시된 시작 시각 기준 평균 곡선 |

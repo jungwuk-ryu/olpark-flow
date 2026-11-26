@@ -20,10 +20,9 @@ describe('서버 응답 예시', () => {
     expect(validateData(data)).toEqual([]);
   });
 
-  it('공연마다 예측이 한 건씩 있고 공연명에 실제 이름이 없다', () => {
+  it('공연마다 예측이 한 건씩 있고 과거 유사 공연에 가명을 쓴다', () => {
     const ids = data.events.events.map((e) => e.id);
     expect(data.predictions.predictions.map((p) => p.eventId)).toEqual(ids);
-    for (const e of data.events.events) expect(e.name).toMatch(/^공연 [A-Z]+$/);
     for (const p of data.predictions.predictions) for (const s of p.similarEvents) expect(s.name).toMatch(/^공연 [A-Z]+$/);
   });
 
@@ -81,7 +80,7 @@ describe('loadDataBundle', () => {
     const data = await loadDataBundle(fetcher);
     expect(String(vi.mocked(fetcher).mock.calls[0]![0])).toBe('/api/bundle');
     expect(data.source?.kind).toBe('server');
-    expect(data.events.events.map((e) => e.id)).toEqual(answer.events.events.map((e) => e.id));
+    expect(data.events.events).toEqual(answer.events.events);
     expect(data.predictions.model.name).toBe('olpark-event-response');
   });
 

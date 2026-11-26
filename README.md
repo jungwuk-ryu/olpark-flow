@@ -41,6 +41,22 @@ cd ml
 
 팀 서버가 이미 있으면 개발 화면만 연결할 수 있습니다. `pnpm dev`를 실행할 터미널에서 PowerShell은 `$env:OLPARK_API = 'http://호스트:포트'`, Bash·zsh는 `export OLPARK_API='http://호스트:포트'`로 지정하세요. 이 값은 예측 서버의 기본 주소입니다.
 
+### 관객층 자동 추측과 수동 선택
+
+예측 서버를 실행할 셸에 아래 키 중 하나를 설정하고 서버를 시작하세요. 미분류 공연을 처음 열면 공식 공연명, 관람 연령, 소개, 제작사·주최사와 포스터를 바탕으로 웹 검색을 사용할 수 있는 모델이 일곱 관객층 중 하나를 선택합니다. 달력에서 비워 둔 항목은 나머지 자료로 보완합니다.
+
+| 서버 환경변수 | 기본 모델 |
+| --- | --- |
+| `OPENAI_API_KEY` | `gpt-6.1-luna`의 제공 여부를 먼저 조회하고, 해당 모델이 없으면 `gpt-6-luna` |
+| `ANTHROPIC_API_KEY` | `claude-haiku-5-5` |
+| `GEMINI_API_KEY` 또는 `GOOGLE_API_KEY` | `gemini-4-hydrogen` |
+
+키가 여러 개면 위 표의 순서로 선택합니다. `OLPARK_AUDIENCE_PROVIDER`로 `openai`, `anthropic`, `gemini` 중 하나를, `OLPARK_AUDIENCE_MODEL`로 모델 ID를 지정할 수 있습니다.
+
+관리자는 공연 정보 아래 태그를 눌러 직접 선택할 수 있습니다. 처음 저장할 때 서버의 `OLPARK_ADMIN_TOKEN`을 입력합니다. 설정하지 않으면 서버가 키를 발급해 `ml/data/runtime/audience/admin.token`에 보관합니다. 수동 선택은 진행 중인 추측을 취소하고 해당 공연의 모든 회차에 반영됩니다.
+
+공식 공연 ID별 분류는 `ml/data/runtime/audience/audience.sqlite3`에 저장합니다. 여러 서버 프로세스가 같은 머신에서 동작하면 같은 디렉터리를 사용하세요. `OLPARK_AUDIENCE_DIR`로 영구 저장 경로를 지정할 수 있습니다. 기존 수작업 분류와 관리자 선택에서 출연자·공연명·제작 주체가 겹치는 사례를 최대 다섯 개 검색합니다. 모델은 이번 공연과 맞는 사례만 참고할 수 있습니다. 호출 실패는 화면에서 관리자가 다시 시도할 수 있습니다. 공연별 원본 기록을 남기고 관련된 기억만 꺼내 쓰는 방식은 Codex의 메모리 읽기 경로를 참고했습니다. [Codex 메모리 구현](https://github.com/openai/codex/tree/main/codex-rs/memories)
+
 [퇴장 수요 예측 데이터와 수집 범위](ml/data/README.md)
 
 [파이썬 쪽 폴더 구성과 설치](ml/README.md) · [퇴장 수요 모델 학습·조회 방법](ml/olpark_demand/README.md) · [행사 반응 모델 v3 모델 카드](ml/artifacts/egress-response/rail-2026-11-v3/MODEL_CARD.md) · [2025년 학습 모델과 검증 결과](ml/artifacts/egress-demand/2025-d1/MODEL_CARD.md) · [연구·운영 설계](docs/design/egress-demand/README.md)
