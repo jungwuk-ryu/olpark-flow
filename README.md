@@ -15,11 +15,11 @@ pnpm dev
 
 ## 실제 공연 예측
 
-팀의 예측 서버에 접속할 수 있으면 로컬 Python 설치 없이 실제 예측을 볼 수 있습니다. 루트 `.env.local`에 `OLPARK_API=http://호스트:포트`를 지정하고 `pnpm dev`를 다시 시작하세요. 주소에는 `/api`를 붙이지 않습니다.
+**예측 서버를 직접 실행하려면 Git에 없는 데이터가 필요합니다.** 현재 판본(`rail-2026-11-v3`)은 가공 데이터 14개와 같은 판본의 발권·출연자 이력 CSV 2개로 실행을 확인했습니다. 협업자는 아래 목록의 파일을 데이터 담당자에게 받아 지정 경로에 배치하세요. 준비된 데이터로 예측을 실행하거나 공원의 공연 목록을 갱신할 때는 API 키가 필요 없습니다. [예측 서버용 파일 16개와 배치 경로](ml/data/README.md#예측-서버-실행-자료)
 
-예측 서버도 직접 실행하려면 Python 3.12와 [모델 실행 자료](ml/olpark_demand/README.md)가 필요합니다. 담당자에게 `ml/data/prepared/`와 같은 모델 판본의 `attendance_history.csv`, `act_history.csv`를 받거나 원자료로 재생성하세요. 이력 CSV의 위치는 `ml/artifacts/egress-response/<판본>/`입니다. 같은 폴더의 `development_forecasts.parquet`는 과거 승차 예측 검증 지표를 표시할 때 사용합니다.
+KOPIS 발권 통계를 직접 수집할 때는 별도로 발급받은 `KOPIS_API_KEY`를 수집기를 실행할 터미널에 설정합니다. [API 키 발급 안내 및 PowerShell·Bash·zsh 설정 방법](ml/data/README.md#인증키)
 
-자료를 배치한 뒤 루트에서 `pnpm build`를 실행하고 아래 명령으로 서버를 시작합니다. 대시보드 주소는 `http://127.0.0.1:4173/`이며 `/api/status`의 `ready`가 `true`이면 예측을 사용할 수 있습니다.
+아래 명령은 저장소 루트에서 시작합니다. API만 사용하면 Python 3.12와 모델 자료로 충분합니다. 같은 서버에서 화면도 제공하려면 먼저 루트에서 `pnpm install --frozen-lockfile`과 `pnpm build`를 실행하세요. 시작 후 [서버 상태](http://127.0.0.1:4173/api/status)에서 `ready: true`와 `lastFailure: null`을 확인합니다.
 
 **Windows PowerShell**
 
@@ -38,6 +38,8 @@ python3.12 -m venv .venv
 cd ml
 ../.venv/bin/python -X utf8 -m olpark_demand.server
 ```
+
+팀 서버가 이미 있으면 개발 화면만 연결할 수 있습니다. `pnpm dev`를 실행할 터미널에서 PowerShell은 `$env:OLPARK_API = 'http://호스트:포트'`, Bash·zsh는 `export OLPARK_API='http://호스트:포트'`로 지정하세요. 이 값은 예측 서버의 기본 주소입니다.
 
 [퇴장 수요 예측 데이터와 수집 범위](ml/data/README.md)
 
