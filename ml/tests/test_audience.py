@@ -1,5 +1,7 @@
 import asyncio
+import base64
 from concurrent.futures import ThreadPoolExecutor
+from io import BytesIO
 import json
 import multiprocessing
 import os
@@ -10,6 +12,7 @@ import unittest
 from unittest.mock import patch
 
 import httpx
+from PIL import Image
 
 from olpark_demand.audience import Audience
 from olpark_demand.audience_ai import Provider, listing
@@ -139,24 +142,67 @@ class AudienceTests(unittest.TestCase):
 
 
 class ProviderTests(unittest.IsolatedAsyncioTestCase):
-    async def test_provider_multimodal_search_and_output(self):
+    async def test_image_only_intro_and_poster_are_sent_to_each_provider(self):
         answer = '{"audience_type":"musical"}'
         examples = {
             "openai": {"output": [{"type": "web_search_call", "status": "completed"}, {"type": "message", "content": [{"type": "output_text", "text": answer}]}]},
             "anthropic": {"content": [{"type": "web_search_tool_result", "content": []}, {"type": "text", "text": "검색 결과"}, {"type": "text", "text": answer}]},
             "gemini": {"candidates": [{"groundingMetadata": {"webSearchQueries": ["공연"]}, "content": {"parts": [{"text": "```json\n" + answer + "\n```"}]}}]},
         }
+        facts = listing({"title": "공연", "fileNm": "poster.jpg", "content": (
+            '<p><img src="/upload/namo/attachfiles/투바투.jpg" title="" alt="" /></p>'
+            '<img src="https://www.ksponco.or.kr/upload/namo/attachfiles/투바투.jpg#preview">'
+            '<img src="https://external.example/ignore.jpg">'
+            '<img src="/upload/namo/attachfiles/missing.jpg">'
+        )})
+        self.assertEqual(facts["intro"], "")
+        self.assertEqual(len(facts["intro_images"]), 2)
+
+        def png(size):
+            with BytesIO() as out:
+                Image.new("RGB", size, "white").save(out, format="PNG")
+                return out.getvalue()
+
+        uploads = {
+            "/olympicpark/attachFiles/eventInfo/poster.jpg": png((250, 350)),
+            "/upload/namo/attachfiles/투바투.jpg": png((600, 2450)),
+        }
         for name, response in examples.items():
             with self.subTest(provider=name):
+                fetched = set()
+
                 def api(request):
+                    if request.method == "GET":
+                        self.assertEqual(request.url.host, "www.ksponco.or.kr")
+                        path = request.url.path
+                        self.assertNotIn(path, fetched)
+                        fetched.add(path)
+                        if path.endswith("missing.jpg"):
+                            return httpx.Response(302, headers={"Location": "https://external.example/ignore.jpg"})
+                        return httpx.Response(200, content=uploads[path])
                     args = json.loads(request.content)
                     self.assertTrue(args["tools"])
-                    self.assertIn("aW1hZ2U=", str(args))
-                    self.assertIn("공연", str(args))
+                    if name == "openai":
+                        content = args["input"][0]["content"]
+                        encoded = [item["image_url"].split(",", 1)[1] for item in content if item["type"] == "input_image"]
+                    elif name == "anthropic":
+                        content = args["messages"][0]["content"]
+                        encoded = [item["source"]["data"] for item in content if item["type"] == "image"]
+                    else:
+                        content = args["contents"][0]["parts"]
+                        encoded = [item["inlineData"]["data"] for item in content if "inlineData" in item]
+                    sizes = []
+                    for data in encoded:
+                        with Image.open(BytesIO(base64.b64decode(data))) as image:
+                            sizes.append(image.size)
+                    self.assertEqual(sizes, [(250, 350), (600, 1500), (600, 1014)])
                     return httpx.Response(200, json=response)
-                async with httpx.AsyncClient(transport=httpx.MockTransport(api)) as client:
-                    label, _ = await Provider(name, "model", "test").classify(client, "공연", ("image/png", "aW1hZ2U="))
-                    self.assertEqual(label, "musical")
+
+                client = httpx.AsyncClient(transport=httpx.MockTransport(api))
+                with patch("olpark_demand.audience_ai.httpx.AsyncClient", return_value=client):
+                    label, _ = await Provider(name, "model", "test")(facts, [])
+                self.assertEqual(label, "musical")
+                self.assertEqual(fetched, {*uploads, "/upload/namo/attachfiles/missing.jpg"})
 
     async def test_luna_checks_model_availability_without_duplicate_generation(self):
         calls = []
@@ -168,7 +214,7 @@ class ProviderTests(unittest.IsolatedAsyncioTestCase):
             return httpx.Response(200, json={"output": [{"type": "web_search_call", "status": "completed"}, {"type": "message", "content": [
                 {"type": "output_text", "text": '{"audience_type":"general"}'}]}]})
         async with httpx.AsyncClient(transport=httpx.MockTransport(api)) as client:
-            result = await Provider("openai", "gpt-6.1-luna", "test", True).classify(client, "title", None)
+            result = await Provider("openai", "gpt-6.1-luna", "test", True).classify(client, "title", [])
         self.assertEqual(result, ("general", "gpt-6-luna"))
         self.assertEqual(calls, ["GET", "POST"])
 
