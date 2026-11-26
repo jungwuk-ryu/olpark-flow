@@ -136,6 +136,50 @@ describe('validateData', () => {
     expect(validateData(d)).toEqual([]);
   });
 
+  it('지하철 이용 인원과 종료 시각 범위가 규칙에 맞으면 오류가 없다', () => {
+    const d = valid();
+    const p = d.predictions.predictions[0]!;
+    p.rail = { ratio: 0.42, people: 3301, peopleLow: 2641, peopleHigh: 5007, interval: 'p10-p90' };
+    p.endTime = {
+      expectedAt: '2026-11-21T21:40:00+09:00',
+      lowAt: '2026-11-21T21:17:00+09:00',
+      highAt: '2026-11-21T22:03:00+09:00',
+      sdMinutes: 18,
+      interval: 'p10-p90',
+    };
+    expect(validateData(d)).toEqual([]);
+    p.rail = null;
+    p.endTime = null;
+    expect(validateData(d)).toEqual([]);
+  });
+
+  it('지하철 이용 비율·인원 범위를 검사한다', () => {
+    const d = valid();
+    const p = d.predictions.predictions[0]!;
+    p.rail = { ratio: 0.9, people: 7074, peopleLow: 7500, peopleHigh: 8000, interval: 'p10-p90' };
+    const e = validateData(d);
+    expect(has(e, 'rail.ratio와 vehicle.ratio의 합')).toBe(true);
+    expect(has(e, 'peopleLow ≤ people ≤ peopleHigh')).toBe(true);
+    p.rail = { ratio: 0.42, people: 5000, peopleLow: 2641, peopleHigh: 5007, interval: 'p10-p90' };
+    expect(has(validateData(d), 'rail.people')).toBe(true);
+  });
+
+  it('종료 시각 범위의 순서와 공연 목록의 종료 시각을 검사한다', () => {
+    const d = valid();
+    const p = d.predictions.predictions[0]!;
+    p.endTime = {
+      expectedAt: '2026-11-21T21:45:00+09:00',
+      lowAt: '2026-11-21T21:50:00+09:00',
+      highAt: '2026-11-21T22:03:00+09:00',
+      sdMinutes: -1,
+      interval: 'p10-p90',
+    };
+    const e = validateData(d);
+    expect(has(e, 'lowAt ≤ expectedAt ≤ highAt')).toBe(true);
+    expect(has(e, 'sdMinutes')).toBe(true);
+    expect(has(e, 'endAt과 다릅니다')).toBe(true);
+  });
+
   it('없는 공연의 예측, 없는 길의 통제를 찾는다', () => {
     const d = valid();
     d.predictions.predictions[0]!.eventId = 'ghost';

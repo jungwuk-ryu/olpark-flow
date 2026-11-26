@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Vite + React + TypeScript (pnpm), Tailwind CSS, MapLibre GL JS + VWorld tiles (OSM fallback), deck.gl (optional flow animation), Recharts, zustand, Vitest. No backend; mock JSON in `src/data/`, all data access through `src/api/` so it can later move to Spring Boot / Python APIs. The user asked to produce design files first, before code.
+Vite + React + TypeScript (pnpm), Tailwind CSS, MapLibre GL JS + OpenFreeMap vector tiles (OpenStreetMap data; routes still draw when the basemap does not load), deck.gl (optional flow animation), Recharts, zustand, Vitest. Events and predictions come from a small Python server (`ml/olpark_demand/server.py`) that calls the park's public calendar API and runs the demand model; all data access goes through `src/api/`, and the mock JSON in `src/data/` is the fallback when the server is unreachable (labelled 시연용 on screen). The user asked to produce design files first, before code.
 
 ## Users
 
@@ -16,7 +16,7 @@ Primary: venue operations staff at Olympic Park (Seoul) running crowd egress aft
 
 ## Product Purpose
 
-After a performance ends, audiences leave venue exits for subway entrances (Olympic Park, Hanseong Baekje, Mongchontoseong stations) and parking lots for vehicle exits. OLPARK FLOW computes, minute by minute, where queues form, shows them on a map, and compares the current operating plan against a dispersal plan (guidance direction, exit assignment, staff placement). Success: an operator can see the expected peak queue, when it clears, and act on a concrete field guidance sheet.
+After a performance ends, audiences leave venue exits for subway entrances (Olympic Park, Hanseong Baekje, Mongchontoseong stations) and parking lots for vehicle exits. OLPARK FLOW computes, minute by minute, where queues form, shows them on a map, and compares the current operating plan against a dispersal plan (guidance direction, exit assignment, staff placement). The walking simulation is the centrepiece. The operator picks a show in a popup; the map then shows every walkway of the park coloured by how congested it gets. Pressing a walkway opens a small box where the operator closes it, places an obstacle (keeps part of the width) or puts safety staff there, and the results show the change against the plan with nothing placed. Below the map: the briefing for the chosen show (who leaves by which mode, when the station is busy), a time-ordered action list, and how earlier day-before forecasts compared with the counts. Success: an operator can try where to place staff and barriers for an evening, see which walkways jam, and tell how far to trust the numbers.
 
 ## Positioning
 
@@ -41,7 +41,7 @@ Name "OLPARK FLOW", subtitle "운영 판단 플랫폼". Binding visual reference
 ## Evidence on Hand
 
 - `reference.png`: screen reference.
-- Data is mock. Performances are named "공연 A/B/C"; no real artist names, logos, or photos. Network geometry is labeled "시연용 가정값".
+- Events and forecasts come from the server; the bundled JSON in `src/data/` is mock. Performances are named "공연 A/B/C"; no real artist names, logos, or photos. Network geometry is labeled "시연용 가정값".
 - Data sources to credit: KSPODO performance info, vehicle entry/exit link, real-time parking, parking congestion; Seoul real-time population and pedestrian network; Seoul Metro boardings.
 
 ## Product Principles

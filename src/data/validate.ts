@@ -108,6 +108,23 @@ export function validateData(d: DataBundle): string[] {
       const s = Object.values(p.directionShare).reduce((x, y) => x + (y ?? 0), 0);
       if (Math.abs(s - 1) > EPS) err.push(`${label} directionShare 합이 ${round(s)}입니다 (1이어야 함)`);
     }
+    if (p.rail != null) {
+      const r = p.rail;
+      if (!(r.ratio >= 0 && r.ratio <= 1)) err.push(`${label} rail.ratio는 0~1이어야 합니다`);
+      else if (p.vehicle && r.ratio + p.vehicle.ratio > 1 + EPS) err.push(`${label} rail.ratio와 vehicle.ratio의 합이 1을 넘습니다`);
+      if (!(0 <= r.peopleLow && r.peopleLow <= r.people && r.people <= r.peopleHigh)) err.push(`${label} rail은 0 ≤ peopleLow ≤ people ≤ peopleHigh여야 합니다`);
+      // 반올림 차이 1명까지는 같은 값으로 본다
+      if (p.attendance && Math.abs(r.people - p.attendance.value * r.ratio) > 1 + p.attendance.value * EPS)
+        err.push(`${label} rail.people이 attendance.value × rail.ratio와 다릅니다`);
+    }
+    if (p.endTime != null) {
+      const t = p.endTime;
+      const [low, mid, high] = [Date.parse(t.lowAt), Date.parse(t.expectedAt), Date.parse(t.highAt)];
+      if (!(low <= mid && mid <= high)) err.push(`${label} endTime은 lowAt ≤ expectedAt ≤ highAt이어야 합니다`);
+      if (!(t.sdMinutes >= 0)) err.push(`${label} endTime.sdMinutes는 0 이상이어야 합니다`);
+      const event = d.events.events.find((e) => e.id === p.eventId);
+      if (event && Date.parse(event.endAt) !== mid) err.push(`${label} endTime.expectedAt이 events.json의 endAt과 다릅니다`);
+    }
     if (p.vehicle) {
       const v = p.vehicle;
       if (!(0 <= v.low && v.low <= v.ratio && v.ratio <= v.high && v.high <= 1)) err.push(`${label} vehicle은 0 ≤ low ≤ ratio ≤ high ≤ 1이어야 합니다`);

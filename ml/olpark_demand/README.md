@@ -180,6 +180,69 @@ python -m olpark_demand.validate_egress_od
 
 운영자가 기존 방식대로 모든 비중을 지정하는 1.0 시나리오도 `python -m olpark_demand.scenario examples/egress_scenario.json`으로 재현할 수 있다. [1.0 입력](../examples/egress_scenario.json) · [1.0 교환 형식](../../docs/design/egress-demand/contract/demand-v1.schema.json)
 
+## 대시보드에 공연과 예측 주기
+
+[서버](server.py)가 올림픽공원 공식 달력 API를 호출해 앞으로 3주의 회차를 받고, 회차마다 예측을 만들어 [데이터 약속 문서](../../docs/data-contract.md)의 모양으로 화면에 준다. 화면의 빌드(`dist/`)도 같은 서버가 내보낸다.
+
+```sh
+(cd .. && pnpm build)                                      # 화면 빌드
+python -m olpark_demand.server                             # http://127.0.0.1:4173
+python -m olpark_demand.server --bind 100.64.0.1           # 그 주소에서도 받는다
+python -m olpark_demand.dashboard --live --output /tmp/bundle.json   # 서버 없이 같은 묶음을 파일로
+```
+
+| 주소 | 응답 |
+|---|---|
+| `GET /api/bundle` | 공연 목록, 예측, 날짜별 역 승차, 과거 적중 기록, 수집 상태. 화면이 쓰는 주소 |
+| `GET /api/events` · `/api/predictions` · `/api/predictions/{공연 ID}` | 약속 문서의 파일 모양 그대로 |
+| `GET /api/evenings` | 날짜별 역 승차와 과거 적중 기록 |
+| `GET /api/status` | 달력을 받은 시각, 공연 수, 마지막 갱신이 실패했는지 |
+
+달력은 `--refresh-minutes`(기본 60분)마다 다시 받는다. 달력 API가 답하지 않으면 저장해 둔 회차 표(`data/prepared/response/sessions.parquet`)로 만들고 응답의 `source.calendar`를 `stored`로 적는다. 갱신이 실패하면 직전 응답을 그대로 준다. 새 판본이 `artifacts/egress-response`에 생기면 다음 갱신부터 그 판본을 쓴다. 서버는 학습에 쓰는 자료(`data/raw`)에 아무것도 쓰지 않는다. 달력 원본을 쌓는 일은 `collect_calendar`와 갱신 명령이 한다.
+
+| 약속 문서의 값 | 모델에서 오는 값 |
+|---|---|
+| `events[].endAt` | 수요표의 예상 종료 시각. KSPO DOME은 역 승차가 시작되는 시각에서 역산한다 |
+| `attendance` | 발권 이력으로 추정한 관객 수와 80% 범위. 상한은 그 공연장의 역대 최대 발권 수에서 자른다 |
+| `directionShare` | 역·호선별 승차 예측의 비율 (A 올림픽공원역, B 한성백제역, C 몽촌토성역) |
+| `rail` | 관객 1명당 철도 승차(`ratio`)와 그 인원. 범위는 판본의 보정표에서 온다: 퇴장 시간대 올림픽공원역 9호선 승차 총량의 관측 ÷ 예측 비율 10~90% 분위. 평소 승객이 든 총량의 비율을 공연 관객 몫에 그대로 곱한 값이다 |
+| `endTime` | 예상 종료 시각과 80% 범위. 폭은 KSPO DOME 저녁 23일의 5분 승차에서 잰, 예측 대비 급증 시각의 표준편차(17.9분)를 정규분포로 보고 낸다. 이 값을 잰 적 없는 공연장은 `null` |
+| `vehicle` | 수단 비중의 차량 몫. 범위는 탑승 인원·도보 비중 가정을 바꾼 경우들 |
+| `egressCurve` | 모델이 추정하지 않는다. 목업의 공연장별 가정(예: KSPO DOME 22분에 95%)을 그대로 넘긴다 |
+| `genre` | `null`. 모델은 장르가 아니라 관객층으로 나누고 근거 문장을 뽑지 않는다 |
+| `similarEvents` | 같은 공연장의 과거 공연 5건. 같은 출연자, 같은 관객층, 최근 순 |
+
+화면은 지도 위 보행 시뮬레이션이 먼저이고 그 아래에 공연 브리핑, 실행표, 근거가 온다. [briefing.py](briefing.py)가 그 값을 판본과 수요표에서 읽어 준다. 새로 추정하는 값은 없다.
+
+| 화면 | 서버가 주는 값 | 출처 |
+|---|---|---|
+| 공연 고르기 창 | 날짜별 올림픽공원역(5·9호선 합) 퇴장 시간대 승차와 80% 범위 | 그날 모든 회차의 시간대별 예측을 더한 값. 범위는 판본 보정표의 9호선 퇴장 시간대 합계 비율 |
+| 〃 | 지난 1년 공연일 가운데 자리(백분위) | 판본의 순차 예측표(`development_forecasts.parquet`)에 든 공연일의 실제 승차 |
+| 공연 브리핑 | 수단별 인원, 차량 대수, 역·호선별 인원 | 수요표의 수단 배분. 도보·기타는 관측이 없는 가정 |
+| 〃 | 역이 붐비는 시간 | KSPO DOME은 한 저녁의 5분 승차 곡선(종료 시각과 함께 움직임), 그 밖은 게시된 시작 시각 기준 평균 곡선 |
+| 〃 | 시간대별 승차와 범위, 공연 없는 날의 값 | 판본의 시간별 예측과 보정표. 공연 없는 날은 지난 1년간 큰 회차가 없던 같은 요일 유형의 중앙값이고 그런 날이 5일 미만이면 내지 않는다(토요일이 그렇다) |
+| 이 예측을 얼마나 믿을 수 있나 | 공연일 총량 오차·편향·범위 적중 | 순차 예측표를 실제와 맞춘 값. 규칙을 정할 때 이미 본 기간이다 |
+| 〃 | 비슷한 과거 공연의 예측과 실제 | 그날 역 퇴장 시간대 승차 (모든 승객, 그날 모든 공연) |
+| 실제 종료 시각 입력의 근거, 시뮬레이션의 한계 | 종료 시각을 알 때의 시간대 적중, 개찰구 실제 통과 인원 | `experiments/response_model/heldout_2026_autumn`의 `operator_inputs.json`, `station_capacity.json` |
+
+순차 예측표는 관측값이 행 단위로 들어 있어 저장소에 없다. 없으면 견줄 자리와 적중 기록, 공연 없는 날의 값이 `null`로 나간다.
+
+지도의 보행 시뮬레이션은 `brief.walks`의 지하철 이용객(역 출입구까지)과 타는 정류장을 아는 버스 이용객을 공원 전체 보행로에 올린다. 차량 이용객은 주차장의 보행 출입구 좌표가 없어 올리지 못하고, 도보 귀가·픽업 관객은 갈 곳을 몰라 뺀다. 화면은 뺀 인원을 까닭과 함께 적는다. 시각으로 적는 값(정점, 해소)은 `endTime`의 범위만큼 넓혀 보여 준다.
+
+### 보행로 그래프
+
+[walkways.py](walkways.py)가 OpenStreetMap 추출본으로 `src/data/walkways.json`을 만든다. 추출본(`geo/osm/osm-walkways.json`)은 저장소에 넣지 않는다.
+
+```sh
+(cd .. && curl -s -H "User-Agent: osm-walk-extract/1.0" --data-urlencode "data@geo/osm/overpass-walkways.txt" \
+    https://overpass-api.de/api/interpreter -o geo/osm/osm-walkways.json)
+python -m olpark_demand.walkways
+```
+
+길의 모양과 연결은 OpenStreetMap에서, 폭은 `network.json` 토막의 항공사진 판독값(그 토막을 따라가는 길), OSM 폭 태그, 길 종류별 기본값 순으로 정한다. 2026-11-25 추출본 기준 2,539토막 가운데 판독 62, OSM 122, 가정 2,355다. `network.json`의 점이 있는 자리에서 길을 끊어 한 토막이 두 판독값에 걸치지 않게 한다. KSPO DOME 밖의 공연장은 출구 위치를 몰라 건물에서 가장 가까운 보행로 한 점을 출구로 둔다(`assumed`). OpenStreetMap의 "주차장N"은 공원의 주차장 번호(P1, P2, P4~P7)와 다르게 매겨져 있다(예: OSM "주차장2"는 올림픽홀에서 1km 떨어져 있다). 그래서 주차장은 넣지 않았다.
+
+공연명은 ‘공연 A’부터 매기고 출연자 이름은 응답 어디에도 쓰지 않는다. 우리금융아트홀은 역 승차에서 관객 반응을 가려낼 수 없어 방면·차량·철도 값이 `null`이다. 관객층 표에 없는 새 프로그램은 일반 관객으로 계산하고 `source.unlabelled`에 적는다. 과거 공연이 5건에 못 미치는 등 예측을 만들지 못한 회차는 목록에서 빼고 `source.leftOutEvents`에 이유를 남긴다.
+
 ## 실제 도착한 과거 승차를 이용하는 실험
 
 별도 버스 일별 실험은 등록 정보를 근거로 D−1 17시에 이용할 수 있었을 D−5까지의 승차 이력을 구성한다. 같은 이력의 요일 중앙값과 고정된 Chronos-2의 제로샷 예측을 14개 정류장에 대조했다. 매일 원자료를 수신해 이력을 누적한다는 조건이며, 정적 파일만 쓰는 기본 후보와 별도 성능표를 제공한다. [실험 설계·환경](../experiments/bus_history/README.md) · [계산 결과](../experiments/bus_history/results.json)

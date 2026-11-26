@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Icon, type IconName } from '../ui/Icon';
 
 export interface NavSection {
@@ -8,13 +8,12 @@ export interface NavSection {
 }
 
 export const NAV_SECTIONS: NavSection[] = [
-  { id: 'overview', label: '운영 개요', icon: 'chart' },
-  { id: 'flow-map', label: '흐름 지도', icon: 'map' },
-  { id: 'dispersal', label: '분산 운영안', icon: 'route' },
-  { id: 'results', label: '분석 결과', icon: 'history' },
+  { id: 'simulation', label: '보행 시뮬레이션', icon: 'map' },
+  { id: 'brief', label: '공연 브리핑', icon: 'notice' },
+  { id: 'actions', label: '실행표와 근거', icon: 'clipboard' },
 ];
 
-const PARK_GUIDE_URL = 'https://www.ksponco.or.kr/olympicpark/';
+const menuItem = 'flex h-10 w-full items-center gap-3 rounded-lg px-3 text-[14px] text-sidebar-text hover:bg-sidebar-selected hover:text-white';
 
 /** 화면에 보이는 섹션을 따라 선택 항목을 바꾼다 (scroll spy). */
 function useActiveSection(ids: string[]) {
@@ -39,13 +38,14 @@ function useActiveSection(ids: string[]) {
 
 const ids = NAV_SECTIONS.map((s) => s.id);
 
-export function Sidebar() {
+export function Sidebar({ onLogout }: { onLogout: () => void }) {
   const [active, setActive] = useActiveSection(ids);
+  const profile = useRef<HTMLDialogElement>(null);
 
   return (
     <aside className="sticky top-0 flex h-screen w-[240px] shrink-0 flex-col justify-between bg-sidebar px-4 py-6 text-sidebar-text">
       <div className="flex flex-col gap-7">
-        <a href="#overview" className="flex items-center gap-3 rounded-lg px-2" aria-label="OLPARK FLOW 처음으로">
+        <a href="#simulation" className="flex items-center gap-3 rounded-lg px-2" aria-label="OLPARK FLOW 처음으로">
           <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
             <rect width="36" height="36" rx="9" fill="#DCE6E2" />
             <path d="M11 25V16.5a7 7 0 0 1 14 0V25" stroke="#1E3B36" strokeWidth="2.4" strokeLinecap="round" />
@@ -87,22 +87,30 @@ export function Sidebar() {
         </nav>
       </div>
 
-      <div className="flex flex-col gap-2 border-t border-sidebar-divider px-2 pt-5">
-        <p className="text-[12px] leading-[18px] font-medium text-sidebar-muted">분석 범위</p>
-        <p className="text-[17px] leading-6 font-bold text-white">올림픽공원</p>
-        <p className="text-[13px] leading-5 text-sidebar-text">
-          공연장 출구부터 인근 지하철 지상 출입구와 주차장 차량 출구까지의 귀가 흐름을 다룹니다.
-        </p>
-        <a
-          href={PARK_GUIDE_URL}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-1 inline-flex items-center gap-1.5 self-start text-[13px] font-medium text-sidebar-text hover:text-white hover:underline"
-        >
-          <Icon name="external" size={14} />
-          공식 공원 안내
+      <nav aria-label="운영 메뉴" className="flex flex-col gap-1 border-t border-sidebar-divider pt-4">
+        <button type="button" className={menuItem} aria-haspopup="dialog" onClick={() => profile.current?.showModal()}>
+          <Icon name="user" size={18} />프로필
+        </button>
+        <a className={menuItem} href="#simulation-settings">
+          <Icon name="sliders" size={18} />설정
         </a>
-      </div>
+        <button type="button" className={menuItem} onClick={onLogout}>
+          <Icon name="logout" size={18} />로그아웃
+        </button>
+      </nav>
+      <dialog ref={profile} aria-labelledby="profile-heading" className="m-auto w-80 rounded-[var(--radius-card)] border border-line bg-card p-5 text-ink shadow-pop backdrop:bg-ink/45">
+        <header className="flex items-center justify-between">
+          <h2 id="profile-heading" className="text-lg font-bold">프로필</h2>
+          <button type="button" onClick={() => profile.current?.close()} aria-label="닫기" className="grid size-8 place-items-center rounded-lg hover:bg-subtle">
+            <Icon name="x" size={16} />
+          </button>
+        </header>
+        <dl className="mt-4 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 border-t border-line pt-4">
+          <dt className="text-ink-2">역할</dt><dd>운영자</dd>
+          <dt className="text-ink-2">워크스페이스</dt><dd>올림픽공원 운영센터</dd>
+          <dt className="text-ink-2">접속 방식</dt><dd>로컬 세션</dd>
+        </dl>
+      </dialog>
     </aside>
   );
 }

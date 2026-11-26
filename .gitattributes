@@ -1,0 +1,4 @@
+# The Python registry verifies the SHA-256 of the original bytes on every platform.
+src/data/network.json text eol=lf
+src/data/routes.json text eol=lf
+src/data/parking.json text eol=lf

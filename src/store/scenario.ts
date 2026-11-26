@@ -1,11 +1,12 @@
+import { useMemo } from 'react';
 import { create } from 'zustand';
 import type { DataBundle, EventItem, Prediction } from '../data/contract';
-import { defaultParams, venueHasNetwork, type ScenarioParams, type ScenarioResult } from '../model/scenario';
+import { defaultParams, endTimeOf, venueHasNetwork, type EndTime, type ScenarioParams, type ScenarioResult } from '../model/scenario';
 import { computeScenarioAsync } from '../model/runner';
 
 let requestSeq = 0;
 
-type Status = 'loading' | 'computing' | 'ready' | 'dirty' | 'no-network' | 'error';
+type Status = 'loading' | 'computing' | 'ready' | 'dirty' | 'no-network' | 'no-events' | 'error';
 
 interface ScenarioState {
   data: DataBundle | null;
@@ -17,12 +18,16 @@ interface ScenarioState {
   error: string | null;
   /** 지도·차트에서 보고 있는 시점 (종료 후 분) */
   minute: number;
+  /** 운영자가 넣은 실제 종료 시각 (공연 ID → ISO). 넣은 공연은 예측 범위 대신 이 시각을 쓴다 */
+  endEntered: Record<string, string>;
 
   init: (data: DataBundle) => void;
   selectEvent: (id: string) => void;
   setParam: <K extends keyof ScenarioParams>(key: K, value: ScenarioParams[K]) => void;
   recompute: () => void;
   setMinute: (m: number) => void;
+  /** 실제 종료 시각을 넣거나(ISO) 지운다(null) */
+  setEndEntered: (eventId: string, at: string | null) => void;
 }
 
 export const selectEvent = (s: ScenarioState): EventItem | null => s.data?.events.events.find((e) => e.id === s.eventId) ?? null;
@@ -64,11 +69,14 @@ export const useScenario = create<ScenarioState>((set, get) => {
     status: 'loading',
     error: null,
     minute: 0,
+    endEntered: {},
 
     init: (data) => {
       const first = data.events.events.find((e) => venueHasNetwork(data, e.venueId)) ?? data.events.events[0];
       set({ data });
       if (first) get().selectEvent(first.id);
+      // 게시된 공연이 하나도 없으면 계산할 것이 없다
+      else set({ eventId: null, params: null, result: null, status: 'no-events' });
     },
 
     selectEvent: (id) => {
@@ -87,5 +95,20 @@ export const useScenario = create<ScenarioState>((set, get) => {
     recompute: run,
 
     setMinute: (m) => set({ minute: m }),
+
+    setEndEntered: (eventId, at) => {
+      const next = { ...get().endEntered };
+      if (at) next[eventId] = at;
+      else delete next[eventId];
+      set({ endEntered: next });
+    },
   };
 });
+
+/** 고른 공연의 종료 시각 예측 (예상 시각과 범위). 공연을 고르기 전에는 null */
+export function useEndTime(): EndTime | null {
+  const event = useScenario(selectEvent);
+  const prediction = useScenario(selectPrediction);
+  const entered = useScenario((s) => (s.eventId ? s.endEntered[s.eventId] : undefined));
+  return useMemo(() => (event ? endTimeOf(event, prediction, entered) : null), [event, prediction, entered]);
+}

@@ -4,7 +4,7 @@ import { Icon } from '../ui/Icon';
 import { Slider } from '../ui/Slider';
 import { Badge } from '../ui/Badge';
 import { formatNumber } from '../../lib/format';
-import { basisFacts, directionWalkMinutes, PARAM_LIMITS, summarySentence } from '../../model/scenario';
+import { basisFacts, crowdOf, crowdRange, directionWalkMinutes, PARAM_LIMITS, summarySentence } from '../../model/scenario';
 import { selectPrediction, useScenario } from '../../store/scenario';
 import { DIRECTIONS, type Direction } from '../../engine/types';
 
@@ -23,8 +23,15 @@ export function SettingsCard() {
   const setParam = useScenario((s) => s.setParam);
   const recompute = useScenario((s) => s.recompute);
 
-  const disabled = !params || status === 'no-network' || status === 'loading';
+  const disabled = !params || status === 'no-network' || status === 'no-events' || status === 'loading';
   const L = PARAM_LIMITS;
+  // 지하철 이용 비율: 차량 이용자를 뺀 인원보다 많을 수 없다
+  const maxStationShare = params ? Math.max(L.stationShare.min, Math.floor((1 - params.vehicleRatio) * 100 + 1e-9) / 100) : 1;
+  const crowd = params ? crowdOf(params) : null;
+  const riders = prediction && params ? crowdRange(prediction, params) : null;
+  const stationShare = crowd && crowd.attendance > 0 ? crowd.station / crowd.attendance : 0;
+  const predictedShare = prediction?.rail?.ratio ?? null;
+  const shareEdited = predictedShare !== null && params !== null && Math.abs(params.stationShare - predictedShare) > 1e-9;
   const routes = data?.routes.routes ?? [];
   // 가장 많이 가는 방면은 안내의 출발점이라 끌 수 없다
   const share = prediction?.directionShare ?? {};
@@ -60,6 +67,32 @@ export function SettingsCard() {
           maxLabel={`${formatNumber(L.attendance.max)}명`}
           disabled={disabled}
         />
+        <Slider
+          label="지하철 이용 비율"
+          badge={<Badge kind={predictedShare === null ? '가정' : shareEdited ? '직접 입력' : 'AI 예측'} />}
+          value={Math.min(params?.stationShare ?? L.stationShare.min, maxStationShare)}
+          min={L.stationShare.min}
+          max={maxStationShare}
+          step={L.stationShare.step}
+          onChange={(v) => setParam('stationShare', v)}
+          valueText={`${formatNumber(stationShare * 100)}% · ${formatNumber(crowd?.station ?? 0)}명`}
+          minLabel={`${formatNumber(L.stationShare.min * 100)}%`}
+          maxLabel={`${formatNumber(maxStationShare * 100)}% (차량 제외 전원)`}
+          disabled={disabled}
+        />
+        {params && crowd && (
+          <p className="-mt-3 text-[12px] leading-[18px] text-ink-2">
+            역 방면 길에는 지하철을 타러 가는 관객만 넣습니다. 차량 {formatNumber(params.vehicleRatio * 100)}% · 버스·도보 귀가·픽업 등{' '}
+            {formatNumber(Math.max(0, 1 - stationShare - params.vehicleRatio) * 100)}%는 길 계산에서 빠집니다.
+            {riders && prediction?.rail && (
+              <>
+                {' '}
+                지하철 이용 인원 80% 예측 범위 {formatNumber(riders.low.station)}~{formatNumber(riders.high.station)}명.
+              </>
+            )}
+            {predictedShare === null && ' 이 공연은 지하철 이용 비율 예측이 없어 차량을 뺀 전원으로 시작합니다.'}
+          </p>
+        )}
         <Slider
           label="퇴장 분포 시간"
           value={params?.egressTotalMinutes ?? L.egressTotalMinutes.min}

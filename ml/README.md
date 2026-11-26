@@ -1,6 +1,6 @@
 # ml: 퇴장 수요 모델
 
-올림픽공원 공연이 끝난 뒤 관객이 언제, 어느 역과 주차장으로, 몇 명 나가는지를 전날 예측하는 파이썬 쪽 작업이 모두 이 폴더에 있다. 화면이 읽는 결과만 저장소의 `src/data/`에 둔다.
+올림픽공원 공연이 끝난 뒤 관객이 언제, 어느 역과 주차장으로, 몇 명 나가는지를 전날 예측하는 파이썬 쪽 작업이 모두 이 폴더에 있다. 화면은 공연 목록과 예측을 이 폴더의 [서버](olpark_demand/README.md#대시보드에-공연과-예측-주기)에서 받는다.
 
 | 폴더 | 내용 |
 |---|---|
@@ -25,6 +25,7 @@ python -m pip install -r requirements.txt
 PYTHONPATH=. python -m unittest discover -s tests                     # 자료가 없으면 자료가 필요한 테스트는 건너뛴다
 python -m olpark_demand.egress build --request examples/egress_planned_request.json --output /tmp/olpark-planned.json
 python -m olpark_demand.update_cycle plan                             # 새 자료로 갱신할 때 받을 날짜와 용량
+python -m olpark_demand.server                                        # 화면과 /api를 127.0.0.1:4173에 띄운다 (자료 필요)
 ```
 
 수요표 생성과 학습에는 `data/`의 자료가 필요하다. 받는 방법은 [자료 문서](data/README.md)에, 명령별 설명은 [패키지 문서](olpark_demand/README.md)에 있다.

@@ -1,11 +1,13 @@
-import { optimize, simulate, type Direction, type SimulationInput, type SimulationResult, DIRECTIONS } from '../engine';
+import { optimize, simulate, endWindowFrom, type Direction, type EndWindow, type SimulationInput, type SimulationResult, DIRECTIONS } from '../engine';
 import type { Plan } from '../engine/optimize';
-import type { DataBundle, Prediction, VenueId } from '../data/contract';
+import type { DataBundle, EventItem, Prediction, VenueId } from '../data/contract';
 import { formatNumber } from '../lib/format';
 
 /** 운영자가 화면에서 바꾸는 조건 */
 export interface ScenarioParams {
   attendance: number;
+  /** 관객 중 지하철을 타러 세 역으로 걸어가는 비율 (0~1) */
+  stationShare: number;
   egressTotalMinutes: number;
   compliance: number;
   staff: number;
@@ -14,7 +16,8 @@ export interface ScenarioParams {
 }
 
 export const PARAM_LIMITS = {
-  attendance: { min: 2000, max: 12000, step: 10 },
+  attendance: { min: 2000, max: 16000, step: 10 },
+  stationShare: { min: 0.1, max: 1, step: 0.01 },
   egressTotalMinutes: { min: 16, max: 40, step: 1 },
   compliance: { min: 0, max: 1, step: 0.05 },
   staff: { min: 2, max: 12, step: 1 },
@@ -31,13 +34,74 @@ export const DEFAULT_COMPLIANCE = 0.6;
 export const DEFAULT_STAFF = 6;
 
 export function defaultParams(p: Prediction): ScenarioParams {
+  const vehicleRatio = p.vehicle?.ratio ?? 0;
   return {
     attendance: p.attendance?.value ?? 5000,
+    // 지하철 이용 비율 예측이 없으면 차량을 뺀 전원이 역으로 간다고 본다
+    stationShare: p.rail?.ratio ?? 1 - vehicleRatio,
     egressTotalMinutes: p.egressCurve?.totalMinutes ?? 22,
     compliance: DEFAULT_COMPLIANCE,
     staff: DEFAULT_STAFF,
     allowedDirections: [...DIRECTIONS],
-    vehicleRatio: p.vehicle?.ratio ?? 0,
+    vehicleRatio,
+  };
+}
+
+/** 한 번의 계산에 넣는 인원: 관객 수와 그중 지하철을 타러 역으로 걷는 사람 */
+export interface Crowd {
+  attendance: number;
+  station: number;
+}
+
+/** 화면의 조건 그대로의 인원. 차량 이용자를 뺀 인원보다 많이 역으로 갈 수는 없다 */
+export function crowdOf(params: ScenarioParams): Crowd {
+  const share = Math.max(0, Math.min(params.stationShare, 1 - params.vehicleRatio));
+  return { attendance: params.attendance, station: params.attendance * share };
+}
+
+/**
+ * 예측 범위의 아래·위 끝 인원.
+ * 지하철 이용 인원은 모델이 역 승차 총량으로 검증한 범위(rail.peopleLow~peopleHigh)를 따르고,
+ * 그 범위가 없으면 관객 수 범위를 따른다. 운영자가 값을 바꿨으면 범위도 같은 비율로 옮긴다.
+ */
+export function crowdRange(p: Prediction, params: ScenarioParams): { low: Crowd; high: Crowd } {
+  const base = crowdOf(params);
+  const a = p.attendance;
+  const attendanceLow = a && a.value > 0 ? a.low / a.value : 1;
+  const attendanceHigh = a && a.value > 0 ? a.high / a.value : 1;
+  const r = p.rail;
+  // 예측의 지하철 이용 인원 (반올림 전). 범위는 이 값 대비 비율로 옮긴다
+  const riders = r ? (a ? a.value * r.ratio : r.people) : 0;
+  const stationLow = r && riders > 0 ? r.peopleLow / riders : attendanceLow;
+  const stationHigh = r && riders > 0 ? r.peopleHigh / riders : attendanceHigh;
+  const make = (fa: number, fs: number): Crowd => {
+    const attendance = Math.round(base.attendance * fa);
+    return { attendance, station: Math.min(Math.round(base.station * fs), attendance * (1 - params.vehicleRatio)) };
+  };
+  return { low: make(attendanceLow, stationLow), high: make(attendanceHigh, stationHigh) };
+}
+
+/** 종료 시각. window가 null이면 범위 없이 시각 하나로 본다 (범위 자료가 없거나 운영자가 실제 시각을 넣은 경우) */
+export interface EndTime {
+  expectedAt: string;
+  window: EndWindow | null;
+  sdMinutes: number | null;
+  interval: string | null;
+  /** 운영자가 넣은 실제 종료 시각인지 */
+  entered: boolean;
+}
+
+/** 공연의 종료 시각. enteredAt이 있으면 예측 대신 그 시각을 쓰고 범위를 두지 않는다 */
+export function endTimeOf(event: EventItem, p: Prediction | null | undefined, enteredAt?: string | null): EndTime {
+  if (enteredAt) return { expectedAt: enteredAt, window: null, sdMinutes: null, interval: null, entered: true };
+  const t = p?.endTime;
+  if (!t) return { expectedAt: event.endAt, window: null, sdMinutes: null, interval: null, entered: false };
+  return {
+    expectedAt: t.expectedAt,
+    window: endWindowFrom(t.expectedAt, t.lowAt, t.highAt),
+    sdMinutes: t.sdMinutes,
+    interval: t.interval,
+    entered: false,
   };
 }
 
@@ -47,12 +111,13 @@ function peakFor(p: Prediction, total: number): number {
   return Math.min(total - 1, Math.max(1, Math.round(total * ratio)));
 }
 
-export function buildInput(data: DataBundle, p: Prediction, params: ScenarioParams, attendance = params.attendance): SimulationInput {
+export function buildInput(data: DataBundle, p: Prediction, params: ScenarioParams, crowd: Crowd = crowdOf(params)): SimulationInput {
   return {
     network: data.network,
     routes: data.routes,
     assumptions: data.assumptions,
-    attendance,
+    attendance: crowd.attendance,
+    stationShare: crowd.attendance > 0 ? crowd.station / crowd.attendance : 0,
     egress: { kind: 'gamma', totalMinutes: params.egressTotalMinutes, peakMinute: peakFor(p, params.egressTotalMinutes) },
     directionShare: p.directionShare ?? { A: 1 },
     compliance: params.compliance,
@@ -61,12 +126,28 @@ export function buildInput(data: DataBundle, p: Prediction, params: ScenarioPara
   };
 }
 
+/** 종료 시각 범위를 "±23분" 또는 "−20분~+25분"으로 */
+export function endWindowText(w: EndWindow): string {
+  const early = Math.round(-Math.min(0, w.earlyMinutes));
+  const late = Math.round(Math.max(0, w.lateMinutes));
+  return early === late ? `±${late}분` : `−${early}분~+${late}분`;
+}
+
 export interface ScenarioResult {
   params: ScenarioParams;
+  /** 계산에 넣은 인원 (관객 수, 그중 역으로 걷는 사람) */
+  crowd: Crowd;
   current: SimulationResult;
   best: { plan: Plan; result: SimulationResult };
-  /** 분산안을 퇴장 인원 범위 하단·상단으로 다시 계산한 결과 */
-  range: { attendanceLow: number; attendanceHigh: number; low: SimulationResult; high: SimulationResult };
+  /** 분산안을 인원 예측 범위의 아래·위 끝으로 다시 계산한 결과 */
+  range: {
+    attendanceLow: number;
+    attendanceHigh: number;
+    stationLow: number;
+    stationHigh: number;
+    low: SimulationResult;
+    high: SimulationResult;
+  };
   evaluated: number;
 }
 
@@ -77,21 +158,26 @@ export function computeScenario(data: DataBundle, p: Prediction, params: Scenari
     maxDetourPerPersonMinutes: MAX_DETOUR_MINUTES,
     allowedDirections: params.allowedDirections,
   });
-  const lowRatio = p.attendance ? p.attendance.low / p.attendance.value : 1;
-  const highRatio = p.attendance ? p.attendance.high / p.attendance.value : 1;
-  const attendanceLow = Math.round(params.attendance * lowRatio);
-  const attendanceHigh = Math.round(params.attendance * highRatio);
-  const withPlan = (n: number) =>
+  const { low, high } = crowdRange(p, params);
+  const withPlan = (crowd: Crowd) =>
     simulate({
-      ...buildInput(data, p, params, n),
+      ...buildInput(data, p, params, crowd),
       guidance: opt.best.plan.guidance.moves.length ? opt.best.plan.guidance : undefined,
       vehicle: input.vehicle && opt.best.plan.vehicleExitShare ? { ...input.vehicle, exitShare: opt.best.plan.vehicleExitShare } : input.vehicle,
     });
   return {
     params,
+    crowd: crowdOf(params),
     current: opt.current,
     best: opt.best,
-    range: { attendanceLow, attendanceHigh, low: withPlan(attendanceLow), high: withPlan(attendanceHigh) },
+    range: {
+      attendanceLow: low.attendance,
+      attendanceHigh: high.attendance,
+      stationLow: low.station,
+      stationHigh: high.station,
+      low: withPlan(low),
+      high: withPlan(high),
+    },
     evaluated: opt.evaluated,
   };
 }
@@ -114,10 +200,13 @@ export function deriveKpis(s: ScenarioResult) {
   const c = s.current.totals;
   const walkB = b.queueMinutesTotal + b.detourMinutesTotal;
   const walkC = c.queueMinutesTotal + c.detourMinutesTotal;
-  const people = s.params.attendance;
+  // 대기와 추가 보행은 역으로 걷는 사람이 진다
+  const people = s.crowd.station;
   return {
     maxQueue: kpi(b.peakQueueTotal, c.peakQueueTotal),
     maxQueueRange: { low: s.range.low.totals.peakQueueTotal, high: s.range.high.totals.peakQueueTotal },
+    /** 대기가 가장 많은 시점 (종료 후 분) */
+    maxQueueMinute: b.peakQueueTotalMinute,
     walkBurden: kpi(walkB, walkC),
     perPerson: kpi(people ? walkB / people : 0, people ? walkC / people : 0),
     clear: kpi(b.clearMinute, c.clearMinute),
@@ -130,7 +219,13 @@ export function summarySentence(s: ScenarioResult): string {
   const b = s.best.result.totals;
   const pct = formatNumber(s.params.compliance * 100);
   const moves = s.best.plan.guidance.moves;
-  if (!moves.length) return `지금 조건에서는 안내를 바꿔도 부담이 줄지 않아 현재 운영안을 유지합니다. 안내 반응률 ${pct}%를 반영했습니다.`;
+  if (!moves.length) {
+    // 보행 안내는 그대로여도 차량 출구 배정은 바뀔 수 있다
+    const dv = c.vehicleQueuePersonMinutes - b.vehicleQueuePersonMinutes;
+    if (s.best.plan.vehicleExitShare && dv >= 0.5)
+      return `보행 안내는 바꿔도 대기와 추가 보행이 줄지 않아 그대로 둡니다. 차량 출구 배정을 바꾸면 차량 대기가 ${formatNumber(dv)}사람·분 줄어듭니다.`;
+    return `지금 조건에서는 안내를 바꿔도 부담이 줄지 않아 현재 운영안을 유지합니다. 안내 반응률 ${pct}%를 반영했습니다.`;
+  }
   const dq = c.peakQueueTotal - b.peakQueueTotal;
   const dw = c.queueMinutesTotal + c.detourMinutesTotal - (b.queueMinutesTotal + b.detourMinutesTotal);
   const part = (v: number, unit: string) => `${formatNumber(Math.abs(v))}${unit}${v >= 0 ? '' : ' 늘어'}`;
