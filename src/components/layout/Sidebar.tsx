@@ -53,12 +53,12 @@ export function Sidebar({ onLogout }: { onLogout: () => void }) {
           </svg>
           <span className="flex flex-col">
             <span className="text-[16px] leading-[22px] font-bold tracking-[0.02em] text-white">OLPARK FLOW</span>
-            <span className="text-[12px] leading-[18px] text-sidebar-muted">운영 판단 플랫폼</span>
+            <span className="text-[12px] leading-[18px] text-sidebar-muted">퇴장 운영 지원 시스템</span>
           </span>
         </a>
 
-        <nav aria-label="워크스페이스">
-          <p className="px-3 pb-2 text-[12px] leading-[18px] font-medium text-sidebar-muted">워크스페이스</p>
+        <nav aria-label="분석 메뉴">
+          <p className="px-3 pb-2 text-[12px] leading-[18px] font-medium text-sidebar-muted">분석 메뉴</p>
           <ul className="flex flex-col gap-1">
             {NAV_SECTIONS.map((s) => {
               const on = s.id === active;
@@ -107,7 +107,7 @@ export function Sidebar({ onLogout }: { onLogout: () => void }) {
         </header>
         <dl className="mt-4 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 border-t border-line pt-4">
           <dt className="text-ink-2">역할</dt><dd>운영자</dd>
-          <dt className="text-ink-2">워크스페이스</dt><dd>올림픽공원 운영센터</dd>
+          <dt className="text-ink-2">운영 구역</dt><dd>올림픽공원 운영센터</dd>
           <dt className="text-ink-2">접속 방식</dt><dd>로컬 세션</dd>
         </dl>
       </dialog>

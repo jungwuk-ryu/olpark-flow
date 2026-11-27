@@ -2,7 +2,7 @@
 
 국민체육진흥공단이 공연 종료 뒤 어디에서 언제 보행 병목이 생길지 예측하고, 가용한 안전요원을 어느 지점에 언제 배치할지 판단하도록 돕는 것이 목표다. 퇴장 수요 모델은 보행 네트워크가 계산에 사용할 공연장 출구·목적지·시간대별 관객 수를 추정하는 역할을 맡는다.
 
-## 대시보드 실행
+## 시스템 실행
 
 Windows PowerShell, Linux, macOS에서 저장소 루트에 Node.js 24와 pnpm 11을 준비한 뒤 실행합니다.
 
@@ -63,4 +63,4 @@ cd ml
 
 [공연별 방문·귀가 비중과 5분 보행망 입력 사용법](ml/olpark_demand/README.md#공연별-방문귀가-비중과-보행망-입력) · [실측 검증](ml/artifacts/egress-od/validation/README.md)
 
-[대시보드에 공연과 예측을 주는 서버](ml/olpark_demand/README.md#대시보드에-공연과-예측-주기) · [화면과 주고받는 값의 약속](docs/data-contract.md) · [계산 엔진](src/engine/README.md)
+[시스템에 공연과 예측을 주는 서버](ml/olpark_demand/README.md#대시보드에-공연과-예측-주기) · [화면과 주고받는 값의 약속](docs/data-contract.md) · [계산 엔진](src/engine/README.md)
