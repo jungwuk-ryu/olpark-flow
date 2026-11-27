@@ -1,0 +1,151 @@
+{
+  "status": "partial_baseline_only",
+  "protocol": {
+    "test_start": "2025-07-01",
+    "test_end": "2025-12-31",
+    "train_start": "2025-01-01",
+    "cutoff": "매월 첫날 00시 이전 관측만 학습",
+    "hours": "17~24시의 7개 정시 구간",
+    "target": "공연 관객만이 아닌 지점 전체 이용량",
+    "baseline": "같은 지점·요일·시간의 과거 평균, 부족 시 같은 지점·시간 평균"
+  },
+  "source_hashes": {
+    "rail": "5fcd91bf5b9e6686e12a3fddf855eb941f2a13910e854d2681db3398ad333b6c",
+    "parking": "97a69c0e4ef2e140789622b6064e3d96f865a5bca985fa8481a2a3edf6fc76b5",
+    "events": "513c3a891ea64d9ff08a105c0be50d2db753cc868c170e4843daeaabfe811339"
+  },
+  "source_coverage": {
+    "rail": {
+      "sites": [
+        "rail-5-2556",
+        "rail-8-2814"
+      ],
+      "rows": 5110
+    },
+    "parking": {
+      "quality": {
+        "input_rows": 2411225,
+        "reversed_rows": 6288
+      },
+      "complete_days": 298,
+      "first": "2025-01-01",
+      "last": "2025-11-07",
+      "excluded_dates": [
+        "2025-07-31",
+        "2025-08-01",
+        "2025-08-02",
+        "2025-08-03"
+      ],
+      "coverage_rule": "세 문 모두 같은 날짜 입차·출차 기록. 원본 입차 월이 1~11월이므로 12월 제외, 알려진 입차 누락일 7/31·8/2와 이튿날 제외. 시간별 완전성 보증은 아님."
+    }
+  },
+  "event_days_2025": 105,
+  "baseline": [
+    {
+      "site": "rail-5-2556",
+      "label": "올림픽공원역 5호선",
+      "unit": "명/시간",
+      "days": 59,
+      "rows": 413,
+      "mae": 251.49862023944672,
+      "rmse": 441.45747226727656,
+      "wape_pct": 55.07220389644574,
+      "bias_pct": -16.23149768392055,
+      "evening_total_mae": {
+        "rows": 59,
+        "mae": 611.9477916594639,
+        "rmse": 785.6669801199331,
+        "wape_pct": 19.14314027088803,
+        "bias_pct": -16.23149768392055
+      }
+    },
+    {
+      "site": "rail-8-2814",
+      "label": "몽촌토성역 8호선",
+      "unit": "명/시간",
+      "days": 59,
+      "rows": 413,
+      "mae": 52.14194493190988,
+      "rmse": 93.85239103658328,
+      "wape_pct": 16.144711367004373,
+      "bias_pct": 6.169507707850772,
+      "evening_total_mae": {
+        "rows": 59,
+        "mae": 308.22562064298864,
+        "rmse": 461.95049471009713,
+        "wape_pct": 13.63370065444865,
+        "bias_pct": 6.1695077078507765
+      }
+    },
+    {
+      "site": "car-north2",
+      "label": "북2문",
+      "unit": "대/시간",
+      "days": 37,
+      "rows": 259,
+      "mae": 81.04169467568735,
+      "rmse": 106.68821938158341,
+      "wape_pct": 63.505382188681544,
+      "bias_pct": 21.766680414050434,
+      "evening_total_mae": {
+        "rows": 37,
+        "mae": 471.46341689997473,
+        "rmse": 582.4225846300521,
+        "wape_pct": 52.77788462210779,
+        "bias_pct": 21.766680414050434
+      }
+    },
+    {
+      "site": "car-east2",
+      "label": "동2문",
+      "unit": "대/시간",
+      "days": 37,
+      "rows": 259,
+      "mae": 96.17074758577043,
+      "rmse": 119.02733194052196,
+      "wape_pct": 65.62567151815188,
+      "bias_pct": 28.84518186486227,
+      "evening_total_mae": {
+        "rows": 37,
+        "mae": 558.8333642430463,
+        "rmse": 702.7081947362092,
+        "wape_pct": 54.477234822797286,
+        "bias_pct": 28.84518186486227
+      }
+    },
+    {
+      "site": "car-south2",
+      "label": "남2문",
+      "unit": "대/시간",
+      "days": 37,
+      "rows": 259,
+      "mae": 63.287285037484715,
+      "rmse": 82.19509535915891,
+      "wape_pct": 84.13616068529177,
+      "bias_pct": 36.171609539563995,
+      "evening_total_mae": {
+        "rows": 37,
+        "mae": 341.82233352576156,
+        "rmse": 417.6914340483679,
+        "wape_pct": 64.91852140669941,
+        "bias_pct": 36.171609539563995
+      }
+    }
+  ],
+  "model_comparison": {
+    "status": "missing_model_ledger",
+    "paired": []
+  },
+  "unverified": [
+    "관객 수·실제 종료시각·출입문별 퇴장 인원 정답 없음",
+    "제공된 지하철 원본에 9호선 두 역이 없어 전체 A/B/C 방면 검증 불가",
+    "역 승차와 역 입구 도착은 서로 다른 측정량",
+    "현재 배포 모델은 2026년까지 학습했으므로 2025년에 그대로 적용 금지"
+  ],
+  "missing_inputs": [
+    "ml/data/prepared/response/sessions.parquet",
+    "ml/data/prepared/response/rail_hourly.parquet",
+    "ml/data/prepared/response/calendar.csv",
+    "ml/data/prepared/의 나머지 운영 모델 자료"
+  ]
+}
