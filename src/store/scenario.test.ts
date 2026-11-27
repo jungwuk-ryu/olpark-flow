@@ -45,7 +45,7 @@ describe('시나리오 상태', () => {
     await vi.runAllTimersAsync();
     expect(useScenario.getState().eventId).toBe(selected);
     expect(useScenario.getState().params).toMatchObject({ attendance: 7800, compliance: 0.32 });
-  });
+  }, 30_000); // 여러 차례 최적화를 실행하므로 느린 CI에서도 같은 검증을 끝까지 수행한다.
 
   it('게시된 공연이 없으면 계산하지 않고 그 사실을 알린다', () => {
     useScenario.getState().init({ ...bundle, events: { schemaVersion: 1, events: [] }, predictions: { ...bundle.predictions, predictions: [] } });
