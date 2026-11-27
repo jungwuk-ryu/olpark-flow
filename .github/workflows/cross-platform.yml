@@ -1,0 +1,59 @@
+name: OS별 검사
+
+on:
+  pull_request:
+  push:
+    branches: [main, chore/ci-cross-platform]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cross-platform-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  frontend:
+    name: 화면 / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: pnpm 준비
+        run: npm install --global pnpm@11.12.0
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm validate:data
+      - run: pnpm test
+      - run: pnpm build
+
+  python:
+    name: 모델 / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    env:
+      PYTHONUTF8: '1'
+      PYTHONIOENCODING: utf-8
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: ml/requirements.txt
+      - run: python -m pip install -r ml/requirements.txt
+      - name: 모델 단위검사
+        working-directory: ml
+        run: python -X utf8 -m unittest discover -s tests -v

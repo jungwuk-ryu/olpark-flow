@@ -64,3 +64,9 @@ cd ml
 [공연별 방문·귀가 비중과 5분 보행망 입력 사용법](ml/olpark_demand/README.md#공연별-방문귀가-비중과-보행망-입력) · [실측 검증](ml/artifacts/egress-od/validation/README.md)
 
 [시스템에 공연과 예측을 주는 서버](ml/olpark_demand/README.md#대시보드에-공연과-예측-주기) · [화면과 주고받는 값의 약속](docs/data-contract.md) · [계산 엔진](src/engine/README.md)
+
+## OS별 자동 검사
+
+GitHub Actions의 **OS별 검사**는 Ubuntu·Windows 각각에서 Node.js 24/pnpm 11.12.0으로 데이터 검사·화면 테스트·프로덕션 빌드를 실행하고, 별도 작업에서 Python 3.12로 `ml/tests`의 unittest를 실행합니다. PR과 main 푸시 때 자동 실행하며 Actions에서 수동으로도 실행할 수 있습니다. Python은 UTF-8 모드로 고정합니다.
+
+비공개 가공 자료와 API 키를 CI에 넣지 않습니다. 자료가 필요한 파이썬 검사는 기존 테스트의 skip 조건에 따라 건너뜁니다. 따라서 CI 통과는 새 체크아웃의 단위검사·빌드 호환성을 뜻하며, 실제 자료를 사용하는 모델 예측이나 화면의 브라우저별 시각 검증까지 보증하지 않습니다. 각 OS의 실행 결과와 건너뛴 검사 수는 Actions 로그에서 확인합니다.
