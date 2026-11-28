@@ -14,7 +14,7 @@ import { busiestEdges, edgeGeometry, hasControls, KIND_NAME, nearestPlace, place
 import { selectEvent, selectPrediction, useEndTime, useScenario } from '../../store/scenario';
 import { useWalk } from '../../store/walk';
 import type { BasemapState } from '../map/WalkMap';
-import { RAMP_CSS } from '../map/flowScale';
+import { CONGESTION_RAMP, STATUS_HEX } from '../map/flowScale';
 import { CONTROL_ICON, CONTROL_NAME, EdgeChoice } from './EdgeChoice';
 import { EventPicker } from './EventPicker';
 
@@ -26,12 +26,8 @@ const LAST_MINUTE = 90;
 const MINUTE_MS = 60_000;
 
 const STEPS = ['공연 선택', '보행로 선택', '통제·배치 조건별 결과 비교'];
-/** 지도에서 혼잡한 길에 두르는 테두리 색 */
-const HALO = [
-  { status: '보통', tone: 'bg-normal' },
-  { status: '병목', tone: 'bg-bottleneck' },
-  { status: '위험', tone: 'bg-danger' },
-] as const;
+/** 범례에 상태색으로 보여 주는 혼잡도 (여유는 옅은 색~초록 막대로 따로 그린다) */
+const LEGEND_STATUSES = ['보통', '병목', '위험'] as const;
 const MODE_NAME: Record<WalkMode | OffMapMode, string> = { rail: '지하철', bus: '버스', car: '차량', walk: '도보 귀가', other: '픽업 등' };
 
 /** 종료 후 minute분의 시각. 종료 시각에 범위가 있으면 괄호로 함께 적는다 */
@@ -231,18 +227,16 @@ export function SimulationSection() {
           </div>
 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-line px-5 py-3 text-[12px] text-ink-2">
-            <span className="flex items-center gap-1.5">
-              <span className="h-[5px] w-5 rounded-full" style={{ background: RAMP_CSS }} aria-hidden="true" />
-              통행량
-            </span>
-            <span className="flex items-center gap-2.5">
-              혼잡 구간 테두리
-              {HALO.map((h) => (
-                <span key={h.status} className="flex items-center gap-1">
-                  <span className={`flex h-[11px] w-6 items-center rounded-full px-[3px] ${h.tone}`} aria-hidden="true">
-                    <span className="h-[5px] w-full rounded-full bg-[#278452] shadow-[0_0_0_1px_#fff]" />
-                  </span>
-                  {h.status}
+            <span className="flex items-center gap-2.5" title="선 색은 그 길의 혼잡도입니다. 여유인 길은 통과 용량에 가까울수록 진한 초록입니다.">
+              혼잡도
+              <span className="flex items-center gap-1">
+                <span className="h-[5px] w-6 rounded-full" style={{ background: `linear-gradient(to right, ${CONGESTION_RAMP[0].color}, ${STATUS_HEX.여유})` }} aria-hidden="true" />
+                여유
+              </span>
+              {LEGEND_STATUSES.map((status) => (
+                <span key={status} className="flex items-center gap-1">
+                  <span className="h-[5px] w-6 rounded-full" style={{ background: STATUS_HEX[status] }} aria-hidden="true" />
+                  {status}
                 </span>
               ))}
             </span>

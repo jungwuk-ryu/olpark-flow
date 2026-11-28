@@ -5,21 +5,18 @@ import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
 import { Icon } from '../ui/Icon';
 import { StatusLabel } from '../ui/StatusLabel';
 import { formatNumber } from '../../lib/format';
-import type { LngLat, Status, WalkControls, WalkGraph, WalkResult } from '../../engine';
+import type { LngLat, WalkControls, WalkGraph, WalkResult } from '../../engine';
 import { controlAt, edgeGeometry, KIND_NAME, type ControlKind } from '../../model/walkplan';
 import { BASEMAP_STYLE_URL, blankStyle, fetchBasemap, MAP_LOCALE, withOverlay } from './basemap';
-import { edgeFlows, FLOW_RAMP, scaleFor, scalePosition } from './flowScale';
+import { CONGESTION_RAMP, edgeFlows, lineWidthExpression } from './flowScale';
 import { MapMarker } from './MapMarker';
 
 // 번들러는 MapLibre가 스스로 찾는 워커 파일 경로를 알 수 없어 주소를 직접 알려 준다
 setWorkerUrl(workerUrl);
 
-/** index.css의 상태 색 토큰과 같은 값 (지도 층은 CSS 변수를 읽지 못한다) */
-const STATUS_HEX: Record<Status, string> = { 여유: '#3e8e6e', 보통: '#d9b44a', 병목: '#e07b39', 위험: '#c8423b' };
+/** 경로 색 (지도 층은 CSS 변수를 읽지 못한다. 상태색은 flowScale.ts의 STATUS_HEX) */
 const ROUTE_HEX = { A: '#2f6e60', B: '#c9a26b', C: '#8ea2c0' } as const;
 const INK = '#1f2a27';
-
-const STATUS_RANK: Record<Status, number> = { 여유: 0, 보통: 1, 병목: 2, 위험: 3 };
 
 const ALL = 'olp-walk-all';
 const MARKS = 'olp-walk-marks';
@@ -42,15 +39,15 @@ const lineFeature = (coordinates: LngLat[], properties: Record<string, string | 
 
 /**
  * 공원의 모든 보행로 (바뀌지 않는다). 길마다 그래프에서의 순번을 번호로 준다.
- * 통행량 색과 혼잡 테두리는 이 번호에 값을 매겨 칠한다 (feature-state): on = 칠할지, v = 색 눈금 위치(0~1), s = 혼잡도 순위
+ * 혼잡도 색은 이 번호에 값을 매겨 칠한다 (feature-state): on = 칠할지, v = 색 눈금 위치(0~1)
  */
 function allData(graph: WalkGraph): Collection {
   const geometry = edgeGeometry(graph);
   return collection(graph.edges.map((e, i) => ({ ...lineFeature(geometry.line.get(e.id)!, { id: e.id, minor: e.kind === 'aisle' || e.kind === 'road' }), id: i })));
 }
 
-/** 지도에 칠해 둔 값: 길 번호 → 통행량과 혼잡도 순위 */
-type Painted = Map<number, { value: number; rank: number }>;
+/** 지도에 칠해 둔 값: 길 번호 → 혼잡도 색 눈금 위치 (0~1) */
+type Painted = Map<number, number>;
 
 /** 재생 중 1분에서 다음 1분으로 넘어갈 때 색을 잇는 시간 (ms). 재생은 0.35초에 1분이다 */
 const BLEND_MS = 300;
@@ -72,11 +69,8 @@ function pickData(graph: WalkGraph, hovered: string | null, selected: string | n
 }
 
 const ROUND = { 'line-cap': 'round', 'line-join': 'round' } as const;
-/** 통행량 선의 굵기: 모든 길이 같고 지도 배율에만 따른다. extra는 선 바깥으로 두르는 테두리 */
-const flowWidth = (extra = 0) => ['interpolate', ['linear'], ['zoom'], 13, 3 + extra, 15, 4.5 + extra, 17, 6 + extra, 19, 8 + extra] as unknown as number;
 const FLOW_ON = ['case', ['boolean', ['feature-state', 'on'], false], 1, 0] as unknown as number;
-const FLOW_RANK = ['coalesce', ['feature-state', 's'], 0];
-const FLOW_COLOR = ['interpolate', ['linear'], ['coalesce', ['feature-state', 'v'], 0], ...FLOW_RAMP.flatMap((c, i) => [i / (FLOW_RAMP.length - 1), c])] as unknown as string;
+const FLOW_COLOR = ['interpolate', ['linear'], ['coalesce', ['feature-state', 'v'], 0], ...CONGESTION_RAMP.flatMap((x) => [x.at, x.color])] as unknown as string;
 
 /** 글자 층이 없어 글꼴 파일 없이도 그려진다 */
 const LAYERS: LayerSpecification[] = [
@@ -87,21 +81,9 @@ const LAYERS: LayerSpecification[] = [
     layout: ROUND,
     paint: { 'line-color': '#9aa5a0', 'line-width': ['case', ['get', 'minor'], 1, 2], 'line-opacity': ['case', ['get', 'minor'], 0.45, 0.8] },
   },
-  // 혼잡 테두리: 보통·병목·위험인 길만 통행량 선 바깥에 혼잡도 색을 두른다
-  {
-    id: 'olp-walk-flow-status',
-    type: 'line',
-    source: ALL,
-    layout: ROUND,
-    paint: {
-      'line-color': ['match', FLOW_RANK, 1, STATUS_HEX.보통, 2, STATUS_HEX.병목, 3, STATUS_HEX.위험, '#ffffff'] as unknown as string,
-      'line-width': flowWidth(9),
-      'line-opacity': ['case', ['>', FLOW_RANK, 0], 1, 0] as unknown as number,
-    },
-  },
-  { id: 'olp-walk-flow-casing', type: 'line', source: ALL, layout: ROUND, paint: { 'line-color': '#ffffff', 'line-width': flowWidth(2.5), 'line-opacity': FLOW_ON } },
-  // 통행량: 굵기는 같고 색으로만 나타낸다
-  { id: 'olp-walk-flow', type: 'line', source: ALL, layout: ROUND, paint: { 'line-color': FLOW_COLOR, 'line-width': flowWidth(), 'line-opacity': FLOW_ON } },
+  { id: 'olp-walk-flow-casing', type: 'line', source: ALL, layout: ROUND, paint: { 'line-color': '#ffffff', 'line-width': lineWidthExpression(2.5), 'line-opacity': FLOW_ON } },
+  // 혼잡도: 색으로 나타내고 병목·위험인 길은 굵게 그린다. 사람이 꽉 차 움직이지 못하는 길도 통행량과 관계없이 위험 색이다
+  { id: 'olp-walk-flow', type: 'line', source: ALL, layout: ROUND, paint: { 'line-color': FLOW_COLOR, 'line-width': lineWidthExpression(), 'line-opacity': FLOW_ON } },
   // 놓은 것: 막은 길은 짧은 점선, 장애물을 놓은 길은 긴 점선, 안전요원을 세운 길은 실선
   { id: 'olp-walk-mark-block', type: 'line', source: MARKS, filter: ['==', ['get', 'kind'], 'block'], paint: { 'line-color': INK, 'line-width': 5, 'line-dasharray': [0.6, 0.9] } },
   { id: 'olp-walk-mark-narrow', type: 'line', source: MARKS, filter: ['==', ['get', 'kind'], 'narrow'], paint: { 'line-color': '#e07b39', 'line-width': 5, 'line-dasharray': [1.4, 0.8] } },
@@ -175,7 +157,6 @@ export default function WalkMap(props: WalkMapProps) {
   const drawn = useRef<{ result: WalkResult; minute: number | null } | null>(null);
   const edgeIndex = useMemo(() => new Map(graph.edges.map((e, i) => [e.id, i])), [graph]);
   const flows = useMemo(() => edgeFlows(result, minute), [result, minute]);
-  const scale = scaleFor(minute);
   const [hovered, setHovered] = useState<{ id: string; x: number; y: number } | null>(null);
   const geometry = useMemo(() => edgeGeometry(graph), [graph]);
   const edgeById = useMemo(() => new Map(graph.edges.map((e) => [e.id, e])), [graph]);
@@ -300,17 +281,16 @@ export default function WalkMap(props: WalkMapProps) {
 
   const source = (id: string) => map?.getSource(id) as GeoJSONSource | undefined;
 
-  // 통행량 색과 혼잡 테두리를 칠한다. 재생 중 1분씩 넘어갈 때만 앞 값에서 새 값으로 곧게 이어 가고,
+  // 혼잡도 색을 칠한다. 재생 중 1분씩 넘어갈 때만 앞 값에서 새 값으로 곧게 이어 가고,
   // 멈춰 있을 때의 색은 언제나 그 분에 계산한 값 그대로다
   useEffect(() => {
     if (!map || !styleReady.current) return;
-    const stops = scale.stops;
     const target: Painted = new Map();
-    for (const [id, x] of flows) target.set(edgeIndex.get(id)!, { value: x.value, rank: STATUS_RANK[x.status] });
+    for (const [id, x] of flows) target.set(edgeIndex.get(id)!, x.level);
     const paint = (next: Painted) => {
       if (!styleReady.current) return;
-      for (const [i, x] of next) map.setFeatureState({ source: ALL, id: i }, { on: true, v: scalePosition(x.value, stops), s: x.rank });
-      for (const i of painted.current.keys()) if (!next.has(i)) map.setFeatureState({ source: ALL, id: i }, { on: false, v: 0, s: 0 });
+      for (const [i, level] of next) map.setFeatureState({ source: ALL, id: i }, { on: true, v: level });
+      for (const i of painted.current.keys()) if (!next.has(i)) map.setFeatureState({ source: ALL, id: i }, { on: false, v: 0 });
       painted.current = next;
     };
     const before = drawn.current;
@@ -331,11 +311,11 @@ export default function WalkMap(props: WalkMapProps) {
         return;
       }
       const mixed: Painted = new Map();
-      for (const [i, x] of target) {
-        const was = from.get(i)?.value ?? 0;
-        mixed.set(i, { value: was + (x.value - was) * k, rank: x.rank });
+      for (const [i, level] of target) {
+        const was = from.get(i) ?? 0;
+        mixed.set(i, was + (level - was) * k);
       }
-      for (const [i, x] of from) if (!target.has(i)) mixed.set(i, { value: x.value * (1 - k), rank: 0 });
+      for (const [i, level] of from) if (!target.has(i)) mixed.set(i, level * (1 - k));
       paint(mixed);
       frame = requestAnimationFrame(step);
     };
@@ -347,7 +327,7 @@ export default function WalkMap(props: WalkMapProps) {
       window.clearTimeout(settle);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [map, styleTurn, edgeIndex, flows, scale]);
+  }, [map, styleTurn, edgeIndex, flows]);
   useEffect(() => {
     source(MARKS)?.setData(marksData(graph, controls));
     // eslint-disable-next-line react-hooks/exhaustive-deps
