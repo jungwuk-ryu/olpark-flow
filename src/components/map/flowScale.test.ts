@@ -5,58 +5,79 @@ import { fromServer, type ServerBundle } from '../../api';
 import { NO_CONTROLS, simulateWalk, type WalkEdge, type WalkGraph } from '../../engine';
 import { tenMinutesFlat, testAssumptions } from '../../engine/testing/fixtures';
 import { defaultParams } from '../../model/scenario';
-import { runWalk } from '../../model/walkplan';
-import { edgeFlows, FLOW_RAMP, MINUTE_SCALE, RAMP_CSS, scaleFor, scalePosition, TOTAL_SCALE } from './flowScale';
+import { narrowEdge, runWalk } from '../../model/walkplan';
+import type { Status } from '../../engine';
+import { CONGESTION_RAMP, congestionPosition, edgeFlows, lineWidth, lineWidthExpression, RAMP_CSS, STATUS_HEX } from './flowScale';
 
-describe('통행량 색 눈금', () => {
-  it('눈금 값은 같은 간격의 색 단계에 놓이고 그 사이는 곧게 잇는다', () => {
-    const stops = MINUTE_SCALE.stops;
-    expect(stops).toEqual([0, 10, 50, 100, 200, 400]);
-    stops.forEach((v, i) => expect(scalePosition(v, stops)).toBeCloseTo(i / 5, 12));
-    // 50과 100의 가운데인 75는 두 색 단계의 가운데다
-    expect(scalePosition(75, stops)).toBeCloseTo(0.5, 12);
-    expect(scalePosition(5, stops)).toBeCloseTo(0.1, 12);
-    expect(scalePosition(300, stops)).toBeCloseTo(0.9, 12);
-    // 누적 1명은 첫 색 단계의 시작점에 가깝다
-    expect(scalePosition(1, TOTAL_SCALE.stops)).toBeCloseTo(0.002, 12);
+describe('혼잡도 색 눈금', () => {
+  it('여유는 옅은 색에서 초록까지, 보통·병목·위험은 각자의 상태색이다', () => {
+    expect(congestionPosition('여유', 0)).toBe(0);
+    // 여유 안에서는 통과 용량에 견준 비율(포화도)이 보통 기준(0.7)에 가까울수록 진한 초록이다
+    expect(congestionPosition('여유', 0.35)).toBeCloseTo(0.25, 12);
+    expect(congestionPosition('여유', 0.69)).toBeLessThan(0.5);
+    const at = (status: Status) => CONGESTION_RAMP.find((x) => x.color === STATUS_HEX[status])!.at;
+    expect(congestionPosition('보통', 0.8)).toBe(at('보통'));
+    expect(congestionPosition('병목', 1.4)).toBe(at('병목'));
+    expect(congestionPosition('위험', 0)).toBe(1);
+    expect(at('위험')).toBe(1);
   });
 
-  it('마지막 눈금을 넘으면 마지막 색이고, 0 이하나 숫자가 아닌 값은 첫 색이다', () => {
-    expect(scalePosition(400, MINUTE_SCALE.stops)).toBe(1);
-    expect(scalePosition(9999, MINUTE_SCALE.stops)).toBe(1);
-    expect(scalePosition(0, MINUTE_SCALE.stops)).toBe(0);
-    expect(scalePosition(-3, MINUTE_SCALE.stops)).toBe(0);
-    expect(scalePosition(Number.NaN, MINUTE_SCALE.stops)).toBe(0);
+  it('상태가 나쁠수록 눈금 위치가 크다', () => {
+    const order = [congestionPosition('여유', 0), congestionPosition('여유', 0.5), congestionPosition('여유', 5), congestionPosition('보통', 0), congestionPosition('병목', 0), congestionPosition('위험', 0)];
+    for (let i = 1; i < order.length; i++) expect(order[i]).toBeGreaterThan(order[i - 1]!);
   });
 
-  it('값이 크면 눈금 위치도 크다', () => {
-    for (const scale of [MINUTE_SCALE, TOTAL_SCALE]) {
-      let before = -1;
-      for (let v = 0; v <= scale.stops[scale.stops.length - 1]!; v += scale.stops[1]! / 4) {
-        const at = scalePosition(v, scale.stops);
-        expect(at).toBeGreaterThanOrEqual(before);
-        if (v > 0) expect(at).toBeGreaterThan(before);
-        before = at;
-      }
-    }
+  it('숫자가 아닌 포화도는 여유의 첫 색이다', () => {
+    expect(congestionPosition('여유', Number.NaN)).toBe(0);
+    expect(congestionPosition('여유', -1)).toBe(0);
   });
 
-  it('전체 시간대 보기와 시간별 보기는 눈금이 다르다', () => {
-    expect(scaleFor(null)).toBe(TOTAL_SCALE);
-    expect(scaleFor(0)).toBe(MINUTE_SCALE);
-    expect(scaleFor(30)).toBe(MINUTE_SCALE);
-    expect(TOTAL_SCALE.stops).toHaveLength(FLOW_RAMP.length);
-    expect(MINUTE_SCALE.stops).toHaveLength(FLOW_RAMP.length);
-  });
-
-  it('범례 막대와 지도는 같은 초록·노랑·주황·빨강 눈금을 쓴다', () => {
+  it('여유의 가장 옅은 색도 배경 지도 위에서 보인다', () => {
     const luminance = (hex: string) => {
       const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
       return 0.2126 * r! + 0.7152 * g! + 0.0722 * b!;
     };
-    // 첫 색은 낮은 통행량을 옅게 표시하고, 나머지 색은 흰 바탕과 2:1 넘게 구별된다
-    for (const color of FLOW_RAMP.slice(1)) expect(1.05 / (luminance(color) + 0.05)).toBeGreaterThan(2);
-    expect(RAMP_CSS).toBe('linear-gradient(to right, #c6d0c8 0%, #70a23e 20%, #b5ab2c 40%, #d8ad19 60%, #e47c28 80%, #ca4033 100%)');
+    // 사람이 지나는 길은 여유라도 흰 바탕과 2:1 넘게 구별된다
+    expect(1.05 / (luminance(CONGESTION_RAMP[0].color) + 0.05)).toBeGreaterThan(2);
+  });
+
+  it('범례 막대와 지도는 같은 눈금을 쓴다', () => {
+    expect(RAMP_CSS).toBe(`linear-gradient(to right, ${CONGESTION_RAMP.map((x) => `${x.color} ${x.at * 100}%`).join(', ')})`);
+  });
+});
+
+describe('선 굵기', () => {
+  const level = (status: Status) => congestionPosition(status, 0);
+
+  it('병목·위험인 길은 기본 확대에서도 여유·보통보다 두 배 넘게 굵다', () => {
+    expect(lineWidth(level('여유'), 13)).toBe(lineWidth(level('보통'), 13));
+    expect(lineWidth(level('병목'), 13)).toBeGreaterThanOrEqual(2 * lineWidth(level('보통'), 13));
+    expect(lineWidth(level('위험'), 13)).toBe(lineWidth(level('병목'), 13));
+  });
+
+  it('확대할수록 굵어지고, 병목·위험은 어느 배율에서나 더 굵다', () => {
+    for (const status of ['여유', '병목'] as const) {
+      const widths = [13, 15, 17, 19].map((zoom) => lineWidth(level(status), zoom));
+      for (let i = 1; i < widths.length; i++) expect(widths[i]).toBeGreaterThan(widths[i - 1]!);
+    }
+    for (const zoom of [13, 15, 17, 19]) expect(lineWidth(level('병목'), zoom)).toBeGreaterThan(lineWidth(level('보통'), zoom));
+  });
+
+  it('지도 표현식은 같은 굵기 규칙으로 만든다', () => {
+    const expr = lineWidthExpression() as unknown as unknown[];
+    expect(expr.slice(0, 3)).toEqual(['interpolate', ['linear'], ['zoom']]);
+    const stops = expr.slice(3);
+    for (let i = 0; i < stops.length; i += 2) {
+      const zoom = stops[i] as number;
+      const [, cond, wide, normal] = stops[i + 1] as [string, unknown[], number, number];
+      expect(cond[0]).toBe('>=');
+      expect(cond[2]).toBe(level('병목'));
+      expect(wide).toBe(lineWidth(level('병목'), zoom));
+      expect(normal).toBe(lineWidth(level('여유'), zoom));
+    }
+    // 테두리는 선보다 바깥으로 두른다
+    const casing = lineWidthExpression(2.5) as unknown as unknown[];
+    expect((casing[4] as number[])[3]).toBe(lineWidth(level('여유'), 13) + 2.5);
   });
 });
 
@@ -75,7 +96,7 @@ describe('지도에 칠할 값', () => {
 
   it('전체 시간대 보기는 지나간 사람 수와 가장 나빴던 혼잡도다', () => {
     const all = edgeFlows(result, null);
-    expect(all.get('a')).toEqual({ value: result.edges.a!.people, status: result.edges.a!.worst });
+    expect(all.get('a')).toMatchObject({ value: result.edges.a!.people, status: result.edges.a!.worst });
     expect(all.get('b')!.value).toBeCloseTo(4000, 6);
     expect(all.get('b')!.status).toBe('병목');
   });
@@ -136,5 +157,38 @@ describe('실제 보행로와 공연', () => {
     // 가장 많이 지나는 길에서는 오차 없이 맞는다
     const [busiest] = [...edgeFlows(run.current, null)].sort((p, q) => q[1].value - p[1].value);
     expect(run.current.edges[busiest![0]]!.flow.reduce((x, y) => x + y, 0)).toBeCloseTo(busiest![1].value, 6);
+  });
+});
+
+describe('길을 좁혀 줄이 선 저녁', () => {
+  // 올림픽홀 공연에서 가장 많이 지나는 길을 0.5m로 좁히면 그 뒤로 줄이 번져 사람이 서 있기만 한 길이 생긴다
+  const graph = walkways as unknown as WalkGraph;
+  const data = fromServer(sample as unknown as ServerBundle);
+  const event = data.events.events.find((e) => e.id === 'olympichall-20261127-2000')!;
+  const prediction = data.predictions.predictions.find((p) => p.eventId === event.id)!;
+  const base = runWalk(data, graph, event, prediction, defaultParams(prediction), NO_CONTROLS)!;
+  const busiest = Object.values(base.baseline.edges).sort((a, b) => b.people - a.people)[0]!;
+  const run = runWalk(data, graph, event, prediction, defaultParams(prediction), narrowEdge(NO_CONTROLS, busiest.edgeId, 0.5))!;
+
+  it('통행량이 0이어도 위험한 길은 위험 색으로 칠한다', () => {
+    let stuck = 0;
+    for (let minute = 1; minute <= run.current.minutes; minute++) {
+      for (const [, x] of edgeFlows(run.current, minute)) {
+        if (x.status === '위험' && x.value < 1) stuck++;
+        expect(x.level).toBe(congestionPosition(x.status, x.saturation));
+        if (x.status === '위험') expect(x.level).toBe(1);
+      }
+    }
+    // 이 저녁에는 줄에 막혀 거의 움직이지 못하는 위험한 길이 실제로 있다
+    expect(stuck).toBeGreaterThan(10);
+  });
+
+  it('전체 시간대 보기는 가장 나빴던 상태와 가장 높았던 포화도로 칠한다', () => {
+    for (const [id, x] of edgeFlows(run.current, null)) {
+      const s = run.current.edges[id]!;
+      expect(x.status).toBe(s.worst);
+      expect(x.saturation).toBe(Math.max(...s.saturation));
+      expect(x.level).toBe(congestionPosition(s.worst, x.saturation));
+    }
   });
 });
