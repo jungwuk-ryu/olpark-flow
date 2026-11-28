@@ -8,8 +8,10 @@ import { formatNumber } from '../../lib/format';
 import type { LngLat, WalkControls, WalkGraph, WalkResult } from '../../engine';
 import { controlAt, edgeGeometry, KIND_NAME, type ControlKind } from '../../model/walkplan';
 import { BASEMAP_STYLE_URL, blankStyle, fetchBasemap, MAP_LOCALE, withOverlay } from './basemap';
-import { CONGESTION_RAMP, edgeFlows, lineWidthExpression } from './flowScale';
+import { CONTROL_CHIP_TONE, CONTROL_LINE } from './controlMarks';
+import { CONGESTION_RAMP, edgeFlows, lineWidthExpression, outerWidthExpression } from './flowScale';
 import { MapMarker } from './MapMarker';
+import { showPins, warningPins } from './warningPins';
 
 // 번들러는 MapLibre가 스스로 찾는 워커 파일 경로를 알 수 없어 주소를 직접 알려 준다
 setWorkerUrl(workerUrl);
@@ -84,10 +86,24 @@ const LAYERS: LayerSpecification[] = [
   { id: 'olp-walk-flow-casing', type: 'line', source: ALL, layout: ROUND, paint: { 'line-color': '#ffffff', 'line-width': lineWidthExpression(2.5), 'line-opacity': FLOW_ON } },
   // 혼잡도: 색으로 나타내고 병목·위험인 길은 굵게 그린다. 사람이 꽉 차 움직이지 못하는 길도 통행량과 관계없이 위험 색이다
   { id: 'olp-walk-flow', type: 'line', source: ALL, layout: ROUND, paint: { 'line-color': FLOW_COLOR, 'line-width': lineWidthExpression(), 'line-opacity': FLOW_ON } },
-  // 놓은 것: 막은 길은 짧은 점선, 장애물을 놓은 길은 긴 점선, 안전요원을 세운 길은 실선
-  { id: 'olp-walk-mark-block', type: 'line', source: MARKS, filter: ['==', ['get', 'kind'], 'block'], paint: { 'line-color': INK, 'line-width': 5, 'line-dasharray': [0.6, 0.9] } },
-  { id: 'olp-walk-mark-narrow', type: 'line', source: MARKS, filter: ['==', ['get', 'kind'], 'narrow'], paint: { 'line-color': '#e07b39', 'line-width': 5, 'line-dasharray': [1.4, 0.8] } },
-  { id: 'olp-walk-mark-staff', type: 'line', source: MARKS, filter: ['==', ['get', 'kind'], 'staff'], layout: ROUND, paint: { 'line-color': '#2c6b5f', 'line-width': 5 } },
+  // 놓은 것 (controlMarks.ts): 막은 길은 짧은 점선, 장애물을 놓은 길은 혼잡도 선 양옆의 긴 점선, 안전요원을 세운 길은 실선
+  ...(['block', 'narrow', 'staff'] as const).map((kind): LayerSpecification => {
+    const line = CONTROL_LINE[kind];
+    return {
+      id: `olp-walk-mark-${kind}`,
+      type: 'line',
+      source: MARKS,
+      filter: ['==', ['get', 'kind'], kind],
+      ...(line.dash ? {} : { layout: ROUND }),
+      paint: {
+        'line-color': line.color,
+        'line-width': line.width,
+        ...(line.dash ? { 'line-dasharray': line.dash } : {}),
+        // 양옆에 두르는 표시는 가장 굵은 혼잡도 선과 흰 테두리보다 바깥에 놓는다
+        ...(line.besideLine ? { 'line-gap-width': outerWidthExpression(4) } : {}),
+      },
+    };
+  }),
   { id: 'olp-walk-pick', type: 'line', source: PICK, layout: ROUND, paint: { 'line-color': INK, 'line-width': ['case', ['get', 'selected'], 5, 3], 'line-opacity': ['case', ['get', 'selected'], 0.9, 0.5], 'line-gap-width': 6 } },
   // 누르기 쉽게 실제 선보다 넓은 보이지 않는 띠
   { id: HIT, type: 'line', source: ALL, layout: ROUND, paint: { 'line-color': '#000000', 'line-width': 16, 'line-opacity': 0.01 } },
@@ -110,15 +126,17 @@ interface WalkMapProps {
   venueExitIds: string[];
   /** 길을 누르면 그 길, 길이 아닌 곳을 누르면 null */
   onSelect: (edgeId: string | null, at: LngLat) => void;
+  /** 위험 경고 핀을 누르면 그 핀의 가장 붐빈 길 (지도를 옮기고 고른다) */
+  onPin?: (edgeId: string) => void;
   onBasemap?: (state: BasemapState) => void;
   /** 이 브라우저에서 지도를 그릴 수 없을 때 (WebGL 없음 등) */
   onUnsupported?: () => void;
 }
 
 const CONTROL_CHIP: Record<ControlKind, { icon: 'ban' | 'fence' | 'user'; tone: string }> = {
-  block: { icon: 'ban', tone: 'bg-ink text-white' },
-  narrow: { icon: 'fence', tone: 'bg-bottleneck text-white' },
-  staff: { icon: 'user', tone: 'bg-accent text-white' },
+  block: { icon: 'ban', tone: CONTROL_CHIP_TONE.block },
+  narrow: { icon: 'fence', tone: CONTROL_CHIP_TONE.narrow },
+  staff: { icon: 'user', tone: CONTROL_CHIP_TONE.staff },
 };
 
 /** 지도 위 한 점의 화면 위치. 지도를 움직이면 따라간다 */
@@ -158,6 +176,17 @@ export default function WalkMap(props: WalkMapProps) {
   const edgeIndex = useMemo(() => new Map(graph.edges.map((e, i) => [e.id, i])), [graph]);
   const flows = useMemo(() => edgeFlows(result, minute), [result, minute]);
   const [hovered, setHovered] = useState<{ id: string; x: number; y: number } | null>(null);
+  // 경고 핀은 공원 전체를 볼 만큼 축소했을 때만 띄운다 (warningPins.ts)
+  const [pinsVisible, setPinsVisible] = useState(true);
+  useEffect(() => {
+    if (!map) return;
+    const update = () => setPinsVisible(showPins(map.getZoom()));
+    update();
+    map.on('zoom', update);
+    return () => {
+      map.off('zoom', update);
+    };
+  }, [map]);
   const geometry = useMemo(() => edgeGeometry(graph), [graph]);
   const edgeById = useMemo(() => new Map(graph.edges.map((e) => [e.id, e])), [graph]);
   const nodeAt = useMemo(() => new Map(graph.nodes.map((n) => [n.id, n.lngLat])), [graph]);
@@ -242,6 +271,8 @@ export default function WalkMap(props: WalkMapProps) {
     });
     // 길을 누르면 고르고, 빈 곳을 누르면 선택 상자를 닫는다
     created.on('click', (e: MapMouseEvent) => {
+      // 경고 핀을 누른 클릭은 핀이 처리한다. 지도가 받으면 핀이 고른 길을 바로 풀어 버린다
+      if ((e.originalEvent?.target as Element | null)?.closest?.('[data-map-pin]')) return;
       const hit = created.getLayer(HIT) ? created.queryRenderedFeatures(e.point, { layers: [HIT] })[0] : undefined;
       latest.current.onSelect((hit?.properties?.id as string | undefined) ?? null, [e.lngLat.lng, e.lngLat.lat]);
     });
@@ -364,6 +395,13 @@ export default function WalkMap(props: WalkMapProps) {
     ...Object.keys(controls.narrowed).map((id) => ({ id, kind: 'narrow' as const })),
     ...controls.staffed.map((s) => ({ id: s.edgeId, kind: 'staff' as const })),
   ].filter((m) => geometry.mid.has(m.id));
+  // 공원 전체를 볼 때만 위험 구간에 핀을 띄운다. 놓은 것 표시와 겹치면 위로 띄운다
+  const pins = useMemo(
+    () => (pinsVisible ? warningPins(result, minute, geometry.mid, marks.map((m) => geometry.mid.get(m.id)!)) : []),
+    // marks는 controls에서 만든다
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [pinsVisible, result, minute, geometry, controls],
+  );
 
   // 선택 상자가 떠 있는 길에는 말풍선을 띄우지 않는다
   const tip = hovered && hovered.id !== selected ? edgeById.get(hovered.id) : undefined;
@@ -450,6 +488,21 @@ export default function WalkMap(props: WalkMapProps) {
               <span className={`pointer-events-none flex size-6 items-center justify-center rounded-full shadow-[0_0_0_2px_#fff] ${CONTROL_CHIP[m.kind].tone}`}>
                 <Icon name={CONTROL_CHIP[m.kind].icon} size={14} />
               </span>
+            </MapMarker>
+          ))}
+          {pins.map((pin) => (
+            <MapMarker key={pin.edgeIds[0]} map={map} lngLat={pin.at} anchor="bottom" layer={9}>
+              <button
+                type="button"
+                data-map-pin=""
+                onClick={() => props.onPin?.(pin.edgeIds[0]!)}
+                className={`flex items-center gap-1 rounded-full bg-danger py-0.5 pr-2 pl-1 text-[12px] leading-[18px] font-bold whitespace-nowrap text-white shadow-[0_0_0_2px_#fff,0_2px_6px_rgb(0_0_0/0.25)] hover:brightness-110 ${pin.lift ? '-translate-y-7' : '-translate-y-1'}`}
+                title={`위험 · 길 위 ${formatNumber(pin.standing)}명 · 누르면 확대`}
+                aria-label={`위험 구간 ${pin.count}곳, 길 위 ${formatNumber(pin.standing)}명. 누르면 확대`}
+              >
+                <Icon name="status-danger" size={14} />
+                {pin.count > 1 ? `위험 ${pin.count}곳` : '위험'}
+              </button>
             </MapMarker>
           ))}
 

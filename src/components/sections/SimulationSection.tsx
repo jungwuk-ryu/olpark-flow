@@ -209,6 +209,7 @@ export function SimulationSection() {
                   venueName={event.venueName}
                   venueExitIds={run.demand.exits.map((x) => x.id)}
                   onSelect={(id, at) => walk().select(id, at)}
+                  onPin={focusOn}
                   onBasemap={setBasemap}
                   onUnsupported={() => setUnsupported(true)}
                 />

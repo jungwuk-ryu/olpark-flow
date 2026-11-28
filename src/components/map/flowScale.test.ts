@@ -7,7 +7,7 @@ import { tenMinutesFlat, testAssumptions } from '../../engine/testing/fixtures';
 import { defaultParams } from '../../model/scenario';
 import { narrowEdge, runWalk } from '../../model/walkplan';
 import type { Status } from '../../engine';
-import { CONGESTION_RAMP, congestionPosition, edgeFlows, lineWidth, lineWidthExpression, RAMP_CSS, STATUS_HEX } from './flowScale';
+import { CONGESTION_RAMP, congestionPosition, edgeFlows, lineWidth, lineWidthExpression, outerWidthExpression, RAMP_CSS, STATUS_HEX } from './flowScale';
 
 describe('혼잡도 색 눈금', () => {
   it('여유는 옅은 색에서 초록까지, 보통·병목·위험은 각자의 상태색이다', () => {
@@ -61,6 +61,13 @@ describe('선 굵기', () => {
       for (let i = 1; i < widths.length; i++) expect(widths[i]).toBeGreaterThan(widths[i - 1]!);
     }
     for (const zoom of [13, 15, 17, 19]) expect(lineWidth(level('병목'), zoom)).toBeGreaterThan(lineWidth(level('보통'), zoom));
+  });
+
+  it('바깥 너비는 어느 배율에서나 가장 굵은 선보다 넓다', () => {
+    const expr = outerWidthExpression(2.5) as unknown as unknown[];
+    expect(expr.slice(0, 3)).toEqual(['interpolate', ['linear'], ['zoom']]);
+    const stops = expr.slice(3);
+    for (let i = 0; i < stops.length; i += 2) expect(stops[i + 1]).toBe(lineWidth(level('위험'), stops[i] as number) + 2.5);
   });
 
   it('지도 표현식은 같은 굵기 규칙으로 만든다', () => {
