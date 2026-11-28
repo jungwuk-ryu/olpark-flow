@@ -61,6 +61,11 @@ export function lineWidthExpression(extra = 0): number {
   ] as unknown as number;
 }
 
+/** 가장 굵은 선(병목·위험)의 너비에 extra를 더한 표현식. 선 양옆에 두르는 표시가 어떤 상태의 선과도 겹치지 않게 한다 */
+export function outerWidthExpression(extra = 0): number {
+  return ['interpolate', ['linear'], ['zoom'], ...WIDTH_BY_ZOOM.flatMap((x) => [x.zoom, lineWidth(WIDE_FROM, x.zoom) + extra])] as unknown as number;
+}
+
 /** 범례 막대의 CSS 그러데이션 */
 export const RAMP_CSS = `linear-gradient(to right, ${CONGESTION_RAMP.map((x) => `${x.color} ${x.at * 100}%`).join(', ')})`;
 
